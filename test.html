@@ -73,26 +73,27 @@
                 margin-top: 0;
             }
             .content-panel {
-                height: 100vh;
+                min-height: 100vh;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-end;
                 font-size: 4rem;
-                text-shadow: 0 2px 10px rgba(0,0,0,0.8);
                 pointer-events: none;
                 width: 100%;
                 margin: 0 auto;
-                padding: 0 5vw;
+                padding-left: 5vw;
+                padding-right: 5vw;
                 box-sizing: border-box;
                 text-align: center;
                 overflow-wrap: break-word;
+                color: #000;
             }
 
-            .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color:#fff;}
+            .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color:#000;}
             .content-panel p { font-family:"Regular"; font-size: 1.5rem; opacity: 0.7; font-weight: 300; margin-top: 10px; }
-            .primary-label { color: #FFF; font-family:"Heading"; }
-            .secondary-label { color: #FFF; font-family:"Heading"; }
+            .primary-label { color: #000; font-family:"Heading"; }
+            .secondary-label { color: #000; font-family:"Heading"; }
         `;
         const dynamicStyleElement = document.createElement("style");
         dynamicStyleElement.innerText = injectedStyles;
@@ -114,7 +115,7 @@
                 </div>
                 <div class="content-panel">
                     <h1>SPRAYZET</h1>
-                    <p>Industrial MRO<span class="primary-label">Aerosols</span></p>
+                    <p>Industrial MRO<span class="primary-label"> Aerosols</span></p>
                 </div>
                 <div class="content-panel">
                     <h1>Engineered to Perform.</h1>
@@ -133,7 +134,20 @@
                     <p>Can Feel.</p>
                 </div>
                 <div class="content-panel">
-                    <h1>Reflects Excellence.</h1>
+                    <h1>Next Chapter</h1>
+                    <p>Unveiling strength</p>
+                </div>
+                <div class="content-panel">
+                    <h1>TWIN TAPE</h1>
+                    <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
+                </div>
+                <div class="content-panel">
+                    <h1>Bonds That Last.</h1>
+                    <p>Trust That Holds.</p>
+                </div>
+                <div class="content-panel">
+                    <h1>Three Brands.</h1>
+                    <p>One Vision of Excellence.</p>
                 </div>
             </div>
         `;
@@ -172,11 +186,11 @@
         primarySpotLight.castShadow = true;
         threeScene.add(primarySpotLight);
 
-        const accentPointLight = new THREE.PointLight(0xff9000, 5);
+        const accentPointLight = new THREE.PointLight(0xffffff, 5);
         accentPointLight.position.set(-5, 0, 5);
         threeScene.add(accentPointLight);
         
-        const backRimLight = new THREE.SpotLight(0x0044ff, 10);
+        const backRimLight = new THREE.SpotLight(0xffffff, 10);
         backRimLight.position.set(0, 5, -5);
         backRimLight.lookAt(0, 0, 0);
         threeScene.add(backRimLight);
@@ -285,6 +299,19 @@
 
         // --- Animation Logic ---
         function initializeScrollAnimation() {
+            // Pin each text panel for snappy scroll behavior
+            const panels = document.querySelectorAll('.content-panel');
+            panels.forEach((panel, index) => {
+                ScrollTrigger.create({
+                    trigger: panel,
+                    start: 'top top',
+                    end: '+=200vh',
+                    pin: true,
+                    pinSpacing: true,
+                    anticipatePin: 1
+                });
+            });
+
             // We use the wrapper as the trigger
             const animationTimeline = gsap.timeline({
                 scrollTrigger: {
@@ -384,7 +411,7 @@
                 ease: "power3.out"
             }, "settle");
 
-            // 5. Final Presentation
+            // 5. Final Presentation - Red can moves to right
             animationTimeline.to(objectGroup.position, {
                 x: 2,
                 y: 0,
@@ -398,46 +425,68 @@
                 ease: "sine.inOut"
             }, "final");
 
-            // TAPE ANIMATION: roll in from left, cinematic reveal, roll out to right
+            // 6. Red can rolls out of the screen
+            animationTimeline.to(objectGroup.position, {
+                x: 7,
+                duration: 1.5,
+                ease: "power2.in"
+            }, "canExit");
+
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 16,
+                duration: 1.5,
+                ease: "linear"
+            }, "canExit");
+
+            // TAPE ANIMATION: After red can exits, tape rolls in, zooms, then rolls out
             if (typeof tapeModel !== 'undefined' && tapeModel) {
-                // ensure tape is above background but below UI
-                tapeModel.position.y = -1.5;
-                tapeModel.position.x = -6;
-                tapeModel.rotation.z = 0;
+                // Initial state: tape off-screen to the left
+                tapeModel.position.set(-8, 0, 0);
+                tapeModel.rotation.set(0, 0, 0);
 
-                // create tape timeline tied to the same ScrollTrigger
+                // 1. Tape rolls in from left to center (smooth rolling motion on z-axis)
                 animationTimeline.to(tapeModel.position, {
-                    x: -1.0,
-                    duration: 1.2,
-                    ease: 'power3.out'
-                }, "tapeStart");
+                    x: 0,
+                    y: -0.5,
+                    z: 0,
+                    duration: 1.5,
+                    ease: 'power2.out'
+                }, "tapeRollIn");
 
-                // rolling while moving in
                 animationTimeline.to(tapeModel.rotation, {
-                    z: Math.PI * 4,
-                    duration: 1.2,
+                    y: Math.PI * 3.8,
+                    x:0.5,
+                    duration: 1.5,
                     ease: 'none'
-                }, "tapeStart");
+                }, "tapeRollIn");
 
-                // cinematic turn: rotate to reveal brand (rotate on Y)
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 1.2,
-                    duration: 1,
+                // 2. Tape zooms in (comes closer) with gentle rotation
+                animationTimeline.to(tapeModel.position, {
+                    z: 1,
+                    duration: 1.2,
                     ease: 'power2.inOut'
-                }, "cinematic+=0.3");
-
-                // hold briefly then roll out to right
-                animationTimeline.to(tapeModel.position, {
-                    x: 6,
-                    duration: 1.2,
-                    ease: 'power3.in'
-                }, "final+=0.2");
+                }, "tapeZoom");
 
                 animationTimeline.to(tapeModel.rotation, {
-                    z: Math.PI * 8,
+                    y: Math.PI * 5.2,
                     duration: 1.2,
+                    ease: 'sine.inOut'
+                }, "tapeZoom");
+
+                // 3. Tape rolls out to the right side of screen
+                animationTimeline.to(tapeModel.position, {
+                    x: 8,
+                    y:0,
+                    z: 0,
+                    duration: 1.5,
+                    ease: 'power2.in'
+                }, "tapeRollOut");
+
+                animationTimeline.to(tapeModel.rotation, {
+                    y: Math.PI * 8,
+                    duration: 1.5,
                     ease: 'none'
-                }, "final+=0.2");
+                }, "tapeRollOut");
             }
         }
 
