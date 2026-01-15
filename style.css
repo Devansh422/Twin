@@ -1,0 +1,115 @@
+@font-face {
+  font-family: 'base';
+  src: url('./font/VastagoGrotesk-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'heading';
+  src: url('./font/VastagoGrotesk-SemiBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+*{
+	margin: 0;
+	padding: 0;        
+}
+:root{
+	--color:#ED1D21;
+	--padding: 1rem;
+}
+
+body{
+	position: relative;
+	height: fit-content;
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: var(--color);
+	font-family: "base";
+}
+
+img{
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
+nav{
+	position: fixed;
+	top:0;
+	left: 0;
+	height: fit-content;
+	width: calc(100vw - calc(2 * var(--padding)));
+	padding: var(--padding);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+nav .logo{
+	width: 8rem;
+	height: auto;
+}
+nav .logo img{
+	margin-top: -0.5rem;
+}
+
+nav ul{
+	position: relative;
+	display: flex;
+	gap: 0.5rem;
+	list-style-type: none;
+}
+
+nav ul li{
+	height: 2.5rem;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+nav ul li a{
+	text-decoration: none;
+	height: 100%;
+	width: 100%;
+	padding: 0.5rem 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 1rem;
+	font-family: "heading";
+	color:#fff;
+	gap: 0.2rem;
+}
+
+nav ul li a span{
+	height: 1rem;
+	width: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+nav .action_buttons{
+	display: flex;
+	gap: 0.5rem;
+}
+
+nav button{
+	border:none;
+	background: #fff;
+	border-radius: 0.2rem;
+	height: 2.5rem;
+	width: 2.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
