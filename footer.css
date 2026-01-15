@@ -1,0 +1,144 @@
+footer{
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	padding: 0rem 5rem;
+}
+
+footer .line{
+	margin: 3rem 0rem;
+	height: 1px;
+	width: 100%;
+	background: var(--color);
+}
+
+footer .top{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 3rem;
+}
+
+footer .top .logo{
+	height: auto;
+	width: 15rem;
+}
+
+footer .footer-info{
+	width: 50rem;
+	text-align: right;
+}
+
+footer .mid{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+footer .mid .footer-navs{
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+footer .mid .footer-navs ul{
+	list-style-type: none;
+	width: 13rem;
+}
+
+footer .mid .footer-navs ul h3{
+	color: var(--color);
+}
+
+footer .mid .footer-navs ul li{
+	height: 2rem;
+	width: 100%;
+}
+
+footer .mid .footer-navs ul li a{
+	display: flex;
+	align-items: center;
+	gap: 0.2rem;
+	font-size: 1.1rem;
+	text-decoration: none;
+	color: #000;
+}
+
+footer .mid .footer-navs ul li a span{
+	height: 2rem;
+	width: 0rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	will-change: width;
+	transition: 0.2s;
+}
+footer .mid .footer-navs ul li a:hover span{
+	width: 2rem;
+}
+footer .mid .footer-navs ul li a span svg{
+	transform: scale(0.8);
+	color: var(--color);
+}
+
+footer .mid .address{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	width: 25rem;
+	list-style-type: none;
+}
+
+footer .mid .address li{
+	text-align: right;
+	margin-bottom: 1rem;
+}
+
+footer .mid .address li a{
+	text-decoration: none;
+	color: #000;
+}
+
+footer .mid .address ul{
+	display: flex;
+	margin-top: 0;
+	list-style-type: none;
+	gap: 1rem;
+	justify-content: flex-end;
+}
+
+footer .mid .address ul a{
+	height: 3rem;
+	width: 3rem;
+	background: var(--color);
+	color:#fff;
+	border-radius: 0.2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+footer .mid .address ul li a svg{
+	transform: scale(1);
+	will-change: transform;
+	transition: 0.2s;
+}
+
+footer .mid .address ul li:hover a svg{
+	transform: scale(1.2);
+}
+
+footer .bottom {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 3rem;
+}
+
+footer .bottom span{
+	text-align: center;
+}

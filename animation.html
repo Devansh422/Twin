@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+
+	<style>
+		<style>
+
+	/* Cards container */
+.cards {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  transform-style: preserve-3d;
+}
+
+/* Card */
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(26vw, 360px);
+  aspect-ratio: 4/5;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, filter;
+  transform-origin: 90% center;
+  contain: layout paint; /* reduce layout/paint scope for perf */
+}
+
+.card__img {
+  border-radius: 0px;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateZ(0);
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+	
+	.animate-text {
+      text-transform: none;
+    }
+	
+	.word{
+		display: inline-block!important;
+	}
+	.char-wrap {
+      display: inline-block!important;
+      overflow: hidden;
+      vertical-align: bottom;
+		text-transform:none;
+    }
+
+    /* Splitting generates .char spans; make them transformable */
+    .char {
+      display: inline-block;
+		text-transform:none;
+    }
+
+
+
+.features-slider {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  perspective: var(--perspective);
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.features-slider.carousel-mode {
+  touch-action: none;
+  cursor: grab;
+}
+.features-slider.carousel-mode.dragging {
+  cursor: grabbing;
+}
+
+
+
+</style>
+	</style>
+</head>
+<body>
+
+
+<div id="features-slider" class="features-slider"></div>
+
+
+
+
+
+<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Same helper as your code
+    const wrapElements = (elems, wrapType, wrapClass) => {
+      elems.forEach(char => {
+        // Prevent double-wrapping if init runs more than once
+        if (char.parentElement && char.parentElement.classList.contains(wrapClass)) return;
+        const wrapEl = document.createElement(wrapType);
+        wrapEl.classList = wrapClass;
+        char.parentNode.appendChild(wrapEl);
+        wrapEl.appendChild(char);
+      });
+    };
+
+    const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE']);
+
+    const hasDirectText = (el) => {
+      for (const node of el.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length) return true;
+      }
+      return false;
+    };
+
+    // Collect text elements under a .animate-text scope.
+    // Rule: pick the first element in a branch that has direct (non-whitespace) text,
+    // and skip its descendants to avoid double-splitting nested text.
+    const collectTextTargets = (scopeEl) => {
+      const targets = [];
+      const stack = [...scopeEl.children];
+
+      // Backward-compat: if .animate-text is applied directly to a text element.
+      if (hasDirectText(scopeEl) && !scopeEl.dataset.animateTextProcessed && !SKIP_TAGS.has(scopeEl.tagName)) {
+        targets.push(scopeEl);
+        return targets;
+      }
+
+      while (stack.length) {
+        const el = stack.shift();
+        if (!(el instanceof HTMLElement)) continue;
+        if (SKIP_TAGS.has(el.tagName)) continue;
+        if (el.dataset.animateTextProcessed) continue;
+
+        if (hasDirectText(el)) {
+          targets.push(el);
+          continue;
+        }
+
+        stack.unshift(...el.children);
+      }
+
+      return targets;
+    };
+
+    const animateScopes = [...document.querySelectorAll('.animate-text')];
+
+    // Gather all targets across all scopes, then run splitting/GSAP once.
+    const targetsToAnimate = animateScopes.flatMap(collectTextTargets);
+
+    // Mark targets so re-running init won't duplicate work.
+    targetsToAnimate.forEach(el => {
+      el.dataset.animateTextProcessed = '1';
+      el.setAttribute('data-splitting', '');
+    });
+
+    // Prefer targeted splitting; fall back to global if needed.
+    if (targetsToAnimate.length) {
+      try {
+        Splitting({ target: targetsToAnimate });
+      } catch {
+        Splitting();
+      }
+    }
+
+    targetsToAnimate.forEach(el => {
+      const allChars = el.querySelectorAll('.char');
+      if (!allChars.length) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'top top+=10%',
+          toggleActions: 'play resume resume reset'
+        }
+      });
+
+      // If Splitting created word wrappers, animate each word's letters in parallel.
+      // (Letters within a word still stagger.)
+      const words = [...el.querySelectorAll('.word')];
+      if (words.length) {
+        words.forEach(word => {
+          const chars = word.querySelectorAll('.char');
+          if (!chars.length) return;
+          wrapElements(chars, 'span', 'char-wrap');
+          tl.fromTo(chars,
+            {
+              willChange: 'transform',
+              transformOrigin: '0% 50%',
+              xPercent: 105
+            },
+            {
+              duration: 1,
+              ease: 'expo',
+              xPercent: 0,
+              stagger: 0.042
+            },
+            0
+          );
+        });
+        return;
+      }
+
+      // Fallback: animate all characters as one sequence.
+      wrapElements(allChars, 'span', 'char-wrap');
+      tl.fromTo(allChars,
+        {
+          willChange: 'transform',
+          transformOrigin: '0% 50%',
+          xPercent: 105
+        },
+        {
+          duration: 1,
+          ease: 'expo',
+          xPercent: 0,
+          stagger: 0.042
+        },
+        0
+      );
+    });
+
+    // If fonts/content shift layout, refresh ScrollTrigger:
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  </script>
+
+
+
+
+<script>
+      /*
+  Infinite Gradient 3D Carousel
+  A smooth, infinite-scrolling 3D carousel with dynamic gradient backgrounds
+  that change based on the active card's colors.
+*/
+
+// ============================================================================
+// CONFIGURATION
+// ============================================================================
+
+const IMAGES = [
+  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003630.png',
+  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003640.png',
+  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003650.png',
+  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003655.png',
+];
+
+// Physics constants
+const FRICTION = 0.9;           // Velocity decay (0-1, lower = more friction)
+const WHEEL_SENS = 0.6;         // Mouse wheel sensitivity
+const DRAG_SENS = 1.0;          // Drag sensitivity
+
+// Visual constants
+const MAX_ROTATION = 28;        // Maximum card rotation in degrees
+const MAX_DEPTH = 140;          // Maximum Z-axis depth in pixels
+const MIN_SCALE = 0.92;         // Minimum card scale
+const SCALE_RANGE = 0.1;        // Scale variation range
+const GAP = 28;                 // Gap between cards in pixels
+
+// ============================================================================
+// DOM REFERENCES
+// ============================================================================
+
+const stage = document.getElementById("features-slider");
+
+function ensureSliderChildren(root) {
+  if (!root) return { cardsRoot: null };
+
+  const existingBg = root.querySelector('#bg');
+  if (existingBg) existingBg.remove();
+
+  let cardsRoot = root.querySelector('#cards');
+  if (!cardsRoot) {
+    cardsRoot = document.createElement('section');
+    cardsRoot.id = 'cards';
+    cardsRoot.className = 'cards';
+    cardsRoot.setAttribute('aria-label', 'Infinite carousel of images');
+    root.appendChild(cardsRoot);
+  }
+
+  return { cardsRoot };
+}
+
+const { cardsRoot } = ensureSliderChildren(stage);
+const loader = document.getElementById('loader');
+
+// ============================================================================
+// STATE MANAGEMENT
+// ============================================================================
+
+// Carousel state
+let items = [];                 // Array of {el: HTMLElement, x: number}
+let positions = [];             // Float32Array for wrapped positions
+let activeIndex = -1;           // Currently centered card index
+let isEntering = true;          // Prevents interaction during entry animation
+
+// Layout measurements
+let CARD_W = 300;               // Card width (measured dynamically)
+let CARD_H = 400;               // Card height (measured dynamically)
+let STEP = CARD_W + GAP;        // Distance between card centers
+let TRACK = 0;                  // Total carousel track length
+let SCROLL_X = 0;               // Current scroll position
+let VW_HALF = window.innerWidth * 0.5;
+
+// Physics state
+let vX = 0;                     // Velocity in X direction
+
+// Animation frame IDs
+let rafId = null;               // Carousel animation frame
+let lastTime = 0;               // Last frame timestamp
+
+// Autoplay state
+let autoTimer = null;
+let autoTween = null;
+let lastUserInput = 0;
+
+// Snap state
+let snapPending = false;
+
+// Snap tuning: when |vX| falls below this, we snap to the active card.
+const SNAP_VELOCITY = 80;
+const SNAP_IDLE_MS = 140;
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * Safe modulo operation that handles negative numbers correctly
+ * @param {number} n - The dividend
+ * @param {number} m - The divisor
+ * @returns {number} The positive remainder
+ */
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
+
+// ============================================================================
+// IMAGE PRELOADING
+// ============================================================================
+
+/**
+ * Preload images using link tags for browser optimization
+ * @param {string[]} srcs - Array of image URLs
+ */
+function preloadImageLinks(srcs) {
+  if (!document.head) return;
+  
+  srcs.forEach((href) => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = href;
+    link.fetchPriority = 'high';
+    document.head.appendChild(link);
+  });
+}
+
+/**
+ * Wait for all card images to finish loading
+ * @returns {Promise<void>}
+ */
+function waitForImages() {
+  const promises = items.map((it) => {
+    const img = it.el.querySelector('img');
+    if (!img || img.complete) return Promise.resolve();
+
+    return new Promise((resolve) => {
+      const done = () => resolve();
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+    });
+  });
+
+  return Promise.all(promises);
+}
+
+/**
+ * Decode all images to prevent jank during first interaction
+ * @returns {Promise<void>}
+ */
+async function decodeAllImages() {
+  const tasks = items.map((it) => {
+    const img = it.el.querySelector('img');
+    if (!img) return Promise.resolve();
+
+    if (typeof img.decode === 'function') {
+      return img.decode().catch(() => {});
+    }
+
+    return Promise.resolve();
+  });
+
+  await Promise.allSettled(tasks);
+}
+
+// ============================================================================
+// CAROUSEL SETUP
+// ============================================================================
+
+/**
+ * Create card DOM elements from image array
+ */
+function createCards(minCount = IMAGES.length) {
+  if (!cardsRoot) return;
+  cardsRoot.innerHTML = '';
+  items = [];
+
+  const fragment = document.createDocumentFragment();
+
+  const count = Math.max(IMAGES.length, Math.floor(minCount));
+  const sources = Array.from({ length: count }, (_, i) => IMAGES[i % IMAGES.length]);
+
+  sources.forEach((src, i) => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.style.willChange = 'transform'; // Force GPU compositing
+
+    const img = new Image();
+    img.className = 'card__img';
+    img.decoding = 'async';
+    img.loading = 'eager';
+    img.fetchPriority = 'high';
+    img.draggable = false;
+    img.src = src;
+
+    card.appendChild(img);
+    fragment.appendChild(card);
+    items.push({ el: card, x: i * STEP });
+  });
+
+  cardsRoot.appendChild(fragment);
+}
+
+/**
+ * Measure card dimensions and calculate layout
+ */
+function measure() {
+  const sample = items[0]?.el;
+  if (!sample) return;
+
+  const r = sample.getBoundingClientRect();
+  CARD_W = r.width || CARD_W;
+  CARD_H = r.height || CARD_H;
+  STEP = CARD_W + GAP;
+  TRACK = items.length * STEP;
+
+  // Set initial positions
+  items.forEach((it, i) => {
+    it.x = i * STEP;
+  });
+
+  positions = new Float32Array(items.length);
+}
+
+// ============================================================================
+// TRANSFORM CALCULATIONS
+// ============================================================================
+
+function computeTransformComponents(screenX) {
+  const norm = Math.max(-1, Math.min(1, screenX / VW_HALF));
+  const absNorm = Math.abs(norm);
+  const invNorm = 1 - absNorm;
+
+  const ry = -norm * MAX_ROTATION;
+  const tz = invNorm * MAX_DEPTH;
+  const scale = MIN_SCALE + invNorm * SCALE_RANGE;
+
+  return { norm, absNorm, invNorm, ry, tz, scale };
+}
+
+
+/**
+ * Calculate 3D transform for a card based on its screen position
+ * @param {number} screenX - Card's X position relative to viewport center
+ * @returns {{transform: string, z: number}} Transform string and Z-depth
+ */
+function transformForScreenX(screenX) {
+  const { ry, tz, scale } = computeTransformComponents(screenX);
+
+  return {
+    transform: `translate3d(${screenX}px,-50%,${tz}px) rotateY(${ry}deg) scale(${scale})`,
+    z: tz,
+  };
+}
+
+/**
+ * Update all card transforms based on current scroll position
+ */
+function updateCarouselTransforms() {
+  const half = TRACK / 2;
+  let closestIdx = -1;
+  let closestDist = Infinity;
+
+  // Calculate wrapped positions for infinite scroll
+  for (let i = 0; i < items.length; i++) {
+    let pos = items[i].x - SCROLL_X;
+    
+    // Wrap position to nearest equivalent position
+    if (pos < -half) pos += TRACK;
+    if (pos > half) pos -= TRACK;
+    
+    positions[i] = pos;
+
+    // Track closest card to center
+    const dist = Math.abs(pos);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestIdx = i;
+    }
+  }
+
+  // Get adjacent cards for selective blur
+  const prevIdx = (closestIdx - 1 + items.length) % items.length;
+  const nextIdx = (closestIdx + 1) % items.length;
+
+  // Apply transforms to all cards
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    const pos = positions[i];
+    const norm = Math.max(-1, Math.min(1, pos / VW_HALF));
+    const { transform, z } = transformForScreenX(pos);
+
+    it.el.style.transform = transform;
+    it.el.style.zIndex = String(1000 + Math.round(z)); // Higher z-index for cards in front
+
+    // Apply subtle blur to non-core cards
+    const isCore = i === closestIdx || i === prevIdx || i === nextIdx;
+    const blur = isCore ? 0 : 2 * Math.pow(Math.abs(norm), 1.1);
+    it.el.style.filter = `blur(${blur.toFixed(2)}px)`;
+  }
+
+  // Update gradient if active card changed
+  if (closestIdx !== activeIndex) {
+    activeIndex = closestIdx;
+  }
+}
+
+// ============================================================================
+// ANIMATION LOOP
+// ============================================================================
+
+/**
+ * Main animation loop for carousel movement
+ * @param {number} t - Current timestamp
+ */
+function tick(t) {
+  const dt = lastTime ? (t - lastTime) / 1000 : 0;
+  lastTime = t;
+
+  // Apply velocity to scroll position
+  SCROLL_X = mod(SCROLL_X + vX * dt, TRACK);
+
+  // Apply friction to velocity
+  const decay = Math.pow(FRICTION, dt * 60);
+  vX *= decay;
+  if (Math.abs(vX) < 0.02) vX = 0;
+
+  // Snap only after the user stops interacting and velocity slows down.
+  if (
+    snapPending &&
+    !isEntering &&
+    !autoTween &&
+    (!stage || !stage.classList.contains('dragging')) &&
+    performance.now() - lastUserInput > SNAP_IDLE_MS &&
+    Math.abs(vX) <= SNAP_VELOCITY
+  ) {
+    snapPending = false;
+    snapToActive();
+  }
+
+  updateCarouselTransforms();
+  rafId = requestAnimationFrame(tick);
+}
+
+/**
+ * Start the carousel animation loop
+ */
+function startCarousel() {
+  cancelCarousel();
+  lastTime = 0;
+  rafId = requestAnimationFrame((t) => {
+    updateCarouselTransforms();
+    tick(t);
+  });
+}
+
+/**
+ * Stop the carousel animation loop
+ */
+function cancelCarousel() {
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = null;
+}
+
+// ============================================================================
+// AUTOPLAY
+// ============================================================================
+
+function signedDeltaToTarget(current, target, track) {
+  if (!track) return 0;
+  let d = (target - current) % track;
+  d = (d + track) % track;
+  if (d > track / 2) d -= track;
+  return d;
+}
+
+function animateToIndex(idx) {
+  if (!items.length || !TRACK) return;
+
+  const clamped = mod(idx, items.length);
+  const targetX = items[clamped].x;
+  const delta = signedDeltaToTarget(SCROLL_X, targetX, TRACK);
+  const targetScroll = SCROLL_X + delta;
+
+  vX = 0;
+  if (autoTween && typeof autoTween.kill === 'function') autoTween.kill();
+
+  if (window.gsap) {
+    const state = { x: SCROLL_X };
+    autoTween = window.gsap.to(state, {
+      x: targetScroll,
+      duration: 0.8,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        SCROLL_X = mod(state.x, TRACK);
+        updateCarouselTransforms();
+      },
+      onComplete: () => {
+        SCROLL_X = mod(state.x, TRACK);
+      },
+    });
+  } else {
+    SCROLL_X = mod(targetScroll, TRACK);
+    updateCarouselTransforms();
+  }
+}
+
+function snapToActive() {
+  if (isEntering) return;
+  if (!items.length || !TRACK) return;
+
+  updateCarouselTransforms();
+  if (activeIndex < 0) return;
+
+  vX = 0;
+  animateToIndex(activeIndex);
+}
+
+function stopAutoAdvance() {
+  if (autoTimer) clearInterval(autoTimer);
+  autoTimer = null;
+  if (autoTween && typeof autoTween.kill === 'function') autoTween.kill();
+  autoTween = null;
+}
+
+function startAutoAdvance() {
+  stopAutoAdvance();
+  autoTimer = setInterval(() => {
+    if (document.hidden) return;
+    if (isEntering) return;
+    if (!items.length || !TRACK) return;
+    if (stage && stage.classList.contains('dragging')) return;
+    if (performance.now() - lastUserInput < 900) return;
+
+    const next = mod((activeIndex < 0 ? 0 : activeIndex) + 1, items.length);
+    animateToIndex(next);
+  }, 5000);
+}
+
+// ============================================================================
+// EVENT HANDLERS
+// ============================================================================
+
+/**
+ * Handle window resize
+ */
+function onResize() {
+  const prevStep = STEP || 1;
+  const ratio = SCROLL_X / (items.length * prevStep);
+  measure();
+  VW_HALF = window.innerWidth * 0.5;
+  SCROLL_X = mod(ratio * TRACK, TRACK);
+  updateCarouselTransforms();
+}
+
+if (stage) {
+  // Prevent default drag behavior
+  stage.addEventListener('dragstart', (e) => e.preventDefault());
+
+  // Drag state
+  let dragging = false;
+  let lastX = 0;
+  let lastT = 0;
+  let lastDelta = 0;
+
+  // Pointer down - start dragging
+  stage.addEventListener('pointerdown', (e) => {
+    if (isEntering) return;
+    if (e.target.closest('.frame')) return;
+
+    lastUserInput = performance.now();
+    dragging = true;
+    lastX = e.clientX;
+    lastT = performance.now();
+    lastDelta = 0;
+    stage.setPointerCapture(e.pointerId);
+    stage.classList.add('dragging');
+  });
+
+  // Pointer move - update scroll position
+  stage.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+
+    lastUserInput = performance.now();
+
+    const now = performance.now();
+    const dx = e.clientX - lastX;
+    const dt = Math.max(1, now - lastT) / 1000;
+
+    SCROLL_X = mod(SCROLL_X - dx * DRAG_SENS, TRACK);
+    lastDelta = dx / dt; // Track velocity for momentum
+    lastX = e.clientX;
+    lastT = now;
+  });
+
+  // Pointer up - apply momentum
+  stage.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+
+    lastUserInput = performance.now();
+    dragging = false;
+    stage.releasePointerCapture(e.pointerId);
+    vX = -lastDelta * DRAG_SENS;
+    snapPending = true;
+    stage.classList.remove('dragging');
+  });
+}
+
+// Debounced resize handler
+window.addEventListener('resize', () => {
+  clearTimeout(onResize._t);
+  onResize._t = setTimeout(onResize, 80);
+});
+
+// Pause animations when tab is hidden
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    cancelCarousel();
+    stopAutoAdvance();
+  } else {
+    startCarousel();
+    startAutoAdvance();
+  }
+});
+
+// ============================================================================
+// INITIALIZATION & ENTRY ANIMATION
+// ============================================================================
+
+/**
+ * Animate visible cards entering the scene
+ * @param {Array} visibleCards - Cards to animate
+ */
+async function animateEntry(visibleCards) {
+  await new Promise((r) => requestAnimationFrame(r));
+
+  const tl = window.gsap.timeline();
+
+  visibleCards.forEach(({ item, screenX }, idx) => {
+    const state = { p: 0 }; // 0 -> 1
+    const { ry, tz, scale: baseScale } = computeTransformComponents(screenX);
+
+    const START_SCALE = 0.92;
+    const START_Y = 40;
+
+    item.el.style.opacity = '0';
+    item.el.style.transform =
+      `translate3d(${screenX}px,-50%,${tz}px) ` +
+      `rotateY(${ry}deg) ` +
+      `scale(${START_SCALE}) ` +
+      `translateY(${START_Y}px)`;
+
+    tl.to(
+      state,
+      {
+        p: 1,
+        duration: 0.6,
+        ease: 'power3.out',
+        onUpdate: () => {
+          const t = state.p;
+
+          const currentScale = START_SCALE + (baseScale - START_SCALE) * t;
+          const currentY = START_Y * (1 - t);
+          const opacity = t;
+
+          item.el.style.opacity = opacity.toFixed(3);
+
+          if (t >= 0.999) {
+            const { transform } = transformForScreenX(screenX);
+            item.el.style.transform = transform;
+          } else {
+            item.el.style.transform =
+              `translate3d(${screenX}px,-50%,${tz}px) ` +
+              `rotateY(${ry}deg) ` +
+              `scale(${currentScale}) ` +
+              `translateY(${currentY}px)`;
+          }
+        },
+      },
+      idx * 0.05
+    );
+  });
+
+  await new Promise((resolve) => {
+    tl.eventCallback('onComplete', resolve);
+  });
+}
+
+
+/**
+ * Pre-composite all card positions to prevent first-interaction jank
+ */
+async function warmupCompositing() {
+  const originalScrollX = SCROLL_X;
+  const stepSize = STEP * 0.5;
+  const numSteps = Math.ceil(TRACK / stepSize);
+
+  // Scroll through entire carousel to force GPU compositing
+  for (let i = 0; i < numSteps; i++) {
+    SCROLL_X = mod(originalScrollX + i * stepSize, TRACK);
+    updateCarouselTransforms();
+
+    // Force paint every few steps (optimization)
+    if (i % 3 === 0) {
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+  }
+
+  // Return to original position
+  SCROLL_X = originalScrollX;
+  updateCarouselTransforms();
+  await new Promise((r) => requestAnimationFrame(r));
+  await new Promise((r) => requestAnimationFrame(r));
+}
+
+/**
+ * Initialize the carousel application
+ */
+async function init() {
+  if (!stage || !cardsRoot) return;
+  // Preload images for faster loading
+  preloadImageLinks(IMAGES);
+  
+  // Create DOM elements
+  createCards();
+  measure();
+
+  // If the track is too short, wrapping becomes visible (a blurred edge card can
+  // appear to "disappear" when it wraps). Repeat cards to push wrap off-screen.
+  const minTrack = (window.innerWidth + STEP * 4);
+  const minCount = Math.min(48, Math.max(IMAGES.length, Math.ceil(minTrack / STEP)));
+  if (items.length < minCount) {
+    createCards(minCount);
+    measure();
+  }
+  updateCarouselTransforms();
+  stage.classList.add('carousel-mode');
+
+  // Wait for all images to load
+  await waitForImages();
+
+  // Decode images to prevent jank
+  await decodeAllImages();
+
+  // Force browser to paint images
+  items.forEach((it) => {
+    const img = it.el.querySelector('img');
+    if (img) void img.offsetHeight;
+  });
+
+  // Find initial centered card
+  const half = TRACK / 2;
+  let closestIdx = 0;
+  let closestDist = Infinity;
+
+  for (let i = 0; i < items.length; i++) {
+    let pos = items[i].x - SCROLL_X;
+    if (pos < -half) pos += TRACK;
+    if (pos > half) pos -= TRACK;
+    const d = Math.abs(pos);
+    if (d < closestDist) {
+      closestDist = d;
+      closestIdx = i;
+    }
+  }
+
+  activeIndex = closestIdx;
+
+  // Warmup GPU compositing
+  await warmupCompositing();
+
+  // Wait for browser idle time
+  if ('requestIdleCallback' in window) {
+    await new Promise((r) => requestIdleCallback(r, { timeout: 100 }));
+  }
+
+  // Prepare entry animation for visible cards
+  const viewportWidth = window.innerWidth;
+  const visibleCards = [];
+  
+  for (let i = 0; i < items.length; i++) {
+    let pos = items[i].x - SCROLL_X;
+    if (pos < -half) pos += TRACK;
+    if (pos > half) pos -= TRACK;
+
+    const screenX = pos;
+    if (Math.abs(screenX) < viewportWidth * 0.6) {
+      visibleCards.push({ item: items[i], screenX, index: i });
+    }
+  }
+
+  // Sort cards left to right
+  visibleCards.sort((a, b) => a.screenX - b.screenX);
+
+  // Hide loader
+  if (loader) loader.classList.add('loader--hide');
+
+  // Animate cards entering
+  await animateEntry(visibleCards);
+
+  // Enable user interaction
+  isEntering = false;
+
+  // Start main carousel loop
+  startCarousel();
+
+  // Start autoplay
+  startAutoAdvance();
+}
+
+// ============================================================================
+// START APPLICATION
+// ============================================================================
+
+init();
+</script>
+</body>
+</html>
