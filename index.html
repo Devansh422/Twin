@@ -32,13 +32,103 @@
 
 	<!-- Hero Section with Background -->
 	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
-		<div id="heroBgContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+		<div id="heroBgContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+    <div class="hero-content">
+      <h1 class="animate-text">Manufacturing at Scale.<br>Quality Without Compromise</h1>
+      <span class="sub-text">From precison-driven production to global supply, we maufacture products brand trust efficiently, reliably, responsibly</span>
+
+      <div class="cta-button">
+        <button>Enquire Now</button>
+        <button>Explore Our Products</button>
+      </div>
+    </div>
 	</section>
 
+  <section class="about">
+    <h2>About Us</h2>
+    <div class="about-container">
+      <div class="about-text animate-text">
+        The manufacturing expertise your brand deserves
+      </div>
+      <div class="about-details">
+        Twin Tech India Pvt. Ltd is a premier manufacturer and supplier of aerosols, sprays, and specialty machines for various industries. Our flagship brand, SPRAYZET, offers custom-designed, biodegradable aerosols for applications in agriculture, engineering, textiles, food manufacturing, and more. We also provide contract aerosol packaging with private label capabilities, ensuring quality and efficiency.<br><br>Our diverse product line includes industrial maintenance aerosols, self-adhesive tapes, home care products under "Hacker," air deodorizers under "Twinzy," and car care solutions under "Evershine." We are committed to high standards, innovation, and timely delivery.<br>
+        <button>Learn More</button>
+      </div>
+    </div>
+  </section>
+  <section class="numbers">
+    <div class="num-1">
+      <div class="counter-item">30+</div>
+      <h2 class="animate-text">Global & Domestic Clients</h2>
+      <span class="details">Long-term partnerships built on quality, consistency, and timely delivery.</span>
+    </div>
+    <div class="num-1">
+      <div class="counter-item">15+</div>
+      <h2 class="animate-text">Years of Manufacturing Experience</h2>
+      <span class="details">Deep industry knowledge refined through years of hands-on production excellence.</span>
+    </div>
+    <div class="num-1">
+      <div class="counter-item">1M+</div>
+      <h2 class="animate-text">Units Manufactured Annually</h2>
+      <span class="details">High-capacity manufacturing designed to meet growing market demands.</span>
+    </div>
+  </section>
+
+  <section class="work" style="padding-bottom:0;">
+    <h2>How We Work</h2>
+    <h1 class="animate-text">Built on Process. Driven by Precision.</h1>
+    <p class="details">We follow a collaborative, step-by-step approach understanding requirements, aligning teams, ensuring precision manufacturing, and delivering consistent quality. Every stage is designed to optimize efficiency, maintain standards, and create solutions that support long-term growth and operational excellence.</p>
+  </section>
 
 	<div id="features-slider" class="features-slider"></div>
 
+  <section class="work" style="padding-top:0;">
+    <h2>Our clients</h2>
+    <h1 class="animate-text">Partners in Progress, Driving Innovation Together.</h1>
+    <p class="details">Trusted partners in progress, working together to drive innovation, quality, and long-term manufacturing excellence.</p>
+    <div class="slider-container">
+        <div class="slider-track" id="track">
+            </div>
+    </div>
+  </section>
 
+  <section class="products">
+    <h2>Our Products</h2>
+    <div class="products-wrapper">
+    <div class="products-container">
+      <div class="products-heading animate-text">
+        Products That Power Your Brand
+      </div>
+      <div class="products-details">
+        At Twin Tech India Pvt. Ltd., we deliver high-quality products tailored to meet diverse industrial needs, including aerosols, tapes, and household items. At Twin Tech India Pvt. Ltd., we are committed to delivering the highest quality products to our clients. Our range of industrial maintenance aerosols, auto care products, adhesive tapes, and household items are designed to meet the diverse needs of various industries.
+      </div>
+      <button>Enquire Now</button>
+    </div>
+    <div class="product-list">
+      <div class="product">
+        <div class="s-no">01</div>
+        <div class="content">
+        <div class="content-heading">Industrial Maintenance</div>
+        <div class="content-detail">Our aerosol range ensures high-quality cleaning, dust removal, and flaw detection, adhering to international standards for optimal performance in industrial maintenance applications.</div>
+      </div>
+      </div>
+      <div class="product">
+        <div class="s-no">02</div>
+        <div class="content">
+        <div class="content-heading">Self Adhesive Tapes</div>
+        <div class="content-detail">We manufacture superior-quality self-adhesive tapes like Polyester, Foam, and Masking Tapes, rigorously tested to meet diverse industrial needs, offering strength, reliability, and precision</div>
+      </div>
+      </div>
+      <div class="product">
+        <div class="s-no">03</div>
+        <div class="content">
+        <div class="content-heading">Car Care Products</div>
+        <div class="content-detail">Our high-quality car care products are designed to help maintain a vehicle's shine and protect its body, keeping it looking brand new while extending its life with regular, consistent application.</div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </section>
 
   <div class="main-display-area" style="position: relative;">
     <div id="animationBgContainer" class="background-canvas-holder" style="position: sticky; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1;"></div>
@@ -52,7 +142,7 @@
 			<div class="logo">
 				<img src="./assets/logo.png">
 			</div>
-			<div class="footer-info">
+			<div class="footer-info animate-text">
 				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care products, self-adhesive tapes and home care products for various industries worldwide.
 			</div>
 		</div>
@@ -108,7 +198,6 @@
 
 
 
-
     <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -137,13 +226,10 @@
     };
 
     // Collect text elements under a .animate-text scope.
-    // Rule: pick the first element in a branch that has direct (non-whitespace) text,
-    // and skip its descendants to avoid double-splitting nested text.
     const collectTextTargets = (scopeEl) => {
       const targets = [];
       const stack = [...scopeEl.children];
 
-      // Backward-compat: if .animate-text is applied directly to a text element.
       if (hasDirectText(scopeEl) && !scopeEl.dataset.animateTextProcessed && !SKIP_TAGS.has(scopeEl.tagName)) {
         targets.push(scopeEl);
         return targets;
@@ -166,85 +252,111 @@
       return targets;
     };
 
-    const animateScopes = [...document.querySelectorAll('.animate-text')];
+    // Make initialization async for better cross-browser compatibility
+    async function initAnimateText() {
+      // Wait for DOM to be ready
+      if (document.readyState === 'loading') {
+        await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+      }
 
-    // Gather all targets across all scopes, then run splitting/GSAP once.
-    const targetsToAnimate = animateScopes.flatMap(collectTextTargets);
+      // Wait a frame for layout to stabilize
+      await new Promise(resolve => requestAnimationFrame(resolve));
 
-    // Mark targets so re-running init won't duplicate work.
-    targetsToAnimate.forEach(el => {
-      el.dataset.animateTextProcessed = '1';
-      el.setAttribute('data-splitting', '');
-    });
+      const animateScopes = [...document.querySelectorAll('.animate-text')];
+      if (!animateScopes.length) return;
 
-    // Prefer targeted splitting; fall back to global if needed.
-    if (targetsToAnimate.length) {
+      const targetsToAnimate = animateScopes.flatMap(collectTextTargets);
+      if (!targetsToAnimate.length) return;
+
+      // Mark targets
+      targetsToAnimate.forEach(el => {
+        el.dataset.animateTextProcessed = '1';
+        el.setAttribute('data-splitting', '');
+      });
+
+      // Run Splitting and wait for completion
       try {
         Splitting({ target: targetsToAnimate });
       } catch {
         Splitting();
       }
-    }
 
-    targetsToAnimate.forEach(el => {
-      const allChars = el.querySelectorAll('.char');
-      if (!allChars.length) return;
+      // Wait for Splitting to complete
+      await new Promise(resolve => setTimeout(resolve, 50));
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: el,
-          start: 'top bottom',
-          end: 'top top+=10%',
-          toggleActions: 'play resume resume reset'
+      // Setup animations
+      targetsToAnimate.forEach(el => {
+        const allChars = el.querySelectorAll('.char');
+        if (!allChars.length) return;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'top top+=10%',
+            toggleActions: 'play resume resume reset'
+          }
+        });
+
+        const words = [...el.querySelectorAll('.word')];
+        if (words.length) {
+          words.forEach(word => {
+            const chars = word.querySelectorAll('.char');
+            if (!chars.length) return;
+            wrapElements(chars, 'span', 'char-wrap');
+            tl.fromTo(chars,
+              {
+                willChange: 'transform',
+                transformOrigin: '0% 50%',
+                xPercent: 105
+              },
+              {
+                duration: 1,
+                ease: 'expo',
+                xPercent: 0,
+                stagger: 0.042
+              },
+              0
+            );
+          });
+          return;
         }
+
+        wrapElements(allChars, 'span', 'char-wrap');
+        tl.fromTo(allChars,
+          {
+            willChange: 'transform',
+            transformOrigin: '0% 50%',
+            xPercent: 105
+          },
+          {
+            duration: 1,
+            ease: 'expo',
+            xPercent: 0,
+            stagger: 0.042
+          },
+          0
+        );
       });
 
-      // If Splitting created word wrappers, animate each word's letters in parallel.
-      // (Letters within a word still stagger.)
-      const words = [...el.querySelectorAll('.word')];
-      if (words.length) {
-        words.forEach(word => {
-          const chars = word.querySelectorAll('.char');
-          if (!chars.length) return;
-          wrapElements(chars, 'span', 'char-wrap');
-          tl.fromTo(chars,
-            {
-              willChange: 'transform',
-              transformOrigin: '0% 50%',
-              xPercent: 105
-            },
-            {
-              duration: 1,
-              ease: 'expo',
-              xPercent: 0,
-              stagger: 0.042
-            },
-            0
-          );
-        });
-        return;
-      }
+      // Refresh ScrollTrigger after setup
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      ScrollTrigger.refresh();
+      
+      // Additional refreshes for late-loading content
+      setTimeout(() => ScrollTrigger.refresh(), 100);
+      setTimeout(() => ScrollTrigger.refresh(), 500);
+    }
 
-      // Fallback: animate all characters as one sequence.
-      wrapElements(allChars, 'span', 'char-wrap');
-      tl.fromTo(allChars,
-        {
-          willChange: 'transform',
-          transformOrigin: '0% 50%',
-          xPercent: 105
-        },
-        {
-          duration: 1,
-          ease: 'expo',
-          xPercent: 0,
-          stagger: 0.042
-        },
-        0
-      );
-    });
+    // Start initialization
+    initAnimateText();
 
-    // If fonts/content shift layout, refresh ScrollTrigger:
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    // Also handle font loading
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        setTimeout(() => ScrollTrigger.refresh(), 100);
+      });
+    }
   </script>
 
 
@@ -285,6 +397,13 @@ const GAP = 28;                 // Gap between cards in pixels
 // ============================================================================
 
 const stage = document.getElementById("features-slider");
+
+// Add touch-action CSS to prevent browser gesture interference
+if (stage) {
+  stage.style.touchAction = 'pan-y';
+  stage.style.userSelect = 'none';
+  stage.style.webkitUserSelect = 'none';
+}
 
 function ensureSliderChildren(root) {
   if (!root) return { cardsRoot: null };
@@ -710,6 +829,9 @@ function onResize() {
 if (stage) {
   // Prevent default drag behavior
   stage.addEventListener('dragstart', (e) => e.preventDefault());
+  
+  // Prevent context menu
+  stage.addEventListener('contextmenu', (e) => e.preventDefault());
 
   // Drag state
   let dragging = false;
@@ -717,35 +839,59 @@ if (stage) {
   let lastT = 0;
   let lastDelta = 0;
 
+  // Prevent wheel events from interfering
+  stage.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      // Horizontal scroll - let carousel handle it
+      e.preventDefault();
+    }
+  }, { passive: false });
+
   // Pointer down - start dragging
   stage.addEventListener('pointerdown', (e) => {
     if (isEntering) return;
     if (e.target.closest('.frame')) return;
 
+    // Only handle primary button (left click/touch)
+    if (e.button !== undefined && e.button !== 0) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    
     lastUserInput = performance.now();
     dragging = true;
-    lastX = e.clientX;
+    lastX = e.clientX || e.pageX;
     lastT = performance.now();
     lastDelta = 0;
-    stage.setPointerCapture(e.pointerId);
+    
+    try {
+      stage.setPointerCapture(e.pointerId);
+    } catch (err) {
+      // Fallback - continue without capture
+    }
+    
     stage.classList.add('dragging');
-  });
+  }, { passive: false });
 
   // Pointer move - update scroll position
   stage.addEventListener('pointermove', (e) => {
     if (!dragging) return;
 
+    e.preventDefault();
+    e.stopPropagation();
+    
     lastUserInput = performance.now();
 
     const now = performance.now();
-    const dx = e.clientX - lastX;
+    const currentX = e.clientX || e.pageX;
+    const dx = currentX - lastX;
     const dt = Math.max(1, now - lastT) / 1000;
 
     SCROLL_X = mod(SCROLL_X - dx * DRAG_SENS, TRACK);
-    lastDelta = dx / dt; // Track velocity for momentum
-    lastX = e.clientX;
+    lastDelta = dx / dt;
+    lastX = currentX;
     lastT = now;
-  });
+  }, { passive: false });
 
   // Pointer up - apply momentum
   stage.addEventListener('pointerup', (e) => {
@@ -753,11 +899,32 @@ if (stage) {
 
     lastUserInput = performance.now();
     dragging = false;
-    stage.releasePointerCapture(e.pointerId);
+    
+    try {
+      stage.releasePointerCapture(e.pointerId);
+    } catch (err) {}
+    
     vX = -lastDelta * DRAG_SENS;
     snapPending = true;
     stage.classList.remove('dragging');
   });
+
+  // Pointer cancel
+  stage.addEventListener('pointercancel', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    try {
+      stage.releasePointerCapture(e.pointerId);
+    } catch (err) {}
+    stage.classList.remove('dragging');
+  });
+  
+  // Fallback for mouse events (belt and suspenders)
+  stage.addEventListener('mousedown', (e) => {
+    if (e.button === 0 && !dragging) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 }
 
 // Debounced resize handler
@@ -1296,7 +1463,7 @@ init();
 
             // 2. Cinematic Move
             animationTimeline.to(perspectiveCamera.position, {
-                z: 3,
+                z: 2.5,
                 y: 0.2,
                 duration: 1,
                 ease: "power2.inOut"
@@ -1381,7 +1548,7 @@ init();
             }, "canExit");
 
             animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 16,
+                y: Math.PI * 14,
                 duration: 1.5,
                 ease: "linear"
             }, "canExit");
@@ -1421,10 +1588,23 @@ init();
                     ease: 'sine.inOut'
                 }, "tapeZoom");
 
+                animationTimeline.to(tapeModel.position, {
+                    z: 0,
+                    duration: 1.2,
+                    ease: 'power2.inOut'
+                }, "tapeZoomOut");
+
+                animationTimeline.to(tapeModel.rotation, {
+                    y: Math.PI * 7,
+                    duration: 1.2,
+                    ease: 'sine.inOut'
+                }, "tapeZoomOut");
+                
+
                 // 3. Tape rolls out to the right side of screen
                 animationTimeline.to(tapeModel.position, {
-                    x: 8,
-                    y:0,
+                    x: 10,
+                    y:2,
                     z: 0,
                     duration: 1.5,
                     ease: 'power2.in'
@@ -1747,5 +1927,114 @@ init();
             animateHero();
             }
         </script>
+
+
+
+
+       <script>
+        // 3. Register the plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        const counters = document.querySelectorAll(".counter-item");
+
+        counters.forEach(counter => {
+            
+            const originalText = counter.innerText; 
+            const match = originalText.match(/(\d+)(\D*)/);
+            
+            if (match) {
+                const targetNumber = match[1]; 
+                const suffix = match[2];       
+                
+                counter.innerHTML = '';
+
+                const digits = targetNumber.split("");
+
+                digits.forEach((digit, index) => {
+                    const container = document.createElement("div");
+                    container.classList.add("digit-container");
+
+                    const strip = document.createElement("div");
+                    strip.classList.add("digit-strip");
+
+                    for (let i = 0; i <= 9; i++) {
+                        const numberSpan = document.createElement("span");
+                        numberSpan.innerText = i;
+                        strip.appendChild(numberSpan);
+                    }
+
+                    container.appendChild(strip);
+                    counter.appendChild(container);
+
+                    // --- ANIMATION WITH SCROLL TRIGGER ---
+                    gsap.to(strip, {
+                        yPercent: -(parseInt(digit) * 10),
+                        duration: 2,
+                        ease: "power2.inOut",
+                        delay: index * 0.1,
+                        
+                        // ScrollTrigger configuration
+                        scrollTrigger: {
+                            trigger: counter, // The element that triggers the animation
+                            start: "top 85%", // Animation starts when top of element hits 85% of viewport height
+                            toggleActions: "play none none reverse", // Play on enter, reverse on leave (optional)
+                            // markers: true // Uncomment this line to debug start/end positions
+                        }
+                    });
+                });
+
+                if (suffix) {
+                    const suffixSpan = document.createElement("div");
+                    suffixSpan.classList.add("suffix");
+                    suffixSpan.innerText = suffix;
+                    counter.appendChild(suffixSpan);
+                }
+            }
+        });
+    </script>
+
+     <script>
+        // CONFIGURATION
+        const imageFolder = "brand/";
+        const totalImages = 5; // Change this to the actual number of images you have (img-1 to img-5)
+        const track = document.getElementById("track");
+
+        // 1. Function to create an image element
+        function createImage(index) {
+            const img = document.createElement("img");
+            img.src = `${imageFolder}img-${index}.jpg`;
+            img.alt = `Brand ${index}`;
+            img.classList.add("brand-logo");
+            return img;
+        }
+
+        // 2. Load the initial set of images
+        for (let i = 1; i <= totalImages; i++) {
+            track.appendChild(createImage(i));
+        }
+
+        // 3. CLONE the images (Duplicate the set)
+        // We duplicate the exact same set so that when the first set scrolls out, 
+        // the second set is exactly where the first one started.
+        for (let i = 1; i <= totalImages; i++) {
+            track.appendChild(createImage(i));
+        }
+
+        // 4. Animate with GSAP
+        // We move the track to -50% because the track now holds 2 sets of images.
+        // Moving -50% means moving exactly the length of 1 set.
+        let tween = gsap.to(track, {
+            xPercent: -50, 
+            duration: 10, // Adjust speed (higher = slower)
+            ease: "none", // Linear movement is crucial for constant speed
+            repeat: -1    // Infinite repeat
+        });
+
+        // Optional: Pause on hover
+        const container = document.querySelector(".slider-container");
+        container.addEventListener("mouseenter", () => tween.pause());
+        container.addEventListener("mouseleave", () => tween.play());
+
+    </script>
 </body>
 </html>

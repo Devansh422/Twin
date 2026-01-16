@@ -34,6 +34,7 @@ body{
 	justify-content: center;
 	font-family: "base";
 	overflow-x: hidden;
+  max-width: 2000px;
 }
 
 img{
@@ -41,10 +42,39 @@ img{
 	width: 100%;
 	object-fit: cover;
 }
+.counter-item {
+            display: flex;
+            height: 5rem;
+            font-size: 5rem;
+            line-height: 5rem;
+            font-family: "heading";
+            color: #333;
+            overflow: hidden; 
+            background: white;
+        }
 
+        .digit-container {
+            height: 100%; 
+            position: relative;
+            display: inline-block; /* Keeps digits side by side */
+        }
 
+        .digit-strip {
+            display: flex;
+            flex-direction: column;
+        }
 
+        .digit-strip span {
+            height: 80px; /* Must match counter-item height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .suffix {
+            position: relative;
+            margin-left: 5px;
+        }
 
 
 
@@ -154,3 +184,245 @@ img{
   cursor: grabbing;
 }
 
+
+
+
+
+
+.hero-content{
+  position: absolute;
+  top:0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hero-content h1{
+  font-family: "heading";
+  font-size: 5rem;
+  width: 80%;
+  text-align: center;
+}
+.hero-content .sub-text{
+  width: 80%;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.hero-content .cta-button{
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.hero-content .cta-button button{
+  border:2px solid var(--color);
+  border-radius: 100px;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3rem;
+  font-size: 1.1rem;
+  font-family: "base";
+  background: var(--color);
+  color: #fff;
+  cursor: pointer;
+}
+
+.hero-content .cta-button button:nth-child(2){
+  background: transparent;
+  color: #000;
+}
+
+
+.about{
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about .about-container{
+  display: flex;
+  gap: 1rem;
+}
+
+.about .about-container .about-text{
+  width: 40%;
+  height: 100%;
+  font-size: 2rem;
+  font-family: "heading";
+}
+.about .about-container .about-details{
+  width: 90%;
+  height: 100%;
+  font-size: 1.5rem;
+}
+
+.about .about-container .about-details button{
+  border:2px solid var(--color);
+  border-radius: 100px;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3rem;
+  font-size: 1.1rem;
+  font-family: "base";
+  background: #fff;
+  color: var(--color);
+  cursor: pointer;
+  margin-top: 3rem;
+}
+
+
+.numbers{
+  padding: 0 5rem;
+  display: flex;
+  gap: 3rem;
+}
+
+.numbers .num-1{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.numbers .num-1 h2{
+  font-size: 2rem;
+}
+.numbers .num-1 .details{
+  font-size: 1.3rem;
+}
+
+.work{
+  padding: 5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.work h2{
+  color: var(--color);
+  text-align: center;
+}
+
+.work h1{
+  font-family: "Heading";
+  font-size: 3rem;
+  text-align: center;
+  width: 70%;
+}
+.work p{
+  text-align: center;
+  font-size: 1.3rem;
+  width: 70%;
+}
+
+.slider-container {
+  margin-top: 3rem;
+            width: 100%;
+            height: 150px; /* Adjust based on your logo height */
+            overflow: hidden; /* Hides the scrollbar and logos outside view */
+            position: relative;
+            background: white; /* Or transparent */
+            display: flex;
+            align-items: center;
+        }
+
+        /* 2. The Moving Track */
+        .slider-track {
+            display: flex;
+            align-items: center;
+            /* Width is determined by content, no need to set it */
+            gap: 4rem; /* Space between logos */
+            padding-left: 4rem; /* Initial padding to match gap */
+        }
+
+        /* 3. The Images */
+        .brand-logo {
+            height: 160px; /* Set a fixed height for consistency */
+            width: auto;  /* Maintain aspect ratio */
+            object-fit: contain;
+            filter: grayscale(100%); /* Optional: Make them B&W initially */
+            transition: filter 0.3s;
+            cursor: pointer;
+        }
+
+        .brand-logo:hover {
+            filter: grayscale(0%); /* Color on hover */
+        }
+
+
+.products{
+  padding: 5rem;
+  background: var(--color);
+  color: #fff;
+}
+.products .products-wrapper{
+  display: flex;
+  gap: 1rem;
+}
+.products .products-container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+.products .products-container .products-heading{
+  font-family: "heading";
+  font-size: 3rem;
+}
+.products .products-container .products-details{
+  font-size: 1.3rem;
+}
+.products .products-container button{
+  border:2px solid #fff;
+  width: fit-content;
+  margin-top: 1rem;
+  border-radius: 100px;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3rem;
+  font-size: 1.1rem;
+  font-family: "base";
+  background: var(--color);
+  color: #fff;
+  cursor: pointer;
+}
+.products .product-list{
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.products .product-list .product{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.products .product-list .product .s-no{
+  font-family: "heading";
+  font-size: 1.5rem;
+}
+
+.products .product-list .product .content .content-heading{
+  font-family: "heading";
+  font-size: 1.5rem;
+}
+
+.products .product-list .product .content .content-detail{
+  font-size: 1.2rem;
+}
