@@ -86,7 +86,6 @@
 
       <div class="cta-button">
         <button>Enquire Now</button>
-        <button>Explore Our Products</button>
       </div>
     </div>
 	</section>
@@ -128,16 +127,6 @@
 
 	<div id="features-slider" class="features-slider" style="height:80vh; overflow: visible;"></div>
 
-  <section class="work" style="padding-top:0;">
-    <h2>Our clients</h2>
-    <h1 class="animate-text">Partners in Progress, Driving Innovation Together.</h1>
-    <p class="details">Trusted partners in progress, working together to drive innovation, quality, and long-term manufacturing excellence.</p>
-    <div class="slider-container">
-        <div class="slider-track" id="track">
-            </div>
-    </div>
-  </section>
-
   <section class="products">
     <h2>Our Products</h2>
     <div class="products-wrapper">
@@ -148,7 +137,7 @@
       <div class="products-details">
         At Twin Tech India Pvt. Ltd., we deliver high-quality products tailored to meet diverse industrial needs, including aerosols, tapes, and household items. At Twin Tech India Pvt. Ltd., we are committed to delivering the highest quality products to our clients. Our range of industrial maintenance aerosols, auto care products, adhesive tapes, and household items are designed to meet the diverse needs of various industries.
       </div>
-      <button>Enquire Now</button>
+      
     </div>
     <div class="product-list">
       <div class="product">
@@ -180,7 +169,15 @@
    <div id="animation-container-main" style="position: relative; z-index: 2;"></div>
 </div>
 
-
+<section class="work">
+    <h2>Our clients</h2>
+    <h1 class="animate-text">Partners in Progress, Driving Innovation Together.</h1>
+    <p class="details">Trusted partners in progress, working together to drive innovation, quality, and long-term manufacturing excellence.</p>
+    <div class="slider-container">
+        <div class="slider-track" id="track">
+            </div>
+    </div>
+  </section>
 
 	<footer>
 		<div class="top">
@@ -1649,7 +1646,7 @@ init();
                 animationTimeline.to(tapeModel.position, {
                     x: 0,
                     y: -0.5,
-                    z: -2,
+                    z: -4,
                     duration: 1.5,
                     ease: 'power2.out'
                 }, "tapeRollIn");
@@ -1675,7 +1672,7 @@ init();
                 }, "tapeZoom");
 
                 animationTimeline.to(tapeModel.position, {
-                    z: -2,
+                    z: -4,
                     duration: 1.2,
                     ease: 'power2.inOut'
                 }, "tapeZoomOut");

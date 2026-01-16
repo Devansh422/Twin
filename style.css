@@ -227,7 +227,7 @@ img{
 .hero-content .cta-button button{
   border:2px solid var(--color);
   border-radius: 100px;
-  height: 4rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;

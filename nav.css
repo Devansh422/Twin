@@ -4,7 +4,7 @@ nav{
 	left: 0;
 	height: fit-content;
 	width: calc(100vw - var(--padding));
-	padding: var(--padding);
+	padding: var(--padding) 3rem ;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -16,7 +16,7 @@ nav{
 }
 
 nav .logo{
-	width: 8rem;
+	width: 10rem;
 	height: auto;
 }
 nav .logo img{
