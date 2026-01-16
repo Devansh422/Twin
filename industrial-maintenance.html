@@ -28,7 +28,73 @@
 			text-align: center;
 			font-size: 1.2rem;
 			color: #666;
-			margin-bottom: 5rem;
+			margin-bottom: 2rem;
+			font-weight: 300;
+		}
+
+		/* Product Filter Tags */
+		.product-filters {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 1rem;
+			max-width: 1200px;
+			margin: 0 auto 4rem;
+			padding: 0 2rem;
+		}
+
+		.filter-tag {
+			font-family: "base", sans-serif;
+			padding: 0.8rem 2rem;
+			background: #fff;
+			border: 2px solid #e0e0e0;
+			border-radius: 50px;
+			cursor: pointer;
+			font-size: 1rem;
+			font-weight: 500;
+			color: #666;
+			transition: all 0.3s ease;
+			text-transform: capitalize;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.filter-tag::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+			transition: left 0.3s ease;
+			z-index: -1;
+		}
+
+		.filter-tag:hover {
+			border-color: #dc143c;
+			color: #dc143c;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 15px rgba(220, 20, 60, 0.2);
+		}
+
+		.filter-tag.active {
+			background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+			color: #fff;
+			border-color: #dc143c;
+			box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+		}
+
+		.filter-tag.active::before {
+			left: 0;
+		}
+
+		.product-count {
+			text-align: center;
+			font-family: "base", sans-serif;
+			font-size: 1rem;
+			color: #888;
+			margin-bottom: 2rem;
 			font-weight: 300;
 		}
 
@@ -108,6 +174,16 @@
 				font-size: 2.5rem;
 			}
 
+			.product-filters {
+				gap: 0.5rem;
+				margin-bottom: 3rem;
+			}
+
+			.filter-tag {
+				padding: 0.6rem 1.5rem;
+				font-size: 0.9rem;
+			}
+
 			.products-grid {
 				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 				gap: 2rem;
@@ -137,51 +213,23 @@
 			<li class="has-dropdown">
 				<a href="#" class="dropdown">About Us <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Overview</a></li>
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Customer Focus</a></li>
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Application Areas</a></li>
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Career</a></li>
-				</ul>
-			</li>
-			<li class="has-dropdown">
-				<a href="#" class="dropdown">Our Products <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
-				<ul class="dropdown-menu">
-					<li class="has-subdropdown">
-						<a href="industrial-maintenance.html"><span class="arrow-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Industrial Maintenance<span class="chevron-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></a>
-						<ul class="subdropdown-menu">
-							<li><a href="#cleaners"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Cleaner and Degreasers</a></li>
-							<li><a href="#rust"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Rust Remover and Protector</a></li>
-							<li><a href="#coatings"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Insulating and Protecting Coatings</a></li>
-							<li><a href="#lubricants"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Lubricants and Anti Seize Spray</a></li>
-							<li><a href="#injection"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Injection Moduling Spray</a></li>
-							<li><a href="#bulk"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Bulk Consumables</a></li>
-						</ul>
-					</li>
-					<li class="has-subdropdown">
-						<a href="car-care.html"><span class="arrow-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Car Care Products<span class="chevron-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></a>
-						<ul class="subdropdown-menu">
-							<li><a href="two-wheeler.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Two Wheeler</a></li>
-							<li><a href="four-wheeler.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Four Wheeler</a></li>
-							<li><a href="additives.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Additives</a></li>
-							<li><a href="spray-paint.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Spray Paint</a></li>
-							<li><a href="bulk-consumables-car.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Bulk Consumables</a></li>
-							<li><a href="home-care.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home Care</a></li>
-						</ul>
-					</li>
-					<li><a href="tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Self Adhesive Tapes</a></li>
+					<li><a href="about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Overview</a></li>
+					<li><a href="about-us.html#customer-focus"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Customer Focus</a></li>
+					<li><a href="about-us.html#application-areas"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Application Areas</a></li>
+					<li><a href="about-us.html#applications"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Our Gallery</a></li>
+					<li><a href="about-us.html#career"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Career</a></li>
 				</ul>
 			</li>
 			<li class="has-dropdown">
 				<a href="#" class="dropdown">Our Brands<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Evershine</a></li>
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>SprayZet</a></li>
-					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twin Tapes</a></li>
+					<li><a href="industrial-maintenance.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Evershine</a></li>
+					<li><a href="car-care.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>SprayZet</a></li>
+					<li><a href="tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twin Tapes</a></li>
 					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Silox</a></li>
 					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twinzy</a></li>
 				</ul>
 			</li>
-			<li><a href="#">Our Gallery</a></li>
 			<li><a href="#">Become a Distributor</a></li>
 			<li><a href="#">Blog</a></li>
 			<li><a href="#">Contact Us</a></li>
@@ -261,8 +309,24 @@
 	<section class="products-showcase">
 		<h2>Our Industrial Products</h2>
 		<p class="section-subtitle">Professional-grade maintenance solutions for industrial applications</p>
+		
+		<!-- Filter Tags -->
+		<div class="product-filters">
+			<button class="filter-tag active" data-filter="all">All Products</button>
+			<button class="filter-tag" data-filter="cleaners">Cleaners & Degreasers</button>
+			<button class="filter-tag" data-filter="electronics">Electronics</button>
+			<button class="filter-tag" data-filter="rust">Rust Protection</button>
+			<button class="filter-tag" data-filter="lubricants">Lubricants</button>
+			<button class="filter-tag" data-filter="anti-seize">Anti-Seize</button>
+			<button class="filter-tag" data-filter="molding">Injection Molding</button>
+			<button class="filter-tag" data-filter="coatings">Coatings</button>
+			<button class="filter-tag" data-filter="maintenance">Maintenance</button>
+		</div>
+
+		<p class="product-count">Showing <span id="product-count">40</span> products</p>
+
 		<div class="products-grid">
-			<div class="product-card" data-product="1">
+			<div class="product-card" data-product="1" data-category="cleaners">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Heavy Duty Degreaser" class="product-img">
 					<div class="product-overlay"></div>
@@ -273,7 +337,7 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="2">
+			<div class="product-card" data-product="2" data-category="electronics">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Contact Cleaner" class="product-img">
 					<div class="product-overlay"></div>
@@ -284,7 +348,7 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="3">
+			<div class="product-card" data-product="3" data-category="rust">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Rust Remover" class="product-img">
 					<div class="product-overlay"></div>
@@ -295,7 +359,7 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="4">
+			<div class="product-card" data-product="4" data-category="lubricants">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Silicone Lubricant" class="product-img">
 					<div class="product-overlay"></div>
@@ -306,7 +370,7 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="5">
+			<div class="product-card" data-product="5" data-category="anti-seize">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Anti-Seize Compound" class="product-img">
 					<div class="product-overlay"></div>
@@ -317,7 +381,7 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="6">
+			<div class="product-card" data-product="6" data-category="molding">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Mold Release Spray" class="product-img">
 					<div class="product-overlay"></div>
@@ -328,7 +392,7 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="7">
+			<div class="product-card" data-product="7" data-category="coatings">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Protective Coating" class="product-img">
 					<div class="product-overlay"></div>
@@ -339,13 +403,373 @@
 				</div>
 			</div>
 
-			<div class="product-card" data-product="8">
+			<div class="product-card" data-product="8" data-category="maintenance">
 				<div class="product-image-wrapper">
 					<img src="./assets/logo.png" alt="Penetrating Oil" class="product-img">
 					<div class="product-overlay"></div>
 				</div>
 				<div class="product-info">
 					<h3 class="product-name">Penetrating Oil</h3>
+					<p class="product-category">Maintenance</p>
+				</div>
+			</div>
+
+			<!-- Additional Cleaners & Degreasers -->
+			<div class="product-card" data-product="9" data-category="cleaners">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Industrial Cleaner" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Industrial Cleaner</h3>
+					<p class="product-category">Cleaners & Degreasers</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="10" data-category="cleaners">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Carbon Remover" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Carbon Remover</h3>
+					<p class="product-category">Cleaners & Degreasers</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="11" data-category="cleaners">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Engine Degreaser" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Engine Degreaser</h3>
+					<p class="product-category">Cleaners & Degreasers</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="12" data-category="cleaners">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Parts Washer Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Parts Washer Spray</h3>
+					<p class="product-category">Cleaners & Degreasers</p>
+				</div>
+			</div>
+
+			<!-- Additional Electronics -->
+			<div class="product-card" data-product="13" data-category="electronics">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="PCB Cleaner" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">PCB Cleaner</h3>
+					<p class="product-category">Electronics</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="14" data-category="electronics">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Electrical Contact Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Electrical Contact Spray</h3>
+					<p class="product-category">Electronics</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="15" data-category="electronics">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Switch Cleaner" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Switch Cleaner</h3>
+					<p class="product-category">Electronics</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="16" data-category="electronics">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Flux Remover" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Flux Remover</h3>
+					<p class="product-category">Electronics</p>
+				</div>
+			</div>
+
+			<!-- Additional Rust Protection -->
+			<div class="product-card" data-product="17" data-category="rust">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Rust Converter" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Rust Converter</h3>
+					<p class="product-category">Rust Protection</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="18" data-category="rust">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Corrosion Inhibitor" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Corrosion Inhibitor</h3>
+					<p class="product-category">Rust Protection</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="19" data-category="rust">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Rust Preventive Coating" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Rust Preventive Coating</h3>
+					<p class="product-category">Rust Protection</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="20" data-category="rust">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Metal Protector Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Metal Protector Spray</h3>
+					<p class="product-category">Rust Protection</p>
+				</div>
+			</div>
+
+			<!-- Additional Lubricants -->
+			<div class="product-card" data-product="21" data-category="lubricants">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="PTFE Lubricant" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">PTFE Lubricant</h3>
+					<p class="product-category">Lubricants</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="22" data-category="lubricants">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Chain Lubricant" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Chain Lubricant</h3>
+					<p class="product-category">Lubricants</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="23" data-category="lubricants">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Dry Film Lubricant" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Dry Film Lubricant</h3>
+					<p class="product-category">Lubricants</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="24" data-category="lubricants">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="High Temperature Grease" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">High Temperature Grease</h3>
+					<p class="product-category">Lubricants</p>
+				</div>
+			</div>
+
+			<!-- Additional Anti-Seize -->
+			<div class="product-card" data-product="25" data-category="anti-seize">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Copper Anti-Seize" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Copper Anti-Seize</h3>
+					<p class="product-category">Anti-Seize</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="26" data-category="anti-seize">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Nickel Anti-Seize" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Nickel Anti-Seize</h3>
+					<p class="product-category">Anti-Seize</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="27" data-category="anti-seize">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Aluminum Anti-Seize" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Aluminum Anti-Seize</h3>
+					<p class="product-category">Anti-Seize</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="28" data-category="anti-seize">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Food Grade Anti-Seize" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Food Grade Anti-Seize</h3>
+					<p class="product-category">Anti-Seize</p>
+				</div>
+			</div>
+
+			<!-- Additional Injection Molding -->
+			<div class="product-card" data-product="29" data-category="molding">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Silicone Mold Release" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Silicone Mold Release</h3>
+					<p class="product-category">Injection Molding</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="30" data-category="molding">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Water-Based Mold Release" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Water-Based Mold Release</h3>
+					<p class="product-category">Injection Molding</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="31" data-category="molding">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="PTFE Mold Release" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">PTFE Mold Release</h3>
+					<p class="product-category">Injection Molding</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="32" data-category="molding">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="High-Temp Mold Release" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">High-Temp Mold Release</h3>
+					<p class="product-category">Injection Molding</p>
+				</div>
+			</div>
+
+			<!-- Additional Coatings -->
+			<div class="product-card" data-product="33" data-category="coatings">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Zinc Coating Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Zinc Coating Spray</h3>
+					<p class="product-category">Coatings</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="34" data-category="coatings">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Insulating Varnish" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Insulating Varnish</h3>
+					<p class="product-category">Coatings</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="35" data-category="coatings">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Ceramic Coating" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Ceramic Coating</h3>
+					<p class="product-category">Coatings</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="36" data-category="coatings">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Anti-Spatter Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Anti-Spatter Spray</h3>
+					<p class="product-category">Coatings</p>
+				</div>
+			</div>
+
+			<!-- Additional Maintenance -->
+			<div class="product-card" data-product="37" data-category="maintenance">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Multi-Purpose Oil" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Multi-Purpose Oil</h3>
+					<p class="product-category">Maintenance</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="38" data-category="maintenance">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Belt Dressing Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Belt Dressing Spray</h3>
+					<p class="product-category">Maintenance</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="39" data-category="maintenance">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Thread Locker Spray" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Thread Locker Spray</h3>
+					<p class="product-category">Maintenance</p>
+				</div>
+			</div>
+
+			<div class="product-card" data-product="40" data-category="maintenance">
+				<div class="product-image-wrapper">
+					<img src="./assets/logo.png" alt="Assembly Lubricant" class="product-img">
+					<div class="product-overlay"></div>
+				</div>
+				<div class="product-info">
+					<h3 class="product-name">Assembly Lubricant</h3>
 					<p class="product-category">Maintenance</p>
 				</div>
 			</div>
@@ -751,6 +1175,94 @@
 				duration: 0.8,
 				delay: index * 0.1,
 				ease: 'power3.out'
+			});
+		});
+
+		// Product Filter Functionality
+		const filterTags = document.querySelectorAll('.filter-tag');
+		const productCards = document.querySelectorAll('.product-card');
+		const productCountElement = document.getElementById('product-count');
+
+		function filterProducts(category) {
+			let visibleCount = 0;
+
+			productCards.forEach((card, index) => {
+				const cardCategory = card.getAttribute('data-category');
+				
+				// Kill any ongoing animations on this card
+				gsap.killTweensOf(card);
+				
+				if (category === 'all' || cardCategory === category) {
+					// Show card
+					visibleCount++;
+					gsap.fromTo(card, 
+						{
+							opacity: 0,
+							x: -20,
+							pointerEvents: 'auto'
+						},
+						{
+							opacity: 1,
+							x: 0,
+							duration: 0.4,
+							ease: 'power3.out',
+							delay: index * 0.03
+						}
+					);
+				} else {
+					// Hide card
+					gsap.to(card, {
+						opacity: 0,
+						x: 20,
+						duration: 0.3,
+						ease: 'power2.in',
+						pointerEvents: 'none'
+					});
+				}
+			});
+
+			// Update product count
+			gsap.killTweensOf(productCountElement);
+			gsap.to(productCountElement, {
+				innerText: visibleCount,
+				duration: 0.4,
+				snap: { innerText: 1 },
+				ease: 'power2.out'
+			});
+		}
+
+		filterTags.forEach((tag) => {
+			tag.addEventListener('click', () => {
+				// Remove active class from all tags
+				filterTags.forEach((t) => t.classList.remove('active'));
+				
+				// Add active class to clicked tag
+				tag.classList.add('active');
+				
+				// Get filter category
+				const filterCategory = tag.getAttribute('data-filter');
+				
+				// Filter products
+				filterProducts(filterCategory);
+			});
+
+			// Add hover animation
+			tag.addEventListener('mouseenter', () => {
+				gsap.to(tag, {
+					scale: 1.05,
+					duration: 0.2,
+					ease: 'back.out(2)'
+				});
+			});
+
+			tag.addEventListener('mouseleave', () => {
+				if (!tag.classList.contains('active')) {
+					gsap.to(tag, {
+						scale: 1,
+						duration: 0.2,
+						ease: 'power2.out'
+					});
+				}
 			});
 		});
 	</script>

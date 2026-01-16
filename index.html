@@ -96,7 +96,6 @@
       </div>
       <div class="about-details">
         Twin Tech India Pvt. Ltd is a premier manufacturer and supplier of aerosols, sprays, and specialty machines for various industries. Our flagship brand, SPRAYZET, offers custom-designed, biodegradable aerosols for applications in agriculture, engineering, textiles, food manufacturing, and more. We also provide contract aerosol packaging with private label capabilities, ensuring quality and efficiency.<br><br>Our diverse product line includes industrial maintenance aerosols, self-adhesive tapes, home care products under "Hacker," air deodorizers under "Twinzy," and car care solutions under "Evershine." We are committed to high standards, innovation, and timely delivery.
-        <button>Learn More</button>
       </div>
     </div>
   </section>
@@ -175,8 +174,7 @@
   </section>
 
   <div class="main-display-area" style="position: relative;">
-    <div id="animationBgContainer" class="background-canvas-holder" style="position: sticky; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1;"></div>
-    <div id="animation-container-main" style="position: relative; z-index: 2;"></div>
+   <div id="animation-container-main" style="position: relative; z-index: 2;"></div>
 </div>
 
 
@@ -1220,57 +1218,87 @@ init();
 <script type="module">
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
         // --- 1. Inject CSS ---
         const injectedStyles = `
             #animation-container-main {
                 position: relative;
                 width: 100%;
-                background-color: transparent;
-                color: white;
+                display: flex;
                 z-index: 2;
                 margin-top: 0;
             }
+            .left-content-side {
+                position: relative;
+                width: 50%;
+                background-color: #dc2626;
+                z-index: 3;
+            }
+            .right-canvas-side {
+                position: sticky;
+                top: 0;
+                right: 0;
+                width: 50%;
+                height: 100vh;
+                z-index: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f5f5f5;
+            }
             #threejs-viewport {
                 display: block;
-                position: fixed;
-                top: 0;
-                left: 0;
                 width: 100%;
-                height: 100vh;
-                z-index: 1;
+                height: 100%;
                 outline: none;
                 pointer-events: none;
             }
             .scrollable-sections {
                 position: relative;
                 z-index: 3;
-                margin-top: 0;
+                width: 100%;
+                background-color: var(--color);
             }
             .content-panel {
                 min-height: 100vh;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                justify-content: flex-end;
+                align-items: flex-start;
+                justify-content: center;
                 font-size: 4rem;
                 pointer-events: none;
                 width: 100%;
-                margin: 0 auto;
-                padding-left: 5vw;
-                padding-right: 5vw;
-                padding-bottom: 10vh;
+                padding: 0 8vw;
                 box-sizing: border-box;
-                text-align: center;
+                text-align: left;
                 overflow-wrap: break-word;
-                color: #000;
-                text-shadow: 0 0 10px #fff;
+                color: white;
             }
 
-            .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color:var(--color); font-size:5rem}
-            .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.7; font-weight: 300; margin-top: 10px; }
-            .primary-label { color: #000; font-family:"Heading"; }
-            .secondary-label { color: #000; font-family:"Heading"; }
+            .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
+            .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 20px; color: white; }
+            .primary-label { color: white; font-family:"Heading"; }
+            .secondary-label { color: white; font-family:"Heading"; }
+            
+            @media (max-width: 1024px) {
+                #animation-container-main {
+                    flex-direction: column;
+                }
+                .left-content-side {
+                    width: 100%;
+                }
+                .right-canvas-side {
+                    position: fixed;
+                    width: 100%;
+                    height: 50vh;
+                    bottom: 0;
+                    top: auto;
+                }
+                .content-panel {
+                    min-height: 50vh;
+                }
+            }
         `;
         const dynamicStyleElement = document.createElement("style");
         dynamicStyleElement.innerText = injectedStyles;
@@ -1285,47 +1313,52 @@ init();
         }
         
         mainContainer.innerHTML = `
-            <canvas id="threejs-viewport"></canvas>
-            <div class="scrollable-sections">
-                <div class="content-panel">
-                    <!-- Empty: Model rises up here -->
+            <div class="left-content-side">
+                <div class="scrollable-sections">
+                    <div class="content-panel">
+                        <h1>Discover Excellence</h1>
+                        <p>Scroll to explore our journey</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>SPRAYZET</h1>
+                        <p>Industrial MRO<span class="primary-label"> Aerosols</span></p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Engineered to Perform.</h1>
+                        <p>Built to Endure.</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>The Transformation</h1>
+                        <p>Watch the shift</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>EVERSHINE</h1>
+                        <p>Car Care <span class="secondary-label">Products</span></p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Shine That You</h1>
+                        <p>Can Feel.</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Next Chapter</h1>
+                        <p>Unveiling strength</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>TWIN TAPE</h1>
+                        <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Bonds That Last.</h1>
+                        <p>Trust That Holds.</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Three Brands.</h1>
+                        <p>One Vision of Excellence.</p>
+                    </div>
                 </div>
-                <div class="content-panel">
-                    <h1>SPRAYZET</h1>
-                    <p>Industrial MRO<span class="primary-label"> Aerosols</span></p>
-                </div>
-                <div class="content-panel">
-                    <h1>Engineered to Perform.</h1>
-                    <p>Built to Endure.</p>
-                </div>
-                <div class="content-panel">
-                    <h1>The Transformation</h1>
-                    <p>Watch the shift</p>
-                </div>
-                <div class="content-panel">
-                    <h1>EVERSHINE</h1>
-                    <p>Car Care <span class="secondary-label">Products</span></p>
-                </div>
-                <div class="content-panel">
-                    <h1>Shine That You</h1>
-                    <p>Can Feel.</p>
-                </div>
-                <div class="content-panel">
-                    <h1>Next Chapter</h1>
-                    <p>Unveiling strength</p>
-                </div>
-                <div class="content-panel">
-                    <h1>TWIN TAPE</h1>
-                    <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
-                </div>
-                <div class="content-panel">
-                    <h1>Bonds That Last.</h1>
-                    <p>Trust That Holds.</p>
-                </div>
-                <div class="content-panel">
-                    <h1>Three Brands.</h1>
-                    <p>One Vision of Excellence.</p>
-                </div>
+            </div>
+            <div class="right-canvas-side">
+                <canvas id="threejs-viewport"></canvas>
             </div>
         `;
 
@@ -1352,33 +1385,13 @@ init();
         webglRenderer.toneMapping = THREE.ACESFilmicToneMapping;
         webglRenderer.toneMappingExposure = 1.2;
 
-        // --- Lighting ---
-        const globalLight = new THREE.AmbientLight(0xffffff, 6);
-        threeScene.add(globalLight);
-
-        const primarySpotLight = new THREE.SpotLight(0xffffff, 2);
-        primarySpotLight.position.set(5, 10, 7);
-        primarySpotLight.angle = Math.PI / 5;
-        primarySpotLight.penumbra = 0.6;
-        primarySpotLight.castShadow = true;
-        threeScene.add(primarySpotLight);
-
-
-        const sprimarySpotLight = new THREE.SpotLight(0xffffff, 0.2);
-        sprimarySpotLight.position.set(-5, 0, 5);
-        sprimarySpotLight.angle = Math.PI / 8;
-        sprimarySpotLight.penumbra = 2;
-        sprimarySpotLight.castShadow = true;
-        threeScene.add(sprimarySpotLight);
-
-        // const accentPointLight = new THREE.PointLight(0xffffff, 0.0);
-        // accentPointLight.position.set(-5, 0, 5);
-        // threeScene.add(accentPointLight);
-        
-        const backRimLight = new THREE.SpotLight(0xffffff, 10);
-        backRimLight.position.set(0, 5, -5);
-        backRimLight.lookAt(0, 0, 0);
-        threeScene.add(backRimLight);
+        // --- HDR Environment Lighting ---
+        const rgbeLoader = new RGBELoader();
+        rgbeLoader.load('./assets/neutral.hdr', function(texture) {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            threeScene.environment = texture;
+            threeScene.background = null; // Keep background transparent, only use HDR for lighting
+        });
 
         // --- Model Loading ---
         const gltfModelLoader = new GLTFLoader();
@@ -1395,9 +1408,9 @@ init();
                             meshNode.castShadow = true;
                             meshNode.receiveShadow = true;
                             if(meshNode.material) {
-                                meshNode.material.envMapIntensity = 1.5;
-                                meshNode.material.roughness = 0.2;
-                                meshNode.material.metalness = 0.8;
+                                meshNode.material.envMapIntensity = 1.0;
+                                meshNode.material.roughness = 0.3;
+                                meshNode.material.metalness = 0.3;
                             }
                         }
                     });
@@ -1468,7 +1481,7 @@ init();
 
         function generateFallbackGeometry(colorHex) {
             const cylinderGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2.5, 32);
-            const standardMaterial = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.5, roughness: 0.2 });
+            const standardMaterial = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.2, roughness: 0.3 });
             const fallbackMesh = new THREE.Mesh(cylinderGeometry, standardMaterial);
             return fallbackMesh;
         }
@@ -1476,7 +1489,7 @@ init();
         function generateFallbackTape(colorHex) {
             // a flattened cylinder to simulate a tape roll
             const geo = new THREE.CylinderGeometry(0.6, 0.6, 0.4, 32);
-            const mat = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.3, roughness: 0.4 });
+            const mat = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.15, roughness: 0.4 });
             const mesh = new THREE.Mesh(geo, mat);
             mesh.rotation.x = Math.PI / 2; // lie it on its side
             return mesh;
@@ -1490,7 +1503,7 @@ init();
                 ScrollTrigger.create({
                     trigger: panel,
                     start: 'top top',
-                    end: '+=200vh',
+                    end: '+=100vh',
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1
@@ -1633,7 +1646,7 @@ init();
                 animationTimeline.to(tapeModel.position, {
                     x: 0,
                     y: -0.5,
-                    z: 0,
+                    z: -2,
                     duration: 1.5,
                     ease: 'power2.out'
                 }, "tapeRollIn");
@@ -1647,7 +1660,7 @@ init();
 
                 // 2. Tape zooms in (comes closer) with gentle rotation
                 animationTimeline.to(tapeModel.position, {
-                    z: 1,
+                    z: 0,
                     duration: 1.2,
                     ease: 'power2.inOut'
                 }, "tapeZoom");
@@ -1659,7 +1672,7 @@ init();
                 }, "tapeZoom");
 
                 animationTimeline.to(tapeModel.position, {
-                    z: 0,
+                    z: -2,
                     duration: 1.2,
                     ease: 'power2.inOut'
                 }, "tapeZoomOut");
