@@ -9,7 +9,10 @@ nav{
 	justify-content: space-between;
 	align-items: center;
 	z-index: 9999999;
-	background: #fff;
+	background: rgba(255, 255, 255, 0.4);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 nav .logo{

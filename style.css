@@ -210,11 +210,13 @@ img{
   font-size: 3rem;
   width: 50%;
   text-align: left;
+  color: #fff;
 }
 .hero-content .sub-text{
   width: 50%;
   font-size: 1.3rem;
   text-align: left;
+  color: #fff;
 }
 
 .hero-content .cta-button{
@@ -239,7 +241,7 @@ img{
 
 .hero-content .cta-button button:nth-child(2){
   background: transparent;
-  color: #000;
+  color: #fff;
 }
 
 
