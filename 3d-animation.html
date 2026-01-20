@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+
+		@font-face {
+  font-family: 'base';
+  src: url('./font/VastagoGrotesk-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'heading';
+  src: url('./font/VastagoGrotesk-SemiBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+		
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;    
+}
+:root{
+	--color:#ED1D21;
+	--padding: 1rem;
+}
+
+body{
+	position: relative;
+	height: fit-content;
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-family: "base";
+	overflow-x: hidden;
+  max-width: 2000px;
+}
+	</style>
+</head>
+<body>
+<div class="main-display-area" style="position: relative;">
+   <div id="animation-container-main" style="position: relative; z-index: 2;"></div>
+</div>
+
+
+
+
+
+
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+<script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+            }
+        }
+    </script>
+
+<!-- GSAP Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+
+<script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+
+        // --- 1. Inject CSS ---
+        const injectedStyles = `
+            #animation-container-main {
+                position: relative;
+                width: 100%;
+                display: block;
+                z-index: 2;
+                margin-top: 0;
+                min-height: 100vh;
+            }
+            .left-content-side {
+                position: relative;
+                width: 100%;
+                background-color: transparent;
+                z-index: 3;
+                height: 100vh;
+                overflow-y: scroll;
+                scroll-snap-type: y mandatory;
+                scroll-behavior: smooth;
+            }
+            .right-canvas-side {
+                position: fixed;
+                top: 0;
+                left: 50%;
+                width: 50%;
+                height: 100vh;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f5f5f5;
+                pointer-events: none;
+            }
+            #threejs-viewport {
+                display: block;
+                width: 100%;
+                height: 100%;
+                outline: none;
+                pointer-events: none;
+            }
+            .scrollable-sections {
+                position: relative;
+                z-index: 3;
+                width: 100%;
+                background-color: transparent;
+            }
+            .content-panel {
+                min-height: 100vh;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                font-size: 4rem;
+                pointer-events: none;
+                width: 50%;
+                padding: 0 8vw;
+                box-sizing: border-box;
+                text-align: left;
+                overflow-wrap: break-word;
+                color: white;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                background-color: #dc2626;
+            }
+
+            .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
+            .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 20px; color: white; }
+            .primary-label { color: white; font-family:"Heading"; }
+            .secondary-label { color: white; font-family:"Heading"; }
+            
+            @media (max-width: 1024px) {
+                #animation-container-main {
+                    flex-direction: column;
+                }
+                .left-content-side {
+                    width: 100%;
+                    height: 50vh;
+                }
+                .right-canvas-side {
+                    position: fixed;
+                    width: 100%;
+                    height: 50vh;
+                    bottom: 0;
+                    top: auto;
+                }
+                .content-panel {
+                    min-height: 50vh;
+                    height: 100vh;
+                }
+            }
+        `;
+        const dynamicStyleElement = document.createElement("style");
+        dynamicStyleElement.innerText = injectedStyles;
+        document.head.appendChild(dynamicStyleElement);
+
+        // --- 2. Generate HTML Structure ---
+        let mainContainer = document.getElementById('animation-container-main');
+        if (!mainContainer) {
+            mainContainer = document.createElement('div');
+            mainContainer.id = 'animation-container-main';
+            document.body.prepend(mainContainer);
+        }
+        
+        mainContainer.innerHTML = `
+            <div class="left-content-side">
+                <div class="scrollable-sections">
+                    <div class="content-panel">
+                        <h1>Discover Excellence</h1>
+                        <p>Scroll to explore our journey</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1 class="animate-text">SPRAYZET</h1>
+                        <p class="animate-text">Industrial MRO<span class="primary-label"> Aerosols</span></p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Engineered to Perform.</h1>
+                        <p>Built to Endure.</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>The Transformation</h1>
+                        <p>Watch the shift</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>EVERSHINE</h1>
+                        <p>Car Care <span class="secondary-label">Products</span></p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Shine That You</h1>
+                        <p>Can Feel.</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Next Chapter</h1>
+                        <p>Unveiling strength</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>TWIN TAPE</h1>
+                        <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Bonds That Last.</h1>
+                        <p>Trust That Holds.</p>
+                    </div>
+                    <div class="content-panel">
+                        <h1>Three Brands.</h1>
+                        <p>One Vision of Excellence.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-canvas-side">
+                <canvas id="threejs-viewport"></canvas>
+            </div>
+        `;
+
+        // --- 3. Initialize 3D & Animation ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const renderCanvas = document.querySelector('#threejs-viewport');
+        
+        // --- Scene Setup ---
+        const threeScene = new THREE.Scene();
+        
+        const perspectiveCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        perspectiveCamera.position.set(0, 0, 5);
+
+        const webglRenderer = new THREE.WebGLRenderer({ 
+            canvas: renderCanvas,
+            antialias: true, 
+            alpha: true 
+        });
+        webglRenderer.setSize(window.innerWidth, window.innerHeight);
+        webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        webglRenderer.shadowMap.enabled = true;
+        webglRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        webglRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        webglRenderer.toneMappingExposure = 1.2;
+
+        // --- HDR Environment Lighting ---
+        const rgbeLoader = new RGBELoader();
+        rgbeLoader.load('./assets/neutral.hdr', function(texture) {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            threeScene.environment = texture;
+            threeScene.background = null; // Keep background transparent, only use HDR for lighting
+        });
+
+        // --- Model Loading ---
+        const gltfModelLoader = new GLTFLoader();
+        let firstModel, secondModel, tapeModel;
+        const objectGroup = new THREE.Group();
+        threeScene.add(objectGroup);
+
+        const loadGltfAsset = (assetPath) => {
+            return new Promise((resolve, reject) => {
+                gltfModelLoader.load(assetPath, (gltfData) => {
+                    const loadedModel = gltfData.scene;
+                    loadedModel.traverse((meshNode) => {
+                        if (meshNode.isMesh) {
+                            meshNode.castShadow = true;
+                            meshNode.receiveShadow = true;
+                            if(meshNode.material) {
+                                meshNode.material.envMapIntensity = 1.0;
+                                meshNode.material.roughness = 0.3;
+                                meshNode.material.metalness = 0.3;
+                            }
+                        }
+                    });
+                    const boundingBox = new THREE.Box3().setFromObject(loadedModel);
+                    const dimensions = boundingBox.getSize(new THREE.Vector3());
+                    const largestDimension = Math.max(dimensions.x, dimensions.y, dimensions.z);
+                    const normalizedScale = 2.5 / largestDimension; 
+                    loadedModel.scale.set(normalizedScale, normalizedScale, normalizedScale);
+                    const centerPoint = boundingBox.getCenter(new THREE.Vector3());
+                    loadedModel.position.sub(centerPoint.multiplyScalar(normalizedScale));
+                    resolve(loadedModel);
+                }, undefined, reject);
+            });
+        };
+
+        // If running from file:// protocol the browser will often block GLTF asset loads
+        // due to CORS. In that case, create fallback geometry immediately to avoid errors.
+        const isFileProtocol = window.location.protocol === 'file:';
+        if (isFileProtocol) {
+            firstModel = generateFallbackGeometry(0xff3333);
+            secondModel = generateFallbackGeometry(0x3388ff);
+            tapeModel = generateFallbackTape(0x996633);
+
+            objectGroup.add(firstModel);
+            objectGroup.add(secondModel);
+            threeScene.add(tapeModel);
+
+            secondModel.visible = false;
+            secondModel.rotation.copy(firstModel.rotation);
+
+            // Initial State: Hidden below
+            objectGroup.position.y = -10;
+            objectGroup.rotation.y = Math.PI;
+
+            // tape initial off-screen left
+            tapeModel.position.set(-6, -1.5, 0);
+            tapeModel.rotation.z = 0;
+
+            initializeScrollAnimation();
+        } else {
+            Promise.all([
+                loadGltfAsset('./assets/Black_Can.glb').catch(() => generateFallbackGeometry(0xff3333)),
+                loadGltfAsset('./assets/Red_Can.glb').catch(() => generateFallbackGeometry(0x3388ff)),
+                loadGltfAsset('./assets/Brown_Tape.glb').catch(() => generateFallbackTape(0x996633))
+            ]).then(([primaryAsset, secondaryAsset, loadedTape]) => {
+                firstModel = primaryAsset;
+                secondModel = secondaryAsset;
+                tapeModel = loadedTape;
+
+                objectGroup.add(firstModel);
+                objectGroup.add(secondModel);
+                threeScene.add(tapeModel);
+
+                secondModel.visible = false;
+                secondModel.rotation.copy(firstModel.rotation);
+
+                // Initial State: Hidden below
+                objectGroup.position.y = -10; 
+                objectGroup.rotation.y = Math.PI;
+
+                // tape initial off-screen left
+                tapeModel.position.set(-6, -1.5, 0);
+                tapeModel.rotation.z = 0;
+
+                initializeScrollAnimation();
+            });
+        }
+
+        function generateFallbackGeometry(colorHex) {
+            const cylinderGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2.5, 32);
+            const standardMaterial = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.2, roughness: 0.3 });
+            const fallbackMesh = new THREE.Mesh(cylinderGeometry, standardMaterial);
+            return fallbackMesh;
+        }
+
+        function generateFallbackTape(colorHex) {
+            // a flattened cylinder to simulate a tape roll
+            const geo = new THREE.CylinderGeometry(0.6, 0.6, 0.4, 32);
+            const mat = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.15, roughness: 0.4 });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.rotation.x = Math.PI / 2; // lie it on its side
+            return mesh;
+        }
+
+        // --- Animation Logic ---
+        function initializeScrollAnimation() {
+            const panels = document.querySelectorAll('.content-panel');
+            const scrollContainer = document.querySelector('.left-content-side');
+            
+            // Create master timeline synced to scroll
+            const animationTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.scrollable-sections',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1,
+                    scroller: scrollContainer
+                }
+            });
+
+            // 0. REVEAL (First Section)
+            // Dramatic rise with a slight tilt
+            animationTimeline.to(objectGroup.position, {
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+            
+            animationTimeline.to(objectGroup.rotation, {
+                y: 0,
+                z: 0.1,
+                duration: 0.9,
+                ease: "power3.out"
+            }, "<");
+
+            // 1. Intro & Tilt
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 2.2,
+                x: -0.2,
+                z: 0,
+                duration: 0.9,
+                ease: "sine.inOut"
+            });
+
+            // 2. Cinematic Move
+            animationTimeline.to(perspectiveCamera.position, {
+                z: 3.0,
+                y: 0.2,
+                duration: 1,
+                ease: "power2.inOut"
+            }, "cinematic");
+            
+            animationTimeline.to(objectGroup.rotation, {
+                z: -0.3,
+                y: Math.PI * 4,
+                duration: 1,
+                ease: "power2.inOut"
+            }, "cinematic");
+
+            // 3. THE TRANSITION
+            // Wind up
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 4,
+                duration: 1,
+                ease: "power2.in" 
+            }, "swapStart");
+
+            // Fast Spin
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 8,
+                duration: 2,
+                ease: "power2.inOut",
+                onUpdate: function() {
+                    const animProgress = this.progress();
+                    if (animProgress > 0.5 && firstModel.visible) {
+                        firstModel.visible = false;
+                        secondModel.visible = true;
+                    } else if (animProgress < 0.5 && !firstModel.visible) {
+                        firstModel.visible = true;
+                        secondModel.visible = false;
+                    }
+                }
+            }, "swapSpin");
+
+            // Camera shake/pull
+            animationTimeline.to(perspectiveCamera.position, {
+                z: 6.5,
+                duration: 1,
+                yoyo: true,
+                repeat: 1,
+                ease: "power2.inOut"
+            }, "swapSpin");
+
+            // 4. Settle
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI *10,
+                x: 0,
+                z: 0,
+                duration: 2.4,
+                ease: "power3.out"
+            }, "settle");
+
+            animationTimeline.to(perspectiveCamera.position, {
+                z: 4,
+                y: 0,
+                duration: 2.4,
+                ease: "power3.out"
+            }, "settle");
+
+
+            // 5. Final Presentation - Red can moves to right
+            animationTimeline.to(objectGroup.position, {
+                x: 2,
+                y: 0,
+                duration: 1,
+                ease: "sine.inOut"
+            }, "final");
+            
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 15,
+                duration: 1,
+                ease: "sine.inOut"
+            }, "final");
+
+            // 6. Red can rolls out of the screen
+            animationTimeline.to(objectGroup.position, {
+                x: 20,
+                duration:1.5,
+                ease: "power2.in"
+            }, "canExit");
+
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 18,
+                duration: 1.5,
+                ease: "linear"
+            }, "canExit");
+
+            // TAPE ANIMATION: After red can exits, tape rolls in, zooms, then rolls out
+            if (typeof tapeModel !== 'undefined' && tapeModel) {
+                // Initial state: tape off-screen to the left
+                tapeModel.position.set(-8, 0, 0);
+                tapeModel.rotation.set(0, 0, 0);
+
+                // 1. Tape rolls in from left to center (smooth rolling motion on z-axis)
+                animationTimeline.to(tapeModel.position, {
+                    x: 0,
+                    y: -0.5,
+                    z: -4,
+                    duration: 1.5,
+                    ease: 'power2.out'
+                }, "canExit");
+
+                animationTimeline.to(tapeModel.rotation, {
+                    y: Math.PI * 3.8,
+                    x:0.5,
+                    duration: 1.5,
+                    ease: 'none'
+                }, "canExit");
+
+                // 2. Tape zooms in (comes closer) with gentle rotation
+                animationTimeline.to(tapeModel.position, {
+                    z: 0,
+                    duration: 1.2,
+                    ease: 'power2.inOut'
+                }, "tapeZoom");
+
+                animationTimeline.to(tapeModel.rotation, {
+                    y: Math.PI * 5.2,
+                    duration: 1.2,
+                    ease: 'sine.inOut'
+                }, "tapeZoom");
+
+                animationTimeline.to(tapeModel.position, {
+                    z: -4,
+                    duration: 1.2,
+                    ease: 'power2.inOut'
+                }, "tapeZoomOut");
+
+                animationTimeline.to(tapeModel.rotation, {
+                    y: Math.PI * 7,
+                    duration: 1.2,
+                    ease: 'sine.inOut'
+                }, "tapeZoomOut");
+                
+
+                // 3. Tape rolls out to the right side of screen
+                animationTimeline.to(tapeModel.position, {
+                    x: 10,
+                    y:2,
+                    z: 0,
+                    duration: 1.5,
+                    ease: 'power2.in'
+                }, "tapeRollOut");
+
+                animationTimeline.to(tapeModel.rotation, {
+                    y: Math.PI * 8,
+                    duration: 1.5,
+                    ease: 'none'
+                }, "tapeRollOut");
+            }
+        }
+
+        // --- Resize ---
+        window.addEventListener('resize', () => {
+            perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
+            perspectiveCamera.updateProjectionMatrix();
+            webglRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- Loop ---
+        function renderLoop() {
+            requestAnimationFrame(renderLoop);
+            webglRenderer.render(threeScene, perspectiveCamera);
+        }
+        renderLoop();
+    </script>
+
+</body>
+</html>
