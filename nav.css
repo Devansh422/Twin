@@ -73,13 +73,19 @@ nav .action_buttons{
 
 nav button{
 	border:none;
-	background: #fff;
+	background: none;
 	border-radius: 0.2rem;
 	height: 2.5rem;
 	width: 2.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
+}
+
+nav button:nth-child(2){
+	background: #25D366;
+	color: #fff;
 }
 
 nav .dropdown-menu{

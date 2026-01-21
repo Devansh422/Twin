@@ -165,10 +165,9 @@
   </div>
   </section>
 
-  <div class="main-display-area" style="position: relative;">
+<div class="main-display-area" style="position: relative;">
    <div id="animation-container-main" style="position: relative; z-index: 2;"></div>
 </div>
-
 <section class="work">
     <h2>Our clients</h2>
     <h1 class="animate-text">Partners in Progress, Driving Innovation Together.</h1>
@@ -1199,6 +1198,7 @@ init();
 
 
 
+
 <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 
 <script type="importmap">
@@ -1222,30 +1222,41 @@ init();
 
         // --- 1. Inject CSS ---
         const injectedStyles = `
+            body {
+                overflow-x: hidden;
+            }
+            .main-display-area {
+                position: relative;
+                overflow: hidden;
+            }
             #animation-container-main {
                 position: relative;
                 width: 100%;
                 display: flex;
                 z-index: 2;
                 margin-top: 0;
+                min-height: 100vh;
             }
             .left-content-side {
                 position: relative;
                 width: 50%;
-                background-color: #dc2626;
+                background-color: transparent;
                 z-index: 3;
             }
             .right-canvas-side {
-                position: sticky;
+                position: fixed;
                 top: 0;
-                right: 0;
+                left: 50%;
                 width: 50%;
                 height: 100vh;
-                z-index: 2;
+                z-index: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background-color: #f5f5f5;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
             }
             #threejs-viewport {
                 display: block;
@@ -1259,25 +1270,31 @@ init();
                 z-index: 3;
                 width: 100%;
                 background-color: var(--color);
+                scroll-snap-type: y mandatory;
             }
             .content-panel {
                 min-height: 100vh;
+                height: 100vh;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
                 font-size: 4rem;
-                pointer-events: none;
+                pointer-events: auto;
                 width: 100%;
                 padding: 0 8vw;
                 box-sizing: border-box;
                 text-align: left;
                 overflow-wrap: break-word;
                 color: white;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
             }
 
             .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
-            .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 20px; color: white; }
+            .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 20px; color: white; line-height: 1.6; }
+            .content-panel .brand-description { font-size: 1.1rem; line-height: 1.7; max-width: 90%; margin-top: 30px; }
+            .reveal-inner { will-change: transform, opacity; }
             .primary-label { color: white; font-family:"Heading"; }
             .secondary-label { color: white; font-family:"Heading"; }
             
@@ -1292,11 +1309,13 @@ init();
                     position: fixed;
                     width: 100%;
                     height: 50vh;
+                    left: 0;
                     bottom: 0;
                     top: auto;
                 }
                 .content-panel {
                     min-height: 50vh;
+                    height: 100vh;
                 }
             }
         `;
@@ -1316,44 +1335,46 @@ init();
             <div class="left-content-side">
                 <div class="scrollable-sections">
                     <div class="content-panel">
-                        <h1>Discover Excellence</h1>
-                        <p>Scroll to explore our journey</p>
+                        <div class="reveal-inner"><h1 class="animate-text">Discover Excellence</h1><p>Scroll to explore our journey</p></div>
                     </div>
                     <div class="content-panel">
-                        <h1>SPRAYZET</h1>
-                        <p>Industrial MRO<span class="primary-label"> Aerosols</span></p>
+                        <div class="reveal-inner"><h1 class="animate-text">SPRAYZET</h1><p class="animate-text">Industrial MRO<span class="primary-label"> Aerosols</span></p></div>
                     </div>
                     <div class="content-panel">
-                        <h1>Engineered to Perform.</h1>
-                        <p>Built to Endure.</p>
+                        <div class="reveal-inner">
+                            <h1 class="animate-text">Engineered to Perform.</h1>
+                            <p>Built to Endure.</p>
+                            <p class="brand-description">SPRAYZET by Twin Tech provides high-performance, eco-friendly industrial maintenance aerosols for equipment care, lubrication, and protection. Designed for diverse industries, these solutions improve durability, enhance performance, reduce downtime, and support sustainable maintenance operations.</p>
+                        </div>
                     </div>
                     <div class="content-panel">
-                        <h1>The Transformation</h1>
-                        <p>Watch the shift</p>
+                        <div class="reveal-inner"><h1 class="animate-text">From Industry to Elegance</h1><p>Where Performance Meets Perfection</p></div>
                     </div>
                     <div class="content-panel">
-                        <h1>EVERSHINE</h1>
-                        <p>Car Care <span class="secondary-label">Products</span></p>
+                        <div class="reveal-inner"><h1 class="animate-text">EVERSHINE</h1><p>Car Care <span class="secondary-label">Products</span></p></div>
                     </div>
                     <div class="content-panel">
-                        <h1>Shine That You</h1>
-                        <p>Can Feel.</p>
+                        <div class="reveal-inner">
+                            <h1 class="animate-text">Shine That You</h1>
+                            <p>Can Feel.</p>
+                            <p class="brand-description">Evershine is a premium car care brand dedicated to preserving the beauty, performance, and value of your vehicle. Our advanced range of car care products is expertly formulated to clean, protect, and enhance every surface, ensuring professional-grade results with every use. Trusted by car enthusiasts and professionals alike, Evershine helps keep vehicles looking pristine, well-maintained, and showroom-ready.</p>
+                        </div>
                     </div>
                     <div class="content-panel">
-                        <h1>Next Chapter</h1>
-                        <p>Unveiling strength</p>
+                        <div class="reveal-inner"><h1 class="animate-text">Built to Bond</h1><p>Engineered to Hold</p></div>
                     </div>
                     <div class="content-panel">
-                        <h1>TWIN TAPE</h1>
-                        <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
+                        <div class="reveal-inner"><h1 class="animate-text">TWIN TAPE</h1><p>Industrial <span class="primary-label">Adhesive Solutions</span></p></div>
                     </div>
                     <div class="content-panel">
-                        <h1>Bonds That Last.</h1>
-                        <p>Trust That Holds.</p>
+                        <div class="reveal-inner">
+                            <h1 class="animate-text">Bonds That Last.</h1>
+                            <p>Trust That Holds.</p>
+                            <p class="brand-description">Twin Tapes offers durable, high-performance self-adhesive tapes designed for both industrial and household applications. Engineered with strong, reliable adhesion, these tapes are suitable for packaging, sealing, insulation, repairs, and surface protection, delivering consistent performance and long-lasting results across a wide range of everyday and professional uses.</p>
+                        </div>
                     </div>
-                    <div class="content-panel">
-                        <h1>Three Brands.</h1>
-                        <p>One Vision of Excellence.</p>
+                    <div class="content-panel" style="opacity:0">
+                        <div class="reveal-inner"><h1 class="animate-text">Three Brands.</h1><p>One Vision of Excellence.</p></div>
                     </div>
                 </div>
             </div>
@@ -1497,26 +1518,80 @@ init();
 
         // --- Animation Logic ---
         function initializeScrollAnimation() {
-            // Pin each text panel for snappy scroll behavior
             const panels = document.querySelectorAll('.content-panel');
+
+            // Pin each text panel to the top and reveal its content as it becomes active
             panels.forEach((panel, index) => {
+                const revealInner = panel.querySelector('.reveal-inner');
+                const isLastPanel = index === panels.length - 1;
+
+                // ensure starting state (off and slightly down)
+                gsap.set(revealInner, { y: 40, opacity: 0 });
+
                 ScrollTrigger.create({
                     trigger: panel,
                     start: 'top top',
-                    end: '+=100vh',
+                    end: isLastPanel ? 'bottom bottom' : 'bottom top',
                     pin: true,
-                    pinSpacing: true,
-                    anticipatePin: 1
+                    pinSpacing: false,
+                    onEnter: () => {
+                        // incoming panel reveals from below
+                        gsap.fromTo(revealInner, 
+                            { y: 40, opacity: 0 }, 
+                            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
+                        );
+                    },
+                    onLeave: () => {
+                        // scroll down: current panel fades up/out to reveal next
+                        gsap.to(revealInner, { 
+                            y: -40, 
+                            opacity: 0, 
+                            duration: 0.5, 
+                            ease: 'power2.in',
+                            overwrite: true 
+                        });
+                    },
+                    onEnterBack: () => {
+                        // scrolling up back into panel: reveal from above
+                        gsap.fromTo(revealInner, 
+                            { y: -40, opacity: 0 }, 
+                            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
+                        );
+                    },
+                    onLeaveBack: () => {
+                        // scrolling up away from panel: fade down to reveal previous
+                        gsap.to(revealInner, { 
+                            y: 40, 
+                            opacity: 0, 
+                            duration: 0.5, 
+                            ease: 'power2.in',
+                            overwrite: true 
+                        });
+                    }
                 });
             });
 
-            // We use the wrapper as the trigger
+            // Control canvas visibility based on main-display-area scroll position
+            const canvasSide = document.querySelector('.right-canvas-side');
+            const mainDisplay = document.querySelector('.main-display-area');
+            
+            ScrollTrigger.create({
+                trigger: mainDisplay,
+                start: 'top top',
+                end: 'bottom bottom',
+                onEnter: () => gsap.to(canvasSide, { opacity: 1, duration: 0.3 }),
+                onLeave: () => gsap.to(canvasSide, { opacity: 0, duration: 0.3 }),
+                onEnterBack: () => gsap.to(canvasSide, { opacity: 1, duration: 0.3 }),
+                onLeaveBack: () => gsap.to(canvasSide, { opacity: 0, duration: 0.3 })
+            });
+
+            // Create master timeline synced to document scroll for the 3D scene
             const animationTimeline = gsap.timeline({
                 scrollTrigger: {
-                    trigger: "#animation-container-main",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 1.5,
+                    trigger: '.scrollable-sections',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1
                 }
             });
 
@@ -1524,29 +1599,29 @@ init();
             // Dramatic rise with a slight tilt
             animationTimeline.to(objectGroup.position, {
                 y: 0,
-                duration: 1,
+                duration: 0.8,
                 ease: "power3.out"
             });
             
             animationTimeline.to(objectGroup.rotation, {
                 y: 0,
                 z: 0.1,
-                duration: 1,
+                duration: 0.9,
                 ease: "power3.out"
             }, "<");
 
             // 1. Intro & Tilt
             animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 2,
+                y: Math.PI * 2.2,
                 x: -0.2,
                 z: 0,
-                duration: 1,
+                duration: 0.9,
                 ease: "sine.inOut"
             });
 
             // 2. Cinematic Move
             animationTimeline.to(perspectiveCamera.position, {
-                z: 2.5,
+                z: 3.0,
                 y: 0.2,
                 duration: 1,
                 ease: "power2.inOut"
@@ -1570,7 +1645,7 @@ init();
             // Fast Spin
             animationTimeline.to(objectGroup.rotation, {
                 y: Math.PI * 8,
-                duration: 3,
+                duration: 2,
                 ease: "power2.inOut",
                 onUpdate: function() {
                     const animProgress = this.progress();
@@ -1587,7 +1662,7 @@ init();
             // Camera shake/pull
             animationTimeline.to(perspectiveCamera.position, {
                 z: 6.5,
-                duration: 1.5,
+                duration: 1,
                 yoyo: true,
                 repeat: 1,
                 ease: "power2.inOut"
@@ -1598,16 +1673,17 @@ init();
                 y: Math.PI *10,
                 x: 0,
                 z: 0,
-                duration: 1,
+                duration: 2.4,
                 ease: "power3.out"
             }, "settle");
 
             animationTimeline.to(perspectiveCamera.position, {
                 z: 4,
                 y: 0,
-                duration: 1,
+                duration: 2.4,
                 ease: "power3.out"
             }, "settle");
+
 
             // 5. Final Presentation - Red can moves to right
             animationTimeline.to(objectGroup.position, {
@@ -1618,20 +1694,20 @@ init();
             }, "final");
             
             animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 12,
+                y: Math.PI * 15,
                 duration: 1,
                 ease: "sine.inOut"
             }, "final");
 
             // 6. Red can rolls out of the screen
             animationTimeline.to(objectGroup.position, {
-                x: 7,
-                duration: 1.5,
+                x: 20,
+                duration:1.5,
                 ease: "power2.in"
             }, "canExit");
 
             animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 14,
+                y: Math.PI * 18,
                 duration: 1.5,
                 ease: "linear"
             }, "canExit");
@@ -1649,14 +1725,14 @@ init();
                     z: -4,
                     duration: 1.5,
                     ease: 'power2.out'
-                }, "tapeRollIn");
+                }, "canExit");
 
                 animationTimeline.to(tapeModel.rotation, {
                     y: Math.PI * 3.8,
                     x:0.5,
                     duration: 1.5,
                     ease: 'none'
-                }, "tapeRollIn");
+                }, "canExit");
 
                 // 2. Tape zooms in (comes closer) with gentle rotation
                 animationTimeline.to(tapeModel.position, {
@@ -1715,6 +1791,8 @@ init();
         }
         renderLoop();
     </script>
+
+
 
         <!-- Background Shader Script for 3D Animation Section -->
         <script type="module">
