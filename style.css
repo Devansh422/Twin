@@ -271,11 +271,16 @@ img{
 
 
 .numbers{
-  padding: 0 5rem;
+  padding: 3rem 5rem;
   display: flex;
   gap: 3rem;
+  background: var(--color);
 }
 
+.counter-item{
+  background: none;
+  color: #fff;
+}
 .numbers .num-1{
   display: flex;
   flex-direction: column;
@@ -283,9 +288,11 @@ img{
 }
 .numbers .num-1 h2{
   font-size: 2rem;
+  color: #fff;
 }
 .numbers .num-1 .details{
   font-size: 1.3rem;
+  color: #fff;
 }
 
 .work{
