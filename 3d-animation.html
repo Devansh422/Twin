@@ -84,16 +84,28 @@ body{
             #animation-container-main {
                 position: relative;
                 width: 100%;
-                display: flex;
+                display: block;
                 z-index: 2;
                 margin-top: 0;
-                min-height: 100vh;
+            }
+            .scrollable-sections {
+                position: relative;
+                z-index: 0;
+                width: 100%;
+                height: 1000vh;
             }
             .left-content-side {
-                position: relative;
+                position: fixed;
+                top: 0;
+                left: 0;
                 width: 50%;
-                background-color: transparent;
-                z-index: 3;
+                height: 100vh;
+                background-color: #dc2626;
+                z-index: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
             }
             .right-canvas-side {
                 position: fixed;
@@ -115,37 +127,32 @@ body{
                 outline: none;
                 pointer-events: none;
             }
-            .scrollable-sections {
-                position: relative;
-                z-index: 3;
-                width: 100%;
-                background-color: transparent;
-                scroll-snap-type: y mandatory;
-            }
             .content-panel {
-                min-height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 50%;
                 height: 100vh;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: center;
                 font-size: 4rem;
-                pointer-events: auto;
-                width: 100%;
+                pointer-events: none;
                 padding: 0 8vw;
                 box-sizing: border-box;
                 text-align: left;
                 overflow-wrap: break-word;
                 color: white;
-                scroll-snap-align: start;
-                scroll-snap-stop: always;
-                background-color: #dc2626;
+                z-index: 3;
+                opacity: 0;
             }
 
             .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
             .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 20px; color: white; }
             .primary-label { color: white; font-family:"Heading"; }
             .secondary-label { color: white; font-family:"Heading"; }
+            .content-panel.active { opacity: 1; }
             
             @media (max-width: 1024px) {
                 #animation-container-main {
@@ -181,50 +188,49 @@ body{
         }
         
         mainContainer.innerHTML = `
-            <div class="left-content-side">
-                <div class="scrollable-sections">
-                    <div class="content-panel">
-                        <h1>Discover Excellence</h1>
-                        <p>Scroll to explore our journey</p>
-                    </div>
-                    <div class="content-panel">
-                        <h1 class="animate-text">SPRAYZET</h1>
-                        <p class="animate-text">Industrial MRO<span class="primary-label"> Aerosols</span></p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>Engineered to Perform.</h1>
-                        <p>Built to Endure.</p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>The Transformation</h1>
-                        <p>Watch the shift</p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>EVERSHINE</h1>
-                        <p>Car Care <span class="secondary-label">Products</span></p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>Shine That You</h1>
-                        <p>Can Feel.</p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>Next Chapter</h1>
-                        <p>Unveiling strength</p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>TWIN TAPE</h1>
-                        <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>Bonds That Last.</h1>
-                        <p>Trust That Holds.</p>
-                    </div>
-                    <div class="content-panel">
-                        <h1>Three Brands.</h1>
-                        <p>One Vision of Excellence.</p>
-                    </div>
+            <div class="scrollable-sections">
+                <div class="content-panel">
+                    <h1>Discover Excellence</h1>
+                    <p>Scroll to explore our journey</p>
+                </div>
+                <div class="content-panel">
+                    <h1 class="animate-text">SPRAYZET</h1>
+                    <p class="animate-text">Industrial MRO<span class="primary-label"> Aerosols</span></p>
+                </div>
+                <div class="content-panel">
+                    <h1>Engineered to Perform.</h1>
+                    <p>Built to Endure.</p>
+                </div>
+                <div class="content-panel">
+                    <h1>The Transformation</h1>
+                    <p>Watch the shift</p>
+                </div>
+                <div class="content-panel">
+                    <h1>EVERSHINE</h1>
+                    <p>Car Care <span class="secondary-label">Products</span></p>
+                </div>
+                <div class="content-panel">
+                    <h1>Shine That You</h1>
+                    <p>Can Feel.</p>
+                </div>
+                <div class="content-panel">
+                    <h1>Next Chapter</h1>
+                    <p>Unveiling strength</p>
+                </div>
+                <div class="content-panel">
+                    <h1>TWIN TAPE</h1>
+                    <p>Industrial <span class="primary-label">Adhesive Solutions</span></p>
+                </div>
+                <div class="content-panel">
+                    <h1>Bonds That Last.</h1>
+                    <p>Trust That Holds.</p>
+                </div>
+                <div class="content-panel">
+                    <h1>Three Brands.</h1>
+                    <p>One Vision of Excellence.</p>
                 </div>
             </div>
+            <div class="left-content-side"></div>
             <div class="right-canvas-side">
                 <canvas id="threejs-viewport"></canvas>
             </div>
@@ -366,197 +372,207 @@ body{
         // --- Animation Logic ---
         function initializeScrollAnimation() {
             const panels = document.querySelectorAll('.content-panel');
+            const totalSections = panels.length;
             
-            // Create master timeline synced to document scroll
-            const animationTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.scrollable-sections',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1
-                }
-            });
-
-            // 0. REVEAL (First Section)
-            // Dramatic rise with a slight tilt
-            animationTimeline.to(objectGroup.position, {
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            });
+            // Show first panel initially
+            gsap.set(panels[0], { opacity: 1 });
             
-            animationTimeline.to(objectGroup.rotation, {
-                y: 0,
-                z: 0.1,
-                duration: 0.9,
-                ease: "power3.out"
-            }, "<");
-
-            // 1. Intro & Tilt
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 2.2,
-                x: -0.2,
-                z: 0,
-                duration: 0.9,
-                ease: "sine.inOut"
-            });
-
-            // 2. Cinematic Move
-            animationTimeline.to(perspectiveCamera.position, {
-                z: 3.0,
-                y: 0.2,
-                duration: 1,
-                ease: "power2.inOut"
-            }, "cinematic");
-            
-            animationTimeline.to(objectGroup.rotation, {
-                z: -0.3,
-                y: Math.PI * 4,
-                duration: 1,
-                ease: "power2.inOut"
-            }, "cinematic");
-
-            // 3. THE TRANSITION
-            // Wind up
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 4,
-                duration: 1,
-                ease: "power2.in" 
-            }, "swapStart");
-
-            // Fast Spin
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 8,
-                duration: 2,
-                ease: "power2.inOut",
-                onUpdate: function() {
-                    const animProgress = this.progress();
-                    if (animProgress > 0.5 && firstModel.visible) {
-                        firstModel.visible = false;
-                        secondModel.visible = true;
-                    } else if (animProgress < 0.5 && !firstModel.visible) {
-                        firstModel.visible = true;
-                        secondModel.visible = false;
-                    }
-                }
-            }, "swapSpin");
-
-            // Camera shake/pull
-            animationTimeline.to(perspectiveCamera.position, {
-                z: 6.5,
-                duration: 1,
-                yoyo: true,
-                repeat: 1,
-                ease: "power2.inOut"
-            }, "swapSpin");
-
-            // 4. Settle
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI *10,
-                x: 0,
-                z: 0,
-                duration: 2.4,
-                ease: "power3.out"
-            }, "settle");
-
-            animationTimeline.to(perspectiveCamera.position, {
-                z: 4,
-                y: 0,
-                duration: 2.4,
-                ease: "power3.out"
-            }, "settle");
-
-
-            // 5. Final Presentation - Red can moves to right
-            animationTimeline.to(objectGroup.position, {
-                x: 2,
-                y: 0,
-                duration: 1,
-                ease: "sine.inOut"
-            }, "final");
-            
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 15,
-                duration: 1,
-                ease: "sine.inOut"
-            }, "final");
-
-            // 6. Red can rolls out of the screen
-            animationTimeline.to(objectGroup.position, {
-                x: 20,
-                duration:1.5,
-                ease: "power2.in"
-            }, "canExit");
-
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 18,
-                duration: 1.5,
-                ease: "linear"
-            }, "canExit");
-
-            // TAPE ANIMATION: After red can exits, tape rolls in, zooms, then rolls out
-            if (typeof tapeModel !== 'undefined' && tapeModel) {
-                // Initial state: tape off-screen to the left
-                tapeModel.position.set(-8, 0, 0);
-                tapeModel.rotation.set(0, 0, 0);
-
-                // 1. Tape rolls in from left to center (smooth rolling motion on z-axis)
-                animationTimeline.to(tapeModel.position, {
-                    x: 0,
-                    y: -0.5,
-                    z: -4,
-                    duration: 1.5,
-                    ease: 'power2.out'
-                }, "canExit");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 3.8,
-                    x:0.5,
-                    duration: 1.5,
-                    ease: 'none'
-                }, "canExit");
-
-                // 2. Tape zooms in (comes closer) with gentle rotation
-                animationTimeline.to(tapeModel.position, {
-                    z: 0,
-                    duration: 1.2,
-                    ease: 'power2.inOut'
-                }, "tapeZoom");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 5.2,
-                    duration: 1.2,
-                    ease: 'sine.inOut'
-                }, "tapeZoom");
-
-                animationTimeline.to(tapeModel.position, {
-                    z: -4,
-                    duration: 1.2,
-                    ease: 'power2.inOut'
-                }, "tapeZoomOut");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 7,
-                    duration: 1.2,
-                    ease: 'sine.inOut'
-                }, "tapeZoomOut");
+            // Create scroll-driven text transitions and 3D animation chunks
+            panels.forEach((panel, index) => {
+                const start = index * 100; // Each section starts at index * 100vh
+                const end = (index + 1) * 100; // And ends at next section
                 
-
-                // 3. Tape rolls out to the right side of screen
-                animationTimeline.to(tapeModel.position, {
-                    x: 10,
-                    y:2,
-                    z: 0,
-                    duration: 1.5,
-                    ease: 'power2.in'
-                }, "tapeRollOut");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 8,
-                    duration: 1.5,
-                    ease: 'none'
-                }, "tapeRollOut");
-            }
+                // Text reveal animation for each section
+                ScrollTrigger.create({
+                    trigger: '.scrollable-sections',
+                    start: `${start}vh top`,
+                    end: `${end}vh top`,
+                    scrub: true,
+                    onUpdate: (self) => {
+                        const progress = self.progress;
+                        
+                        // Current panel fades out as we scroll through it
+                        gsap.to(panel, { opacity: 1 - progress, duration: 0.1 });
+                        
+                        // Next panel fades in
+                        if (index < totalSections - 1) {
+                            gsap.to(panels[index + 1], { opacity: progress, duration: 0.1 });
+                        }
+                    }
+                });
+                
+                // 3D Animation chunk for each section
+                if (index === 0) {
+                    // Section 0: Initial Reveal
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '0vh top',
+                        end: '100vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(objectGroup.position, { y: -10 + (10 * progress), duration: 0.1 });
+                            gsap.to(objectGroup.rotation, { y: Math.PI - (Math.PI * progress), z: 0.1 * progress, duration: 0.1 });
+                        }
+                    });
+                } else if (index === 1) {
+                    // Section 1: Intro & Tilt
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '100vh top',
+                        end: '200vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(objectGroup.rotation, { 
+                                y: Math.PI * 2.2 * progress, 
+                                x: -0.2 * progress, 
+                                z: 0, 
+                                duration: 0.1 
+                            });
+                        }
+                    });
+                } else if (index === 2) {
+                    // Section 2: Cinematic Move
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '200vh top',
+                        end: '300vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(perspectiveCamera.position, { z: 5 - (2 * progress), y: 0.2 * progress, duration: 0.1 });
+                            gsap.to(objectGroup.rotation, { 
+                                z: -0.3 * progress, 
+                                y: Math.PI * 2.2 + (Math.PI * 1.8 * progress), 
+                                duration: 0.1 
+                            });
+                        }
+                    });
+                } else if (index === 3) {
+                    // Section 3: Transition & Spin
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '300vh top',
+                        end: '400vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            const spinProgress = progress;
+                            gsap.to(objectGroup.rotation, { y: Math.PI * 4 + (Math.PI * 4 * spinProgress), duration: 0.1 });
+                            
+                            if (spinProgress > 0.5 && firstModel.visible) {
+                                firstModel.visible = false;
+                                secondModel.visible = true;
+                            } else if (spinProgress < 0.5 && !firstModel.visible) {
+                                firstModel.visible = true;
+                                secondModel.visible = false;
+                            }
+                            
+                            const shake = Math.sin(spinProgress * Math.PI) * 2.5;
+                            gsap.to(perspectiveCamera.position, { z: 3 + shake, duration: 0.1 });
+                        }
+                    });
+                } else if (index === 4) {
+                    // Section 4: Settle
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '400vh top',
+                        end: '500vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(objectGroup.rotation, { 
+                                y: Math.PI * 8 + (Math.PI * 2 * progress), 
+                                x: 0, 
+                                z: 0, 
+                                duration: 0.1 
+                            });
+                            gsap.to(perspectiveCamera.position, { z: 5.5 - (1.5 * progress), y: 0, duration: 0.1 });
+                        }
+                    });
+                } else if (index === 5) {
+                    // Section 5: Showcase
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '500vh top',
+                        end: '600vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(objectGroup.rotation, { y: Math.PI * 10 + (Math.PI * 2 * progress), duration: 0.1 });
+                        }
+                    });
+                } else if (index === 6) {
+                    // Section 6: Move right
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '600vh top',
+                        end: '700vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(objectGroup.position, { x: 2 * progress, duration: 0.1 });
+                            gsap.to(objectGroup.rotation, { y: Math.PI * 12 + (Math.PI * 3 * progress), duration: 0.1 });
+                        }
+                    });
+                } else if (index === 7) {
+                    // Section 7: Can exits, Tape enters
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '700vh top',
+                        end: '800vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            gsap.to(objectGroup.position, { x: 2 + (18 * progress), duration: 0.1 });
+                            gsap.to(objectGroup.rotation, { y: Math.PI * 15 + (Math.PI * 3 * progress), duration: 0.1 });
+                            
+                            if (tapeModel) {
+                                gsap.to(tapeModel.position, { x: -8 + (8 * progress), y: -0.5 * progress, z: -4 * progress, duration: 0.1 });
+                                gsap.to(tapeModel.rotation, { y: Math.PI * 3.8 * progress, x: 0.5 * progress, duration: 0.1 });
+                            }
+                        }
+                    });
+                } else if (index === 8) {
+                    // Section 8: Tape zoom
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '800vh top',
+                        end: '900vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            if (tapeModel) {
+                                if (progress < 0.5) {
+                                    const zoomProgress = progress * 2;
+                                    gsap.to(tapeModel.position, { z: -4 + (4 * zoomProgress), duration: 0.1 });
+                                    gsap.to(tapeModel.rotation, { y: Math.PI * 3.8 + (Math.PI * 1.4 * zoomProgress), duration: 0.1 });
+                                } else {
+                                    const zoomOutProgress = (progress - 0.5) * 2;
+                                    gsap.to(tapeModel.position, { z: 0 - (4 * zoomOutProgress), duration: 0.1 });
+                                    gsap.to(tapeModel.rotation, { y: Math.PI * 5.2 + (Math.PI * 1.8 * zoomOutProgress), duration: 0.1 });
+                                }
+                            }
+                        }
+                    });
+                } else if (index === 9) {
+                    // Section 9: Tape exits
+                    ScrollTrigger.create({
+                        trigger: '.scrollable-sections',
+                        start: '900vh top',
+                        end: '1000vh top',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            if (tapeModel) {
+                                gsap.to(tapeModel.position, { x: 10 * progress, y: 2 * progress, z: -4, duration: 0.1 });
+                                gsap.to(tapeModel.rotation, { y: Math.PI * 7 + (Math.PI * progress), duration: 0.1 });
+                            }
+                        }
+                    });
+                }
+            });
         }
 
         // --- Resize ---
