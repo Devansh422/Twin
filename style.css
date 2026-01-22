@@ -25,7 +25,7 @@
 	--padding: 1rem;
 }
 
-body{
+.main-container{
 	position: relative;
 	height: fit-content;
 	width:100%;
@@ -168,12 +168,13 @@ img{
 .features-slider {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   overflow: hidden;
   perspective: 3000px;
   overscroll-behavior: none;
   -webkit-user-select: none;
   user-select: none;
+  overflow: visible;
 }
 
 .features-slider.carousel-mode {
@@ -297,6 +298,7 @@ img{
 
 .work{
   padding: 5rem;
+  padding-bottom: 0;
   width: 100%;
   display: flex;
   align-items: center;
@@ -419,4 +421,98 @@ img{
 
 .products .product-list .product .content .content-detail{
   font-size: 1.2rem;
+}
+
+
+
+
+@media (max-width: 1000px){
+  .hero-content h1{
+    font-size: 2rem;
+  }
+  .hero-content .sub-text{
+    font-size: 1rem;
+  }
+  .about .about-container .about-text{
+    font-size: 1.4rem;
+  }
+  .numbers .num-1 .counter-item{
+    font-size: 4rem;
+  }
+  .numbers .num-1 h2{
+    font-size: 1.7rem;
+  }
+  .numbers .num-1 .details{
+    font-size: 1rem;
+  }
+  .products .products-container .products-heading{
+    font-size: 2.4rem;
+  }
+  .products .products-container .products-details{
+    font-size: 1rem;
+  }
+  .products .product-list .product .content .content-heading{
+    font-size: 1.2rem;
+  }
+  .products .product-list .product .content .content-detail{
+    font-size: 1rem;
+  }
+}
+
+
+@media (max-width: 500px){
+  .hero-content h1{
+    font-size: 1.3rem;
+  }
+  .hero-content .sub-text{
+    font-size: 1rem;
+  }
+  .about{
+    padding: 2rem;
+  }
+  .about .about-container{
+    flex-direction: column;
+  }
+  .about .about-container .about-text{
+    width: 100%;
+  }
+  .about .about-container .about-details{
+    font-size: 1rem;
+  }
+
+  .numbers{
+    padding: 2rem;
+    flex-direction: column;
+  }
+
+  .work{
+    padding: 2rem;
+    padding-bottom: 2rem;
+  }
+  .work h2{
+    font-size: 1.2rem;
+  }
+  .work h1{
+    font-size: 1.5rem;
+    width: 100%;
+  }
+  .work .details{
+    width: 100%;
+    font-size: 1rem;
+  }
+  .products{
+    padding: 2rem;
+  }
+  .products h2{
+    font-size: 1.2rem;
+  }
+  .products .products-wrapper{
+    flex-direction: column;
+  }
+  .products .products-wrapper .products-container .products-heading{
+    font-size: 1.5rem;
+  }
+  .features-slider{
+    display: none;
+  }
 }

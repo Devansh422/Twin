@@ -46,7 +46,34 @@
 	</nav>
 
 
-  <div class="main-container">
+    <!-- Main container: all page content (except nav and footer) will be moved here -->
+    <main id="main-container"></main>
+
+    <!-- mover script: moves all body children (except nav/footer and this script) into #main-container -->
+    <script data-main-mover="1">
+      document.addEventListener('DOMContentLoaded', () => {
+        const body = document.body;
+        const nav = body.querySelector('nav');
+        const footer = body.querySelector('footer');
+        const moverScript = body.querySelector('script[data-main-mover]');
+
+        let main = document.getElementById('main-container');
+        if (!main) {
+          main = document.createElement('main');
+          main.id = 'main-container';
+          if (nav && nav.parentNode) nav.parentNode.insertBefore(main, nav.nextSibling);
+          else body.insertBefore(main, body.firstChild);
+        }
+
+        // Snapshot children to avoid live-collection issues
+        const children = Array.from(body.children);
+        children.forEach(child => {
+          if (child === nav || child === footer || child === main || child === moverScript) return;
+          main.appendChild(child);
+        });
+      });
+    </script>
+	<!-- Hero Section with Background -->
 	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
 		<video id="heroVideo" autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
 			<source src="./assets/hero-video.mp4" type="video/mp4">
@@ -149,7 +176,7 @@
             </div>
     </div>
   </section>
-</div>
+
 	<footer>
 		<div class="top">
 			<div class="logo">

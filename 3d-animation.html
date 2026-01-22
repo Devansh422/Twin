@@ -40,7 +40,7 @@ body{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	font-family: "base";
+    font-family: 'base';
 	overflow-x: hidden;
   max-width: 2000px;
 }
@@ -113,6 +113,8 @@ body{
                 justify-content: center;
                 background-color: #f5f5f5;
                 pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
             }
             #threejs-viewport {
                 display: block;
@@ -147,14 +149,15 @@ body{
                 scroll-snap-stop: always;
             }
 
-            .content-panel h1 {font-family:"Heading"; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
-            .content-panel p { font-family:"base"; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 20px; color: white; line-height: 1.6; }
-            .content-panel .brand-description { font-size: 1.1rem; line-height: 1.7; max-width: 90%; margin-top: 30px; }
+            .content-panel h1 {font-family: 'heading'; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
+            .content-panel p { font-family: 'base'; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 8px; color: white; line-height: 1.45; }
+            .content-panel .brand-description { font-size: 1.1rem; line-height: 1.6; max-width: 90%; margin-top: 8px; }
             .reveal-inner { will-change: transform, opacity; }
             .primary-label { color: white; font-family:"Heading"; }
             .secondary-label { color: white; font-family:"Heading"; }
             
             @media (max-width: 1024px) {
+                body { justify-content: flex-start; }
                 #animation-container-main {
                     flex-direction: column;
                 }
@@ -166,13 +169,47 @@ body{
                     width: 100%;
                     height: 50vh;
                     left: 0;
-                    bottom: 0;
-                    top: auto;
+                    top: 0;
+                    bottom: auto;
+                    z-index: 10;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #f5f5f5;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+                /* ensure the scrollable content starts below the fixed canvas */
+                .scrollable-sections {
+                    padding-top: 50vh;
                 }
                 .content-panel {
-                    min-height: 50vh;
+                    min-height: 100vh;
                     height: 100vh;
+                    position: relative;
+                    padding: 0 8vw;
+                    font-size: 1.1rem;
+                    align-items: flex-start;
+                    text-align: center;
+                    justify-content: flex-start;
                 }
+                /* place the reveal content centered inside the lower 50% of the panel */
+                .content-panel .reveal-inner {
+                    position: absolute;
+                    left: 50%;
+                    top: 75%; /* nudge a bit higher so reveal centers in bottom 50% */
+                    transform: translate(-50%, -50%);
+                    width: calc(100% - 16vw);
+                    max-width: 720px;
+                    box-sizing: border-box;
+                    padding: 0;
+                }
+                .content-panel .reveal-inner p { margin-top: 6px; margin-bottom: 6px; }
+                .content-panel h1 { font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.15; }
+                .content-panel p { font-size: clamp(0.95rem, 3.2vw, 1.2rem); }
+                .content-panel .brand-description { font-size: 0.95rem; max-width: 95%; }
+                .reveal-inner { width: 100%; }
             }
         `;
         const dynamicStyleElement = document.createElement("style");
@@ -213,7 +250,7 @@ body{
                         <div class="reveal-inner">
                             <h1 class="animate-text">Shine That You</h1>
                             <p>Can Feel.</p>
-                            <p class="brand-description">Evershine is a premium car care brand dedicated to preserving the beauty, performance, and value of your vehicle. Our advanced range of car care products is expertly formulated to clean, protect, and enhance every surface, ensuring professional-grade results with every use. Trusted by car enthusiasts and professionals alike, Evershine helps keep vehicles looking pristine, well-maintained, and showroom-ready.</p>
+                            <p class="brand-description">Evershine is a premium car care brand offering advanced products that clean, protect, and enhance every surface of your vehicle. Trusted by enthusiasts and professionals, Evershine ensures lasting shine, performance, and showroom-ready results.</p>
                         </div>
                     </div>
                     <div class="content-panel">
@@ -247,7 +284,8 @@ body{
         // --- Scene Setup ---
         const threeScene = new THREE.Scene();
         
-        const perspectiveCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        // set a neutral aspect for now; we'll update it after we size the canvas
+        const perspectiveCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
         perspectiveCamera.position.set(0, 0, 5);
 
         const webglRenderer = new THREE.WebGLRenderer({ 
@@ -255,12 +293,22 @@ body{
             antialias: true, 
             alpha: true 
         });
-        webglRenderer.setSize(window.innerWidth, window.innerHeight);
-        webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         webglRenderer.shadowMap.enabled = true;
         webglRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
         webglRenderer.toneMapping = THREE.ACESFilmicToneMapping;
         webglRenderer.toneMappingExposure = 1.2;
+
+        // Resize helper: make renderer match the actual canvas CSS size (important on mobile when canvas is 50vh)
+        function resizeRendererToDisplaySize() {
+            const width = renderCanvas.clientWidth || window.innerWidth;
+            const height = renderCanvas.clientHeight || window.innerHeight;
+            // protect against zero height
+            const safeHeight = Math.max(1, height);
+            perspectiveCamera.aspect = Math.max(0.0001, width / safeHeight);
+            perspectiveCamera.updateProjectionMatrix();
+            webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            webglRenderer.setSize(width, safeHeight, false);
+        }
 
         // --- HDR Environment Lighting ---
         const rgbeLoader = new RGBELoader();
@@ -375,56 +423,81 @@ body{
         // --- Animation Logic ---
         function initializeScrollAnimation() {
             const panels = document.querySelectorAll('.content-panel');
+            const isMobile = window.matchMedia('(max-width: 1024px)').matches;
 
-            // Pin each text panel to the top and reveal its content as it becomes active
+            // Pin desktop panels; use simpler non-pinning reveals on mobile so content sits below fixed canvas
             panels.forEach((panel, index) => {
                 const revealInner = panel.querySelector('.reveal-inner');
                 const isLastPanel = index === panels.length - 1;
 
                 // ensure starting state (off and slightly down)
-                gsap.set(revealInner, { y: 40, opacity: 0 });
+                gsap.set(revealInner, { y: isMobile ? 30 : 40, opacity: 0 });
 
-                ScrollTrigger.create({
-                    trigger: panel,
-                    start: 'top top',
-                    end: isLastPanel ? 'bottom bottom' : 'bottom top',
-                    pin: true,
-                    pinSpacing: false,
-                    onEnter: () => {
-                        // incoming panel reveals from below
-                        gsap.fromTo(revealInner, 
-                            { y: 40, opacity: 0 }, 
-                            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
-                        );
-                    },
-                    onLeave: () => {
-                        // scroll down: current panel fades up/out to reveal next
-                        gsap.to(revealInner, { 
-                            y: -40, 
-                            opacity: 0, 
-                            duration: 0.5, 
-                            ease: 'power2.in',
-                            overwrite: true 
-                        });
-                    },
-                    onEnterBack: () => {
-                        // scrolling up back into panel: reveal from above
-                        gsap.fromTo(revealInner, 
-                            { y: -40, opacity: 0 }, 
-                            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
-                        );
-                    },
-                    onLeaveBack: () => {
-                        // scrolling up away from panel: fade down to reveal previous
-                        gsap.to(revealInner, { 
-                            y: 40, 
-                            opacity: 0, 
-                            duration: 0.5, 
-                            ease: 'power2.in',
-                            overwrite: true 
-                        });
-                    }
-                });
+                // On mobile: pin the panel at the top of the viewport so
+                // .reveal-inner (absolute top:75%) sits in the lower 50% area
+                if (isMobile) {
+                    // Mobile: create a scrubbed timeline that pins the panel and
+                    // animates the reveal into the lower 50% (reveal-inner at top:72%)
+                    gsap.set(revealInner, { y: 30, opacity: 0 });
+                    const mobileTL = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: true,
+                            pin: true,
+                            pinSpacing: false
+                        }
+                    });
+
+                    // timeline: fade in, hold visible, then fade out smoothly
+                    mobileTL.to(revealInner, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.35 });
+                    // hold visible for a portion of the scroll (noop tween keeps opacity at 1)
+                    mobileTL.to(revealInner, { y: 0, opacity: 1, duration: 0.3 });
+                    // fade out upward
+                    mobileTL.to(revealInner, { y: -30, opacity: 0, ease: 'power2.in', duration: 0.35 });
+                } else {
+                    const start = 'top top';
+                    const end = isLastPanel ? 'bottom bottom' : 'bottom top';
+
+                    ScrollTrigger.create({
+                        trigger: panel,
+                        start: start,
+                        end: end,
+                        pin: true,
+                        pinSpacing: false,
+                        onEnter: () => {
+                            gsap.fromTo(revealInner,
+                                { y: 40, opacity: 0 },
+                                { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
+                            );
+                        },
+                        onLeave: () => {
+                            gsap.to(revealInner, {
+                                y: -40,
+                                opacity: 0,
+                                duration: 0.25,
+                                ease: 'power2.in',
+                                overwrite: true
+                            });
+                        },
+                        onEnterBack: () => {
+                            gsap.fromTo(revealInner,
+                                { y: -40, opacity: 0 },
+                                { y: 0, opacity: 1, duration: 0.2, ease: 'power2.out', overwrite: true }
+                            );
+                        },
+                        onLeaveBack: () => {
+                            gsap.to(revealInner, {
+                                y: 40,
+                                opacity: 0,
+                                duration: 0.25,
+                                ease: 'power2.in',
+                                overwrite: true
+                            });
+                        }
+                    });
+                }
             });
 
             // Control canvas visibility based on main-display-area scroll position
@@ -631,14 +704,18 @@ body{
                     ease: 'none'
                 }, "tapeRollOut");
             }
+            // Ensure ScrollTrigger recalculates sizes/positions after setup
+            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         }
 
         // --- Resize ---
         window.addEventListener('resize', () => {
-            perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
-            perspectiveCamera.updateProjectionMatrix();
-            webglRenderer.setSize(window.innerWidth, window.innerHeight);
+            resizeRendererToDisplaySize();
+            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         });
+
+        // initial sizing so the renderer matches the canvas element (handles mobile 50vh)
+        resizeRendererToDisplaySize();
 
         // --- Loop ---
         function renderLoop() {
@@ -647,30 +724,6 @@ body{
         }
         renderLoop();
     </script>
-
-<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-
-<script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Initialize Lenis Smooth Scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
-
-</script>
 
 
 </body>
