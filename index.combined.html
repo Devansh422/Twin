@@ -738,6 +738,46 @@ window.ASSETS = {
     `
   };
 
+  function setupBrandSlider() {
+    const track = document.getElementById("track");
+    if (!track) return;
+
+    const imageFolder = "brand/";
+    const totalImages = 6;
+
+    function createImage(index) {
+      const img = document.createElement("img");
+      img.src = `${imageFolder}img-${index}.jpg`;
+      img.alt = `Brand ${index}`;
+      img.classList.add("brand-logo");
+      return img;
+    }
+
+    // Load initial set
+    for (let i = 1; i <= totalImages; i++) {
+      track.appendChild(createImage(i));
+    }
+    // Clone for infinite loop
+    for (let i = 1; i <= totalImages; i++) {
+      track.appendChild(createImage(i));
+    }
+
+    if (window.gsap) {
+      let tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 20, 
+        ease: "none",
+        repeat: -1
+      });
+
+      const container = document.querySelector(".slider-container");
+      if (container) {
+        container.addEventListener("mouseenter", () => tween.pause());
+        container.addEventListener("mouseleave", () => tween.play());
+      }
+    }
+  }
+
   function injectAll() {
     Object.keys(sections).forEach(id => {
       const el = document.getElementById(id);
@@ -746,6 +786,7 @@ window.ASSETS = {
       el.innerHTML = sections[id];
       el.dataset.injected = '1';
     });
+    setupBrandSlider();
   }
 
   if (document.readyState === 'loading') {
@@ -2782,48 +2823,5 @@ init();
         });
     </script>
 
-     <script>
-        // CONFIGURATION
-        const imageFolder = "brand/";
-        const totalImages = 5; // Change this to the actual number of images you have (img-1 to img-5)
-        const track = document.getElementById("track");
-
-        // 1. Function to create an image element
-        function createImage(index) {
-            const img = document.createElement("img");
-            img.src = `${imageFolder}img-${index}.jpg`;
-            img.alt = `Brand ${index}`;
-            img.classList.add("brand-logo");
-            return img;
-        }
-
-        // 2. Load the initial set of images
-        for (let i = 1; i <= totalImages; i++) {
-            track.appendChild(createImage(i));
-        }
-
-        // 3. CLONE the images (Duplicate the set)
-        // We duplicate the exact same set so that when the first set scrolls out, 
-        // the second set is exactly where the first one started.
-        for (let i = 1; i <= totalImages; i++) {
-            track.appendChild(createImage(i));
-        }
-
-        // 4. Animate with GSAP
-        // We move the track to -50% because the track now holds 2 sets of images.
-        // Moving -50% means moving exactly the length of 1 set.
-        let tween = gsap.to(track, {
-            xPercent: -50, 
-            duration: 10, // Adjust speed (higher = slower)
-            ease: "none", // Linear movement is crucial for constant speed
-            repeat: -1    // Infinite repeat
-        });
-
-        // Optional: Pause on hover
-        const container = document.querySelector(".slider-container");
-        container.addEventListener("mouseenter", () => tween.pause());
-        container.addEventListener("mouseleave", () => tween.play());
-
-    </script>
 </body>
 </html>

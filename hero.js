@@ -81,6 +81,46 @@
     `
   };
 
+  function setupBrandSlider() {
+    const track = document.getElementById("track");
+    if (!track) return;
+
+    const imageFolder = "brand/";
+    const totalImages = 6;
+
+    function createImage(index) {
+      const img = document.createElement("img");
+      img.src = `${imageFolder}img-${index}.jpg`;
+      img.alt = `Brand ${index}`;
+      img.classList.add("brand-logo");
+      return img;
+    }
+
+    // Load initial set
+    for (let i = 1; i <= totalImages; i++) {
+      track.appendChild(createImage(i));
+    }
+    // Clone for infinite loop
+    for (let i = 1; i <= totalImages; i++) {
+      track.appendChild(createImage(i));
+    }
+
+    if (window.gsap) {
+      let tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 20, 
+        ease: "none",
+        repeat: -1
+      });
+
+      const container = document.querySelector(".slider-container");
+      if (container) {
+        container.addEventListener("mouseenter", () => tween.pause());
+        container.addEventListener("mouseleave", () => tween.play());
+      }
+    }
+  }
+
   function injectAll() {
     Object.keys(sections).forEach(id => {
       const el = document.getElementById(id);
@@ -89,6 +129,7 @@
       el.innerHTML = sections[id];
       el.dataset.injected = '1';
     });
+    setupBrandSlider();
   }
 
   if (document.readyState === 'loading') {
