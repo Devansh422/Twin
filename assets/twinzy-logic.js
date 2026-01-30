@@ -77,7 +77,7 @@ function initDynamicProducts() {
 
         card.innerHTML = `
             <div class="product-image-wrapper">
-                <img src="${imgSrc}" alt="${product.name}" class="product-img" loading="lazy">
+                <img src="${imgSrc}" alt="${product.name}" class="product-img">
                 <div class="product-overlay"></div>
             </div>
             <div class="product-info">
@@ -255,6 +255,47 @@ function attachEventListeners() {
 }
 
 function animateCardsEntrance() {
+    // Check if preloader exists
+    const preloader = document.getElementById('loading-overlay');
+    
+    // Check helper
+    const checkAllLoaded = () => {
+        if (preloader && preloader.style.opacity !== '0') {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                if (preloader.parentElement) preloader.remove();
+            }, 500);
+        }
+    };
+
+    // Safety timeout: force remove after 5 seconds to prevent infinite spinning
+    setTimeout(checkAllLoaded, 5000);
+
+    // Wait for all images in the grid to load before removing preloader
+    const gridImages = document.querySelectorAll('.products-grid img');
+    let loadedCount = 0;
+    const totalImages = gridImages.length;
+
+    if (totalImages === 0) {
+        checkAllLoaded();
+    } else {
+        gridImages.forEach(img => {
+            if (img.complete) {
+                loadedCount++;
+                if (loadedCount === totalImages) checkAllLoaded();
+            } else {
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === totalImages) checkAllLoaded();
+                };
+                img.onerror = () => {
+                    loadedCount++; // Count errors as loaded to avoid sticking
+                    if (loadedCount === totalImages) checkAllLoaded();
+                };
+            }
+        });
+    }
+
     if (!window.gsap || !window.ScrollTrigger) return;
     
     gsap.utils.toArray('.product-card').forEach((card, index) => {
