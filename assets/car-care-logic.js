@@ -1,0 +1,464 @@
+const productsData = {
+    "TWO WHEELER BIKE": [
+        {
+            "name": "ALL-IN-ONE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/1. ALL-IN-ONE/ALL-IN-ONE 500ML.jpg",
+            "category": "TWO WHEELER BIKE"
+        },
+        {
+            "name": "ADHESIVE CHAIN LUBE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/2. ADHESIVE CHAIN LUBE/ADHESIVE CHAIN LUBE 500ML.jpg",
+            "category": "TWO WHEELER BIKE"
+        },
+        {
+            "name": "BRAKE CLEANER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/3. BRAKE CLEANER/BRAKE CLEANER 500ML.jpg",
+            "category": "TWO WHEELER BIKE"
+        },
+        {
+            "name": "CHAIN CLEANER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/4. CHAIN CLEANER/CHAIN CLEANER 500ML.jpg",
+            "category": "TWO WHEELER BIKE"
+        },
+        {
+            "name": "SILENCER COATING",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/5. SILENCER COATING/SILENCER COATING 500ML.jpg",
+            "category": "TWO WHEELER BIKE"
+        },
+        {
+            "name": "TYRE SHINER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/6. TYRE SHINER/500ML PACK SIZE.png",
+            "category": "TWO WHEELER BIKE"
+        },
+        {
+            "name": "VINYL CARE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/1.TWO WHEELER BIKE/7. VINYL CARE/1.png",
+            "category": "TWO WHEELER BIKE"
+        }
+    ],
+    "FOUR WHEELER CAR CARE PRODUCTS": [
+        {
+            "name": "AUTO BODY SHINER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/1. AUTO BODY SHINER/500ML PACK SIZE.png",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "SPRAY GREASE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/10.SPRAY GREASE/SPRAY GREASE IMG 1.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "RUBBER CARE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/11. RUBBER CARE/RUBBER CAR CARE IMG1.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "RODENT REPELLENT",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/12. RODENT REPELLENT/RODEMT REPELLENT IMG 1.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "AC DISINFECTANT",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/13. AC DISINFECTANT/1.png",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "ELECTRICAL CONTACT CLEANER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/14. ELECTRICAL CONTACT CLEANER/500ml.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "UNDERBODY ANTI-RUST COATING",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/15. UNDERBODY ANTI-RUST COATING/Under-Body-Anti-Rust-Coating 1 LTR PACK SIZE.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "CAR WASH SHAMPOO",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/16. CAR WASH SHAMPOO/1ltr pack size.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "COOLANT",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/17. COOLANT/1LTR PACK SIZE.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "VINYL CARE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/18. VINYL CARE/1.png",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "DASHNOARD SHINER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/2. DASHNOARD SHINER/500ML PACK SIZE.png",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "TYRE SHINER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/3. TYRE SHINER/500ML PACK SIZE.png",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "ALL-IN-ONE (Rust-Off)",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/4. ALL-IN-ONE (Rust-Off)/ALL-IN-ONE 500ML.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "ENGINE LACQUER COATING",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/5. ENGINE LACQUER COATING/500ML.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "BATTERY TERMINAL COATING",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/6. BATTERY TERMINAL COATING/500ML.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "THROTLLE BODY CLEANER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/7. THROTLLE BODY CLEANER/THROTTLE BODY IMG 1.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "SILENCER COATING",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/8. SILENCER COATING/SILENCER COATING IMG1.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        },
+        {
+            "name": "BRAKE CLEANER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/2.FOUR WHEELER CAR CARE PRODUCTS/9. BRAKE CLEANER/BRAKE CLEANER.jpg",
+            "category": "FOUR WHEELER CAR CARE PRODUCTS"
+        }
+    ],
+    "ADDITIVES": [
+        {
+            "name": "ENGINE OIL ADDITIVES",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/3. ADDITIVES/1. ENGINE OIL ADDITIVES/Engine-Oil-Additive.jpg",
+            "category": "ADDITIVES"
+        },
+        {
+            "name": "PETROL ADDITIVES",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/3. ADDITIVES/2. PETROL ADDITIVES/Petrol-Additive.jpg",
+            "category": "ADDITIVES"
+        },
+        {
+            "name": "DIESEL ADDITIVES",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/3. ADDITIVES/3. DIESEL ADDITIVES/Diesel-Additive.jpg",
+            "category": "ADDITIVES"
+        },
+        {
+            "name": "ENGINE OIL FLUSH",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/3. ADDITIVES/4. ENGINE OIL FLUSH/ENGINE OIL FLUSH 250ML IMG-1.jpg",
+            "category": "ADDITIVES"
+        },
+        {
+            "name": "RADIATOR FLUSH",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/3. ADDITIVES/5. RADIATOR FLUSH/Radiator-Flush.jpg",
+            "category": "ADDITIVES"
+        },
+        {
+            "name": "WIND SHIELD CLEANER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/3. ADDITIVES/6. WIND SHIELD CLEANER/Wind-Shield-Cleaner.jpg",
+            "category": "ADDITIVES"
+        }
+    ],
+    "SPRAY PAINTS": [
+        {
+            "name": "1",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/4. SPRAY PAINTS/1.png",
+            "category": "SPRAY PAINTS"
+        }
+    ],
+    "BULK CONSUMABLES": [
+        {
+            "name": "Car-Shampoo-Bulk",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/5. BULK CONSUMABLES/Car-Shampoo-Bulk.jpg",
+            "category": "BULK CONSUMABLES"
+        },
+        {
+            "name": "COOLANT BULK",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/5. BULK CONSUMABLES/COOLANT BULK.jpg",
+            "category": "BULK CONSUMABLES"
+        },
+        {
+            "name": "Engine-Lacquer-Coating-Bulk",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/5. BULK CONSUMABLES/Engine-Lacquer-Coating-Bulk.jpg",
+            "category": "BULK CONSUMABLES"
+        },
+        {
+            "name": "Tyre-Shiner-Bulk",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/5. BULK CONSUMABLES/Tyre-Shiner-Bulk.jpg",
+            "category": "BULK CONSUMABLES"
+        },
+        {
+            "name": "Vinyl-Protector-Bulk",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/2. EVERSHINE/EVERSHINE CAR CARE PRODUCTS/5. BULK CONSUMABLES/Vinyl-Protector-Bulk.jpg",
+            "category": "BULK CONSUMABLES"
+        }
+    ]
+};
+
+// Flatten to array for easier handling if needed, or iterate
+const allProducts = [];
+Object.entries(productsData).forEach(([category, products]) => {
+    products.forEach(p => {
+        allProducts.push({
+            ...p,
+            category: category,
+            rawCategory: category,
+            filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+        });
+    });
+});
+
+function initDynamicProducts() {
+    const filtersContainer = document.querySelector('.product-filters');
+    const gridContainer = document.querySelector('.products-grid');
+    const countElement = document.getElementById('product-count');
+
+    if (!filtersContainer || !gridContainer) return;
+
+    // Clear existing
+    filtersContainer.innerHTML = '';
+    gridContainer.innerHTML = '';
+
+    // 1. Generate Filter Buttons
+    const categories = Object.keys(productsData);
+    
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-tag active';
+    allBtn.setAttribute('data-filter', 'all');
+    allBtn.textContent = 'All Products';
+    filtersContainer.appendChild(allBtn);
+
+    categories.forEach(cat => {
+        const slug = cat.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const btn = document.createElement('button');
+        btn.className = 'filter-tag';
+        btn.setAttribute('data-filter', slug);
+        const displayName = cat.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        
+        btn.textContent = displayName.replace(' And ', ' & ');
+        filtersContainer.appendChild(btn);
+    });
+
+    // 2. Generate Product Cards
+    allProducts.forEach((product, index) => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.setAttribute('data-product', index + 1);
+        card.setAttribute('data-category', product.filterSlug);
+        
+        // Image path handling
+        const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
+        const imgSrc = './' + encodedPath;
+
+        card.innerHTML = `
+            <div class="product-image-wrapper">
+                <img src="${imgSrc}" alt="${product.name}" class="product-img" loading="lazy">
+                <div class="product-overlay"></div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-category">${product.rawCategory.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</p>
+            </div>
+        `;
+        gridContainer.appendChild(card);
+    });
+
+    // Update count
+    if (countElement) countElement.textContent = allProducts.length;
+
+    // Re-initialize event listeners
+    attachEventListeners();
+    
+    // Initial animation for cards
+    animateCardsEntrance();
+}
+
+function attachEventListeners() {
+    const filterTags = document.querySelectorAll('.filter-tag');
+    const productCards = document.querySelectorAll('.product-card');
+    const productCountElement = document.getElementById('product-count');
+
+    function filterProducts(category) {
+        let visibleCount = 0;
+
+        productCards.forEach((card, index) => {
+            const cardCategory = card.getAttribute('data-category');
+            
+            if (window.gsap) gsap.killTweensOf(card);
+            
+            if (category === 'all' || cardCategory === category) {
+                visibleCount++;
+                card.style.display = 'block'; 
+                if (window.gsap) {
+                    gsap.fromTo(card, 
+                        {
+                            opacity: 0,
+                            x: -20,
+                            pointerEvents: 'auto'
+                        },
+                        {
+                            opacity: 1,
+                            x: 0,
+                            duration: 0.4,
+                            ease: 'power3.out',
+                            delay: index * 0.03
+                        }
+                    );
+                }
+            } else {
+                if (window.gsap) {
+                   gsap.to(card, {
+                        opacity: 0,
+                        x: 20,
+                        duration: 0.3,
+                        ease: 'power2.in',
+                        onComplete: () => {
+                             card.style.display = 'none';
+                        }
+                    });
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        });
+
+        if (productCountElement) {
+             if (window.gsap) {
+                gsap.killTweensOf(productCountElement);
+                gsap.to(productCountElement, {
+                    innerText: visibleCount,
+                    duration: 0.4,
+                    snap: { innerText: 1 },
+                    ease: 'power2.out'
+                });
+            } else {
+                productCountElement.textContent = visibleCount;
+            }
+        }
+    }
+
+    filterTags.forEach((tag) => {
+        tag.addEventListener('click', () => {
+            filterTags.forEach((t) => t.classList.remove('active'));
+            tag.classList.add('active');
+            const filterCategory = tag.getAttribute('data-filter');
+            filterProducts(filterCategory);
+        });
+
+        if (window.gsap) {
+            tag.addEventListener('mouseenter', () => {
+                gsap.to(tag, { scale: 1.05, duration: 0.2, ease: 'back.out(2)' });
+            });
+            tag.addEventListener('mouseleave', () => {
+                if (!tag.classList.contains('active')) {
+                    gsap.to(tag, { scale: 1, duration: 0.2, ease: 'power2.out' });
+                }
+            });
+        }
+    });
+
+    productCards.forEach((card) => {
+        if (!window.gsap) return;
+        const img = card.querySelector('.product-img');
+        const overlay = card.querySelector('.product-overlay');
+        const productName = card.querySelector('.product-name');
+        const productCategory = card.querySelector('.product-category');
+        const imageWrapper = card.querySelector('.product-image-wrapper');
+
+        // Removed the scale animation as requested
+        const hoverTimeline = gsap.timeline({ paused: true });
+
+        hoverTimeline
+            // .to(card, {
+            //     scale: 1.05,
+            //     boxShadow: '0 20px 60px rgba(220, 20, 60, 0.3)',
+            //     duration: 0.4,
+            //     ease: 'power2.out'
+            // }, 0)
+            .to(img, {
+                // scale: 1.2,
+                rotation: 1, // Slight rotation only
+                duration: 0.6,
+                ease: 'power2.out'
+            }, 0)
+            .to(overlay, {
+                opacity: 0.7,
+                duration: 0.4,
+                ease: 'power2.out'
+            }, 0)
+            .to(productName, {
+                y: -2,
+                color: '#dc143c',
+                duration: 0.3,
+                ease: 'back.out(1.7)'
+            }, 0.1)
+            .to(productCategory, {
+                y: -2,
+                color: '#dc143c',
+                duration: 0.3,
+                ease: 'back.out(1.7)'
+            }, 0.15);
+
+        card.addEventListener('mouseenter', () => hoverTimeline.play());
+        card.addEventListener('mouseleave', () => hoverTimeline.reverse());
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Reduced intensity by increasing the divisor from 10 to 50
+            const rotateX = (y - centerY) / 50;
+            const rotateY = (centerX - x) / 50;
+
+            gsap.to(imageWrapper, {
+                rotationX: rotateX,
+                rotationY: rotateY,
+                transformPerspective: 1000,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(imageWrapper, {
+                rotationX: 0,
+                rotationY: 0,
+                duration: 0.5,
+                ease: 'power2.out'
+            });
+        });
+    });
+}
+
+function animateCardsEntrance() {
+    if (!window.gsap || !window.ScrollTrigger) return;
+    
+    gsap.utils.toArray('.product-card').forEach((card, index) => {
+        // Disabled entrance animation as requested
+        // gsap.from(card, {
+        //     scrollTrigger: {
+        //         trigger: card,
+        //         start: 'top 90%',
+        //         end: 'top 60%',
+        //         toggleActions: 'play none none reverse'
+        //     },
+        //     y: 80,
+        //     opacity: 0,
+        //     rotation: -5,
+        //     duration: 0.8,
+        //     delay: (index % 5) * 0.1, 
+        //     ease: 'power3.out'
+        // });
+        gsap.set(card, { opacity: 1, y: 0, rotation: 0 });
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDynamicProducts);
+} else {
+    initDynamicProducts();
+}

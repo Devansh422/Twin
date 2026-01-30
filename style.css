@@ -35,8 +35,7 @@
 	font-family: "base";
 	overflow-x: hidden;
   max-width: 2000px;
-  left:50%;
-  transform: translateX(-50%);
+  margin: 0 auto;
 }
 
 img{

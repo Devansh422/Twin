@@ -1,0 +1,568 @@
+<!-- 
+    WORDPRESS ELEMENTOR CUSTOM CODE SNIPPET - V3 (Robust Modules)
+    
+    CRITICAL STEP: 
+    You MUST update the URLs in the "ASSETS" section below. 
+    The animation WILL NOT WORK if you do not replace the placeholder URLs 
+    with the actual links to your files in the WordPress Media Library.
+-->
+
+<!-- ES Module Shims -->
+<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+
+<!-- 
+    We are skipping the Import Map to avoid conflicts with other plugins.
+    We will use direct full URLs in the module script.
+-->
+
+<script type="module">
+    // --- IMPORTS (Fixed Versions to prevent conflicts) ---
+    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+    import { GLTFLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+    import { RGBELoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/RGBELoader.js';
+    import gsap from 'https://unpkg.com/gsap@3.12.5/index.js';
+    import ScrollTrigger from 'https://unpkg.com/gsap@3.12.5/ScrollTrigger.js';
+
+    // Register Plugin Immediately
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ============================================
+    // CONFIGURATION: UPDATE THESE URLS
+    // ============================================
+    // 🛑 STOP! YOU MUST UPDATE THESE URLS 🛑
+    const ASSETS = {
+        // Fonts
+        fontBase: 'https://twinindia.com/wp-content/uploads/VastagoGrotesk-Regular.woff2', 
+        fontHeading: 'https://twinindia.com/wp-content/uploads/VastagoGrotesk-SemiBold.woff2',
+        
+        // 3D Assets (Use HTTPS URLs from your Media Library)
+        // Example: 'https://twinindia.com/wp-content/uploads/2026/01/neutral.hdr'
+        neutralHdr: './assets/neutral.hdr', 
+        blackCan: './assets/Black_Can.glb',
+        redCan: './assets/Red_Can.glb',
+        brownTape: './assets/Brown_Tape.glb'
+    };
+
+    var isTwin3DInitialized = false;
+
+    // Initialize Logic
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(initTwin3DAnimation, 100);
+    } else {
+        document.addEventListener("DOMContentLoaded", initTwin3DAnimation);
+    }
+
+    function initTwin3DAnimation() {
+        if (isTwin3DInitialized) return;
+
+        const mainDisplayArea = document.querySelector('#main-display-area');
+
+        if (!mainDisplayArea) {
+            setTimeout(initTwin3DAnimation, 500);
+            return;
+        }
+
+        isTwin3DInitialized = true;
+        
+        // --- 1. Inject CSS ---
+        const injectedStyles = `
+            /* Cleaned up styles for WordPress */
+            @font-face {
+                font-family: 'base';
+                src: url('${ASSETS.fontBase}') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'heading';
+                src: url('${ASSETS.fontHeading}') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+            #main-display-area {
+                --color: #ED1D21;
+                --padding: 1rem;
+                position: relative;
+                overflow: visible; 
+                width: 100%;
+                min-height: 100vh;
+            }
+            #animation-container-main {
+                position: relative;
+                width: 100%;
+                display: flex;
+                z-index: 2;
+                margin-top: 0;
+            }
+            #animation-container-main * {
+                box-sizing: border-box;
+            }
+            .left-content-side {
+                position: relative;
+                width: 50%;
+                background-color: transparent;
+                z-index: 3;
+            }
+            .right-canvas-side {
+                position: fixed;
+                top: 0;
+                left: 50%;
+                width: 50%;
+                height: 100vh;
+                z-index: 1; 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                filter: brightness(1.2); /* Slight brightness boost */
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            #threejs-viewport {
+                display: block;
+                width: 100%;
+                height: 100%;
+                outline: none;
+                pointer-events: none;
+            }
+            .scrollable-sections {
+                position: relative;
+                z-index: 3;
+                width: 100%;
+                background-color: var(--color);
+                scroll-snap-type: y mandatory;
+            }
+            .content-panel {
+                min-height: 100vh;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                font-size: 4rem;
+                pointer-events: auto;
+                width: 100%;
+                padding: 0 8vw;
+                box-sizing: border-box;
+                text-align: left;
+                overflow-wrap: break-word;
+                color: white;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
+            .content-panel h1 { font-family: 'heading', sans-serif; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
+            .content-panel p { font-family: 'base', sans-serif; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 8px; color: white; line-height: 1.45; }
+            .content-panel .brand-description { font-size: 1.1rem; line-height: 1.6; max-width: 90%; margin-top: 8px; }
+            .reveal-inner { will-change: transform, opacity; }
+            .primary-label { color: white; font-family:"Heading", sans-serif; }
+            .secondary-label { color: white; font-family:"Heading", sans-serif; }
+            
+            @media (max-width: 1024px) {
+                #animation-container-main {
+                    flex-direction: column;
+                }
+                .left-content-side {
+                    width: 100%;
+                }
+                .right-canvas-side {
+                    position: fixed;
+                    width: 100%;
+                    height: 50vh;
+                    left: 0;
+                    top: 0;
+                    bottom: auto;
+                    z-index: 10;
+                    opacity: 0;
+                }
+                .scrollable-sections {
+                    padding-top: 50vh;
+                }
+                .content-panel {
+                    min-height: 100vh;
+                    height: 100vh;
+                    width: 100%;
+                    position: relative;
+                    padding: 0 8vw;
+                    font-size: 1.1rem;
+                    align-items: flex-start;
+                    text-align: center;
+                    justify-content: flex-start;
+                }
+                .content-panel .reveal-inner {
+                    position: absolute;
+                    left: 50%;
+                    top: 75%;
+                    transform: translate(-50%, -50%);
+                    width: calc(100% - 16vw);
+                    max-width: 720px;
+                    padding: 0;
+                }
+                .content-panel h1 { font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.15; }
+                .content-panel p { font-size: clamp(0.95rem, 3.2vw, 1.2rem); }
+                .content-panel .brand-description { font-size: 0.95rem; max-width: 95%; }
+                .reveal-inner { width: 100%; }
+            }
+        `;
+        const dynamicStyleElement = document.createElement("style");
+        dynamicStyleElement.innerText = injectedStyles;
+        document.head.appendChild(dynamicStyleElement);
+
+        // --- 2. Inject HTML Structure ---
+        mainDisplayArea.innerHTML = `
+            <div id="animation-container-main">
+                <div class="left-content-side">
+                    <div class="scrollable-sections">
+                        <div class="content-panel">
+                            <div class="reveal-inner"><h1 class="animate-text">Discover Excellence</h1><p>Scroll to explore our journey</p></div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner"><h1 class="animate-text">SPRAYZET</h1><p class="animate-text">Industrial MRO<span class="primary-label"> Aerosols</span></p></div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner">
+                                <h1 class="animate-text">Engineered to Perform.</h1>
+                                <p>Built to Endure.</p>
+                                <p class="brand-description">SPRAYZET by Twin Tech provides high-performance, eco-friendly industrial maintenance aerosols for equipment care, lubrication, and protection. Designed for diverse industries, these solutions improve durability, enhance performance, reduce downtime, and support sustainable maintenance operations.</p>
+                            </div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner"><h1 class="animate-text">From Industry to Elegance</h1><p>Where Performance Meets Perfection</p></div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner"><h1 class="animate-text">EVERSHINE</h1><p>Car Care <span class="secondary-label">Products</span></p></div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner">
+                                <h1 class="animate-text">Shine That You</h1>
+                                <p>Can Feel.</p>
+                                <p class="brand-description">Evershine is a premium car care brand offering advanced products that clean, protect, and enhance every surface of your vehicle. Trusted by enthusiasts and professionals, Evershine ensures lasting shine, performance, and showroom-ready results.</p>
+                            </div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner"><h1 class="animate-text">Built to Bond</h1><p>Engineered to Hold</p></div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner"><h1 class="animate-text">TWIN TAPE</h1><p>Industrial <span class="primary-label">Adhesive Solutions</span></p></div>
+                        </div>
+                        <div class="content-panel">
+                            <div class="reveal-inner">
+                                <h1 class="animate-text">Bonds That Last.</h1>
+                                <p>Trust That Holds.</p>
+                                <p class="brand-description">Twin Tapes offers durable, high-performance self-adhesive tapes designed for both industrial and household applications. Engineered with strong, reliable adhesion, these tapes are suitable for packaging, sealing, insulation, repairs, and surface protection, delivering consistent performance and long-lasting results across a wide range of everyday and professional uses.</p>
+                            </div>
+                        </div>
+                        <div class="content-panel" style="opacity:0">
+                            <div class="reveal-inner"><h1 class="animate-text">Three Brands.</h1><p>One Vision of Excellence.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Create Canvas Container (Appended to Body to avoid Elementor transforms)
+        let canvasSideElement = document.getElementById('twin-3d-canvas-container');
+        if (!canvasSideElement) {
+            canvasSideElement = document.createElement('div');
+            canvasSideElement.id = 'twin-3d-canvas-container';
+            canvasSideElement.className = 'right-canvas-side';
+            canvasSideElement.innerHTML = '<canvas id="threejs-viewport"></canvas>';
+            document.body.appendChild(canvasSideElement);
+        }
+
+        // --- 3. Initialize 3D Scene ---
+        const renderCanvas = document.getElementById('threejs-viewport');
+        const threeScene = new THREE.Scene();
+        
+        const perspectiveCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        perspectiveCamera.position.set(0, 0, 5);
+
+        const webglRenderer = new THREE.WebGLRenderer({ 
+            canvas: renderCanvas,
+            antialias: true, 
+            alpha: true 
+        });
+        webglRenderer.shadowMap.enabled = true;
+        webglRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        webglRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        webglRenderer.toneMappingExposure = 1.2;
+
+        function resizeRendererToDisplaySize() {
+            const canvas = webglRenderer.domElement;
+            // Use actual display dimensions for aspect ratio to handle split-screen (50% width) correctly
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+            
+            if (width === 0 || height === 0) return;
+
+            perspectiveCamera.aspect = width / height;
+            perspectiveCamera.updateProjectionMatrix();
+            
+            webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            webglRenderer.setSize(width, height, false);
+        }
+
+        const rgbeLoader = new RGBELoader();
+        rgbeLoader.load(ASSETS.neutralHdr, function(texture) {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            threeScene.environment = texture;
+            threeScene.background = null; 
+        }, undefined, function(err) {
+            console.error("FAILED TO LOAD HDR:", ASSETS.neutralHdr, err);
+        });
+
+        const gltfModelLoader = new GLTFLoader();
+        let firstModel, secondModel, tapeModel;
+        const objectGroup = new THREE.Group();
+        threeScene.add(objectGroup);
+
+        const loadGltfAsset = (assetPath) => {
+            return new Promise((resolve, reject) => {
+                // Determine absolute URL if relative
+                // ... (Assuming user provides correct URLs now)
+                gltfModelLoader.load(assetPath, (gltfData) => {
+                    const loadedModel = gltfData.scene;
+                     loadedModel.traverse((meshNode) => {
+                        if (meshNode.isMesh) {
+                            meshNode.castShadow = true;
+                            meshNode.receiveShadow = true;
+                            if(meshNode.material) {
+                                meshNode.material.envMapIntensity = 1.0;
+                                meshNode.material.roughness = 0.3;
+                                meshNode.material.metalness = 0.3;
+                            }
+                        }
+                    });
+                    const boundingBox = new THREE.Box3().setFromObject(loadedModel);
+                    const dimensions = boundingBox.getSize(new THREE.Vector3());
+                    const largestDimension = Math.max(dimensions.x, dimensions.y, dimensions.z);
+                    const normalizedScale = 2.5 / largestDimension; 
+                    loadedModel.scale.set(normalizedScale, normalizedScale, normalizedScale);
+                    const centerPoint = boundingBox.getCenter(new THREE.Vector3());
+                    loadedModel.position.sub(centerPoint.multiplyScalar(normalizedScale));
+                    resolve(loadedModel);
+                }, undefined, (err) => {
+                    console.error("ERROR LOADING ASSET:", assetPath, err);
+                    reject(err);
+                });
+            });
+        };
+
+        // Load models using configured Assets
+        Promise.all([
+                loadGltfAsset(ASSETS.blackCan).catch(() => generateFallbackGeometry(0xff3333)),
+                loadGltfAsset(ASSETS.redCan).catch(() => generateFallbackGeometry(0x3388ff)),
+                loadGltfAsset(ASSETS.brownTape).catch(() => generateFallbackTape(0x996633))
+        ]).then(([primaryAsset, secondaryAsset, loadedTape]) => {
+            firstModel = primaryAsset;
+            secondModel = secondaryAsset;
+            tapeModel = loadedTape;
+
+            objectGroup.add(firstModel);
+            objectGroup.add(secondModel);
+            threeScene.add(tapeModel);
+
+            secondModel.visible = false;
+            secondModel.rotation.copy(firstModel.rotation);
+
+            // Initial State
+            objectGroup.position.y = -10; 
+            objectGroup.rotation.y = Math.PI;
+
+            // Tape Initial
+            tapeModel.position.set(-6, -1.5, 0);
+            tapeModel.rotation.z = 0;
+
+            initializeScrollAnimation();
+        });
+
+        function generateFallbackGeometry(colorHex) {
+            console.warn("Using Fallback Geometry for", colorHex.toString(16));
+            const cylinderGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2.5, 32);
+            const standardMaterial = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.2, roughness: 0.3 });
+            return new THREE.Mesh(cylinderGeometry, standardMaterial);
+        }
+
+        function generateFallbackTape(colorHex) {
+            console.warn("Using Fallback Tape");
+            const geo = new THREE.CylinderGeometry(0.6, 0.6, 0.4, 32);
+            const mat = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.15, roughness: 0.4 });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.rotation.x = Math.PI / 2;
+            return mesh;
+        }
+
+        function initializeScrollAnimation() {
+            const panels = mainDisplayArea.querySelectorAll('.content-panel');
+            const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+
+            panels.forEach((panel, index) => {
+                const revealInner = panel.querySelector('.reveal-inner');
+                const isLastPanel = index === panels.length - 1;
+
+                gsap.set(revealInner, { y: isMobile ? 30 : 40, opacity: 0 });
+
+                if (isMobile) {
+                    gsap.set(revealInner, { y: 30, opacity: 0 });
+                    const mobileTL = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: true,
+                            pin: true,
+                            pinSpacing: false
+                        }
+                    });
+
+                    mobileTL.to(revealInner, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.35 });
+                    mobileTL.to(revealInner, { y: 0, opacity: 1, duration: 0.3 });
+                    mobileTL.to(revealInner, { y: -30, opacity: 0, ease: 'power2.in', duration: 0.35 });
+                } else {
+                    const start = 'top top';
+                    const end = isLastPanel ? 'bottom bottom' : 'bottom top';
+
+                    ScrollTrigger.create({
+                        trigger: panel,
+                        start: start,
+                        end: end,
+                        pin: true,
+                        pinSpacing: false,
+                        preventOverlaps: true, 
+                        anticipatePin: 1,
+                        onEnter: () => {
+                            gsap.fromTo(revealInner,
+                                { y: 40, opacity: 0 },
+                                { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
+                            );
+                        },
+                        onLeave: () => {
+                            gsap.to(revealInner, {
+                                y: -40, opacity: 0, duration: 0.25, ease: 'power2.in', overwrite: true
+                            });
+                        },
+                        onEnterBack: () => {
+                            gsap.fromTo(revealInner,
+                                { y: -40, opacity: 0 },
+                                { y: 0, opacity: 1, duration: 0.2, ease: 'power2.out', overwrite: true }
+                            );
+                        },
+                        onLeaveBack: () => {
+                            gsap.to(revealInner, {
+                                y: 40, opacity: 0, duration: 0.25, ease: 'power2.in', overwrite: true
+                            });
+                        }
+                    });
+                }
+            });
+
+            const canvasSide = document.getElementById('twin-3d-canvas-container');
+            
+            // Toggle visibility of the canvas when the user scrolls into the main section
+            ScrollTrigger.create({
+                trigger: mainDisplayArea,
+                start: 'top top',
+                end: 'bottom bottom',
+                onEnter: () => gsap.to(canvasSide, { opacity: 1, duration: 0.3 }),
+                onLeave: () => gsap.to(canvasSide, { opacity: 0, duration: 0.3 }),
+                onEnterBack: () => gsap.to(canvasSide, { opacity: 1, duration: 0.3 }),
+                onLeaveBack: () => gsap.to(canvasSide, { opacity: 0, duration: 0.3 })
+            });
+
+            // Master Timeline
+            const scrollableSection = mainDisplayArea.querySelector('.scrollable-sections');
+            
+            ScrollTrigger.refresh();
+            
+            const animationTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: scrollableSection,
+                    start: 'top top',
+                    end: 'bottom bottom', 
+                    scrub: 1, 
+                    invalidateOnRefresh: true 
+                }
+            });
+
+            // 0. Reveal
+            animationTimeline.to(objectGroup.position, { y: 0, duration: 0.8, ease: "power3.out" });
+            animationTimeline.to(objectGroup.rotation, { y: 0, z: 0.1, duration: 0.9, ease: "power3.out" }, "<");
+
+            // 1. Intro
+            animationTimeline.to(objectGroup.rotation, { y: Math.PI * 2.2, x: -0.2, z: 0, duration: 0.9, ease: "sine.inOut" });
+
+            // 2. Cinematic
+            animationTimeline.to(perspectiveCamera.position, { z: 3.0, y: 0.2, duration: 1, ease: "power2.inOut" }, "cinematic");
+            animationTimeline.to(objectGroup.rotation, { z: -0.3, y: Math.PI * 4, duration: 1, ease: "power2.inOut" }, "cinematic");
+
+            // 3. Swap
+            animationTimeline.to(objectGroup.rotation, { y: Math.PI * 4, duration: 1, ease: "power2.in" }, "swapStart");
+            animationTimeline.to(objectGroup.rotation, {
+                y: Math.PI * 8,
+                duration: 2,
+                ease: "power2.inOut",
+                onUpdate: function() {
+                    const animProgress = this.progress();
+                    if (animProgress > 0.5 && firstModel && firstModel.visible) {
+                        firstModel.visible = false;
+                        secondModel.visible = true;
+                    } else if (animProgress < 0.5 && firstModel && !firstModel.visible) {
+                        firstModel.visible = true;
+                        secondModel.visible = false;
+                    }
+                }
+            }, "swapSpin");
+
+            animationTimeline.to(perspectiveCamera.position, { z: 6.5, duration: 1, yoyo: true, repeat: 1, ease: "power2.inOut" }, "swapSpin");
+
+            // 4. Settle
+            animationTimeline.to(objectGroup.rotation, { y: Math.PI * 10, x: 0, z: 0, duration: 2.4, ease: "power3.out" }, "settle");
+            animationTimeline.to(perspectiveCamera.position, { z: 4, y: 0, duration: 2.4, ease: "power3.out" }, "settle");
+
+            // 5. Final Move
+            animationTimeline.to(objectGroup.position, { x: 2, y: 0, duration: 1, ease: "sine.inOut" }, "final");
+            animationTimeline.to(objectGroup.rotation, { y: Math.PI * 15, duration: 1, ease: "sine.inOut" }, "final");
+
+            // 6. Exit
+            animationTimeline.to(objectGroup.position, { x: 20, duration: 1.5, ease: "power2.in" }, "canExit");
+            animationTimeline.to(objectGroup.rotation, { y: Math.PI * 18, duration: 1.5, ease: "linear" }, "canExit");
+
+            // Tape Animation
+            if (tapeModel) {
+                // 1. Roll In
+                animationTimeline.to(tapeModel.position, { x: 0, y: -0.5, z: -4, duration: 1.5, ease: 'power2.out' }, "canExit");
+                animationTimeline.to(tapeModel.rotation, { y: Math.PI * 3.8, x:0.5, duration: 1.5, ease: 'none' }, "canExit");
+                // 2. Zoom In
+                animationTimeline.to(tapeModel.position, { z: 0, duration: 1.2, ease: 'power2.inOut' }, "tapeZoom");
+                animationTimeline.to(tapeModel.rotation, { y: Math.PI * 5.2, duration: 1.2, ease: 'sine.inOut' }, "tapeZoom");
+                // Zoom Out
+                animationTimeline.to(tapeModel.position, { z: -4, duration: 1.2, ease: 'power2.inOut' }, "tapeZoomOut");
+                animationTimeline.to(tapeModel.rotation, { y: Math.PI * 7, duration: 1.2, ease: 'sine.inOut' }, "tapeZoomOut");
+                // 3. Roll Out
+                animationTimeline.to(tapeModel.position, { x: 10, y:2, z: 0, duration: 1.5, ease: 'power2.in' }, "tapeRollOut");
+                animationTimeline.to(tapeModel.rotation, { y: Math.PI * 8, duration: 1.5, ease: 'none' }, "tapeRollOut");
+            }
+            
+            ScrollTrigger.refresh();
+        }
+
+        window.addEventListener('resize', () => {
+             clearTimeout(window.resizeTimer);
+             window.resizeTimer = setTimeout(() => {
+                 resizeRendererToDisplaySize();
+                 ScrollTrigger.refresh();
+             }, 100);
+        });
+
+        resizeRendererToDisplaySize();
+
+        function renderLoop() {
+            requestAnimationFrame(renderLoop);
+            if (canvasSideElement.style.opacity !== '0') {
+                 webglRenderer.render(threeScene, perspectiveCamera);
+            }
+        }
+        renderLoop();
+    }
+</script>
