@@ -9,10 +9,10 @@
 	<title></title>
 </head>
 <body>
-    <div id="loading-overlay" style="position: fixed; inset: 0; background: #ED1D21; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s;">
+    <!-- <div id="loading-overlay" style="position: fixed; inset: 0; background: #ED1D21; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s;">
         <div style="width: 50px; height: 50px; border: 4px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
         <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
-    </div>
+    </div> -->
 	<nav>
     <div class="logo">
       <img id="site-logo" src="" alt="Twin Tech Logo">
@@ -52,8 +52,18 @@
 
   <div class="main-container">
   <section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
-
-    <!-- Hero content will be injected via hero.js -->
+  	<video id="heroVideo" autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+        <source src="./assets/hero-vid.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-content">
+        <h1 class="animate-text">Manufacturing at Scale.<br>Quality Without Compromise</h1>
+        <span class="sub-text">From precison-driven production to global supply, we maufacture products brand trust efficiently, reliably, responsibly</span>
+        <div class="cta-button">
+          <button>Enquire Now</button>
+        </div>
+      </div>
+      <div class="gradient"></div>
   </section>
 
   <section class="about" id="about-section">
@@ -62,20 +72,62 @@
   <section class="numbers" id="numbers-section">
     <!-- Numbers section will be injected via hero.js -->
   </section>
-
   <section class="work" id="work-section">
     <!-- Work section will be injected via hero.js -->
   </section>
 
-	<div id="features-slider" class="features-slider"></div>
+<div class="content-showcase-wrapper">
+        <div class="showcase-grid">
+            <!-- Card 1: Industrial Products -->
+            <div class="item-card">
+                <div class="item-visual">
+                    <div class="canvas-container" id="canvas-container-1"></div>
+                </div>
+                <div class="item-info-panel">
+                    <div class="item-text-content">
+                        <h3>Industrial Products</h3>
+                    <div class="item-desc-wrapper">
+                        <p>Our aerosol range ensures high-quality cleaning, dust removal, and flaw detection, adhering to international standards for optimal performance in industrial maintenance applications.</p>
+                        <a href="sprayzet.html" class="details-btn">View Products</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <!-- Card 2: Self Adhesive Tapes -->
+            <div class="item-card">
+                <div class="item-visual">
+                    <div class="canvas-container" id="canvas-container-3"></div>
+                </div>
+                <div class="item-info-panel">
+                    <div class="item-text-content">
+                        <h3>Self Adhesive Tapes</h3>
+                    <div class="item-desc-wrapper">
+                        <p>We manufacture superior-quality self-adhesive tapes like Polyester, Foam, and Masking Tapes, rigorously tested to meet diverse industrial needs, offering strength, reliability, and precision.</p>
+                        <a href="twin-tapes.html" class="details-btn">View Products</a>
+                    </div>
+                </div>
+                </div>
+            </div>
 
-  <section class="products" id="products-section">
-    <!-- Products section will be injected via hero.js -->
-  </section>
+            <!-- Card 3: Car Care Products -->
+            <div class="item-card">
+                <div class="item-visual">
+                    <div class="canvas-container" id="canvas-container-2"></div>
+                </div>
+                <div class="item-info-panel">
+                    <div class="item-text-content">
+                        <h3>Car Care Products</h3>
+                    <div class="item-desc-wrapper">
+                        <p>Our high-quality car care products are designed to help maintain a vehicle's shine and protect its body, keeping it looking brand new while extending its life with regular, consistent application.</p>
+                        <a href="evershine.html" class="details-btn">View Products</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="main-display-area" style="position: relative;">
-   <div id="animation-container-main" style="position: relative; z-index: 2;"></div>
-</div>
 <section class="work" id="work-bottom">
     <!-- Clients section will be injected via hero.js -->
   </section>
@@ -143,12 +195,12 @@
 
     <script src="assets-config.js"></script>
     <script src="assets-apply.js" defer></script>
-    <script src="hero.js" defer></script>
-    <script src="about.js" defer></script>
 <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+<script src="hero.js" defer></script>
+<script src="about.js" defer></script>
 <script>
     gsap.registerPlugin(ScrollTrigger);
 
@@ -168,950 +220,11 @@
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
-
-    // Same helper as your code
-    const wrapElements = (elems, wrapType, wrapClass) => {
-      elems.forEach(char => {
-        // Prevent double-wrapping if init runs more than once
-        if (char.parentElement && char.parentElement.classList.contains(wrapClass)) return;
-        const wrapEl = document.createElement(wrapType);
-        wrapEl.classList = wrapClass;
-        char.parentNode.appendChild(wrapEl);
-        wrapEl.appendChild(char);
-      });
-    };
-
-    const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE']);
-
-    const hasDirectText = (el) => {
-      for (const node of el.childNodes) {
-        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length) return true;
-      }
-      return false;
-    };
-
-    // Collect text elements under a .animate-text scope.
-    const collectTextTargets = (scopeEl) => {
-      const targets = [];
-      const stack = [...scopeEl.children];
-
-      if (hasDirectText(scopeEl) && !scopeEl.dataset.animateTextProcessed && !SKIP_TAGS.has(scopeEl.tagName)) {
-        targets.push(scopeEl);
-        return targets;
-      }
-
-      while (stack.length) {
-        const el = stack.shift();
-        if (!(el instanceof HTMLElement)) continue;
-        if (SKIP_TAGS.has(el.tagName)) continue;
-        if (el.dataset.animateTextProcessed) continue;
-
-        if (hasDirectText(el)) {
-          targets.push(el);
-          continue;
-        }
-
-        stack.unshift(...el.children);
-      }
-
-      return targets;
-    };
-
-    function initTextAnimations() {
-        document.querySelectorAll(".animate-text").forEach((element) => {
-            // Skip if already processed
-            if (element.dataset.textAnimated) return;
-            element.dataset.textAnimated = "true";
-
-            // Get all text nodes in the element
-            const walker = document.createTreeWalker(
-                element,
-                NodeFilter.SHOW_TEXT,
-                null,
-                false
-            );
-
-            const textNodes = [];
-            let node;
-            while ((node = walker.nextNode())) {
-                if (node.nodeValue.trim() !== "") {
-                    textNodes.push(node);
-                }
-            }
-
-            // Process each text node
-            textNodes.forEach((textNode) => {
-                const parent = textNode.parentNode;
-                const text = textNode.nodeValue;
-                const frag = document.createDocumentFragment();
-
-                if (window.innerWidth <= 767) {
-                    // Per-word wrap for mobile
-                    text.split(/(\s+)/).forEach((part) => {
-                        if (part.match(/\s+/)) {
-                            // Keep whitespace as-is
-                            frag.appendChild(document.createTextNode(part));
-                        } else if (part.length > 0) {
-                            // Wrap word in span
-                            const span = document.createElement("span");
-                            span.textContent = part;
-                            span.style.display = "inline-block";
-                            span.style.opacity = "0";
-                            frag.appendChild(span);
-                        }
-                    });
-                } else {
-                    // Per-character wrap for desktop
-                    [...text].forEach((char) => {
-                        const span = document.createElement("span");
-                        span.textContent = char === " " ? "\u00A0" : char;
-                        span.style.display = "inline-block";
-                        span.style.opacity = "0";
-                        frag.appendChild(span);
-                    });
-                }
-
-                parent.replaceChild(frag, textNode);
-            });
-
-            // Get all the spans we just created
-            const chars = element.querySelectorAll("span");
-
-            if (chars.length === 0) return;
-
-            // Animate them
-            gsap.fromTo(chars, 
-                {
-                    y: 20,
-                    opacity: 0
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    stagger: 0.02,
-                    ease: "power2.out",
-                    duration: 0.4,
-                    scrollTrigger: {
-                        trigger: element,
-                        start: "top 85%",
-                        once: true,
-                        toggleActions: "play none none none"
-                    }
-                }
-            );
-        });
-    }
-
-    // Initialize text animations when DOM is ready
-    // Use a MutationObserver to detect when content is added dynamically
-    function setupTextAnimations() {
-        initTextAnimations();
-        ScrollTrigger.refresh();
-        
-        // Watch for new .animate-text elements being added
-        const observer = new MutationObserver(() => {
-            initTextAnimations();
-            ScrollTrigger.refresh();
-        });
-        
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(setupTextAnimations, 500);
-        });
-    } else {
-        setTimeout(setupTextAnimations, 500);
-    }
   </script>
 
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 
-
-
-<script>
-      /*
-  Infinite Gradient 3D Carousel
-  A smooth, infinite-scrolling 3D carousel with dynamic gradient backgrounds
-  that change based on the active card's colors.
-*/
-
-// ============================================================================
-// CONFIGURATION
-// ============================================================================
-
-const IMAGES = [
-  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003630.png',
-  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003640.png',
-  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003650.png',
-  'https://twinindia.com/wp-content/uploads/2026/01/Screenshot-2026-01-04-003655.png',
-];
-
-// Physics constants
-const FRICTION = 0.9;           // Velocity decay (0-1, lower = more friction)
-const WHEEL_SENS = 0.6;         // Mouse wheel sensitivity
-const DRAG_SENS = 1.0;          // Drag sensitivity
-
-// Visual constants
-const MAX_ROTATION = 28;        // Maximum card rotation in degrees
-const MAX_DEPTH = 140;          // Maximum Z-axis depth in pixels
-const MIN_SCALE = 0.92;         // Minimum card scale
-const SCALE_RANGE = 0.1;        // Scale variation range
-const GAP = 28;                 // Gap between cards in pixels
-
-// ============================================================================
-// DOM REFERENCES
-// ============================================================================
-
-const stage = document.getElementById("features-slider");
-
-// Add touch-action CSS to prevent browser gesture interference
-if (stage) {
-  stage.style.touchAction = 'pan-y';
-  stage.style.userSelect = 'none';
-  stage.style.webkitUserSelect = 'none';
-}
-
-function ensureSliderChildren(root) {
-  if (!root) return { cardsRoot: null };
-
-  const existingBg = root.querySelector('#bg');
-  if (existingBg) existingBg.remove();
-
-  let cardsRoot = root.querySelector('#cards');
-  if (!cardsRoot) {
-    cardsRoot = document.createElement('section');
-    cardsRoot.id = 'cards';
-    cardsRoot.className = 'cards';
-    cardsRoot.setAttribute('aria-label', 'Infinite carousel of images');
-    root.appendChild(cardsRoot);
-  }
-
-  return { cardsRoot };
-}
-
-const { cardsRoot } = ensureSliderChildren(stage);
-const loader = document.getElementById('loader');
-
-// ============================================================================
-// STATE MANAGEMENT
-// ============================================================================
-
-// Carousel state
-let items = [];                 // Array of {el: HTMLElement, x: number}
-let positions = [];             // Float32Array for wrapped positions
-let activeIndex = -1;           // Currently centered card index
-let isEntering = true;          // Prevents interaction during entry animation
-
-// Layout measurements
-let CARD_W = 300;               // Card width (measured dynamically)
-let CARD_H = 400;               // Card height (measured dynamically)
-let STEP = CARD_W + GAP;        // Distance between card centers
-let TRACK = 0;                  // Total carousel track length
-let SCROLL_X = 0;               // Current scroll position
-let VW_HALF = window.innerWidth * 0.5;
-
-// Physics state
-let vX = 0;                     // Velocity in X direction
-
-// Animation frame IDs
-let rafId = null;               // Carousel animation frame
-let lastTime = 0;               // Last frame timestamp
-
-// Autoplay state
-let autoTimer = null;
-let autoTween = null;
-let lastUserInput = 0;
-
-// Snap state
-let snapPending = false;
-
-// Snap tuning: when |vX| falls below this, we snap to the active card.
-const SNAP_VELOCITY = 80;
-const SNAP_IDLE_MS = 140;
-
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
-
-/**
- * Safe modulo operation that handles negative numbers correctly
- * @param {number} n - The dividend
- * @param {number} m - The divisor
- * @returns {number} The positive remainder
- */
-function mod(n, m) {
-  return ((n % m) + m) % m;
-}
-
-// ============================================================================
-// IMAGE PRELOADING
-// ============================================================================
-
-/**
- * Preload images using link tags for browser optimization
- * @param {string[]} srcs - Array of image URLs
- */
-function preloadImageLinks(srcs) {
-  if (!document.head) return;
-  
-  srcs.forEach((href) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = href;
-    link.fetchPriority = 'high';
-    document.head.appendChild(link);
-  });
-}
-
-/**
- * Wait for all card images to finish loading
- * @returns {Promise<void>}
- */
-function waitForImages() {
-  const promises = items.map((it) => {
-    const img = it.el.querySelector('img');
-    if (!img || img.complete) return Promise.resolve();
-
-    return new Promise((resolve) => {
-      const done = () => resolve();
-      img.addEventListener('load', done, { once: true });
-      img.addEventListener('error', done, { once: true });
-    });
-  });
-
-  return Promise.all(promises);
-}
-
-/**
- * Decode all images to prevent jank during first interaction
- * @returns {Promise<void>}
- */
-async function decodeAllImages() {
-  const tasks = items.map((it) => {
-    const img = it.el.querySelector('img');
-    if (!img) return Promise.resolve();
-
-    if (typeof img.decode === 'function') {
-      return img.decode().catch(() => {});
-    }
-
-    return Promise.resolve();
-  });
-
-  await Promise.allSettled(tasks);
-}
-
-// ============================================================================
-// CAROUSEL SETUP
-// ============================================================================
-
-/**
- * Create card DOM elements from image array
- */
-function createCards(minCount = IMAGES.length) {
-  if (!cardsRoot) return;
-  cardsRoot.innerHTML = '';
-  items = [];
-
-  const fragment = document.createDocumentFragment();
-
-  const count = Math.max(IMAGES.length, Math.floor(minCount));
-  const sources = Array.from({ length: count }, (_, i) => IMAGES[i % IMAGES.length]);
-
-  sources.forEach((src, i) => {
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.style.willChange = 'transform'; // Force GPU compositing
-
-    const img = new Image();
-    img.className = 'card__img';
-    img.decoding = 'async';
-    img.loading = 'eager';
-    img.fetchPriority = 'high';
-    img.draggable = false;
-    img.src = src;
-
-    card.appendChild(img);
-    fragment.appendChild(card);
-    items.push({ el: card, x: i * STEP });
-  });
-
-  cardsRoot.appendChild(fragment);
-}
-
-/**
- * Measure card dimensions and calculate layout
- */
-function measure() {
-  const sample = items[0]?.el;
-  if (!sample) return;
-
-  const r = sample.getBoundingClientRect();
-  CARD_W = r.width || CARD_W;
-  CARD_H = r.height || CARD_H;
-  STEP = CARD_W + GAP;
-  TRACK = items.length * STEP;
-
-  // Set initial positions
-  items.forEach((it, i) => {
-    it.x = i * STEP;
-  });
-
-  positions = new Float32Array(items.length);
-}
-
-// ============================================================================
-// TRANSFORM CALCULATIONS
-// ============================================================================
-
-function computeTransformComponents(screenX) {
-  const norm = Math.max(-1, Math.min(1, screenX / VW_HALF));
-  const absNorm = Math.abs(norm);
-  const invNorm = 1 - absNorm;
-
-  const ry = -norm * MAX_ROTATION;
-  const tz = invNorm * MAX_DEPTH;
-  const scale = MIN_SCALE + invNorm * SCALE_RANGE;
-
-  return { norm, absNorm, invNorm, ry, tz, scale };
-}
-
-
-/**
- * Calculate 3D transform for a card based on its screen position
- * @param {number} screenX - Card's X position relative to viewport center
- * @returns {{transform: string, z: number}} Transform string and Z-depth
- */
-function transformForScreenX(screenX) {
-  const { ry, tz, scale } = computeTransformComponents(screenX);
-
-  return {
-    transform: `translate3d(${screenX}px,-50%,${tz}px) rotateY(${ry}deg) scale(${scale})`,
-    z: tz,
-  };
-}
-
-/**
- * Update all card transforms based on current scroll position
- */
-function updateCarouselTransforms() {
-  const half = TRACK / 2;
-  let closestIdx = -1;
-  let closestDist = Infinity;
-
-  // Calculate wrapped positions for infinite scroll
-  for (let i = 0; i < items.length; i++) {
-    let pos = items[i].x - SCROLL_X;
-    
-    // Wrap position to nearest equivalent position
-    if (pos < -half) pos += TRACK;
-    if (pos > half) pos -= TRACK;
-    
-    positions[i] = pos;
-
-    // Track closest card to center
-    const dist = Math.abs(pos);
-    if (dist < closestDist) {
-      closestDist = dist;
-      closestIdx = i;
-    }
-  }
-
-  // Get adjacent cards for selective blur
-  const prevIdx = (closestIdx - 1 + items.length) % items.length;
-  const nextIdx = (closestIdx + 1) % items.length;
-
-  // Apply transforms to all cards
-  for (let i = 0; i < items.length; i++) {
-    const it = items[i];
-    const pos = positions[i];
-    const norm = Math.max(-1, Math.min(1, pos / VW_HALF));
-    const { transform, z } = transformForScreenX(pos);
-
-    it.el.style.transform = transform;
-    it.el.style.zIndex = String(1000 + Math.round(z)); // Higher z-index for cards in front
-
-    // Apply subtle blur to non-core cards
-    const isCore = i === closestIdx || i === prevIdx || i === nextIdx;
-    const blur = isCore ? 0 : 2 * Math.pow(Math.abs(norm), 1.1);
-    it.el.style.filter = `blur(${blur.toFixed(2)}px)`;
-  }
-
-  // Update gradient if active card changed
-  if (closestIdx !== activeIndex) {
-    activeIndex = closestIdx;
-  }
-}
-
-// ============================================================================
-// ANIMATION LOOP
-// ============================================================================
-
-/**
- * Main animation loop for carousel movement
- * @param {number} t - Current timestamp
- */
-function tick(t) {
-  const dt = lastTime ? (t - lastTime) / 1000 : 0;
-  lastTime = t;
-
-  // Apply velocity to scroll position
-  SCROLL_X = mod(SCROLL_X + vX * dt, TRACK);
-
-  // Apply friction to velocity
-  const decay = Math.pow(FRICTION, dt * 60);
-  vX *= decay;
-  if (Math.abs(vX) < 0.02) vX = 0;
-
-  // Snap only after the user stops interacting and velocity slows down.
-  if (
-    snapPending &&
-    !isEntering &&
-    !autoTween &&
-    (!stage || !stage.classList.contains('dragging')) &&
-    performance.now() - lastUserInput > SNAP_IDLE_MS &&
-    Math.abs(vX) <= SNAP_VELOCITY
-  ) {
-    snapPending = false;
-    snapToActive();
-  }
-
-  updateCarouselTransforms();
-  rafId = requestAnimationFrame(tick);
-}
-
-/**
- * Start the carousel animation loop
- */
-function startCarousel() {
-  cancelCarousel();
-  lastTime = 0;
-  rafId = requestAnimationFrame((t) => {
-    updateCarouselTransforms();
-    tick(t);
-  });
-}
-
-/**
- * Stop the carousel animation loop
- */
-function cancelCarousel() {
-  if (rafId) cancelAnimationFrame(rafId);
-  rafId = null;
-}
-
-// ============================================================================
-// AUTOPLAY
-// ============================================================================
-
-function signedDeltaToTarget(current, target, track) {
-  if (!track) return 0;
-  let d = (target - current) % track;
-  d = (d + track) % track;
-  if (d > track / 2) d -= track;
-  return d;
-}
-
-function animateToIndex(idx) {
-  if (!items.length || !TRACK) return;
-
-  const clamped = mod(idx, items.length);
-  const targetX = items[clamped].x;
-  const delta = signedDeltaToTarget(SCROLL_X, targetX, TRACK);
-  const targetScroll = SCROLL_X + delta;
-
-  vX = 0;
-  if (autoTween && typeof autoTween.kill === 'function') autoTween.kill();
-
-  if (window.gsap) {
-    const state = { x: SCROLL_X };
-    autoTween = window.gsap.to(state, {
-      x: targetScroll,
-      duration: 0.8,
-      ease: 'power2.inOut',
-      onUpdate: () => {
-        SCROLL_X = mod(state.x, TRACK);
-        updateCarouselTransforms();
-      },
-      onComplete: () => {
-        SCROLL_X = mod(state.x, TRACK);
-      },
-    });
-  } else {
-    SCROLL_X = mod(targetScroll, TRACK);
-    updateCarouselTransforms();
-  }
-}
-
-function snapToActive() {
-  if (isEntering) return;
-  if (!items.length || !TRACK) return;
-
-  updateCarouselTransforms();
-  if (activeIndex < 0) return;
-
-  vX = 0;
-  animateToIndex(activeIndex);
-}
-
-function stopAutoAdvance() {
-  if (autoTimer) clearInterval(autoTimer);
-  autoTimer = null;
-  if (autoTween && typeof autoTween.kill === 'function') autoTween.kill();
-  autoTween = null;
-}
-
-function startAutoAdvance() {
-  stopAutoAdvance();
-  autoTimer = setInterval(() => {
-    if (document.hidden) return;
-    if (isEntering) return;
-    if (!items.length || !TRACK) return;
-    if (stage && stage.classList.contains('dragging')) return;
-    if (performance.now() - lastUserInput < 900) return;
-
-    const next = mod((activeIndex < 0 ? 0 : activeIndex) + 1, items.length);
-    animateToIndex(next);
-  }, 5000);
-}
-
-// ============================================================================
-// EVENT HANDLERS
-// ============================================================================
-
-/**
- * Handle window resize
- */
-function onResize() {
-  const prevStep = STEP || 1;
-  const ratio = SCROLL_X / (items.length * prevStep);
-  measure();
-  VW_HALF = window.innerWidth * 0.5;
-  SCROLL_X = mod(ratio * TRACK, TRACK);
-  updateCarouselTransforms();
-}
-
-if (stage) {
-  // Prevent default drag behavior
-  stage.addEventListener('dragstart', (e) => e.preventDefault());
-  
-  // Prevent context menu
-  stage.addEventListener('contextmenu', (e) => e.preventDefault());
-
-  // Drag state
-  let dragging = false;
-  let lastX = 0;
-  let lastT = 0;
-  let lastDelta = 0;
-
-  // Prevent wheel events from interfering
-  stage.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      // Horizontal scroll - let carousel handle it
-      e.preventDefault();
-    }
-  }, { passive: false });
-
-  // Pointer down - start dragging
-  stage.addEventListener('pointerdown', (e) => {
-    if (isEntering) return;
-    if (e.target.closest('.frame')) return;
-
-    // Only handle primary button (left click/touch)
-    if (e.button !== undefined && e.button !== 0) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-    
-    lastUserInput = performance.now();
-    dragging = true;
-    lastX = e.clientX || e.pageX;
-    lastT = performance.now();
-    lastDelta = 0;
-    
-    try {
-      stage.setPointerCapture(e.pointerId);
-    } catch (err) {
-      // Fallback - continue without capture
-    }
-    
-    stage.classList.add('dragging');
-  }, { passive: false });
-
-  // Pointer move - update scroll position
-  stage.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-    
-    lastUserInput = performance.now();
-
-    const now = performance.now();
-    const currentX = e.clientX || e.pageX;
-    const dx = currentX - lastX;
-    const dt = Math.max(1, now - lastT) / 1000;
-
-    SCROLL_X = mod(SCROLL_X - dx * DRAG_SENS, TRACK);
-    lastDelta = dx / dt;
-    lastX = currentX;
-    lastT = now;
-  }, { passive: false });
-
-  // Pointer up - apply momentum
-  stage.addEventListener('pointerup', (e) => {
-    if (!dragging) return;
-
-    lastUserInput = performance.now();
-    dragging = false;
-    
-    try {
-      stage.releasePointerCapture(e.pointerId);
-    } catch (err) {}
-    
-    vX = -lastDelta * DRAG_SENS;
-    snapPending = true;
-    stage.classList.remove('dragging');
-  });
-
-  // Pointer cancel
-  stage.addEventListener('pointercancel', (e) => {
-    if (!dragging) return;
-    dragging = false;
-    try {
-      stage.releasePointerCapture(e.pointerId);
-    } catch (err) {}
-    stage.classList.remove('dragging');
-  });
-  
-  // Fallback for mouse events (belt and suspenders)
-  stage.addEventListener('mousedown', (e) => {
-    if (e.button === 0 && !dragging) {
-      e.preventDefault();
-    }
-  }, { passive: false });
-}
-
-// Debounced resize handler
-window.addEventListener('resize', () => {
-  clearTimeout(onResize._t);
-  onResize._t = setTimeout(onResize, 80);
-});
-
-// Pause animations when tab is hidden
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    cancelCarousel();
-    stopAutoAdvance();
-  } else {
-    startCarousel();
-    startAutoAdvance();
-  }
-});
-
-// ============================================================================
-// INITIALIZATION & ENTRY ANIMATION
-// ============================================================================
-
-/**
- * Animate visible cards entering the scene
- * @param {Array} visibleCards - Cards to animate
- */
-async function animateEntry(visibleCards) {
-  await new Promise((r) => requestAnimationFrame(r));
-
-  const tl = window.gsap.timeline();
-
-  visibleCards.forEach(({ item, screenX }, idx) => {
-    const state = { p: 0 }; // 0 -> 1
-    const { ry, tz, scale: baseScale } = computeTransformComponents(screenX);
-
-    const START_SCALE = 0.92;
-    const START_Y = 40;
-
-    item.el.style.opacity = '0';
-    item.el.style.transform =
-      `translate3d(${screenX}px,-50%,${tz}px) ` +
-      `rotateY(${ry}deg) ` +
-      `scale(${START_SCALE}) ` +
-      `translateY(${START_Y}px)`;
-
-    tl.to(
-      state,
-      {
-        p: 1,
-        duration: 0.6,
-        ease: 'power3.out',
-        onUpdate: () => {
-          const t = state.p;
-
-          const currentScale = START_SCALE + (baseScale - START_SCALE) * t;
-          const currentY = START_Y * (1 - t);
-          const opacity = t;
-
-          item.el.style.opacity = opacity.toFixed(3);
-
-          if (t >= 0.999) {
-            const { transform } = transformForScreenX(screenX);
-            item.el.style.transform = transform;
-          } else {
-            item.el.style.transform =
-              `translate3d(${screenX}px,-50%,${tz}px) ` +
-              `rotateY(${ry}deg) ` +
-              `scale(${currentScale}) ` +
-              `translateY(${currentY}px)`;
-          }
-        },
-      },
-      idx * 0.05
-    );
-  });
-
-  await new Promise((resolve) => {
-    tl.eventCallback('onComplete', resolve);
-  });
-}
-
-
-/**
- * Pre-composite all card positions to prevent first-interaction jank
- */
-async function warmupCompositing() {
-  const originalScrollX = SCROLL_X;
-  const stepSize = STEP * 0.5;
-  const numSteps = Math.ceil(TRACK / stepSize);
-
-  // Scroll through entire carousel to force GPU compositing
-  for (let i = 0; i < numSteps; i++) {
-    SCROLL_X = mod(originalScrollX + i * stepSize, TRACK);
-    updateCarouselTransforms();
-
-    // Force paint every few steps (optimization)
-    if (i % 3 === 0) {
-      await new Promise((r) => requestAnimationFrame(r));
-    }
-  }
-
-  // Return to original position
-  SCROLL_X = originalScrollX;
-  updateCarouselTransforms();
-  await new Promise((r) => requestAnimationFrame(r));
-  await new Promise((r) => requestAnimationFrame(r));
-}
-
-/**
- * Initialize the carousel application
- */
-async function init() {
-  if (!stage || !cardsRoot) return;
-  // Preload images for faster loading
-  preloadImageLinks(IMAGES);
-  
-  // Create DOM elements
-  createCards();
-  measure();
-
-  // If the track is too short, wrapping becomes visible (a blurred edge card can
-  // appear to "disappear" when it wraps). Repeat cards to push wrap off-screen.
-  const minTrack = (window.innerWidth + STEP * 4);
-  const minCount = Math.min(48, Math.max(IMAGES.length, Math.ceil(minTrack / STEP)));
-  if (items.length < minCount) {
-    createCards(minCount);
-    measure();
-  }
-  updateCarouselTransforms();
-  stage.classList.add('carousel-mode');
-
-  // Wait for all images to load
-  await waitForImages();
-
-  // Decode images to prevent jank
-  await decodeAllImages();
-
-  // Force browser to paint images
-  items.forEach((it) => {
-    const img = it.el.querySelector('img');
-    if (img) void img.offsetHeight;
-  });
-
-  // Find initial centered card
-  const half = TRACK / 2;
-  let closestIdx = 0;
-  let closestDist = Infinity;
-
-  for (let i = 0; i < items.length; i++) {
-    let pos = items[i].x - SCROLL_X;
-    if (pos < -half) pos += TRACK;
-    if (pos > half) pos -= TRACK;
-    const d = Math.abs(pos);
-    if (d < closestDist) {
-      closestDist = d;
-      closestIdx = i;
-    }
-  }
-
-  activeIndex = closestIdx;
-
-  // Warmup GPU compositing
-  await warmupCompositing();
-
-  // Wait for browser idle time
-  if ('requestIdleCallback' in window) {
-    await new Promise((r) => requestIdleCallback(r, { timeout: 100 }));
-  }
-
-  // Prepare entry animation for visible cards
-  const viewportWidth = window.innerWidth;
-  const visibleCards = [];
-  
-  for (let i = 0; i < items.length; i++) {
-    let pos = items[i].x - SCROLL_X;
-    if (pos < -half) pos += TRACK;
-    if (pos > half) pos -= TRACK;
-
-    const screenX = pos;
-    if (Math.abs(screenX) < viewportWidth * 0.6) {
-      visibleCards.push({ item: items[i], screenX, index: i });
-    }
-  }
-
-  // Sort cards left to right
-  visibleCards.sort((a, b) => a.screenX - b.screenX);
-
-  // Hide loader
-  if (loader) loader.classList.add('loader--hide');
-
-  // Animate cards entering
-  await animateEntry(visibleCards);
-
-  // Enable user interaction
-  isEntering = false;
-
-  // Start main carousel loop
-  startCarousel();
-
-  // Start autoplay
-  startAutoAdvance();
-}
-
-// ============================================================================
-// START APPLICATION
-// ============================================================================
-
-init();
-</script>
-
-
-
-
-<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-
-<script type="importmap">
+    <script type="importmap">
         {
             "imports": {
                 "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
@@ -1120,730 +233,335 @@ init();
         }
     </script>
 
-<!-- GSAP Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-
-<script type="module">
+    <script type="module">
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
         import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        // --- 1. Inject CSS ---
-        const injectedStyles = `
-            body {
-                overflow-x: hidden;
-            }
-            .main-display-area {
-                position: relative;
-                overflow: hidden;
-            }
-            #animation-container-main {
-                position: relative;
-                width: 100%;
-                display: flex;
-                z-index: 2;
-                margin-top: 0;
-                min-height: 100vh;
-            }
-            .left-content-side {
-                position: relative;
-                width: 50%;
-                background-color: transparent;
-                z-index: 3;
-            }
-            .right-canvas-side {
-                position: fixed;
-                top: 0;
-                left: 50%;
-                width: 50%;
-                height: 100vh;
-                z-index: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: #f5f5f5;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            #threejs-viewport {
-                display: block;
-                width: 100%;
-                height: 100%;
-                outline: none;
-                pointer-events: none;
-            }
-            .scrollable-sections {
-                position: relative;
-                z-index: 3;
-                width: 100%;
-                background-color: var(--color);
-                scroll-snap-type: y mandatory;
-            }
-            .content-panel {
-                min-height: 100vh;
-                height: 100vh;
-                display: flex;
-                width: 50%;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                font-size: 4rem;
-                pointer-events: auto;
-                width: 100%;
-                padding: 0 8vw;
-                box-sizing: border-box;
-                text-align: left;
-                overflow-wrap: break-word;
-                color: white;
-                scroll-snap-align: start;
-                scroll-snap-stop: always;
-            }
-
-            .content-panel h1 {font-family: 'heading'; margin: 0; font-weight: 800; letter-spacing: -2px; color: white; font-size:4rem; line-height: 1.1;}
-            .content-panel p { font-family: 'base'; font-size: 1.5rem; opacity: 0.9; font-weight: 300; margin-top: 8px; color: white; line-height: 1.45; }
-            .content-panel .brand-description { font-size: 1.1rem; line-height: 1.6; max-width: 90%; margin-top: 8px; }
-            .reveal-inner { will-change: transform, opacity; }
-            .primary-label { color: white; font-family:"Heading"; }
-            .secondary-label { color: white; font-family:"Heading"; }
-            
-            @media (max-width: 1024px) {
-                body { justify-content: flex-start; }
-                #animation-container-main {
-                    flex-direction: column;
+        // Configuration for cards
+        const modelDataConfig = [
+            {
+                id: 'canvas-container-1',
+                modelPath: window.ASSETS.blackCan || './assets/Black_Can.glb',
+                scale: 1.0,
+                // Separation of animation states
+                initialState: {
+                    position: { x: 0, y: 1, z: 0 },
+                    rotation: { x: 0, y: 0, z: 0 },
+                    scale: 1.0
+                },
+                enterState: {
+                    position: { y: 1.2, z: 1 },
+                    rotation: { x: 0.5, z: 0, spin: Math.PI * 2 },
+                    scale: 1.6,
+                    duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                    ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                },
+                leaveState: {
+                    position: { x: 0, y: 1, z: 0 },
+                    rotation: { x: 0, z: 0 },
+                    scale: 1.0,
+                    duration: 0.8,
+                    ease: "power2.inOut"
                 }
-                .left-content-side {
-                    width: 100%;
+            },
+            {
+                id: 'canvas-container-2',
+                modelPath: window.ASSETS.redCan || './assets/Red_Can.glb',
+                scale: 1.0,
+                initialState: {
+                    position: { x: 0, y: 1, z: 0 },
+                    rotation: { x: 0, y: 0, z: 0 },
+                    scale: 1.0
+                },
+                enterState: {
+                    position: { y: 1, z: 1 },
+                    rotation: { x: 0.4, z: 0, spin: Math.PI * 2 },
+                    scale: 1.6,
+                    duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                    ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                },
+                leaveState: {
+                    position: { x: 0, y: 1, z: 0 },
+                    rotation: { x: 0, z: 0 },
+                    scale: 1.0,
+                    duration: 0.8,
+                    ease: "power2.inOut"
                 }
-                .right-canvas-side {
-                    position: fixed;
-                    width: 100%;
-                    height: 50vh;
-                    left: 0;
-                    top: 0;
-                    bottom: auto;
-                    z-index: 10;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: #f5f5f5;
-                    pointer-events: none;
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
+            },
+            {
+                id: 'canvas-container-3',
+                modelPath: window.ASSETS.brownTape || './assets/Brown_Tape.glb',
+                scale: 1.0,
+                initialState: {
+                    position: { x: 0, y: 1.5, z: 0 },
+                    rotation: { x: 0, y: 0, z: 0 },
+                    scale: 1.0
+                },
+                enterState: {
+                    position: { y: 2, z: 0.5 },
+                    rotation: { x: 0.4, z: 0, spin: Math.PI },
+                    scale: 1.4,
+                    duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                    ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                },
+                leaveState: {
+                    position: { x: 0, y: 1.5, z: 0 },
+                    rotation: { x: 0, z: 0 },
+                    scale: 1.0,
+                    duration: 0.8,
+                    ease: "power2.inOut"
                 }
-                /* ensure the scrollable content starts below the fixed canvas */
-                .scrollable-sections {
-                    padding-top: 50vh;
-                }
-                .content-panel {
-                    min-height: 100vh;
-                    height: 100vh;
-                    width: 100%;
-                    position: relative;
-                    padding: 0 8vw;
-                    font-size: 1.1rem;
-                    align-items: flex-start;
-                    text-align: center;
-                    justify-content: flex-start;
-                }
-                /* place the reveal content centered inside the lower 50% of the panel */
-                .content-panel .reveal-inner {
-                    position: absolute;
-                    left: 50%;
-                    top: 75%; /* nudge a bit higher so reveal centers in bottom 50% */
-                    transform: translate(-50%, -50%);
-                    width: calc(100% - 16vw);
-                    max-width: 720px;
-                    box-sizing: border-box;
-                    padding: 0;
-                }
-                .content-panel .reveal-inner p { margin-top: 6px; margin-bottom: 6px; }
-                .content-panel h1 { font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.15; }
-                .content-panel p { font-size: clamp(0.95rem, 3.2vw, 1.2rem); }
-                .content-panel .brand-description { font-size: 0.95rem; max-width: 95%; }
-                .reveal-inner { width: 100%; }
             }
-        `;
-        const dynamicStyleElement = document.createElement("style");
-        dynamicStyleElement.innerText = injectedStyles;
-        document.head.appendChild(dynamicStyleElement);
+        ];
 
-        // --- 2. Generate HTML Structure ---
-        let mainContainer = document.getElementById('animation-container-main');
-        if (!mainContainer) {
-            mainContainer = document.createElement('div');
-            mainContainer.id = 'animation-container-main';
-            document.body.prepend(mainContainer);
-        }
-        
-        mainContainer.innerHTML = `
-            <div class="left-content-side">
-                <div class="scrollable-sections">
-                    <div class="content-panel">
-                        <div class="reveal-inner"><h1 class="animate-text">Discover Excellence</h1><p>Scroll to explore our journey</p></div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner"><h1 class="animate-text">SPRAYZET</h1><p class="animate-text">Industrial MRO<span class="primary-label"> Aerosols</span></p></div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner">
-                            <h1 class="animate-text">Engineered to Perform.</h1>
-                            <p>Built to Endure.</p>
-                            <p class="brand-description">SPRAYZET by Twin Tech provides high-performance, eco-friendly industrial maintenance aerosols for equipment care, lubrication, and protection. Designed for diverse industries, these solutions improve durability, enhance performance, reduce downtime, and support sustainable maintenance operations.</p>
-                        </div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner"><h1 class="animate-text">From Industry to Elegance</h1><p>Where Performance Meets Perfection</p></div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner"><h1 class="animate-text">EVERSHINE</h1><p>Car Care <span class="secondary-label">Products</span></p></div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner">
-                            <h1 class="animate-text">Shine That You</h1>
-                            <p>Can Feel.</p>
-                            <p class="brand-description">Evershine is a premium car care brand offering advanced products that clean, protect, and enhance every surface of your vehicle. Trusted by enthusiasts and professionals, Evershine ensures lasting shine, performance, and showroom-ready results.</p>
-                        </div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner"><h1 class="animate-text">Built to Bond</h1><p>Engineered to Hold</p></div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner"><h1 class="animate-text">TWIN TAPE</h1><p>Industrial <span class="primary-label">Adhesive Solutions</span></p></div>
-                    </div>
-                    <div class="content-panel">
-                        <div class="reveal-inner">
-                            <h1 class="animate-text">Bonds That Last.</h1>
-                            <p>Trust That Holds.</p>
-                            <p class="brand-description">Twin Tapes offers durable, high-performance self-adhesive tapes designed for both industrial and household applications. Engineered with strong, reliable adhesion, these tapes are suitable for packaging, sealing, insulation, repairs, and surface protection, delivering consistent performance and long-lasting results across a wide range of everyday and professional uses.</p>
-                        </div>
-                    </div>
-                    <div class="content-panel" style="opacity:0">
-                        <div class="reveal-inner"><h1 class="animate-text">Three Brands.</h1><p>One Vision of Excellence.</p></div>
-                    </div>
-                </div>
-            </div>
-            <div class="right-canvas-side">
-                <canvas id="threejs-viewport"></canvas>
-            </div>
-        `;
+        // Shared Environment Map
+        let environmentTexture = null;
 
-        // --- 3. Initialize 3D & Animation ---
-        gsap.registerPlugin(ScrollTrigger);
-
-        const renderCanvas = document.querySelector('#threejs-viewport');
-        
-        // --- Scene Setup ---
-        const threeScene = new THREE.Scene();
-        
-        // set a neutral aspect for now; we'll update it after we size the canvas
-        const perspectiveCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-        perspectiveCamera.position.set(0, 0, 5);
-
-        const webglRenderer = new THREE.WebGLRenderer({ 
-            canvas: renderCanvas,
-            antialias: true, 
-            alpha: true 
-        });
-        webglRenderer.shadowMap.enabled = true;
-        webglRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        webglRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-        webglRenderer.toneMappingExposure = 1.2;
-
-        // Resize helper: make renderer match the actual canvas CSS size (important on mobile when canvas is 50vh)
-        function resizeRendererToDisplaySize() {
-            const width = renderCanvas.clientWidth || window.innerWidth;
-            const height = renderCanvas.clientHeight || window.innerHeight;
-            // protect against zero height
-            const safeHeight = Math.max(1, height);
-            perspectiveCamera.aspect = Math.max(0.0001, width / safeHeight);
-            perspectiveCamera.updateProjectionMatrix();
-            webglRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            webglRenderer.setSize(width, safeHeight, false);
-        }
-
-        // --- HDR Environment Lighting ---
-        const rgbeLoader = new RGBELoader();
-        rgbeLoader.load(window.ASSETS && window.ASSETS.neutralHdr ? window.ASSETS.neutralHdr : './assets/neutral.hdr', function(texture) {
-            texture.mapping = THREE.EquirectangularReflectionMapping;
-            threeScene.environment = texture;
-            threeScene.background = null; // Keep background transparent, only use HDR for lighting
-        });
-
-        // --- Model Loading ---
-        const gltfModelLoader = new GLTFLoader();
-        let firstModel, secondModel, tapeModel;
-        const objectGroup = new THREE.Group();
-        threeScene.add(objectGroup);
-
-        const loadGltfAsset = (assetPath) => {
-            return new Promise((resolve, reject) => {
-                gltfModelLoader.load(assetPath, (gltfData) => {
-                    const loadedModel = gltfData.scene;
-                    loadedModel.traverse((meshNode) => {
-                        if (meshNode.isMesh) {
-                            meshNode.castShadow = true;
-                            meshNode.receiveShadow = true;
-                            if(meshNode.material) {
-                                meshNode.material.envMapIntensity = 1.0;
-                                meshNode.material.roughness = 0.3;
-                                meshNode.material.metalness = 0.3;
-                            }
-                        }
-                    });
-                    const boundingBox = new THREE.Box3().setFromObject(loadedModel);
-                    const dimensions = boundingBox.getSize(new THREE.Vector3());
-                    const largestDimension = Math.max(dimensions.x, dimensions.y, dimensions.z);
-                    const normalizedScale = 2.5 / largestDimension; 
-                    loadedModel.scale.set(normalizedScale, normalizedScale, normalizedScale);
-                    const centerPoint = boundingBox.getCenter(new THREE.Vector3());
-                    loadedModel.position.sub(centerPoint.multiplyScalar(normalizedScale));
-                    resolve(loadedModel);
-                }, undefined, reject);
-            });
-        };
-
-        // If running from file:// protocol the browser will often block GLTF asset loads
-        // due to CORS. In that case, create fallback geometry immediately to avoid errors.
-        const isFileProtocol = window.location.protocol === 'file:';
-        if (isFileProtocol) {
-            firstModel = generateFallbackGeometry(0xff3333);
-            secondModel = generateFallbackGeometry(0x3388ff);
-            tapeModel = generateFallbackTape(0x996633);
-
-            objectGroup.add(firstModel);
-            objectGroup.add(secondModel);
-            threeScene.add(tapeModel);
-
-            secondModel.visible = false;
-            secondModel.rotation.copy(firstModel.rotation);
-
-            // Initial State: Hidden below
-            objectGroup.position.y = -10;
-            objectGroup.rotation.y = Math.PI;
-
-            // tape initial off-screen left
-            tapeModel.position.set(-6, -1.5, 0);
-            tapeModel.rotation.z = 0;
-
-            initializeScrollAnimation();
-        } else {
-            Promise.all([
-                  loadGltfAsset((window.ASSETS && window.ASSETS.blackCan) || './assets/Black_Can.glb').catch(() => generateFallbackGeometry(0xff3333)),
-                  loadGltfAsset((window.ASSETS && window.ASSETS.redCan) || './assets/Red_Can.glb').catch(() => generateFallbackGeometry(0x3388ff)),
-                  loadGltfAsset((window.ASSETS && window.ASSETS.brownTape) || './assets/Brown_Tape.glb').catch(() => generateFallbackTape(0x996633))
-            ]).then(([primaryAsset, secondaryAsset, loadedTape]) => {
-                firstModel = primaryAsset;
-                secondModel = secondaryAsset;
-                tapeModel = loadedTape;
-
-                objectGroup.add(firstModel);
-                objectGroup.add(secondModel);
-                threeScene.add(tapeModel);
-
-                secondModel.visible = false;
-                secondModel.rotation.copy(firstModel.rotation);
-
-                // Initial State: Hidden below
-                objectGroup.position.y = -10; 
-                objectGroup.rotation.y = Math.PI;
-
-                // tape initial off-screen left
-                tapeModel.position.set(-6, -1.5, 0);
-                tapeModel.rotation.z = 0;
-
-                initializeScrollAnimation();
+        function getEnvironmentMap(webGLRender, threeScene) {
+            return new Promise((resolve) => {
+                if (environmentTexture) {
+                    threeScene.environment = environmentTexture;
+                    resolve(environmentTexture);
+                    return;
+                }
+                const pmremGen = new THREE.PMREMGenerator(webGLRender);
+                pmremGen.compileEquirectangularShader();
+                new RGBELoader().load(window.ASSETS.neutralHdr || './assets/neutral.hdr', (texture) => {
+                    environmentTexture = pmremGen.fromEquirectangular(texture).texture;
+                    threeScene.environment = environmentTexture;
+                    texture.dispose();
+                    pmremGen.dispose();
+                    resolve(environmentTexture);
+                });
             });
         }
 
-        function generateFallbackGeometry(colorHex) {
-            const cylinderGeometry = new THREE.CylinderGeometry(0.8, 0.8, 2.5, 32);
-            const standardMaterial = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.2, roughness: 0.3 });
-            const fallbackMesh = new THREE.Mesh(cylinderGeometry, standardMaterial);
-            return fallbackMesh;
-        }
+        async function setupModelViewer(configs) {
+            const mountPoint = document.getElementById(configs.id);
+            if (!mountPoint) return;
 
-        function generateFallbackTape(colorHex) {
-            // a flattened cylinder to simulate a tape roll
-            const geo = new THREE.CylinderGeometry(0.6, 0.6, 0.4, 32);
-            const mat = new THREE.MeshStandardMaterial({ color: colorHex, metalness: 0.15, roughness: 0.4 });
-            const mesh = new THREE.Mesh(geo, mat);
-            mesh.rotation.x = Math.PI / 2; // lie it on its side
-            return mesh;
-        }
+            const threeScene = new THREE.Scene();
+            // Transparent background for 3D scene to layer over CSS gradient
+            threeScene.background = null; 
 
-        // --- Animation Logic ---
-        function initializeScrollAnimation() {
-            // Hide preloader when animation initializes (models loaded)
-            const preloader = document.getElementById('loading-overlay');
-            if (preloader) {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.remove(), 500);
-            }
+            // Adjusted Angle: Lower elevation to avoid "top-down" look, kept at center
+            const viewCamera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); // Slightly narrower FOV for better focus
+            viewCamera.position.set(0, 0.5, 6.5); 
 
-            const panels = document.querySelectorAll('.content-panel');
-            const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+            const webGLRender = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            // Set size including the 140% oversized margin
+            const renderWidth = mountPoint.clientWidth * 1.4;
+            const renderHeight = mountPoint.clientHeight * 1.4;
+            webGLRender.setSize(renderWidth, renderHeight);
+            webGLRender.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            webGLRender.toneMapping = THREE.ACESFilmicToneMapping;
+            webGLRender.toneMappingExposure = 1.0;
+            webGLRender.outputColorSpace = THREE.SRGBColorSpace;
+            mountPoint.appendChild(webGLRender.domElement);
 
-            // Pin desktop panels; use simpler non-pinning reveals on mobile so content sits below fixed canvas
-            panels.forEach((panel, index) => {
-                const revealInner = panel.querySelector('.reveal-inner');
-                const isLastPanel = index === panels.length - 1;
+            const orbitControls = new OrbitControls(viewCamera, webGLRender.domElement);
+            orbitControls.enableDamping = true;
+            orbitControls.dampingFactor = 0.05;
+            orbitControls.enableZoom = false; 
+            orbitControls.enablePan = false; 
+            orbitControls.enableRotate = false;
+            orbitControls.autoRotate = true;
+            orbitControls.autoRotateSpeed = 2.0; 
+            orbitControls.target.set(0, 0, 0);
 
-                // ensure starting state (off and slightly down)
-                gsap.set(revealInner, { y: isMobile ? 30 : 40, opacity: 0 });
+            await getEnvironmentMap(webGLRender, threeScene);
 
-                // On mobile: pin the panel at the top of the viewport so
-                // .reveal-inner (absolute top:75%) sits in the lower 50% area
-                if (isMobile) {
-                    // Mobile: create a scrubbed timeline that pins the panel and
-                    // animates the reveal into the lower 50% (reveal-inner at top:72%)
-                    gsap.set(revealInner, { y: 30, opacity: 0 });
-                    const mobileTL = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: panel,
-                            start: 'top top',
-                            end: 'bottom top',
-                            scrub: true,
-                            pin: true,
-                            pinSpacing: false
-                        }
-                    });
-
-                    // timeline: fade in, hold visible, then fade out smoothly
-                    mobileTL.to(revealInner, { y: 0, opacity: 1, ease: 'power2.out', duration: 0.35 });
-                    // hold visible for a portion of the scroll (noop tween keeps opacity at 1)
-                    mobileTL.to(revealInner, { y: 0, opacity: 1, duration: 0.3 });
-                    // fade out upward
-                    mobileTL.to(revealInner, { y: -30, opacity: 0, ease: 'power2.in', duration: 0.35 });
-                } else {
-                    const start = 'top top';
-                    const end = isLastPanel ? 'bottom bottom' : 'bottom top';
-
-                    ScrollTrigger.create({
-                        trigger: panel,
-                        start: start,
-                        end: end,
-                        pin: true,
-                        pinSpacing: false,
-                        onEnter: () => {
-                            gsap.fromTo(revealInner,
-                                { y: 40, opacity: 0 },
-                                { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', overwrite: true }
-                            );
-                        },
-                        onLeave: () => {
-                            gsap.to(revealInner, {
-                                y: -40,
-                                opacity: 0,
-                                duration: 0.25,
-                                ease: 'power2.in',
-                                overwrite: true
-                            });
-                        },
-                        onEnterBack: () => {
-                            gsap.fromTo(revealInner,
-                                { y: -40, opacity: 0 },
-                                { y: 0, opacity: 1, duration: 0.2, ease: 'power2.out', overwrite: true }
-                            );
-                        },
-                        onLeaveBack: () => {
-                            gsap.to(revealInner, {
-                                y: 40,
-                                opacity: 0,
-                                duration: 0.25,
-                                ease: 'power2.in',
-                                overwrite: true
-                            });
-                        }
-                    });
-                }
-            });
-
-            // Control canvas visibility based on main-display-area scroll position
-            const canvasSide = document.querySelector('.right-canvas-side');
-            const mainDisplay = document.querySelector('.main-display-area');
+            const gltfLoader = new GLTFLoader();
+            let activeModel = null;
+            let modelGroup = new THREE.Group();
             
-            ScrollTrigger.create({
-                trigger: mainDisplay,
-                start: 'top top',
-                end: 'bottom bottom',
-                onEnter: () => gsap.to(canvasSide, { opacity: 1, duration: 0.3 }),
-                onLeave: () => gsap.to(canvasSide, { opacity: 0, duration: 0.3 }),
-                onEnterBack: () => gsap.to(canvasSide, { opacity: 1, duration: 0.3 }),
-                onLeaveBack: () => gsap.to(canvasSide, { opacity: 0, duration: 0.3 })
-            });
-
-            // Create master timeline synced to document scroll for the 3D scene
-            const animationTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.scrollable-sections',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1
-                }
-            });
-
-            // 0. REVEAL (First Section)
-            // Dramatic rise with a slight tilt
-            animationTimeline.to(objectGroup.position, {
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            });
+            // Apply Initial State
+            const initialProps = configs.initialState || { position: { x:0, y:0, z:0 } };
+            modelGroup.position.set(
+                initialProps.position.x || 0,
+                initialProps.position.y || 0,
+                initialProps.position.z || 0
+            );
+            modelGroup.rotation.set(
+                initialProps.rotation.x || 0,
+                initialProps.rotation.y || 0,
+                initialProps.rotation.z || 0
+            );
+            if (initialProps.scale) modelGroup.scale.setScalar(initialProps.scale);
             
-            animationTimeline.to(objectGroup.rotation, {
-                y: 0,
-                z: 0.1,
-                duration: 0.9,
-                ease: "power3.out"
-            }, "<");
+            threeScene.add(modelGroup);
 
-            // 1. Intro & Tilt
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 2.2,
-                x: -0.2,
-                z: 0,
-                duration: 0.9,
-                ease: "sine.inOut"
-            });
-
-            // 2. Cinematic Move
-            animationTimeline.to(perspectiveCamera.position, {
-                z: 3.0,
-                y: 0.2,
-                duration: 1,
-                ease: "power2.inOut"
-            }, "cinematic");
-            
-            animationTimeline.to(objectGroup.rotation, {
-                z: -0.3,
-                y: Math.PI * 4,
-                duration: 1,
-                ease: "power2.inOut"
-            }, "cinematic");
-
-            // 3. THE TRANSITION
-            // Wind up
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 4,
-                duration: 1,
-                ease: "power2.in" 
-            }, "swapStart");
-
-            // Fast Spin
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 8,
-                duration: 2,
-                ease: "power2.inOut",
-                onUpdate: function() {
-                    const animProgress = this.progress();
-                    if (animProgress > 0.5 && firstModel.visible) {
-                        firstModel.visible = false;
-                        secondModel.visible = true;
-                    } else if (animProgress < 0.5 && !firstModel.visible) {
-                        firstModel.visible = true;
-                        secondModel.visible = false;
-                    }
-                }
-            }, "swapSpin");
-
-            // Camera shake/pull
-            animationTimeline.to(perspectiveCamera.position, {
-                z: 6.5,
-                duration: 1,
-                yoyo: true,
-                repeat: 1,
-                ease: "power2.inOut"
-            }, "swapSpin");
-
-            // 4. Settle
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI *10,
-                x: 0,
-                z: 0,
-                duration: 2.4,
-                ease: "power3.out"
-            }, "settle");
-
-            animationTimeline.to(perspectiveCamera.position, {
-                z: 4,
-                y: 0,
-                duration: 2.4,
-                ease: "power3.out"
-            }, "settle");
-
-
-            // 5. Final Presentation - Red can moves to right
-            animationTimeline.to(objectGroup.position, {
-                x: 2,
-                y: 0,
-                duration: 1,
-                ease: "sine.inOut"
-            }, "final");
-            
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 15,
-                duration: 1,
-                ease: "sine.inOut"
-            }, "final");
-
-            // 6. Red can rolls out of the screen
-            animationTimeline.to(objectGroup.position, {
-                x: 20,
-                duration:1.5,
-                ease: "power2.in"
-            }, "canExit");
-
-            animationTimeline.to(objectGroup.rotation, {
-                y: Math.PI * 18,
-                duration: 1.5,
-                ease: "linear"
-            }, "canExit");
-
-            // TAPE ANIMATION: After red can exits, tape rolls in, zooms, then rolls out
-            if (typeof tapeModel !== 'undefined' && tapeModel) {
-                // Initial state: tape off-screen to the left
-                tapeModel.position.set(-8, 0, 0);
-                tapeModel.rotation.set(0, 0, 0);
-
-                // 1. Tape rolls in from left to center (smooth rolling motion on z-axis)
-                animationTimeline.to(tapeModel.position, {
-                    x: 0,
-                    y: -0.5,
-                    z: -4,
-                    duration: 1.5,
-                    ease: 'power2.out'
-                }, "canExit");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 3.8,
-                    x:0.5,
-                    duration: 1.5,
-                    ease: 'none'
-                }, "canExit");
-
-                // 2. Tape zooms in (comes closer) with gentle rotation
-                animationTimeline.to(tapeModel.position, {
-                    z: 0,
-                    duration: 1.2,
-                    ease: 'power2.inOut'
-                }, "tapeZoom");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 5.2,
-                    duration: 1.2,
-                    ease: 'sine.inOut'
-                }, "tapeZoom");
-
-                animationTimeline.to(tapeModel.position, {
-                    z: -4,
-                    duration: 1.2,
-                    ease: 'power2.inOut'
-                }, "tapeZoomOut");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 7,
-                    duration: 1.2,
-                    ease: 'sine.inOut'
-                }, "tapeZoomOut");
+            gltfLoader.load(configs.modelPath, (gltf) => {
+                const model = gltf.scene;
                 
+                // Ensure model is at local origin before measurement
+                model.position.set(0, 0, 0);
 
-                // 3. Tape rolls out to the right side of screen
-                animationTimeline.to(tapeModel.position, {
-                    x: 10,
-                    y:2,
-                    z: 0,
-                    duration: 1.5,
-                    ease: 'power2.in'
-                }, "tapeRollOut");
-
-                animationTimeline.to(tapeModel.rotation, {
-                    y: Math.PI * 8,
-                    duration: 1.5,
-                    ease: 'none'
-                }, "tapeRollOut");
-            }
-            // Ensure ScrollTrigger recalculates sizes/positions after setup
-            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-        }
-
-        // --- Resize ---
-        window.addEventListener('resize', () => {
-            resizeRendererToDisplaySize();
-            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-        });
-
-        // initial sizing so the renderer matches the canvas element (handles mobile 50vh)
-        resizeRendererToDisplaySize();
-
-        // --- Loop ---
-        function renderLoop() {
-            requestAnimationFrame(renderLoop);
-            webglRenderer.render(threeScene, perspectiveCamera);
-        }
-        renderLoop();
-    </script>
-       <script>
-        // 3. Register the plugin
-        gsap.registerPlugin(ScrollTrigger);
-
-        const counters = document.querySelectorAll(".counter-item");
-
-        counters.forEach(counter => {
-            
-            const originalText = counter.innerText; 
-            const match = originalText.match(/(\d+)(\D*)/);
-            
-            if (match) {
-                const targetNumber = match[1]; 
-                const suffix = match[2];       
+                // Center and Scale model
+                const box = new THREE.Box3().setFromObject(model);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
                 
-                counter.innerHTML = '';
+                // Move model to center geometry at group origin
+                model.position.set(-center.x, -center.y , -center.z);
+                
+                // Fit nicely - 1.8 units fit in the 45deg camera at dist 5
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scaleFactor = 1.8 / maxDim; 
+                model.scale.setScalar(scaleFactor);
 
-                const digits = targetNumber.split("");
+                modelGroup.add(model);
+                activeModel = model;
+            });
 
-                digits.forEach((digit, index) => {
-                    const container = document.createElement("div");
-                    container.classList.add("digit-container");
+            // Handle Resize
+            const onResize = () => {
+                const width = mountPoint.clientWidth * 1.4;
+                const height = mountPoint.clientHeight * 1.4;
+                viewCamera.aspect = width / height;
+                viewCamera.updateProjectionMatrix();
+                webGLRender.setSize(width, height);
+            };
+            window.addEventListener('resize', onResize);
+            onResize(); // Initial sizing
 
-                    const strip = document.createElement("div");
-                    strip.classList.add("digit-strip");
+            // Interaction Logic using CSS + GSAP
+            const itemElement = mountPoint.closest('.item-card');
+            if (itemElement) {
+                let isHovered = false;
 
-                    for (let i = 0; i <= 9; i++) {
-                        const numberSpan = document.createElement("span");
-                        numberSpan.innerText = i;
-                        strip.appendChild(numberSpan);
-                    }
 
-                    container.appendChild(strip);
-                    counter.appendChild(container);
+                itemElement.addEventListener('mouseenter', () => {
+                    // Only animate if not in mobile view or verify screen width
+                    if (window.innerWidth < 1024) return;
 
-                    // --- ANIMATION WITH SCROLL TRIGGER ---
-                    gsap.to(strip, {
-                        yPercent: -(parseInt(digit) * 10),
-                        duration: 2,
-                        ease: "power2.inOut",
-                        delay: index * 0.1,
+                    isHovered = true;
+                    if(modelGroup) {
+                        const enter = configs.enterState || {
+                            position: { y: 1, z: 1 },
+                            rotation: { x: 0.4, z: 0.2, spin: Math.PI * 2 },
+                            scale: 1.6,
+                            duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                            ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                        };
+
+                        // 1. Move
+                        gsap.to(modelGroup.position, {
+                            y: enter.position.y,
+                            z: enter.position.z,
+                            duration: enter.duration.position,
+                            ease: enter.ease.position
+                        });
+
+                        // 2. Rotate
+                        gsap.to(modelGroup.rotation, {
+                            y: modelGroup.rotation.y + (enter.rotation.spin || 0), 
+                            x: enter.rotation.x,
+                            z: enter.rotation.z, 
+                            duration: enter.duration.rotation,
+                            ease: enter.ease.rotation
+                        });
+
+                        // 3. Scale
+                        gsap.to(modelGroup.scale, {
+                            x: enter.scale,
+                            y: enter.scale,
+                            z: enter.scale,
+                            duration: enter.duration.scale,
+                            ease: enter.ease.scale
+                        });
                         
-                        // ScrollTrigger configuration
-                        scrollTrigger: {
-                            trigger: counter, // The element that triggers the animation
-                            start: "top 85%", // Animation starts when top of element hits 85% of viewport height
-                            toggleActions: "play none none reverse", // Play on enter, reverse on leave (optional)
-                            // markers: true // Uncomment this line to debug start/end positions
-                        }
+                        // 4. Continued Rotation: Increase speed
+                        orbitControls.autoRotateSpeed = 15.0; 
+                    }
+                });
+
+                itemElement.addEventListener('mousemove', (e) => {
+                    if (window.innerWidth < 1024) return; // Disable hover effects on mobile
+                    if(!isHovered || !modelGroup) return;
+
+                    const enter = configs.enterState || { rotation: { x: 0.4, z: 0.2 } };
+
+                    // Add dynamic micro-tilt on top of the base tilt
+                    const rect = itemElement.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                    gsap.to(modelGroup.rotation, {
+                        x: enter.rotation.x + (y * 0.3), // Base tilt + mouse offset
+                        z: enter.rotation.z + (-x * 0.3), // Base tilt + mouse offset
+                        duration: 0.4,
+                        ease: "power1.out"
                     });
                 });
 
-                if (suffix) {
-                    const suffixSpan = document.createElement("div");
-                    suffixSpan.classList.add("suffix");
-                    suffixSpan.innerText = suffix;
-                    counter.appendChild(suffixSpan);
-                }
+                itemElement.addEventListener('mouseleave', () => {
+                    // Always try to reset state on leave, just in case
+                    isHovered = false;
+                    if(modelGroup) {
+                        const leave = configs.leaveState || {
+                            position: { x: 0, y: 0, z: 0 },
+                            rotation: { x: 0, z: 0 },
+                            scale: 1,
+                            duration: 0.8,
+                            ease: "power2.inOut"
+                        };
+
+                        // Return position to center
+                        gsap.to(modelGroup.position, {
+                            x: leave.position.x || 0,
+                            y: leave.position.y || 0,
+                            z: leave.position.z || 0,
+                            duration: leave.duration,
+                            ease: leave.ease
+                        });
+
+                        // Return scale to normal
+                        gsap.to(modelGroup.scale, {
+                            x: leave.scale,
+                            y: leave.scale,
+                            z: leave.scale,
+                            duration: leave.duration,
+                            ease: leave.ease
+                        });
+
+                        // Reset tilt to zero
+                        gsap.to(modelGroup.rotation, {
+                            x: leave.rotation.x || 0,
+                            z: leave.rotation.z || 0,
+                            duration: leave.duration,
+                            ease: leave.ease
+                        });
+
+                        // Return to slow rotation
+                        orbitControls.autoRotateSpeed = 2.0;
+                    }
+                });
             }
+
+            // Animation Loop
+            const animateLoop = () => {
+                requestAnimationFrame(animateLoop);
+                orbitControls.update();
+                webGLRender.render(threeScene, viewCamera);
+            };
+            animateLoop();
+        }
+
+        // Initialize all cards
+        modelDataConfig.forEach(config => setupModelViewer(config));
+
+        // Hide overlay after a short delay
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay');
+                if(overlay) {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => overlay.remove(), 500);
+                }
+            }, 1000);
         });
     </script>
 </body>

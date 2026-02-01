@@ -1,8 +1,43 @@
 (function(){
   const content = `
-      <div class="about-container">
-        <div style="width: 50%"><img src="assets/director.png" style="width:400px; height:auto;" class="about-image" alt="About Us" /></div>
-        <div class="about-details"><h1 style-="line-height : 1; padding-top: 0;">About Us</h1><br> Twin Tech India Pvt. Ltd is a premier manufacturer and supplier of aerosols, sprays, and specialty machines for various industries. Our flagship brand, SPRAYZET, offers custom-designed, biodegradable aerosols for applications in agriculture, engineering, textiles, food manufacturing, and more. We also provide contract aerosol packaging with private label capabilities, ensuring quality and efficiency.<br><br>Our diverse product line includes industrial maintenance aerosols, self-adhesive tapes, home care products under "Hacker," air deodorizers under "Twinzy," and car care solutions under "Evershine." We are committed to high standards, innovation, and timely delivery.</div>
+      <div class="about-wrapper">
+        <div class="about-image-col">
+            <div class="image-frame">
+                <img src="assets/director.png" alt="Twin Tech Director" loading="lazy" />
+                <div class="exp-badge">
+                    <span class="years">25+</span>
+                    <span class="text">Years Experience</span>
+                </div>
+            </div>
+        </div>
+        <div class="about-content-col">
+            <span class="eyebrow">Who We Are</span>
+            <h2>Innovating Industrial & consumer Solutions</h2>
+            <p class="lead">Twin Tech India Pvt. Ltd is a premier manufacturer and supplier of aerosols, sprays, and specialty machines.</p>
+            <p>Our flagship brand, <strong>SPRAYZET</strong>, leads with custom-designed, biodegradable aerosols for agriculture, engineering, and food industries. From "Evershine" car care to "Twinzy" air deodorizers, we deliver private label excellence built on quality and efficiency.</p>
+            
+            <ul class="highlights">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Custom Manufacturing</strong>
+                        <span>Tailored aerosol and chemical solutions.</span>
+                    </div>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Eco-Friendly</strong>
+                        <span>Biodegradable products meeting global standards.</span>
+                    </div>
+                </li>
+            </ul>
+
+            <a href="about-us.html" class="about-cta-btn">
+                Discover More
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+        </div>
       </div>
   `;
 

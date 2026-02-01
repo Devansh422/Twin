@@ -1,42 +1,36 @@
 (function(){
   const sections = {
-    'hero-section': `
-      <video id="heroVideo" autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-        <source src="./assets/hero-vid.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="hero-content">
-        <h1 class="animate-text">Manufacturing at Scale.<br>Quality Without Compromise</h1>
-        <span class="sub-text">From precison-driven production to global supply, we maufacture products brand trust efficiently, reliably, responsibly</span>
-        <div class="cta-button">
-          <button>Enquire Now</button>
-        </div>
-      </div>
-      <div class="gradient"></div>
-    `,
-
     'numbers-section': `
-      <div class="num-1">
-        <div class="counter-item">30+</div>
-        <h2 class="animate-text">Global & Domestic Clients</h2>
-        <span class="details">Long-term partnerships built on quality, consistency, and timely delivery.</span>
+      <div class="num-card">
+        <div class="counter-wrapper">
+            <span class="count" data-target="30">0</span>
+            <span class="suffix">+</span>
+        </div>
+        <h3>Global & Domestic Clients</h3>
+        <p class="details">Long-term partnerships built on quality, consistency, and timely delivery.</p>
       </div>
-      <div class="num-1">
-        <div class="counter-item">15+</div>
-        <h2 class="animate-text">Years of Manufacturing Experience</h2>
-        <span class="details">Deep industry knowledge refined through years of hands-on production excellence.</span>
+      <div class="num-card">
+        <div class="counter-wrapper">
+            <span class="count" data-target="15">0</span>
+            <span class="suffix">+</span>
+        </div>
+        <h3>Years of Experience</h3>
+        <p class="details">Deep industry knowledge refined through years of hands-on production excellence.</p>
       </div>
-      <div class="num-1">
-        <div class="counter-item">1M+</div>
-        <h2 class="animate-text">Units Manufactured Annually</h2>
-        <span class="details">High-capacity manufacturing designed to meet growing market demands.</span>
+      <div class="num-card">
+        <div class="counter-wrapper">
+            <span class="count" data-target="1">0</span>
+            <span class="suffix">M+</span>
+        </div>
+        <h3>Units Annually</h3>
+        <p class="details">High-capacity manufacturing designed to meet growing market demands.</p>
       </div>
     `,
 
     'work-section': `
-      <h2>How We Work</h2>
-      <h1 class="animate-text">Built on Process. Driven by Precision.</h1>
-      <p class="details">We follow a collaborative, step-by-step approach understanding requirements, aligning teams, ensuring precision manufacturing, and delivering consistent quality. Every stage is designed to optimize efficiency, maintain standards, and create solutions that support long-term growth and operational excellence.</p>
+      <h2>Our Products</h2>
+      <h1 class="animate-text">Products That Power Your Brand</h1>
+      <p class="details">At Twin Tech India Pvt. Ltd., we deliver high-quality products tailored to meet diverse industrial needs, including aerosols, tapes, and household items. We are committed to delivering the highest quality products to our clients.</p>
     `,
 
     'products-section': `
@@ -74,52 +68,125 @@
     ,
     'work-bottom': `
       <h2>Our clients</h2>
-      <h1 class="animate-text">Partners in Progress, Driving Innovation Together.</h1>
+      <h1 class="animate-text">Partners in Progress</h1>
       <p class="details">Trusted partners in progress, working together to drive innovation, quality, and long-term manufacturing excellence.</p>
       <div class="slider-container">
-        <div class="slider-track" id="track"></div>
+        <div class="slider-track" id="track-1"></div>
+      </div>
+      <div class="slider-container">
+        <div class="slider-track" id="track-2"></div>
+      </div>
+      <div class="slider-container">
+        <div class="slider-track" id="track-3"></div>
       </div>
     `
   };
 
   function setupBrandSlider() {
-    const track = document.getElementById("track");
-    if (!track) return;
-
+    const tracks = ["track-1", "track-2", "track-3"];
     const imageFolder = "brand/";
     const totalImages = 6;
 
-    function createImage(index) {
-      const img = document.createElement("img");
-      img.src = `${imageFolder}img-${index}.jpg`;
-      img.alt = `Brand ${index}`;
-      img.classList.add("brand-logo");
-      return img;
-    }
+    tracks.forEach((trackId, idx) => {
+      const track = document.getElementById(trackId);
+      if (!track) return;
 
-    // Load initial set
-    for (let i = 1; i <= totalImages; i++) {
-      track.appendChild(createImage(i));
-    }
-    // Clone for infinite loop
-    for (let i = 1; i <= totalImages; i++) {
-      track.appendChild(createImage(i));
-    }
-
-    if (window.gsap) {
-      let tween = gsap.to(track, {
-        xPercent: -50,
-        duration: 20, 
-        ease: "none",
-        repeat: -1
-      });
-
-      const container = document.querySelector(".slider-container");
-      if (container) {
-        container.addEventListener("mouseenter", () => tween.pause());
-        container.addEventListener("mouseleave", () => tween.play());
+      function createImage(index) {
+        const img = document.createElement("img");
+        img.src = `${imageFolder}img-${index}.jpg`;
+        img.alt = `Brand ${index}`;
+        img.classList.add("brand-logo");
+        return img;
       }
-    }
+
+      // Fill tracks with images
+      // Row 1: 1-6, Row 2: 4-6 then 1-3, Row 3: 2-6 then 1
+      const order = [
+        [1, 2, 3, 4, 5, 6],
+        [4, 5, 6, 1, 2, 3],
+        [3, 6, 2, 5, 1, 4]
+      ];
+
+      const currentOrder = order[idx] || order[0];
+
+      // Clone enough times to cover viewport + buffer
+      // Duplicating 6 times to ensure no gaps even on very wide screens
+      for (let k = 0; k < 6; k++) {
+        currentOrder.forEach(i => track.appendChild(createImage(i)));
+      } // Duplicate for loop
+
+      if (window.gsap) {
+        // Wait for images to load to get correct widths if needed, 
+        // though % based works, we use a small timeout to let the browser settle
+        setTimeout(() => {
+          const speed = 15 + (idx * 5); // Slightly faster
+          const direction = (idx % 2 === 0) ? -1 : 1;
+
+          if (direction === 1) {
+            // Move Right
+            gsap.set(track, { xPercent: -50 });
+            gsap.to(track, {
+              xPercent: 0,
+              duration: speed,
+              ease: "none",
+              repeat: -1
+            });
+          } else {
+            // Move Left
+            gsap.to(track, {
+              xPercent: -50,
+              duration: speed,
+              ease: "none",
+              repeat: -1
+            });
+          }
+        }, 100);
+
+        const container = track.closest(".slider-container");
+        if (container) {
+          container.addEventListener("mouseenter", () => {
+             const activeTweens = gsap.getTweensOf(track);
+             activeTweens.forEach(t => t.pause());
+          });
+          container.addEventListener("mouseleave", () => {
+             const activeTweens = gsap.getTweensOf(track);
+             activeTweens.forEach(t => t.play());
+          });
+        }
+      }
+    });
+  }
+
+  function setupCounters() {
+    if (!window.gsap || !window.ScrollTrigger) return;
+    
+    // Select all counters
+    const counters = document.querySelectorAll('.num-card .count');
+    
+    counters.forEach(counter => {
+      const targetValue = parseFloat(counter.getAttribute('data-target'));
+      // Create a proxy object to animate
+      let proxy = { val: 0 };
+      
+      gsap.to(proxy, {
+        val: targetValue,
+        duration: 2, 
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: counter,
+          start: "top 85%", // Start when top of number hits 85% of viewport height
+          toggleActions: "play none none reverse" 
+        },
+        onUpdate: function() {
+          // Update the element's text with the rounded value
+          counter.textContent = Math.floor(proxy.val); 
+          // If the target is decimal (like 1.5), you might want to use toFixed
+          if (targetValue % 1 !== 0) {
+             counter.textContent = proxy.val.toFixed(1);
+          }
+        }
+      });
+    });
   }
 
   function injectAll() {
@@ -131,6 +198,7 @@
       el.dataset.injected = '1';
     });
     setupBrandSlider();
+    setupCounters();
   }
 
   if (document.readyState === 'loading') {
