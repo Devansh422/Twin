@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'base';
-  src: url('./font/VastagoGrotesk-Regular.woff2') format('woff2');
+  src: url('./font/f4.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'heading';
-  src: url('./font/VastagoGrotesk-SemiBold.woff2') format('woff2');
+  src: url('./font/f2.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -46,6 +46,22 @@ img{
 	width: 100%;
 	object-fit: cover;
 }
+
+
+
+.animate-text span {
+    display: inline-block;
+    overflow: hidden;
+    will-change: transform,opacity;
+    line-height: 1.24
+}
+
+.animate-text span span {
+    display: inline-block
+}
+
+
+
 .counter-item {
             display: flex;
             height: 5rem;
@@ -147,10 +163,6 @@ img{
   }
 }
 	
-	.animate-text {
-      text-transform: none;
-    }
-	
 	.word{
 		display: inline-block!important;
 	}
@@ -219,7 +231,7 @@ img{
 }
 .hero-content .sub-text{
   width: 50%;
-  font-size: 1.3rem;
+  font-size: 1rem;
   text-align: left;
   color: #fff;
 }
@@ -227,6 +239,17 @@ img{
 .hero-content .cta-button{
   display: flex;
   gap: 2rem;
+}
+
+
+#hero-section .gradient{
+  position: absolute;
+  top:0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(45deg,rgba(0, 0, 0, 0.5) 0%, rgba(218, 207, 190, 0) 100%);
+  z-index: 99;
 }
 
 .hero-content .cta-button button{

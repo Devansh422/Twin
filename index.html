@@ -52,6 +52,7 @@
 
   <div class="main-container">
   <section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
+
     <!-- Hero content will be injected via hero.js -->
   </section>
 
@@ -216,110 +217,115 @@
       return targets;
     };
 
-    // Make initialization async for better cross-browser compatibility
-    async function initAnimateText() {
-      // Wait for DOM to be ready
-      if (document.readyState === 'loading') {
-        await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
-      }
+    function initTextAnimations() {
+        document.querySelectorAll(".animate-text").forEach((element) => {
+            // Skip if already processed
+            if (element.dataset.textAnimated) return;
+            element.dataset.textAnimated = "true";
 
-      // Wait a frame for layout to stabilize
-      await new Promise(resolve => requestAnimationFrame(resolve));
-
-      const animateScopes = [...document.querySelectorAll('.animate-text')];
-      if (!animateScopes.length) return;
-
-      const targetsToAnimate = animateScopes.flatMap(collectTextTargets);
-      if (!targetsToAnimate.length) return;
-
-      // Mark targets
-      targetsToAnimate.forEach(el => {
-        el.dataset.animateTextProcessed = '1';
-        el.setAttribute('data-splitting', '');
-      });
-
-      // Run Splitting and wait for completion
-      try {
-        Splitting({ target: targetsToAnimate });
-      } catch {
-        Splitting();
-      }
-
-      // Wait for Splitting to complete
-      await new Promise(resolve => setTimeout(resolve, 50));
-
-      // Setup animations
-      targetsToAnimate.forEach(el => {
-        const allChars = el.querySelectorAll('.char');
-        if (!allChars.length) return;
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: el,
-            start: 'top bottom',
-            end: 'top top+=10%',
-            toggleActions: 'play resume resume reset'
-          }
-        });
-
-        const words = [...el.querySelectorAll('.word')];
-        if (words.length) {
-          words.forEach(word => {
-            const chars = word.querySelectorAll('.char');
-            if (!chars.length) return;
-            wrapElements(chars, 'span', 'char-wrap');
-            tl.fromTo(chars,
-              {
-                willChange: 'transform',
-                transformOrigin: '0% 50%',
-                xPercent: 105
-              },
-              {
-                duration: 1,
-                ease: 'expo',
-                xPercent: 0,
-                stagger: 0.042
-              },
-              0
+            // Get all text nodes in the element
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
             );
-          });
-          return;
-        }
 
-        wrapElements(allChars, 'span', 'char-wrap');
-        tl.fromTo(allChars,
-          {
-            willChange: 'transform',
-            transformOrigin: '0% 50%',
-            xPercent: 105
-          },
-          {
-            duration: 1,
-            ease: 'expo',
-            xPercent: 0,
-            stagger: 0.042
-          },
-          0
-        );
-      });
+            const textNodes = [];
+            let node;
+            while ((node = walker.nextNode())) {
+                if (node.nodeValue.trim() !== "") {
+                    textNodes.push(node);
+                }
+            }
 
-      // Refresh ScrollTrigger after setup
-      await new Promise(resolve => requestAnimationFrame(resolve));
-      ScrollTrigger.refresh();
-      
-      // Additional refreshes for late-loading content
-      setTimeout(() => ScrollTrigger.refresh(), 100);
-      setTimeout(() => ScrollTrigger.refresh(), 500);
+            // Process each text node
+            textNodes.forEach((textNode) => {
+                const parent = textNode.parentNode;
+                const text = textNode.nodeValue;
+                const frag = document.createDocumentFragment();
+
+                if (window.innerWidth <= 767) {
+                    // Per-word wrap for mobile
+                    text.split(/(\s+)/).forEach((part) => {
+                        if (part.match(/\s+/)) {
+                            // Keep whitespace as-is
+                            frag.appendChild(document.createTextNode(part));
+                        } else if (part.length > 0) {
+                            // Wrap word in span
+                            const span = document.createElement("span");
+                            span.textContent = part;
+                            span.style.display = "inline-block";
+                            span.style.opacity = "0";
+                            frag.appendChild(span);
+                        }
+                    });
+                } else {
+                    // Per-character wrap for desktop
+                    [...text].forEach((char) => {
+                        const span = document.createElement("span");
+                        span.textContent = char === " " ? "\u00A0" : char;
+                        span.style.display = "inline-block";
+                        span.style.opacity = "0";
+                        frag.appendChild(span);
+                    });
+                }
+
+                parent.replaceChild(frag, textNode);
+            });
+
+            // Get all the spans we just created
+            const chars = element.querySelectorAll("span");
+
+            if (chars.length === 0) return;
+
+            // Animate them
+            gsap.fromTo(chars, 
+                {
+                    y: 20,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    stagger: 0.02,
+                    ease: "power2.out",
+                    duration: 0.4,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        once: true,
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
     }
 
-    // Start initialization
-    initAnimateText();
+    // Initialize text animations when DOM is ready
+    // Use a MutationObserver to detect when content is added dynamically
+    function setupTextAnimations() {
+        initTextAnimations();
+        ScrollTrigger.refresh();
+        
+        // Watch for new .animate-text elements being added
+        const observer = new MutationObserver(() => {
+            initTextAnimations();
+            ScrollTrigger.refresh();
+        });
+        
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
 
-    // Also handle font loading
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        setTimeout(() => ScrollTrigger.refresh(), 100);
-      });
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(setupTextAnimations, 500);
+        });
+    } else {
+        setTimeout(setupTextAnimations, 500);
     }
   </script>
 

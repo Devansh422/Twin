@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="nav.css">
+	<link rel="stylesheet" type="text/css" href="footer.css">
+	<title>Products Cards</title>
+    <style>
+        body {
+            /* Ensure footer stays at bottom if content is short */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding-top: 100px; /* Space for fixed navbar */
+            padding-bottom: 50px;
+            background-color: #f9f9f9;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem; /* Increased gap for pop-out space */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            /* overflow: visible is default, but ensuring it here */
+            overflow: visible; 
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-card:hover {
+            z-index: 10; /* Ensure it overlaps neighbors */
+        }
+
+        .card-canvas-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            position: relative;
+            background: radial-gradient(circle at center, #f5f5f5 0%, #ffffff 70%); 
+            border-radius: 20px 20px 0 0;
+            overflow: visible; /* Ensure nothing clips the canvas */
+        }
+        
+        /* The Card Background/Surface - Fixed size */
+        .card-canvas-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            border-radius: inherit;
+            z-index: 0;
+        }
+
+        /* The Canvas itself - Oversized and absolutely positioned to allow "pop out" */
+        .card-canvas-wrapper canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140% !important; /* Larger than container */
+            height: 140% !important;
+            display: block;
+            z-index: 5;
+            pointer-events: none; /* Let hover events pass to the card */
+            outline: none;
+        }
+
+        .card-info {
+            padding: 1.5rem;
+            text-align: center;
+            background: white;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            z-index: 2; 
+        }
+
+        .product-card:hover {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+    </style>
+
+        .card-info h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+            font-family: inherit; /* Inherit font from global styles */
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay" style="position: fixed; inset: 0; background: #ED1D21; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s;">
+        <div style="width: 50px; height: 50px; border: 4px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+    </div>
+
+	<nav>
+    <div class="logo">
+      <img id="site-logo" src="" alt="Twin Tech Logo">
+    </div>
+		<ul class="navigation">
+			<li><a href="index.html">Home</a></li>
+			<li class="has-dropdown">
+				<a href="about-us.html" class="dropdown">About Us <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="about-us.html#overview"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Overview</a></li>
+					<li><a href="about-us.html#customer-focus"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Customer Focus</a></li>
+					<li><a href="about-us.html#applications"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Application Areas</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Career</a></li>
+				</ul>
+			</li>
+			<li class="has-dropdown">
+				<a href="#" class="dropdown">Our Brands<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Evershine</a></li>
+					<li><a href="sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>SprayZet</a></li>
+					<li><a href="twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twin Tapes</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Silox</a></li>
+					<li><a href="twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twinzy</a></li>
+				</ul>
+			</li>
+			<li><a href="gallery.html">Gallery</a></li>
+			<li><a href="twinzy.html">Become a Distributor</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="contact-us.html">Contact Us</a></li>
+		</ul>
+		<div class="action_buttons">
+			<button class="search"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+			<button class="whatsapp"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg></button>
+		</div>
+	</nav>
+
+    <div class="main-content">
+        <div class="cards-grid">
+            <!-- Card 1: Industrial Products -->
+            <div class="product-card">
+                <div class="card-canvas-wrapper" id="canvas-wrapper-1"></div>
+                <div class="card-info">
+                    <h3>Industrial Products</h3>
+                </div>
+            </div>
+
+            <!-- Card 2: Car Care Products -->
+            <div class="product-card">
+                <div class="card-canvas-wrapper" id="canvas-wrapper-2"></div>
+                <div class="card-info">
+                    <h3>Car Care Products</h3>
+                </div>
+            </div>
+
+            <!-- Card 3: Adhesive Tapes -->
+            <div class="product-card">
+                <div class="card-canvas-wrapper" id="canvas-wrapper-3"></div>
+                <div class="card-info">
+                    <h3>Adhesive Tapes</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<footer>
+		<div class="top">
+      <div class="logo">
+        <img id="site-logo-footer" src="" alt="Twin Tech Logo">
+      </div>
+			<div class="footer-info animate-text">
+				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care products, self-adhesive tapes and home care products for various industries worldwide.
+			</div>
+		</div>
+		<div class="line"></div>
+		<div class="mid">
+			<div class="footer-navs">
+			<ul class="nav-1">
+				<h3>Quick Links</h3>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Our Clients</a></li>
+				<li><a href="contact-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Contact</a></li>
+			</ul>
+			<ul class="nav-2">
+				<h3>Brands</h3>
+				<li><a href="evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Evershine</a></li>
+				<li><a href="sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>SprayZet</a></li>
+				<li><a href="twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twin Tapes</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Silox</a></li>
+				<li><a href="twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twinzy</a></li>
+			</ul>
+			<ul class="nav-3">
+				<h3>Download Catalog</h3>
+				<li><a href="BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf" target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg></span>Evershine</a></li>
+				<li><a href="BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/1.%20SPRAYZET/SPRAYZET%20CATALOGUE%20NEW.pdf" target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg></span>SprayZet</a></li>
+				<li><a href="BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/3.%20TWIN%20TAPE/TAPE%20CATALOUGE.pdf" target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg></span>Twin Tapes</a></li>
+			</ul>
+			<ul class="nav-4">
+				<h3>Get In Touch</h3>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>twin@twinindia.com</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>sales@twinindia.com</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>91-9310052702</a></li>
+			</ul>
+		</div>
+			<ul class="address">
+				<li><a href="#">Office Address : A-304, Solitairian City Center, Knowledge Park III, Greater NOIDA (UP), India 201308</a></li>
+				<li><a href="#">Work Address : R-51, 52 & 53, UPSIDC, Sikandrabad -203205 Uttar Pradesh</a></li>
+				<ul class="socials">
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></li>
+				</ul>
+			</ul>
+		</div>
+		<div class="line"></div>
+		<div class="bottom">
+			<span>©Copyright 2026. All Rights Reserved.</span>
+		</div>
+	</footer>
+
+    <script src="assets-config.js"></script>
+    <script src="assets-apply.js" defer></script>
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // Configuration for cards
+        const cardInfos = [
+            {
+                id: 'canvas-wrapper-1',
+                // Black Can for Industrial
+                modelPath: window.ASSETS.blackCan || './assets/Black_Can.glb',
+                scale: 1.0
+            },
+            {
+                id: 'canvas-wrapper-2',
+                // Red Can for Car Care
+                modelPath: window.ASSETS.redCan || './assets/Red_Can.glb',
+                scale: 1.0
+            },
+            {
+                id: 'canvas-wrapper-3',
+                // Tape for Adhesive
+                modelPath: window.ASSETS.brownTape || './assets/Brown_Tape.glb',
+                scale: 1.0
+            }
+        ];
+
+        // Shared Environment Map
+        let envMap = null;
+
+        function loadEnvMap(renderer, scene) {
+            return new Promise((resolve) => {
+                if (envMap) {
+                    scene.environment = envMap;
+                    resolve(envMap);
+                    return;
+                }
+                const pmremGenerator = new THREE.PMREMGenerator(renderer);
+                pmremGenerator.compileEquirectangularShader();
+                new RGBELoader().load(window.ASSETS.neutralHdr || './assets/neutral.hdr', (texture) => {
+                    envMap = pmremGenerator.fromEquirectangular(texture).texture;
+                    scene.environment = envMap;
+                    texture.dispose();
+                    pmremGenerator.dispose();
+                    resolve(envMap);
+                });
+            });
+        }
+
+        async function initCard(cardInfo) {
+            const container = document.getElementById(cardInfo.id);
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            // Transparent background for 3D scene to layer over CSS gradient
+            scene.background = null; 
+
+            // Adjusted Angle: Lower elevation to avoid "top-down" look, kept at center
+            const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); // Slightly narrower FOV for better focus
+            camera.position.set(0, 0.5, 6.5); 
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            // Set size including the 140% oversized margin
+            const renderWidth = container.clientWidth * 1.4;
+            const renderHeight = container.clientHeight * 1.4;
+            renderer.setSize(renderWidth, renderHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0;
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            container.appendChild(renderer.domElement);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enableZoom = false; 
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 2.0; 
+            controls.target.set(0, 0, 0);
+
+            await loadEnvMap(renderer, scene);
+
+            const loader = new GLTFLoader();
+            let modelReference = null;
+            let group = new THREE.Group();
+            scene.add(group);
+
+            loader.load(cardInfo.modelPath, (gltf) => {
+                const model = gltf.scene;
+                
+                // Ensure model is at local origin before measurement
+                model.position.set(0, 0, 0);
+
+                // Center and Scale model
+                const box = new THREE.Box3().setFromObject(model);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
+                
+                // Move model to center geometry at group origin
+                model.position.set(center.x, -center.y, -center.z);
+                
+                // Fit nicely - 1.8 units fit in the 45deg camera at dist 5
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scaleFactor = 1.8 / maxDim; 
+                model.scale.setScalar(scaleFactor);
+
+                group.add(model);
+                modelReference = model;
+            });
+
+            // Handle Resize
+            const onResize = () => {
+                const width = container.clientWidth * 1.4;
+                const height = container.clientHeight * 1.4;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            };
+            window.addEventListener('resize', onResize);
+            onResize(); // Initial sizing
+
+            // Interaction Logic using CSS + GSAP
+            const cardElement = container.closest('.product-card');
+            if (cardElement) {
+                let isHovered = false;
+
+                cardElement.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    if(group) {
+                        // 1. Move Upward
+                        gsap.to(group.position, {
+                            y: 2.0,    // Lift it significantly higher
+                            z: 1,    // Slight forward pop
+                            duration: 0.3,
+                            ease: "power2.out"
+                        });
+
+                        // 2. Flick & Tilt: Snappy rotation with a fixed tilt
+                        gsap.to(group.rotation, {
+                            y: group.rotation.y + Math.PI * 2, // Full 360 flick
+                            x: 0.4, // Permanent cinematic tilt while hovered
+                            z: 0.2, // Permanent cinematic tilt while hovered
+                            duration: 1.0,
+                            ease: "back.out(2)"
+                        });
+
+                        // 3. Cinematic Scale
+                        gsap.to(group.scale, {
+                            x: 1.6,
+                            y: 1.6,
+                            z: 1.6,
+                            duration: 0.6,
+                            ease: "elastic.out(1, 0.75)" 
+                        });
+                        
+                        // 4. Continued Rotation: Increase speed
+                        controls.autoRotateSpeed = 15.0; 
+                    }
+                });
+
+                cardElement.addEventListener('mousemove', (e) => {
+                    if(!isHovered || !group) return;
+
+                    // Add dynamic micro-tilt on top of the base tilt
+                    const rect = cardElement.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                    gsap.to(group.rotation, {
+                        x: 0.4 + (y * 0.3), // Base tilt + mouse offset
+                        z: 0.2 + (-x * 0.3), // Base tilt + mouse offset
+                        duration: 0.4,
+                        ease: "power1.out"
+                    });
+                });
+
+                cardElement.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                    if(group) {
+                        // Return position to center
+                        gsap.to(group.position, {
+                            y: 0,
+                            z: 0,
+                            duration: 0.8,
+                            ease: "power2.inOut"
+                        });
+
+                        // Return scale to normal
+                        gsap.to(group.scale, {
+                            x: 1,
+                            y: 1,
+                            z: 1,
+                            duration: 0.8,
+                            ease: "power2.inOut"
+                        });
+
+                        // Reset tilt to zero
+                        gsap.to(group.rotation, {
+                            x: 0,
+                            z: 0,
+                            duration: 0.8,
+                            ease: "power2.inOut"
+                        });
+
+                        // Return to slow rotation
+                        controls.autoRotateSpeed = 2.0;
+                    }
+                });
+            }
+
+            // Animation Loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            };
+            animate();
+        }
+
+        // Initialize all cards
+        cardInfos.forEach(info => initCard(info));
+
+        // Hide overlay after a short delay
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay');
+                if(overlay) {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => overlay.remove(), 500);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

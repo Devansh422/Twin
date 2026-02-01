@@ -12,6 +12,7 @@
           <button>Enquire Now</button>
         </div>
       </div>
+      <div class="gradient"></div>
     `,
 
     'numbers-section': `
