@@ -1,194 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="nav.css">
-	<link rel="stylesheet" type="text/css" href="footer.css">
-	<title>Become a Distributor - Twin Tech</title>
-    <style>
-        .distributor-form-section {
-            padding: 4rem 2rem;
-            background-color: #f9f9f9;
-        }
-        .form-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .form-container h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        .form-container .sub-heading {
-            text-align: center;
-            color: #ED1D21;
-            margin-bottom: 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-        .form-field {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        .form-field.full-width {
-            grid-column: 1 / -1;
-        }
-        .form-field label {
-            position: absolute;
-            top: 0.8rem;
-            left: 1rem;
-            color: #999;
-            font-size: 1rem;
-            font-weight: 500;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        .form-field input,
-        .form-field textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            background-color: transparent;
-            transition: border-color 0.3s;
-        }
-        .form-field input:focus,
-        .form-field textarea:focus,
-        .form-field input:not(:placeholder-shown),
-        .form-field textarea:not(:placeholder-shown) {
-            outline: none;
-            border-color: #ED1D21;
-        }
-        .form-field input:focus + label,
-        .form-field textarea:focus + label,
-        .form-field input:not(:placeholder-shown) + label,
-        .form-field textarea:not(:placeholder-shown) + label {
-            top: -0.75rem;
-            left: 0.75rem;
-            font-size: 0.8rem;
-            color: #ED1D21;
-            background-color: #fff;
-            padding: 0 0.25rem;
-        }
-        .form-field textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .radio-group {
-            grid-column: 1 / -1;
-        }
-        .radio-group legend {
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            color: #555;
-            font-size: 0.9rem;
-        }
-        .radio-options {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .radio-options label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .radio-options input {
-            accent-color: #ED1D21;
-        }
-        .submit-btn {
-            grid-column: 1 / -1;
-            width: 100%;
-            padding: 1rem;
-            background-color: #ED1D21;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 1rem;
-        }
-        .submit-btn:hover {
-            background-color: #d4181c;
-        }
-
-        @media (max-width: 768px) {
-            .distributor-form-section {
-                padding: 2rem 1rem;
-            }
-            .form-container {
-                padding: 1.5rem;
-            }
-            .form-container h1 {
-                font-size: 2rem;
-            }
-            .form-container .sub-heading {
-                font-size: 1rem;
-                margin-bottom: 2rem;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
-            }
-            .form-field input,
-            .form-field textarea {
-                font-size: 0.9rem;
-                padding: 0.7rem 0.9rem;
-            }
-            .form-field label {
-                font-size: 0.9rem;
-                top: 0.7rem;
-                left: 0.9rem;
-            }
-            .form-field input:focus + label,
-            .form-field textarea:focus + label,
-            .form-field input:not(:placeholder-shown) + label,
-            .form-field textarea:not(:placeholder-shown) + label {
-                top: -0.7rem;
-                font-size: 0.75rem;
-            }
-            .radio-options {
-                gap: 1rem;
-            }
-            .submit-btn {
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .form-container h1 {
-                font-size: 1.8rem;
-            }
-            .form-container .sub-heading {
-                font-size: 0.9rem;
-            }
-            .radio-options {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Twin Tech</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="nav.css">
+    <link rel="stylesheet" type="text/css" href="footer.css">
+    <link rel="stylesheet" type="text/css" href="blog.css">
 </head>
 <body>
+
 	<nav>
     <div class="logo">
       <img id="site-logo" src="" alt="Twin Tech Logo">
@@ -225,66 +47,104 @@
 		</div>
 	</nav>
 
-    <main>
-        <section class="distributor-form-section">
-            <div class="form-container">
-                <h1>Become A Distributor</h1>
-                <p class="sub-heading">Elevate Your Business With Twin Tech's Distributor Partnership.</p>
-                <form action="#" method="POST">
-                    <div class="form-grid">
-                        <div class="form-field">
-                            <input type="text" id="name" name="name" placeholder=" " required>
-                            <label for="name">Name</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="tel" id="phone" name="phone" placeholder=" " required>
-                            <label for="phone">Phone Number</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="email" id="email" name="email" placeholder=" " required>
-                            <label for="email">Email</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="text" id="city" name="city" placeholder=" ">
-                            <label for="city">City or Town</label>
-                        </div>
-                        <div class="form-field full-width">
-                            <input type="text" id="country" name="country" placeholder=" ">
-                            <label for="country">Country</label>
-                        </div>
-                        <div class="form-field full-width">
-                            <textarea id="business-plans" name="business-plans" placeholder=" "></textarea>
-                            <label for="business-plans">Please tell us little about your current business/plans</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="text" id="company-name" name="company-name" placeholder=" ">
-                            <label for="company-name">Company Name</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="text" id="representing" name="representing" placeholder=" ">
-                            <label for="representing">What products are you currently representing?</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="text" id="job-title" name="job-title" placeholder=" ">
-                            <label for="job-title">Job Title</label>
-                        </div>
-                        <div class="form-field">
-                            <input type="text" id="inquiries" name="inquiries" placeholder=" ">
-                            <label for="inquiries">QUESTIONS OR INQUIRIES</label>
-                        </div>
-                        <div class="radio-group">
-                            <legend>You are a:</legend>
-                            <div class="radio-options">
-                                <label><input type="radio" name="trader-type" value="retailer"> Retailer</label>
-                                <label><input type="radio" name="trader-type" value="wholesaler"> Wholesaler</label>
-                                <label><input type="radio" name="trader-type" value="trader"> Trader</label>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-btn">Send</button>
+    <header class="blog-header">
+        <h1>Our Blog</h1>
+        <p>Insights, news, and stories from the Twin Tech team.</p>
+    </header>
+
+    <main class="blog-section">
+        <div class="blog-grid">
+            <!-- Blog Card 1 -->
+            <div class="blog-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
+                </div>
+                <div class="card-content">
+                    <span class="category">Industry News</span>
+                    <h3>The Future of Adhesive Technology</h3>
+                    <p class="excerpt">Discover the latest trends and innovations in the adhesive industry and what they mean for manufacturing and construction.</p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                        <span class="post-meta">Jan 15, 2026</span>
                     </div>
-                </form>
+                </div>
             </div>
-        </section>
+            <!-- Blog Card 2 -->
+            <div class="blog-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1521790797524-12432c82538e?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
+                </div>
+                <div class="card-content">
+                    <span class="category">Productivity</span>
+                    <h3>5 Ways to Boost Your Workshop's Efficiency</h3>
+                    <p class="excerpt">Simple changes and the right products can make a huge difference in your daily workflow and output quality.</p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                        <span class="post-meta">Jan 22, 2026</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Card 3 -->
+            <div class="blog-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1607863680198-23d4b2565df0?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
+                </div>
+                <div class="card-content">
+                    <span class="category">DIY Projects</span>
+                    <h3>A Guide to Perfect Car Detailing at Home</h3>
+                    <p class="excerpt">Learn the secrets from the pros on how to get a showroom shine on your vehicle using our Evershine products.</p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                        <span class="post-meta">Jan 28, 2026</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Card 4 -->
+            <div class="blog-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
+                </div>
+                <div class="card-content">
+                    <span class="category">Company Culture</span>
+                    <h3>Inside Twin Tech: Our Commitment to Quality</h3>
+                    <p class="excerpt">A look behind the scenes at our manufacturing process and the values that drive our team to deliver the best.</p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                        <span class="post-meta">Feb 01, 2026</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Card 5 -->
+            <div class="blog-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
+                </div>
+                <div class="card-content">
+                    <span class="category">Maintenance Tips</span>
+                    <h3>Extending the Life of Your Machinery</h3>
+                    <p class="excerpt">Proper maintenance is key. We share our top tips for using industrial sprays to protect and prolong your equipment's lifespan.</p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                        <span class="post-meta">Feb 05, 2026</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Card 6 -->
+            <div class="blog-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
+                </div>
+                <div class="card-content">
+                    <span class="category">Community</span>
+                    <h3>Partnering with Local Distributors</h3>
+                    <p class="excerpt">Read about our successful partnership program and how we're growing together with businesses across the country.</p>
+                    <div class="card-footer">
+                        <a href="#" class="read-more-btn">Read More &rarr;</a>
+                        <span class="post-meta">Feb 12, 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
 	<footer>
@@ -301,8 +161,8 @@
 			<div class="footer-navs">
 			<ul class="nav-1">
 				<h3>Quick Links</h3>
-				<li><a href="index.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home</a></li>
-				<li><a href="about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home</a></li>
+				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
 				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Our Clients</a></li>
 				<li><a href="contact-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Contact</a></li>
 			</ul>
@@ -343,8 +203,7 @@
 			<span>©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
-
-    <script src="assets-config.js"></script>
-    <script src="assets-apply.js" defer></script>
+    <script src="app.js"></script>
+    <script src="hero.js"></script>
 </body>
 </html>
