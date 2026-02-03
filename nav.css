@@ -57,6 +57,7 @@ nav ul li a{
 	color:#000;
 	gap: 0.2rem;
 	font-size: 0.9rem;
+	font-weight: 600;
 }
 
 nav ul li a span{
