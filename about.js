@@ -2,8 +2,8 @@
   const content = `
       <div class="about-wrapper">
         <div class="about-image-col">
-            <div class="image-frame">
-                <img src="assets/director.png" alt="Twin Tech Director" loading="lazy" />
+            <div class="image-frame" style="height:500px">
+                <img src="assets/director.webp" alt="Twin Tech Director" loading="lazy" />
                 <div class="exp-badge">
                     <span class="years">25+</span>
                     <span class="text">Years Experience</span>
@@ -33,7 +33,7 @@
                 </li>
             </ul>
 
-            <a href="about-us.html" class="about-cta-btn">
+            <a href="about-us.html" class="cta-button" style="width: fit-content">
                 Discover More
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>

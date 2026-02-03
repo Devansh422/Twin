@@ -60,7 +60,7 @@
         <h1 class="animate-text">Manufacturing at Scale.<br>Quality Without Compromise</h1>
         <span class="sub-text">From precison-driven production to global supply, we maufacture products brand trust efficiently, reliably, responsibly</span>
         <div class="cta-button">
-          <button>Enquire Now</button>
+          <button class="cta-button">Enquire Now</button>
         </div>
       </div>
       <div class="gradient"></div>
@@ -88,7 +88,7 @@
                         <h3>Industrial Products</h3>
                     <div class="item-desc-wrapper">
                         <p>Our aerosol range ensures high-quality cleaning, dust removal, and flaw detection, adhering to international standards for optimal performance in industrial maintenance applications.</p>
-                        <a href="sprayzet.html" class="details-btn">View Products</a>
+                        <a href="sprayzet.html" class="cta-button" style="width: fit-content;">View Products</a>
                     </div>
                 </div>
                 </div>
@@ -104,7 +104,7 @@
                         <h3>Self Adhesive Tapes</h3>
                     <div class="item-desc-wrapper">
                         <p>We manufacture superior-quality self-adhesive tapes like Polyester, Foam, and Masking Tapes, rigorously tested to meet diverse industrial needs, offering strength, reliability, and precision.</p>
-                        <a href="twin-tapes.html" class="details-btn">View Products</a>
+                        <a href="twin-tapes.html" class="cta-button" style="width: fit-content;">View Products</a>
                     </div>
                 </div>
                 </div>
@@ -120,7 +120,7 @@
                         <h3>Car Care Products</h3>
                     <div class="item-desc-wrapper">
                         <p>Our high-quality car care products are designed to help maintain a vehicle's shine and protect its body, keeping it looking brand new while extending its life with regular, consistent application.</p>
-                        <a href="evershine.html" class="details-btn">View Products</a>
+                        <a href="evershine.html" class="cta-button" style="width: fit-content;">View Products</a>
                     </div>
                 </div>
                 </div>
@@ -201,6 +201,107 @@
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 <script src="hero.js" defer></script>
 <script src="about.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ✅ Inject CTA CSS Automatically */
+  const style = document.createElement("style");
+  style.innerHTML = `
+    .cta-button {
+      padding: 0 1.3rem;
+      height: 2.8rem;
+      border-radius: 100px;
+      background: var(--color, #ff3b3b);
+      border: none;
+      color: #fff;
+      font-family: "base", sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .cta-button > .button-content {
+      height: 1.5rem;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .cta-button > .arrow {
+      height: 1.5rem;
+      width: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-button > .arrow svg {
+      height: 1.2rem;
+      width: 1.2rem;
+      display: block;
+      transform: rotate(-45deg);
+      will-change: transform;
+      transition: 0.2s;
+    }
+
+    .cta-button:hover .arrow svg {
+      transform: rotate(0deg);
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ✅ Auto Convert Any Element with class="cta-button" */
+  function applyCTAStyles() {
+    document.querySelectorAll(".cta-button").forEach((el) => {
+
+      // Prevent double processing
+      if (el.dataset.ctaProcessed) return;
+
+      // Save text
+      const text = el.textContent.trim();
+
+      // Clear content
+      el.innerHTML = "";
+
+      // Build CTA Structure
+      el.innerHTML = `
+        <span class="button-content">${text}</span>
+        <span class="arrow">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </span>
+      `;
+
+      // Mark as processed
+      el.dataset.ctaProcessed = "true";
+    });
+  }
+
+  // Run once on page load
+  applyCTAStyles();
+
+});
+</script>
+
+
+
+
 <script>
     gsap.registerPlugin(ScrollTrigger);
 

@@ -56,6 +56,7 @@ nav ul li a{
 	font-family: "base";
 	color:#000;
 	gap: 0.2rem;
+	font-size: 0.9rem;
 }
 
 nav ul li a span{
@@ -84,8 +85,7 @@ nav button{
 }
 
 nav button:nth-child(2){
-	background: #25D366;
-	color: #fff;
+	color: #000;
 }
 
 nav .dropdown-menu{
@@ -125,7 +125,7 @@ nav .dropdown-menu li a{
 	height: 2.5rem;
 	padding: 0 1rem;
 	justify-content: flex-start;
-	font-size: 0.95rem;
+	font-size: 0.9rem;
 	white-space: nowrap;
 	transition: background 0.2s ease;
 }
