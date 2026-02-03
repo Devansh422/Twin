@@ -240,7 +240,7 @@
 				</ul>
 			</li>
 			<li><a href="gallery.html">Gallery</a></li>
-			<li><a href="twinzy.html">Become a Distributor</a></li>
+			<li><a href="distributor.html">Become a Distributor</a></li>
 			<li><a href="#">Blog</a></li>
 			<li><a href="contact-us.html">Contact Us</a></li>
 		</ul>
@@ -255,63 +255,11 @@
 			<source src="./assets/Aerosol.mp4" type="video/mp4">
 		</video>
 		<div class="hero-content">
-			<h1 class="animate-text">Car Care Products<br>That Shine</h1>
+			<h1>Car Care Products<br>That Shine</h1>
 			<span class="sub-text">Premium automotive care solutions designed to protect, restore, and maintain your vehicle's beauty and performance</span>
-			<div class="cta-button">
-				<button>Request Quote</button>
-				<a href="BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf" target="_blank" style="text-decoration:none;"><button>Download Catalog</button></a>
-			</div>
-		</div>
-	</section>
-
-	<!-- Introduction Section -->
-	<section class="about">
-		<h2>Car Care Excellence</h2>
-		<div class="about-container">
-			<div class="about-text animate-text">
-				Premium formulations for automotive perfection
-			</div>
-			<div class="about-details">
-				Our car care product range is meticulously formulated to provide superior protection and enhancement for all types of vehicles. From high-gloss polishes to protective coatings, each product is designed with advanced chemistry to deliver professional-grade results that keep your vehicle looking showroom fresh.<br><br>Under the trusted Evershine brand, we combine cutting-edge technology with user-friendly applications, ensuring that both professional detailers and car enthusiasts can achieve outstanding results in maintaining, protecting, and beautifying their vehicles.
-			</div>
-		</div>
-	</section>
-
-	<!-- Product Categories -->
-	<section class="products" id="cleaners">
-		<h2>Product Categories</h2>
-		<div class="products-wrapper">
-			<div class="products-container">
-				<div class="products-heading animate-text">
-					Exterior Care Solutions
-				</div>
-				<div class="products-details">
-					Our exterior car care range includes premium shampoos, polishes, and waxes that clean, protect, and enhance your vehicle's paintwork. Formulated with advanced polymers and conditioning agents, these products remove dirt while adding brilliant shine and long-lasting protection against environmental elements.
-				</div>
-				<button>View Products</button>
-			</div>
-			<div class="product-list">
-				<div class="product">
-					<div class="s-no">01</div>
-					<div class="content">
-						<div class="content-heading">Premium Car Shampoo</div>
-						<div class="content-detail">pH-balanced formula with high-foam action that lifts dirt and grime without stripping wax or sealants, leaving a streak-free shine.</div>
-					</div>
-				</div>
-				<div class="product">
-					<div class="s-no">02</div>
-					<div class="content">
-						<div class="content-heading">Carnauba Wax Polish</div>
-						<div class="content-detail">Premium-grade carnauba wax blend that creates a deep, reflective shine while providing durable protection against UV rays and water.</div>
-					</div>
-				</div>
-				<div class="product">
-					<div class="s-no">03</div>
-					<div class="content">
-						<div class="content-heading">Tire Shine & Protectant</div>
-						<div class="content-detail">Silicone-based formula that restores deep black color to tires and trim while providing UV protection and resistance to browning.</div>
-					</div>
-				</div>
+			<div style="display:flex; gap: 1rem;">
+				<button class="cta-button" style="font-size: 0.9rem;">Request Quote</button>
+				<a class="cta-button" style="font-size: 0.9rem;" href="BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf" target="_blank" style="text-decoration:none;"><button>Download Catalog</button></a>
 			</div>
 		</div>
 	</section>
@@ -328,25 +276,6 @@
 
 		<div class="products-grid"></div>
 	</section>
-<!-- Features Section -->
-	<section class="numbers" style="padding: 5rem;">
-		<div class="num-1">
-			<div class="counter-item">10K+</div>
-			<h2 class="animate-text">Happy Vehicle Owners</h2>
-			<span class="details">Trusted by car enthusiasts and professional detailers nationwide for superior results.</span>
-		</div>
-		<div class="num-1">
-			<div class="counter-item">99%</div>
-			<h2 class="animate-text">Customer Satisfaction</h2>
-			<span class="details">Consistently rated for product quality, ease of use, and long-lasting shine.</span>
-		</div>
-		<div class="num-1">
-			<div class="counter-item">30+</div>
-			<h2 class="animate-text">Premium Products</h2>
-			<span class="details">Comprehensive range covering every aspect of vehicle care and maintenance.</span>
-		</div>
-	</section>
-
 	<footer>
 		<div class="top">
 			<div class="logo">
@@ -403,6 +332,102 @@
 			<span>©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
+	<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ✅ Inject CTA CSS Automatically */
+  const style = document.createElement("style");
+  style.innerHTML = `
+    .cta-button {
+      padding: 0 1.3rem;
+      height: 2.8rem;
+      border-radius: 100px;
+      background: var(--color, #ff3b3b);
+      border: none;
+      color: #fff;
+      font-family: "base", sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .cta-button > .button-content {
+      height: 1.5rem;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .cta-button > .arrow {
+      height: 1.5rem;
+      width: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-button > .arrow svg {
+      height: 1.2rem;
+      width: 1.2rem;
+      display: block;
+      transform: rotate(-45deg);
+      will-change: transform;
+      transition: 0.2s;
+    }
+
+    .cta-button:hover .arrow svg {
+      transform: rotate(0deg);
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ✅ Auto Convert Any Element with class="cta-button" */
+  function applyCTAStyles() {
+    document.querySelectorAll(".cta-button").forEach((el) => {
+
+      // Prevent double processing
+      if (el.dataset.ctaProcessed) return;
+
+      // Save text
+      const text = el.textContent.trim();
+
+      // Clear content
+      el.innerHTML = "";
+
+      // Build CTA Structure
+      el.innerHTML = `
+        <span class="button-content">${text}</span>
+        <span class="arrow">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </span>
+      `;
+
+      // Mark as processed
+      el.dataset.ctaProcessed = "true";
+    });
+  }
+
+  // Run once on page load
+  applyCTAStyles();
+
+});
+</script>
 
 	<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>

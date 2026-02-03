@@ -10,40 +10,44 @@
 	<style>
 		/* About Us Hero Section */
 		.about-hero {
-			padding: 12rem 5vw 6rem;
+			padding: 6rem 5vw 3rem;
 			text-align: center;
 			position: relative;
 			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 		}
 		.about-hero h1 {
 			font-family: "Heading", sans-serif;
-			font-size: 5rem;
+			font-size: 3rem;
 			font-weight: 900;
 			color: #fff;
-			margin-bottom: 1.5rem;
+			margin-bottom: 0.8rem;
 			position: relative;
 			z-index: 1;
 		}
 
 		.about-hero .subtitle {
 			font-family: "base", sans-serif;
-			font-size: 1.4rem;
+			font-size: 1rem;
 			color: #fff;
-			max-width: 800px;
+			max-width: 700px;
 			margin: 0 auto;
 			position: relative;
 			z-index: 1;
-			line-height: 1.8;
+			line-height: 1.6;
 		}
 
 		/* Content Sections */
 		.content-section {
-			padding: 8rem 5vw;
+			padding: 3rem 5vw;
 			position: relative;
 		}
 
 		.content-section:nth-child(even) {
-			background: linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
+			background: #fdfdfd;
 		}
 
 		.content-section:nth-child(odd) {
@@ -52,107 +56,107 @@
 
 		.section-header {
 			text-align: center;
-			margin-bottom: 5rem;
+			margin-bottom: 2rem;
 		}
 
 		.section-label {
 			font-family: "base", sans-serif;
-			font-size: 0.95rem;
+			font-size: 0.8rem;
 			color: #667eea;
 			text-transform: uppercase;
-			letter-spacing: 3px;
+			letter-spacing: 2px;
 			font-weight: 600;
-			margin-bottom: 1rem;
+			margin-bottom: 0.4rem;
 		}
 
 		.section-title {
 			font-family: "Heading", sans-serif;
-			font-size: 3.5rem;
+			font-size: 2.2rem;
 			font-weight: 800;
 			color: var(--color);
-			margin-bottom: 2rem;
+			margin-bottom: 0.8rem;
 		}
 
 		.section-description {
 			font-family: "base", sans-serif;
-			font-size: 1.2rem;
+			font-size: 0.95rem;
 			color: #666;
-			max-width: 900px;
+			max-width: 800px;
 			margin: 0 auto;
-			line-height: 1.8;
+			line-height: 1.6;
 		}
 
 		/* Two Column Layout */
 		.two-column {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			gap: 5rem;
+			gap: 2.5rem;
 			max-width: 1400px;
-			margin: 4rem auto 0;
+			margin: 2rem auto 0;
 			align-items: start;
 		}
 
 		.column-content {
 			font-family: "base", sans-serif;
-			font-size: 1.1rem;
+			font-size: 0.9rem;
 			color: #444;
-			line-height: 1.9;
+			line-height: 1.6;
 		}
 
 		.column-content h3 {
 			font-family: "Heading", sans-serif;
-			font-size: 2rem;
+			font-size: 1.4rem;
 			font-weight: 700;
 			color: var(--color);
-			margin-bottom: 1.5rem;
+			margin-bottom: 0.8rem;
 		}
 
 		.column-content p {
-			margin-bottom: 1.5rem;
+			margin-bottom: 0.8rem;
 		}
 
 		/* Highlight Box */
 		.highlight-box {
-			background: linear-gradient(135deg, rgba(220, 20, 60, 0.05) 0%, rgba(139, 0, 0, 0.05) 100%);
-			padding: 3rem;
-			border-left: 5px solid #dc143c;
-			margin: 3rem 0;
+			background: rgba(220, 20, 60, 0.04);
+			padding: 1.5rem;
+			border-left: 3px solid #dc143c;
+			margin: 1.5rem 0;
 		}
 
 		.highlight-box p {
 			font-family: "Heading", sans-serif;
-			font-size: 1.5rem;
+			font-size: 1rem;
 			font-weight: 600;
 			color: #dc143c;
-			line-height: 1.7;
+			line-height: 1.5;
 			margin: 0;
 			font-style: italic;
 		}
 
 		/* Single Column Content */
 		.single-column {
-			max-width: 1200px;
+			max-width: 1100px;
 			margin: 0 auto;
 		}
 
 		.single-column .column-content {
-			font-size: 1.15rem;
-			line-height: 2;
+			font-size: 0.95rem;
+			line-height: 1.7;
 		}
 
 		/* Feature Cards */
 		.feature-cards {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
-			gap: 3rem;
+			gap: 1.5rem;
 			max-width: 1400px;
-			margin: 5rem auto 0;
+			margin: 2.5rem auto 0;
 		}
 
 		.feature-card {
 			background: #fff;
-			padding: 3rem;
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+			padding: 1.5rem;
+			box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
 			transition: all 0.4s ease;
 			position: relative;
 			overflow: hidden;
@@ -164,7 +168,7 @@
 			top: 0;
 			left: 0;
 			width: 100%;
-			height: 5px;
+			height: 3px;
 			background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
 			transform: scaleX(0);
 			transform-origin: left;
@@ -172,8 +176,8 @@
 		}
 
 		.feature-card:hover {
-			transform: translateY(-10px);
-			box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+			transform: translateY(-4px);
+			box-shadow: 0 10px 35px rgba(102, 126, 234, 0.12);
 		}
 
 		.feature-card:hover::before {
@@ -182,34 +186,34 @@
 
 		.feature-card h3 {
 			font-family: "Heading", sans-serif;
-			font-size: 1.8rem;
+			font-size: 1.3rem;
 			font-weight: 700;
 			color: var(--color);
-			margin-bottom: 1.5rem;
+			margin-bottom: 0.8rem;
 		}
 
 		.feature-card p {
 			font-family: "base", sans-serif;
-			font-size: 1.05rem;
+			font-size: 0.85rem;
 			color: #666;
-			line-height: 1.8;
-			margin-bottom: 1rem;
+			line-height: 1.6;
+			margin-bottom: 0.6rem;
 		}
 
 		/* Philosophy List */
 		.philosophy-list {
 			list-style: none;
 			padding: 0;
-			margin: 2rem 0;
+			margin: 0.8rem 0;
 		}
 
 		.philosophy-list li {
 			font-family: "base", sans-serif;
-			font-size: 1.15rem;
+			font-size: 0.95rem;
 			color: #444;
-			padding: 1rem 0 1rem 3rem;
+			padding: 0.5rem 0 0.5rem 2rem;
 			position: relative;
-			line-height: 1.8;
+			line-height: 1.6;
 		}
 
 		.philosophy-list li::before {
@@ -218,91 +222,92 @@
 			left: 0;
 			top: 50%;
 			transform: translateY(-50%);
-			width: 35px;
-			height: 35px;
+			width: 20px;
+			height: 20px;
 			border-radius: 50%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>');
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>');
 			background-repeat: no-repeat;
 			background-position: center;
-			background-size: 20px 20px;
+			background-size: 14px 14px;
 		}
 
 		/* Stats Section */
 		.stats-section {
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			padding: 6rem 5vw;
+			padding: 3rem 5vw;
 			text-align: center;
-			margin: 8rem 0;
+			margin: 3rem 0;
 		}
 
 		.stats-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-			gap: 4rem;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 1.5rem;
 			max-width: 1400px;
 			margin: 0 auto;
 		}
 
 		.stat-item h3 {
 			font-family: "Heading", sans-serif;
-			font-size: 4rem;
+			font-size: 2.5rem;
 			font-weight: 900;
 			color: #fff;
-			margin-bottom: 1rem;
+			margin-bottom: 0.4rem;
 		}
 
 		.stat-item p {
 			font-family: "base", sans-serif;
-			font-size: 1.2rem;
-			color: rgba(255, 255, 255, 0.9);
+			font-size: 0.9rem;
+			color: rgba(255, 255, 255, 0.85);
 			text-transform: uppercase;
-			letter-spacing: 2px;
+			letter-spacing: 1px;
 		}
 
 		/* Responsive Design */
 		@media (max-width: 768px) {
 			.about-hero {
-				padding: 10rem 5vw 5rem;
+				padding: 5rem 5vw 2rem;
 			}
 
 			.about-hero h1 {
-				font-size: 3rem;
+				font-size: 2rem;
 			}
 
 			.about-hero .subtitle {
-				font-size: 1.1rem;
+				font-size: 0.9rem;
 			}
 
 			.content-section {
-				padding: 5rem 5vw;
+				padding: 2.5rem 5vw;
 			}
 
 			.section-title {
-				font-size: 2.5rem;
+				font-size: 1.8rem;
 			}
 
 			.two-column {
 				grid-template-columns: 1fr;
-				gap: 3rem;
+				gap: 1.5rem;
 			}
 
 			.feature-cards {
 				grid-template-columns: 1fr;
+				gap: 1rem;
 			}
 			}
 
 			.feature-card {
-				padding: 2rem;
+				padding: 1.2rem;
 			
 			.highlight-box {
-				padding: 2rem;
+				padding: 1.2rem;
 			}
 
 			.highlight-box p {
-				font-size: 1.2rem;
+				font-size: 0.9rem;
 			}
 		}
 	</style>
@@ -334,7 +339,7 @@
 				</ul>
 			</li>
 			<li><a href="gallery.html">Gallery</a></li>
-			<li><a href="twinzy.html">Become a Distributor</a></li>
+			<li><a href="distributor.html">Become a Distributor</a></li>
 			<li><a href="#">Blog</a></li>
 			<li><a href="contact-us.html">Contact Us</a></li>
 		</ul>
@@ -426,22 +431,24 @@
 			</div>
 		</div>
 
-		<div class="single-column" style="margin-top: 5rem;">
-			<div class="column-content" style="text-align: center;">
+		<div class="single-column" style="margin-top: 2rem; text-align: center;">
+			<div class="column-content">
 				<p>The credit for the success of our company goes to our skilled professionals who help in providing best quality products at a very impressive rates coupled with quick delivery.</p>
 			</div>
 		</div>
 
-		<div class="highlight-box" style="margin-top: 4rem; text-align: center;">
-			<p>"Our highly committed workforce is the pillars of our strength"</p>
-		</div>
+		<div style="display: flex; gap: 1.5rem; margin-top: 2rem; justify-content: center; flex-wrap: wrap;">
+			<div class="highlight-box" style="flex: 1; min-width: 280px; text-align: center;">
+				<p>"Our highly committed workforce is the pillars of our strength"</p>
+			</div>
 
-		<div class="highlight-box" style="text-align: center;">
-			<p>"Due to our strict quality measures, we have mastered the art of producing flawless industrial products"</p>
-		</div>
+			<div class="highlight-box" style="flex: 1; min-width: 280px; text-align: center;">
+				<p>"Due to our strict quality measures, we have mastered the art of producing flawless industrial products"</p>
+			</div>
 
-		<div class="highlight-box" style="text-align: center;">
-			<p>"Clients we have an exhaustive list of immensely satisfied customers all over the globe."</p>
+			<div class="highlight-box" style="flex: 1; min-width: 280px; text-align: center;">
+				<p>"Clients we have an exhaustive list of immensely satisfied customers all over the globe."</p>
+			</div>
 		</div>
 	</section>
 

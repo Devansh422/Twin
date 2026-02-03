@@ -240,7 +240,7 @@
 				</ul>
 			</li>
 			<li><a href="gallery.html">Gallery</a></li>
-			<li><a href="twinzy.html">Become a Distributor</a></li>
+			<li><a href="distributor.html">Become a Distributor</a></li>
 			<li><a href="#">Blog</a></li>
 			<li><a href="contact-us.html">Contact Us</a></li>
 		</ul>
@@ -255,60 +255,14 @@
 		<video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
 			<source src="./assets/Aerosol.mp4" type="video/mp4">
 		</video><div class="hero-content">
-			<h1 class="animate-text">Twinzy Home Care<br>Freshness Reimagined</h1>
+			<h1>Twinzy Home Care<br>Freshness Reimagined</h1>
 			<span class="sub-text">Premium home care products aimed at revitalizing your living spaces and preserving your furniture's beauty</span>
-			<div class="cta-button">
-				<button>Request Quote</button>
-				<button>Download Catalog</button>
+			<div style="display:flex; gap: 1rem;">
+				<button class="cta-button" style="font-size: 0.9rem;">Request Quote</button>
+				<button class="cta-button" style="font-size: 0.9rem;">Download Catalog</button>
 			</div>
 		</div>
 	</section>
-
-	<!-- Introduction Section -->
-	<section class="about" style="font-family: 'base', sans-serif;">
-		<h2>Home Care Solutions</h2>
-		<div class="about-container">
-			<div class="about-text animate-text">
-				Revitalize Your Home with Twinzy
-			</div>
-			<div class="about-details">
-				Twinzy brings you a curated selection of home care products designed to enhance the ambiance and longevity of your living spaces. Our formulations are safe, effective, and crafted to deliver a refreshing experience.<br><br>From aromatic air fresheners that transform your environment to furniture polishes that restore natural shine, Twinzy ensures your home always feels welcoming and pristine.
-			</div>
-		</div>
-	</section>
-
-		<!-- Product Categories -->
-	<section class="products" id="cleaners">
-		<h2>Product Categories</h2>
-		<div class="products-wrapper">
-			<div class="products-container">
-				<div class="products-heading animate-text">
-					Home Care Essentials
-				</div>
-				<div class="products-details">
-					 Explore our range of daily home care essentials, featuring delightful fragrances and protective solutions for your valuable furniture.
-				</div>
-				<button>View Products</button>
-			</div>
-			<div class="product-list">
-				<div class="product">
-					<div class="s-no">01</div>
-					<div class="content">
-						<div class="content-heading">Air Freshner</div>
-						<div class="content-detail">Long-lasting fragrances like Lavender, Jasmine, and Citrus to keep your rooms smelling fresh.</div>
-					</div>
-				</div>
-				<div class="product">
-					<div class="s-no">02</div>
-					<div class="content">
-						<div class="content-heading">Furniture Polish</div>
-						<div class="content-detail">Advanced formula to clean, polish, and protect wood and other furniture surfaces.</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Products Showcase Section -->
 	<section class="products-showcase">
 		<h2>Our Twinzy Collection</h2>
 		<p class="section-subtitle">Discover our complete range of Air Freshners and Furniture Polish</p>
@@ -320,24 +274,6 @@
 
 		<div class="products-grid"></div>
 	</section><!-- Features Section -->
-	<section class="numbers" style="padding: 5rem;">
-		<div class="num-1">
-			<div class="counter-item">500+</div>
-			<h2 class="animate-text">Industrial Clients</h2>
-			<span class="details">Trusted by manufacturers across automotive, aerospace, and heavy machinery sectors.</span>
-		</div>
-		<div class="num-1">
-			<div class="counter-item">98%</div>
-			<h2 class="animate-text">Customer Satisfaction</h2>
-			<span class="details">Consistently rated for product quality, technical support, and reliable delivery.</span>
-		</div>
-		<div class="num-1">
-			<div class="counter-item">24H</div>
-			<h2 class="animate-text">Delivery Promise</h2>
-			<span class="details">Fast turnaround for urgent requirements with nationwide logistics network.</span>
-		</div>
-	</section>
-
 	<footer>
 		<div class="top">
 			<div class="logo">
@@ -394,6 +330,104 @@
 			<span>Â©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
+
+
+		<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ✅ Inject CTA CSS Automatically */
+  const style = document.createElement("style");
+  style.innerHTML = `
+    .cta-button {
+      padding: 0 1.3rem;
+      height: 2.8rem;
+      border-radius: 100px;
+      background: var(--color, #ff3b3b);
+      border: none;
+      color: #fff;
+      font-family: "base", sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .cta-button > .button-content {
+      height: 1.5rem;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .cta-button > .arrow {
+      height: 1.5rem;
+      width: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-button > .arrow svg {
+      height: 1.2rem;
+      width: 1.2rem;
+      display: block;
+      transform: rotate(-45deg);
+      will-change: transform;
+      transition: 0.2s;
+    }
+
+    .cta-button:hover .arrow svg {
+      transform: rotate(0deg);
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ✅ Auto Convert Any Element with class="cta-button" */
+  function applyCTAStyles() {
+    document.querySelectorAll(".cta-button").forEach((el) => {
+
+      // Prevent double processing
+      if (el.dataset.ctaProcessed) return;
+
+      // Save text
+      const text = el.textContent.trim();
+
+      // Clear content
+      el.innerHTML = "";
+
+      // Build CTA Structure
+      el.innerHTML = `
+        <span class="button-content">${text}</span>
+        <span class="arrow">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </span>
+      `;
+
+      // Mark as processed
+      el.dataset.ctaProcessed = "true";
+    });
+  }
+
+  // Run once on page load
+  applyCTAStyles();
+
+});
+</script>
 
 	<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
