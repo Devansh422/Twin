@@ -1,0 +1,557 @@
+{
+    "ALL-IN-ONE": {
+        "description": "A versatile multi-purpose professional spray designed for cleaning, protecting and lubricating various surfaces of two-wheelers and cars.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Advanced formula for deep cleaning",
+            "Protective coating against dust and rust",
+            "Quick-drying non-greasy finish",
+            "Safe on plastic, rubber, and metal"
+        ],
+        "benefits": [
+            "Restores original shine of the vehicle",
+            "Extends life of rubber and plastic parts",
+            "Provides long-lasting protection",
+            "Easy application for all users"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "SAFE CLEAN": {
+        "description": "Twin Tech India is a manufacturer & Supplier of Safe Clean under the brand name Sprayzet. Off-Line, precision synthetic cleaner cum degreaser designed for use in electrical maintenance. Di-electric & residueless.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6002",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml/500 ml"
+        },
+        "features": [
+            "Off-Line precision cleaning",
+            "Di-electric properties",
+            "Residueless finish",
+            "High penetration"
+        ],
+        "benefits": [
+            "Safe for delicate electrical parts",
+            "Efficient degreasing",
+            "Quick evaporation",
+            "Non-conductive"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Cleaning Spray"
+    },
+    "FOAM CLEANER": {
+        "description": "Professional grade foam cleaner designed for industrial and household surfaces. Effectively removes dirt, grease, and grime without aggressive chemicals.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6004",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml/500 ml"
+        },
+        "features": [
+            "Heavy-duty foaming action",
+            "Multi-surface compatibility",
+            "Fast acting formula",
+            "No harmful vapors"
+        ],
+        "benefits": [
+            "Leaves surfaces looking new",
+            "Deep cleaning without scrubbing",
+            "Versatile for industrial use",
+            "Economical packaging"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Foaming Spray"
+    },
+    "SAFETY SOLVENT": {
+        "description": "High-purity industrial solvent cleaner for heavy-duty degreasing and cleaning of mechanical parts.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6001",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml/500 ml"
+        },
+        "features": [
+            "Superior degreasing power",
+            "Non-flammable options available",
+            "High penetration",
+            "Residueless finish"
+        ],
+        "benefits": [
+            "Safe for mechanical components",
+            "Quick maintenance",
+            "Industrial grade performance",
+            "Versatile application"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "ADHESIVE CHAIN LUBE": {
+        "description": "High-performance adhesive lubricant specifically formulated for motorcycle chains, providing superior lubrication under extreme pressure.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Excellent adhesion property - no fling-off",
+            "Water repellent and moisture resistant",
+            "Deep penetration into chain rollers",
+            "Compatible with O-ring and X-ring chains"
+        ],
+        "benefits": [
+            "Reduces friction and power loss",
+            "Prevents chain wear and elongation",
+            "Quietens chain noise significantly",
+            "Protects against corrosion and rust"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "BRAKE CLEANER": {
+        "description": "Heavy-duty cleaner that instantly dissolves grease, oil, and brake fluid from brake systems without leaving any residue.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Fast-acting penetrating formula",
+            "Dries instantly without leaving film",
+            "Removes brake dust and carbon deposits",
+            "Non-corrosive to brake components"
+        ],
+        "benefits": [
+            "Improves braking efficiency",
+            "Eliminates brake squeal",
+            "Safe for calipers, drums, and pads",
+            "No disassembly required for cleaning"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "CHAIN CLEANER": {
+        "description": "Deep-cleansing agent designed to remove old lubricant, dirt, and grime from chains before re-lubrication.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Effective against stubborn grease",
+            "Safe for all types of chains",
+            "Emulsifies oil for easy rinsing",
+            "Penetrates tight links easily"
+        ],
+        "benefits": [
+            "Prepares chain for optimal lubrication",
+            "Removes abrasive dirt that causes wear",
+            "Extends chain and sprocket life",
+            "Saves time and effort in maintenance"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "SILENCER COATING": {
+        "description": "Heat-resistant protective coating specifically designed to prevent rust and corrosion on vehicle exhaust systems.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Withstands temperatures up to 600°C",
+            "Rust-inhibiting chemical formula",
+            "Excellent adhesion to metal surfaces",
+            "Matte finish for professional look"
+        ],
+        "benefits": [
+            "Prevents silencer rust from inside and out",
+            "Improves silencer aesthetics",
+            "Durable protection in humid conditions",
+            "Reduces maintenance costs"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "TYRE SHINER": {
+        "description": "Professional grade foam or spray that gives your tires a rich, deep black 'new tire' look with a protective layer.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol / Liquid",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml / 5 Ltr"
+        },
+        "features": [
+            "UV protective barrier against cracking",
+            "Water-based non-slippery formula",
+            "Dust repellent technology",
+            "Instant results on application"
+        ],
+        "benefits": [
+            "Makes tires look brand new",
+            "Prevents sidewall browning and aging",
+            "Adds a long-lasting showroom shine",
+            "Easy to apply without wiping"
+        ],
+        "packSize": "500ML / 5Ltr / 20Ltr",
+        "form": "Spray / Liquid"
+    },
+    "VINYL CARE": {
+        "description": "Restorative conditioner for interior vinyl, plastic, and leather surfaces that cleans and protects against fading.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Anti-static formula repels dust",
+            "UV inhibitors prevent sun damage",
+            "Pleasant fragrance after use",
+            "Silk-matte finish without residue"
+        ],
+        "benefits": [
+            "Prevents dashboard cracking and fading",
+            "Restores color and suppleness",
+            "Keeps interior looking fresh and clean",
+            "Leaves no greasy or oily film"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "AUTO BODY SHINER": {
+        "description": "Liquid wax and shine enhancer for vehicle exteriors that provides an instant glossy finish and water beading surface.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Liquid",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Carnauba-enriched formula",
+            "Safe for all automotive finishes",
+            "Easy buffing without streaks",
+            "Nano-technology surface leveling"
+        ],
+        "benefits": [
+            "Provides a deep brilliant shine",
+            "Creates hydrophobic water-beading layer",
+            "Protects against environmental fallout",
+            "Makes washing easier next time"
+        ],
+        "packSize": "500ML",
+        "form": "Liquid / Spray"
+    },
+    "SPRAY GREASE": {
+        "description": "High-viscosity white lithium grease that sprays on as a liquid and sets up as a waterproof, heat-resistant solid.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Will not wash away or melt",
+            "Visible application for full coverage",
+            "Inhibits rust and corrosion",
+            "Heavy-duty load bearing capacity"
+        ],
+        "benefits": [
+            "Long-lasting lubrication for joints",
+            "Excellent for hinges, latches, and sliding parts",
+            "Reduces metal-on-metal friction",
+            "Stay-put formula won't drip"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "RUBBER CARE": {
+        "description": "Specialized conditioner for door seals, weatherstripping, and other rubber components to keep them soft and functional.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Prevents rubber from sticking and freezing",
+            "Maintains elasticity and flexibility",
+            "Easy to apply on intricate parts",
+            "Silicone-based protective layer"
+        ],
+        "benefits": [
+            "Eliminates wind noise from door seals",
+            "Prevents dry rotting and cracking",
+            "Extends the life of expensive rubber parts",
+            "Waterproofs electrical connectors"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "RODENT REPELLENT": {
+        "description": "A bitter-tasting coating spray that protects wires and plastic parts from being chewed by rats and rodents.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "12 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Extremely bitter deterrent substance",
+            "Non-toxic and safe for humans",
+            "Heat resistant for engine components",
+            "Long-lasting residual effect"
+        ],
+        "benefits": [
+            "Prevents expensive electrical damage",
+            "Keeps rodents away from engine bay",
+            "Easy application once every month",
+            "Invisible protection"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "AC DISINFECTANT": {
+        "description": "Powerful enzymatic cleaner that kills bacteria and fungi in the air conditioning system, eliminating foul odors.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Kills 99.9% of germs and bacteria",
+            "Deodorizes air vents and evaporator",
+            "Safe for aluminum and plastic parts",
+            "Easy foaming application"
+        ],
+        "benefits": [
+            "Provides fresh and healthy interior air",
+            "Improves AC cooling efficiency",
+            "Removes musty and damp smells",
+            "Prevents respiratory issues"
+        ],
+        "packSize": "500ML",
+        "form": "Aerosol Spray"
+    },
+    "CITRUS": {
+        "description": "High-quality air freshener with a refreshing citrus scent, designed to eliminate odors and leave a long-lasting fragrance in homes and offices.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twinzy",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "300 ml"
+        },
+        "features": [
+            "Natural citrus extracts",
+            "Instant odor neutralization",
+            "Long-lasting fragrance",
+            "Eco-friendly propellant"
+        ],
+        "benefits": [
+            "Creates a pleasant ambiance",
+            "Safe for indoor use",
+            "Effective against tough odors",
+            "Refreshes living spaces instantly"
+        ],
+        "packSize": "300ML",
+        "form": "Aerosol Spray"
+    },
+    "JASMINE": {
+        "description": "Premium jasmine-scented air freshener that brings the soothing essence of floral gardens into your living space.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twinzy",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "300 ml"
+        },
+        "features": [
+            "Authentic jasmine aroma",
+            "Fine mist spray",
+            "Non-staining formula",
+            "Eliminates stale air"
+        ],
+        "benefits": [
+            "Promotes relaxation",
+            "Masks unpleasant smells efficiently",
+            "Enhances indoor environment",
+            "Consistent fragrance delivery"
+        ],
+        "packSize": "300ML",
+        "form": "Aerosol Spray"
+    },
+    "LAVENDER": {
+        "description": "Calming lavender air freshener designed to provide a serene atmosphere while effectively neutralizing unwanted odors.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twinzy",
+            "Packing Type": "Aerosol Can",
+            "Packaging": "24 Cans per box",
+            "Packaging Size": "300 ml"
+        },
+        "features": [
+            "Soothing lavender essential oils",
+            "Odor-destroying technology",
+            "Quick-action spray",
+            "Pet-friendly formula"
+        ],
+        "benefits": [
+            "Helps reduce stress",
+            "Refreshing and clean scent",
+            "Versatile usage (home/car/office)",
+            "Economical packaging"
+        ],
+        "packSize": "300ML",
+        "form": "Aerosol Spray"
+    },
+    "DS POLYESTER TAPE": {
+        "description": "Double-sided polyester tape with high-performance adhesive, ideal for permanent mounting and industrial bonding applications.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twin Tapes",
+            "Packing Type": "Roll",
+            "Packaging": "Standard Carton",
+            "Packaging Size": "Various Widths"
+        },
+        "features": [
+            "High initial tack",
+            "Excellent shear strength",
+            "Temperature resistance",
+            "UV and moisture resistant"
+        ],
+        "benefits": [
+            "Reliable permanent bond",
+            "Easy to apply",
+            "Versatile for various substrates",
+            "Long-term stability"
+        ],
+        "packSize": "Standard Rolls",
+        "form": "Adhesive Tape"
+    },
+    "MASKING TAPE": {
+        "description": "Premium paper masking tape designed for painting and decorative applications, providing clean edges and easy removal.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twin Tapes",
+            "Packing Type": "Roll",
+            "Packaging": "Standard Carton",
+            "Packaging Size": "Various Widths"
+        },
+        "features": [
+            "Clean removal without residue",
+            "Sharp paint lines",
+            "Flexible paper backing",
+            "Good adhesion to most surfaces"
+        ],
+        "benefits": [
+            "Saves time on clean-up",
+            "Professional finish results",
+            "Prevents paint bleed-through",
+            "Easy to tear by hand"
+        ],
+        "packSize": "Standard Rolls",
+        "form": "Adhesive Tape"
+    },
+    "Acrylic-Foam-Tape (VHB TAPE)": {
+        "description": "Very High Bond (VHB) acrylic foam tape for structural bonding, replacing mechanical fasteners in many industrial applications.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twin Tapes",
+            "Packing Type": "Roll",
+            "Packaging": "Standard Carton",
+            "Packaging Size": "Various Widths"
+        },
+        "features": [
+            "Exceptional strength",
+            "Viscoelastic properties",
+            "Weather and solvent resistant",
+            "Distributes stress evenly"
+        ],
+        "benefits": [
+            "Replaces rivets and screws",
+            "Aesthetic bond lines",
+            "Durable in extreme conditions",
+            "Dampens vibration and noise"
+        ],
+        "packSize": "Standard Rolls",
+        "form": "Adhesive Tape"
+    },
+    "ALUMINIUM FOIL TAPE": {
+        "description": "High-strength aluminum foil tape for sealing HVAC ducts, providing an airtight and moisture-resistant barrier.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twin Tapes",
+            "Packing Type": "Roll",
+            "Packaging": "Standard Carton",
+            "Packaging Size": "Various Widths"
+        },
+        "features": [
+            "Reflective backing",
+            "Fire and moisture resistant",
+            "Strong cold-weather adhesive",
+            "Excellent vapor seal"
+        ],
+        "benefits": [
+            "Reduces energy loss in ducts",
+            "Durable thermal protection",
+            "Reliable in humid environments",
+            "Long service life"
+        ],
+        "packSize": "Standard Rolls",
+        "form": "Adhesive Tape"
+    },
+    "default": {
+        "description": "Professional quality product for vehicle maintenance and care, manufactured with advanced chemical technology for superior results.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Twin Tech",
+            "Packing Type": "Standard",
+            "Packaging": "Standard box",
+            "Packaging Size": "Various"
+        },
+        "features": [
+            "High-performance chemical formula",
+            "Quick and easy application",
+            "Environmentally friendly components",
+            "Manufactured under ISO standards"
+        ],
+        "benefits": [
+            "Ensures optimal vehicle performance",
+            "Provides durable protection",
+            "Reduces long-term maintenance costs",
+            "Professional showroom finish"
+        ],
+        "packSize": "Various Sizes Available",
+        "form": "Aerosol / Liquid"
+    }
+}

@@ -31,7 +31,20 @@ const productsData = {
   ]
 };
 
-function initDynamicProducts() {
+let productDetails = {};
+
+async function fetchProductDetails() {
+    try {
+        const response = await fetch('./assets/evershine-details.json');
+        productDetails = await response.json();
+    } catch (error) {
+        console.error('Error loading product details:', error);
+    }
+}
+
+async function initDynamicProducts() {
+    await fetchProductDetails();
+    
     const filtersContainer = document.querySelector('.product-filters');
     const gridContainer = document.querySelector('.products-grid');
     const countElement = document.getElementById('product-count');
@@ -71,7 +84,6 @@ function initDynamicProducts() {
         card.setAttribute('data-category', product.rawCategory);
         
         // Image path handling
-        // Ensure path uses forward slashes and encode URI components if needed
         const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
         const imgSrc = './' + encodedPath;
 
@@ -148,7 +160,6 @@ function attachEventListeners() {
         });
 
         if (productCountElement) {
-            // Animate count change
              gsap.to(productCountElement, {
                 scale: 1.5,
                 color: '#dc143c',
@@ -164,16 +175,12 @@ function attachEventListeners() {
 
     filterTags.forEach(tag => {
         tag.addEventListener('click', (e) => {
-            // Remove active class from all
             filterTags.forEach(t => t.classList.remove('active'));
-            // Add to clicked
             e.target.classList.add('active');
-            
             const filterValue = e.target.getAttribute('data-filter');
             filterProducts(filterValue);
         });
 
-        // Hover effect for filters
         if (window.gsap) {
             tag.addEventListener('mouseenter', () => {
                 gsap.to(tag, { scale: 1.05, duration: 0.2, ease: 'back.out(2)' });
@@ -198,7 +205,6 @@ function attachEventListeners() {
 
         hoverTimeline
             .to(img, {
-                // scale: 1.2,
                 rotation: 1, 
                 duration: 0.6,
                 ease: 'power2.out'
@@ -251,14 +257,117 @@ function attachEventListeners() {
                 ease: 'power2.out'
             });
         });
+
+        // Add Modal Click Listener
+        card.addEventListener('click', () => {
+            const name = card.querySelector('.product-name').textContent;
+            const imgSrc = card.querySelector('.product-img').src;
+            const category = card.querySelector('.product-category').textContent;
+            openProductModal(name, imgSrc, category);
+        });
+    });
+
+    // Close Modal Listeners
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalOverlay = document.getElementById('productModal');
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeProductModal);
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeProductModal();
+        });
+    }
+}
+
+function openProductModal(name, imgSrc, category) {
+    const modal = document.getElementById('productModal');
+    
+    // Case-insensitive lookup
+    const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
+    const details = productDetails[detailKey] || productDetails['default'];
+
+    if (!modal || !details) return;
+
+    document.getElementById('modalProductName').textContent = name;
+    document.getElementById('modalTableName').textContent = name;
+    document.getElementById('modalProductImg').src = imgSrc;
+    document.getElementById('modalProductCategory').textContent = category;
+    document.getElementById('modalProductDescription').textContent = details.description;
+    document.getElementById('modalPackSize').textContent = details.packSize;
+    document.getElementById('modalForm').textContent = details.form;
+    document.getElementById('modalAvailability').textContent = details.availability || "In stock";
+
+    // Populate Table
+    const table = document.getElementById('modalProductTable');
+    table.innerHTML = '';
+    if (details.tableData) {
+        Object.entries(details.tableData).forEach(([key, value]) => {
+            const row = `<tr><td>${key}</td><td>${value}</td></tr>`;
+            table.innerHTML += row;
+        });
+        table.style.display = 'table';
+        document.getElementById('modalTableName').style.display = 'block';
+    } else {
+        table.style.display = 'none';
+        document.getElementById('modalTableName').style.display = 'none';
+    }
+
+    const featuresList = document.getElementById('modalFeatures');
+    const featuresSection = document.getElementById('featuresSection');
+    if (details.features && details.features.length > 0) {
+        featuresList.innerHTML = details.features.map(f => `<li>${f}</li>`).join('');
+        featuresSection.style.display = 'block';
+    } else {
+        featuresSection.style.display = 'none';
+    }
+
+    const benefitsList = document.getElementById('modalBenefits');
+    const benefitsSection = document.getElementById('benefitsSection');
+    if (details.benefits && details.benefits.length > 0) {
+        benefitsList.innerHTML = details.benefits.map(b => `<li>${b}</li>`).join('');
+        benefitsSection.style.display = 'block';
+    } else {
+        benefitsSection.style.display = 'none';
+    }
+
+    if (window.applyCTAStyles) window.applyCTAStyles();
+
+    modal.style.display = 'flex';
+    gsap.set(modal, { opacity: 0 });
+    gsap.to(modal, { 
+        opacity: 1, 
+        duration: 0.5,
+        ease: 'power2.out'
+    });
+    
+    const contentCol = modal.querySelector('.modal-content-col');
+    if (contentCol) contentCol.scrollTop = 0;
+
+    document.body.style.overflow = 'hidden';
+    if (window.lenis) window.lenis.stop();
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
+    if (!modal) return;
+
+    gsap.to(modal, { 
+        opacity: 0, 
+        duration: 0.3, 
+        ease: 'power2.in',
+        onComplete: () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            if (window.lenis) window.lenis.start();
+        } 
     });
 }
 
 function animateCardsEntrance() {
-    // Check if preloader exists
     const preloader = document.getElementById('loading-overlay');
-    
-    // Check helper
     const checkAllLoaded = () => {
         if (preloader && preloader.style.opacity !== '0') {
             preloader.style.opacity = '0';
@@ -268,10 +377,8 @@ function animateCardsEntrance() {
         }
     };
 
-    // Safety timeout: force remove after 5 seconds to prevent infinite spinning
     setTimeout(checkAllLoaded, 5000);
 
-    // Wait for all images in the grid to load before removing preloader
     const gridImages = document.querySelectorAll('.products-grid img');
     let loadedCount = 0;
     const totalImages = gridImages.length;
@@ -288,17 +395,12 @@ function animateCardsEntrance() {
                     loadedCount++;
                     if (loadedCount === totalImages) checkAllLoaded();
                 };
-                img.onerror = () => {
-                    loadedCount++; // Count errors as loaded to avoid sticking
-                    if (loadedCount === totalImages) checkAllLoaded();
-                };
             }
         });
     }
 
-    if (!window.gsap || !window.ScrollTrigger) return;
-    
-    gsap.utils.toArray('.product-card').forEach((card, index) => {
+    if (!window.gsap) return;
+    gsap.utils.toArray('.product-card').forEach((card) => {
         gsap.set(card, { opacity: 1, y: 0, rotation: 0 });
     });
 }

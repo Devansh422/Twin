@@ -209,7 +209,20 @@ Object.entries(productsData).forEach(([category, products]) => {
     });
 });
 
-function initDynamicProducts() {
+let productDetails = {};
+
+async function fetchProductDetails() {
+    try {
+        const response = await fetch('./assets/evershine-details.json');
+        productDetails = await response.json();
+    } catch (error) {
+        console.error('Error loading product details:', error);
+    }
+}
+
+async function initDynamicProducts() {
+    await fetchProductDetails();
+    
     const filtersContainer = document.querySelector('.product-filters');
     const gridContainer = document.querySelector('.products-grid');
     const countElement = document.getElementById('product-count');
@@ -431,6 +444,115 @@ function attachEventListeners() {
                 ease: 'power2.out'
             });
         });
+
+        // Modal Open Click Listener
+        card.addEventListener('click', () => {
+            const name = card.querySelector('.product-name').textContent;
+            const imgSrc = card.querySelector('.product-img').src;
+            const category = card.querySelector('.product-category').textContent;
+            openProductModal(name, imgSrc, category);
+        });
+    });
+
+    // Close Modal Listeners
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalOverlay = document.getElementById('productModal');
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeProductModal);
+    }
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeProductModal();
+        });
+    }
+}
+
+function openProductModal(name, imgSrc, category) {
+    const modal = document.getElementById('productModal');
+    
+    // Case-insensitive lookup
+    const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
+    const details = productDetails[detailKey] || productDetails['default'];
+
+    if (!modal || !details) return;
+
+    document.getElementById('modalProductName').textContent = name;
+    document.getElementById('modalTableName').textContent = name;
+    document.getElementById('modalProductImg').src = imgSrc;
+    document.getElementById('modalProductCategory').textContent = category;
+    document.getElementById('modalProductDescription').textContent = details.description;
+    document.getElementById('modalPackSize').textContent = details.packSize;
+    document.getElementById('modalForm').textContent = details.form;
+    document.getElementById('modalAvailability').textContent = details.availability || "In stock";
+
+    // Populate Table
+    const table = document.getElementById('modalProductTable');
+    table.innerHTML = '';
+    if (details.tableData) {
+        Object.entries(details.tableData).forEach(([key, value]) => {
+            const row = `<tr><td>${key}</td><td>${value}</td></tr>`;
+            table.innerHTML += row;
+        });
+        table.style.display = 'table';
+        document.getElementById('modalTableName').style.display = 'block';
+    } else {
+        table.style.display = 'none';
+        document.getElementById('modalTableName').style.display = 'none';
+    }
+
+    const featuresList = document.getElementById('modalFeatures');
+    const featuresSection = document.getElementById('featuresSection');
+    if (details.features && details.features.length > 0) {
+        featuresList.innerHTML = details.features.map(f => `<li>${f}</li>`).join('');
+        featuresSection.style.display = 'block';
+    } else {
+        featuresSection.style.display = 'none';
+    }
+
+    const benefitsList = document.getElementById('modalBenefits');
+    const benefitsSection = document.getElementById('benefitsSection');
+    if (details.benefits && details.benefits.length > 0) {
+        benefitsList.innerHTML = details.benefits.map(b => `<li>${b}</li>`).join('');
+        benefitsSection.style.display = 'block';
+    } else {
+        benefitsSection.style.display = 'none';
+    }
+
+    // Re-run CTA animation if needed for the quote button
+    if (window.applyCTAStyles) window.applyCTAStyles();
+
+    modal.style.display = 'flex';
+    gsap.set(modal, { opacity: 0 });
+    gsap.to(modal, { 
+        opacity: 1, 
+        duration: 0.5,
+        ease: 'power2.out'
+    });
+    
+    // Reset scroll position
+    const contentCol = modal.querySelector('.modal-content-col');
+    if (contentCol) contentCol.scrollTop = 0;
+
+    // Disable body scroll
+    document.body.style.overflow = 'hidden';
+    if (window.lenis) window.lenis.stop();
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
+    if (!modal) return;
+
+    gsap.to(modal, { 
+        opacity: 0, 
+        duration: 0.3, 
+        ease: 'power2.in',
+        onComplete: () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            if (window.lenis) window.lenis.start();
+        } 
     });
 }
 

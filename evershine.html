@@ -120,6 +120,7 @@
             display: flex;
             flex-direction: column;
 			border-radius: 10px;
+			overflow: hidden;
 		}
 
 		.product-image-wrapper {
@@ -252,7 +253,7 @@
 	<!-- Hero Section -->
 	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
 		<video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-			<source src="./assets/Aerosol.mp4" type="video/mp4">
+			<source src="./assets/Evershine.mp4" type="video/mp4">
 		</video>
 		<div class="hero-content">
 			<h1>Car Care Products<br>That Shine</h1>
@@ -388,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.head.appendChild(style);
 
   /* ✅ Auto Convert Any Element with class="cta-button" */
-  function applyCTAStyles() {
+  window.applyCTAStyles = function() {
     document.querySelectorAll(".cta-button").forEach((el) => {
 
       // Prevent double processing
@@ -424,8 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Run once on page load
-  applyCTAStyles();
-
+  window.applyCTAStyles();
 });
 </script>
 
@@ -437,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		gsap.registerPlugin(ScrollTrigger);
 
 		// Initialize Lenis Smooth Scroll
-		const lenis = new Lenis({
+		window.lenis = new Lenis({
 			duration: 1.2,
 			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 			direction: "vertical",
@@ -449,8 +449,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			infinite: false,
 		});
 
-		lenis.on("scroll", ScrollTrigger.update);
-		gsap.ticker.add((time) => lenis.raf(time * 1000));
+		window.lenis.on("scroll", ScrollTrigger.update);
+		gsap.ticker.add((time) => window.lenis.raf(time * 1000));
 		gsap.ticker.lagSmoothing(0);
 
 		// Text animation setup
@@ -749,6 +749,307 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 	</script>
+
+	<!-- Product Detail Popup Modal -->
+	<style>
+		.product-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.85);
+			backdrop-filter: blur(8px);
+			z-index: 10001;
+			display: none;
+			justify-content: center;
+			align-items: center;
+			opacity: 0;
+		}
+
+		.modal-container {
+			background: #fff;
+			width: 95%;
+			max-width: 1200px;
+			height: 75vh;
+			border-radius: 1rem;
+			position: relative;
+			overflow: hidden;
+			display: flex;
+			flex-direction: row;
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+		}
+
+		.modal-close {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			background: #f0f0f0;
+			border: none;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 10;
+			transition: all 0.3s ease;
+		}
+
+		.modal-close:hover {
+			background: #ed1d21;
+			color: #fff;
+			transform: rotate(90deg);
+		}
+
+		.modal-image-col {
+			flex: 0 0 350px;
+			background: #f9f9f9;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 2rem;
+			gap: 1.5rem;
+		}
+
+		.modal-image-col img {
+			max-width: 100%;
+			max-height: 300px;
+			object-fit: contain;
+			filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+		}
+
+		/* Product Info Table Styles */
+		.product-info-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 1rem 0;
+			border: 1px solid #e0e0e0;
+		}
+
+		.product-info-table td {
+			padding: 0.6rem 1rem;
+			border: 1px solid #e0e0e0;
+			font-family: "base", sans-serif;
+			font-size: 0.85rem;
+		}
+
+		.product-info-table tr td:first-child {
+			background: #fcfcfc;
+			color: #666;
+			width: 40%;
+			text-align: center;
+			font-weight: 600;
+		}
+
+		.product-info-table tr td:last-child {
+			color: #222;
+			text-align: center;
+		}
+
+		.availability-tag {
+			margin: 0.8rem 0;
+			font-family: "base", sans-serif;
+			padding-bottom: 0.5rem;
+			font-size: 0.9rem;
+		}
+
+		.availability-tag span:first-child {
+			color: #ed1d21;
+			font-weight: 700;
+		}
+
+		.availability-tag span:last-child {
+			color: #555;
+		}
+
+		.modal-content-col {
+			flex: 1;
+			padding: 2rem;
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			min-height: 0; /* Important for flex scrolling */
+		}
+
+		.modal-header h2 {
+			font-family: "Heading", sans-serif;
+			font-size: 1.8rem;
+			color: #222;
+			margin-bottom: 0.2rem;
+		}
+
+		.modal-category {
+			font-family: "base", sans-serif;
+			color: #ed1d21;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-bottom: 0.8rem;
+			font-size: 0.75rem;
+			display: block;
+		}
+
+		.modal-description {
+			font-family: "base", sans-serif;
+			color: #555;
+			line-height: 1.4;
+			margin-bottom: 1rem;
+			font-size: 0.85rem;
+		}
+
+		/* Grid for Features and Benefits */
+		.modal-info-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.modal-section {
+			margin-bottom: 0.5rem;
+		}
+
+		.modal-section h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 1rem;
+			color: #333;
+			margin-bottom: 0.5rem;
+			border-bottom: 2px solid #eee;
+			padding-bottom: 0.2rem;
+		}
+
+		.modal-list {
+			list-style: none;
+			padding: 0;
+		}
+
+		.modal-list li {
+			font-family: "base", sans-serif;
+			font-size: 0.8rem;
+			color: #666;
+			margin-bottom: 0.3rem;
+			display: flex;
+			align-items: flex-start;
+			gap: 0.4rem;
+			line-height: 1.3;
+		}
+
+		.modal-list li::before {
+			content: '•';
+			color: #ed1d21;
+			font-weight: bold;
+		}
+
+		.modal-specs {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+			background: #f8f8f8;
+			padding: 0.8rem 1.2rem;
+			border-radius: 8px;
+		}
+
+		.spec-item span:first-child {
+			display: block;
+			font-size: 0.7rem;
+			color: #888;
+			text-transform: uppercase;
+			margin-bottom: 0.1rem;
+		}
+
+		.spec-item span:last-child {
+			font-weight: 600;
+			color: #333;
+			font-size: 0.85rem;
+		}
+
+		@media (max-width: 768px) {
+			.modal-container {
+				flex-direction: column;
+				width: 95%;
+				height: 90vh; /* More height on mobile */
+			}
+			.modal-image-col {
+				padding: 1.5rem;
+				flex: 0 0 auto;
+				min-height: 180px;
+				gap: 1rem;
+			}
+			.modal-image-col img {
+				max-height: 150px;
+			}
+			.modal-content-col {
+				padding: 1.5rem;
+			}
+			.modal-header h2 {
+				font-size: 1.5rem;
+			}
+			.modal-info-grid {
+				grid-template-columns: 1fr;
+				gap: 1rem;
+			}
+		}
+	</style>
+
+	<div class="product-modal" id="productModal">
+		<div class="modal-container">
+			<button class="modal-close" id="closeModal">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+			</button>
+			<div class="modal-image-col">
+				<img id="modalProductImg" src="" alt="Product Image">
+				<a href="contact-us.html" class="cta-button">Get a Quote</a>
+			</div>
+			<div class="modal-content-col">
+				<div class="modal-header">
+					<span class="modal-category" id="modalProductCategory">Category</span>
+					<h2 id="modalProductName" style="color:#ed1d21;">Product Name</h2>
+				</div>
+				
+				<p class="modal-description" id="modalProductDescription">
+					Description goes here...
+				</p>
+
+				<div class="availability-tag">
+					<span>Availability:</span> <span id="modalAvailability">In stock</span>
+				</div>
+
+				<h2 id="modalTableName" style="font-family:'Heading'; font-size:1.3rem; margin-top:0.5rem;">Product Details</h2>
+				<table class="product-info-table" id="modalProductTable">
+					<!-- Dynamically populated -->
+				</table>
+
+				<div class="modal-info-grid">
+					<div class="modal-section" id="featuresSection">
+						<h3>Key Features</h3>
+						<ul class="modal-list" id="modalFeatures"></ul>
+					</div>
+					<div class="modal-section" id="benefitsSection">
+						<h3>Benefits</h3>
+						<ul class="modal-list" id="modalBenefits"></ul>
+					</div>
+				</div>
+
+				<div class="modal-section">
+					<h3>Additional Information</h3>
+					<div class="modal-specs">
+						<div class="spec-item">
+							<span>Pack Size</span>
+							<span id="modalPackSize">N/A</span>
+						</div>
+						<div class="spec-item">
+							<span>Form</span>
+							<span id="modalForm">Aerosol/Liquid</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <script src="./assets/car-care-logic.js"></script>
 </body>
 </html>

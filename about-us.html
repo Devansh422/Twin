@@ -8,38 +8,6 @@
 	<link rel="stylesheet" type="text/css" href="footer.css">
 	<title>About Us - Twin Tech India</title>
 	<style>
-		/* About Us Hero Section */
-		.about-hero {
-			padding: 6rem 5vw 3rem;
-			text-align: center;
-			position: relative;
-			overflow: hidden;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
-		.about-hero h1 {
-			font-family: "Heading", sans-serif;
-			font-size: 3rem;
-			font-weight: 900;
-			color: #fff;
-			margin-bottom: 0.8rem;
-			position: relative;
-			z-index: 1;
-		}
-
-		.about-hero .subtitle {
-			font-family: "base", sans-serif;
-			font-size: 1rem;
-			color: #fff;
-			max-width: 700px;
-			margin: 0 auto;
-			position: relative;
-			z-index: 1;
-			line-height: 1.6;
-		}
-
 		/* Content Sections */
 		.content-section {
 			padding: 3rem 5vw;
@@ -135,7 +103,6 @@
 
 		/* Single Column Content */
 		.single-column {
-			max-width: 1100px;
 			margin: 0 auto;
 		}
 
@@ -349,13 +316,20 @@
 		</div>
 	</nav>
 
+	<div class="main-container">
 	<!-- About Us Hero Section -->
-	<section class="about-hero" style="height: 100vh;">
+	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
 		<video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-			<source src="./assets/hero-video.mp4" type="video/mp4">
+			<source src="./assets/Aerosol.mp4" type="video/mp4">
 		</video>
-		<h1>About Twin Tech India</h1>
-		<p class="subtitle">Leading manufacturer of aerosols, sprays, and specialty industrial products. Committed to quality, innovation, and customer satisfaction since our inception.</p>
+		<div class="hero-content">
+			<h1 class="animate-text">About Twin Tech India Pvt. Ltd.</h1>
+			<p class="sub-text">Leading manufacturer of aerosols, sprays, and specialty industrial products. Committed to quality, innovation, and customer satisfaction since our inception.</p>
+			<div class="cta-button">
+				<button class="cta-button">Enquire Now</button>
+			</div>
+		</div>
+		<div class="gradient"></div>
 	</section>
 
 	<!-- Overview Section -->
@@ -396,6 +370,7 @@
 			</div>
 		</div>
 	</section>
+	</div>
 
 	<!-- Footer -->
 	<footer>
@@ -458,24 +433,107 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+	<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 	<script>
 		gsap.registerPlugin(ScrollTrigger);
 
 		// Animate hero section
-		gsap.from('.about-hero h1', {
+		gsap.from('.hero-content h1', {
 			y: 100,
 			opacity: 0,
 			duration: 1,
 			ease: 'power3.out'
 		});
 
-		gsap.from('.about-hero .subtitle', {
+		gsap.from('.hero-content .sub-text', {
 			y: 50,
 			opacity: 0,
 			duration: 1,
 			delay: 0.3,
 			ease: 'power3.out'
+		});
+
+		// CTA Button Script
+		document.addEventListener("DOMContentLoaded", () => {
+			/* ✅ Inject CTA CSS Automatically */
+			const style = document.createElement("style");
+			style.innerHTML = `
+				.cta-button {
+					padding: 0 1.3rem;
+					height: 2.8rem;
+					border-radius: 100px;
+					background: var(--color, #ff3b3b);
+					border: none;
+					color: #fff;
+					font-family: "base", sans-serif;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					gap: 0.4rem;
+					cursor: pointer;
+					text-decoration: none;
+					user-select: none;
+				}
+
+				.cta-button > .button-content {
+					height: 1.5rem;
+					width: fit-content;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					line-height: 1;
+				}
+
+				.cta-button > .arrow {
+					height: 1.5rem;
+					width: 1.5rem;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				.cta-button > .arrow svg {
+					height: 1.2rem;
+					width: 1.2rem;
+					display: block;
+					transform: rotate(-45deg);
+					will-change: transform;
+					transition: 0.2s;
+				}
+
+				.cta-button:hover .arrow svg {
+					transform: rotate(0deg);
+				}
+			`;
+			document.head.appendChild(style);
+
+			/* ✅ Auto Convert Any Element with class="cta-button" */
+			function applyCTAStyles() {
+				document.querySelectorAll(".cta-button").forEach((el) => {
+					if (el.dataset.ctaProcessed) return;
+					const text = el.textContent.trim();
+					el.innerHTML = "";
+					el.innerHTML = `
+						<span class="button-content">${text}</span>
+						<span class="arrow">
+							<svg xmlns="http://www.w3.org/2000/svg"
+								width="24" height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<path d="M5 12h14"/>
+								<path d="m12 5 7 7-7 7"/>
+							</svg>
+						</span>
+					`;
+					el.dataset.ctaProcessed = "true";
+				});
+			}
+			applyCTAStyles();
 		});
 
 		// Animate section headers
