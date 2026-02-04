@@ -1,19 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Twin Tech</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="nav.css">
-    <link rel="stylesheet" type="text/css" href="footer.css">
-    <link rel="stylesheet" type="text/css" href="blog.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="nav.css">
+	<link rel="stylesheet" type="text/css" href="footer.css">
+	<title>Application Areas - Twin Tech India</title>
+	<style>
+		/* Content Sections */
+		.content-section {
+			padding: 8rem 5vw 3rem;
+			position: relative;
+		}
+
+		.content-section:nth-child(even) {
+			background: #fdfdfd;
+		}
+
+		.content-section:nth-child(odd) {
+			background: #fff;
+		}
+
+		.section-header {
+			text-align: center;
+			margin-bottom: 2rem;
+		}
+
+		.section-label {
+			font-family: "base", sans-serif;
+			font-size: 0.8rem;
+			color: #667eea;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: 600;
+			margin-bottom: 0.4rem;
+		}
+
+		.section-title {
+			font-family: "Heading", sans-serif;
+			font-size: 2.2rem;
+			font-weight: 800;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.section-description {
+			font-family: "base", sans-serif;
+			font-size: 0.95rem;
+			color: #666;
+			max-width: 800px;
+			margin: 0 auto;
+			line-height: 1.6;
+		}
+
+		/* Two Column Layout */
+		.two-column {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 2.5rem;
+			max-width: 1400px;
+			margin: 2rem auto 0;
+			align-items: start;
+		}
+
+		.column-content {
+			font-family: "base", sans-serif;
+			font-size: 0.9rem;
+			color: #444;
+			line-height: 1.6;
+		}
+
+		.column-content h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.column-content p {
+			margin-bottom: 0.8rem;
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.content-section {
+				padding: 5rem 5vw 2.5rem;
+			}
+
+			.section-title {
+				font-size: 1.8rem;
+			}
+
+			.two-column {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+		}
+	</style>
 </head>
 <body>
-
 	<nav>
     <div class="logo">
-      <img id="site-logo" src="./assets/logo.png" alt="Twin Tech Logo">
+      <a href="index.html"><img id="site-logo" src="./assets/logo.png" alt="Twin Tech Logo"></a>
     </div>
 		<ul class="navigation">
 			<li><a href="index.html">Home</a></li>
@@ -47,111 +137,53 @@
 		</div>
 	</nav>
 
-    <header class="blog-header">
-        <h1>Our Blog</h1>
-        <p>Insights, news, and stories from the Twin Tech team.</p>
-    </header>
+	<!-- Applications Section -->
+	<section class="content-section" id="applications">
+		<div class="section-header">
+			<div class="section-label">Industries We Serve</div>
+			<h2 class="section-title">Application Areas</h2>
+			<p class="section-description">Twin Tech India Pvt Ltd, based in Ghaziabad, is a manufacturer and supplier of Aerosol cans and sprays for variety of industrial application with endless possibilities and no boundaries. No matter what the application is, our products have been using in almost every industries and giving good results with customer satisfaction.</p>
+		</div>
 
-    <main class="blog-section">
-        <div class="blog-grid">
-            <!-- Blog Card 1 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Industry News</span>
-                    <h3>The Future of Adhesive Technology</h3>
-                    <p class="excerpt">Discover the latest trends and innovations in the adhesive industry and what they mean for manufacturing and construction.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 15, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 2 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1521790797524-12432c82538e?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Productivity</span>
-                    <h3>5 Ways to Boost Your Workshop's Efficiency</h3>
-                    <p class="excerpt">Simple changes and the right products can make a huge difference in your daily workflow and output quality.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 22, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 3 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1607863680198-23d4b2565df0?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">DIY Projects</span>
-                    <h3>A Guide to Perfect Car Detailing at Home</h3>
-                    <p class="excerpt">Learn the secrets from the pros on how to get a showroom shine on your vehicle using our Evershine products.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 28, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 4 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Company Culture</span>
-                    <h3>Inside Twin Tech: Our Commitment to Quality</h3>
-                    <p class="excerpt">A look behind the scenes at our manufacturing process and the values that drive our team to deliver the best.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 01, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 5 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Maintenance Tips</span>
-                    <h3>Extending the Life of Your Machinery</h3>
-                    <p class="excerpt">Proper maintenance is key. We share our top tips for using industrial sprays to protect and prolong your equipment's lifespan.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 05, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 6 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Community</span>
-                    <h3>Partnering with Local Distributors</h3>
-                    <p class="excerpt">Read about our successful partnership program and how we're growing together with businesses across the country.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 12, 2026</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+		<div class="two-column" style="margin-top: 5rem;">
+			<div class="column-content">
+				<h3>Process Industry</h3>
+				<p>Twin Tech India offers customers a wide range of maintenance aerosols for process industries like On-line electrical contact cleaners, Moisture Displacer, Carbon Remover, Contact Lube. Dry Lubrication, Spray Lubricants, Rust Remover, insulating & protective coatings, HT tapes and many more…</p>
 
+				<h3 style="margin-top: 3rem;">Automotive Industry</h3>
+				<p>In the automotive sector, Twin Tech India offers customers an extensive range of aerosols, lubricants and maintenance products. In general, Corrosion Inhibitors, Rust penetrator, Cleaning & Degreasing of machinery parts, engines, bearings, metal molds, moisture proofing, lubrication in extreme temperature and many more…</p>
+
+				<h3 style="margin-top: 3rem;">Telecommunication Industry</h3>
+				<p>We offers customers a wide range of cleaning and degreasers for safely and efficiently cleaning and removing grease, oxides, condensation, dust, grime and other contaminants from optical fiber cables, connectors used in telecommunication. Our product has been also used in radio antenna assemblies for reducing contact resistance.</p>
+
+				<h3 style="margin-top: 3rem;">Electrical & Electronics Industry</h3>
+				<p>A wide range of products line On-line Electrical Cleaner, Electronic Cleaner, PCB Coatings, Tuff Clean, Cold Galvanizing Compounds, Anti-Track Coatings, HT Tapes for 11KV and 33KV Insulations. Our products are recommended for cleaning electric motor windings, cables, electronic equipments etc and also PCB coating enhances the working lifespan and reliability of electronic PCB assemblies.</p>
+			</div>
+
+			<div class="column-content">
+				<h3>IT Industry</h3>
+				<p>Twin Tech India offers customers a wide range of cleaning and degreasers for safely removing dust and dirt without contaminating either your computer, or the environment. Our product is used hundreds of times every day by technicians to keep computers and data centers clean.</p>
+
+				<h3 style="margin-top: 3rem;">Textile Industry</h3>
+				<p>Twin Tech India offers a wide range of Dry Lubricants and anti seize spray that has been using in textile equipments for long lasting drip free lubrication like Dry Graphite lube, PTFE Dry Film Lubricant, Dry Moly Lubricant and Copper/Moly based antiseize compounds.</p>
+
+				<h3 style="margin-top: 3rem;">Pharmaceuticals Industry</h3>
+				<p>Twin Tech India offers a wide range of cleaning products which synthetic surface active compound exceptionally effective for cleaning various kinds of contaminants i:e oils, greases, carbon, dirt, grime etc. it is non-toxic biodegradable product, immediately soluble in water. It is very useful for cleaning of floors & machines agent, vessels and containers in pharmaceuticals industries.</p>
+
+				<h3 style="margin-top: 3rem;">Other Application Areas</h3>
+				<p>Twin Tech India is also offering a wide range of home care products eg: glass cleaner, furniture polish, room freshener, air deo, shoe deo, helmet deo etc and Car care products eg: Car wash shampoo, Tyre and Dashboard shiner, All in one rust remover, brake cleaner, car perfume, air dry spray paint, car wax and many more…</p>
+				<p>Twin Tech India is also offering a wide range of adhesive tapes for floor line marking, sealing of ducts, bundling and stripling of heavy goods, holding of condenser coils in refrigerators, PE surface protection, masking tape, packaging, labeling, electrical insulation, double layer advertising tape and many more…</p>
+				<p><strong>Twin tech India is also engaged in Contract packaging for a number of companies and industries, with extensive private label aerosol filling / packaging capabilities.</strong></p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
 	<footer>
 		<div class="top">
-      <div class="logo">
-        <img id="site-logo-footer" src="" alt="Twin Tech Logo">
-      </div>
+			<div class="logo">
+				<img src="./assets/logo.png">
+			</div>
 			<div class="footer-info animate-text">
 				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care products, self-adhesive tapes and home care products for various industries worldwide.
 			</div>
@@ -162,7 +194,7 @@
 			<ul class="nav-1">
 				<h3>Quick Links</h3>
 				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home</a></li>
-				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
+				<li><a href="about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
 				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Our Clients</a></li>
 				<li><a href="contact-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Contact</a></li>
 			</ul>
@@ -203,7 +235,28 @@
 			<span>©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
-    <script src="app.js"></script>
-    <script src="hero.js"></script>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+	<script>
+		gsap.registerPlugin(ScrollTrigger);
+
+		// Animate section headers
+		gsap.utils.toArray('.section-header').forEach((header) => {
+			gsap.from(header, {
+				scrollTrigger: {
+					trigger: header,
+					start: 'top 80%',
+					end: 'top 50%',
+					toggleActions: 'play none none reverse'
+				},
+				y: 50,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'power3.out'
+			});
+		});
+	</script>
 </body>
 </html>

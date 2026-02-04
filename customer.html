@@ -1,19 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Twin Tech</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="nav.css">
-    <link rel="stylesheet" type="text/css" href="footer.css">
-    <link rel="stylesheet" type="text/css" href="blog.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="nav.css">
+	<link rel="stylesheet" type="text/css" href="footer.css">
+	<title>Customer Focus - Twin Tech India</title>
+	<style>
+		/* Content Sections */
+		.content-section {
+			padding: 8rem 5vw 3rem;
+			position: relative;
+		}
+
+		.content-section:nth-child(even) {
+			background: #fdfdfd;
+		}
+
+		.content-section:nth-child(odd) {
+			background: #fff;
+		}
+
+		.section-header {
+			text-align: center;
+			margin-bottom: 2rem;
+		}
+
+		.section-label {
+			font-family: "base", sans-serif;
+			font-size: 0.8rem;
+			color: #667eea;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: 600;
+			margin-bottom: 0.4rem;
+		}
+
+		.section-title {
+			font-family: "Heading", sans-serif;
+			font-size: 2.2rem;
+			font-weight: 800;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.section-description {
+			font-family: "base", sans-serif;
+			font-size: 0.95rem;
+			color: #666;
+			max-width: 800px;
+			margin: 0 auto;
+			line-height: 1.6;
+		}
+
+		/* Two Column Layout */
+		.two-column {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 2.5rem;
+			max-width: 1400px;
+			margin: 2rem auto 0;
+			align-items: start;
+		}
+
+		.column-content {
+			font-family: "base", sans-serif;
+			font-size: 0.9rem;
+			color: #444;
+			line-height: 1.6;
+		}
+
+		.column-content h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.column-content p {
+			margin-bottom: 0.8rem;
+		}
+
+		/* Highlight Box */
+		.highlight-box {
+			background: rgba(220, 20, 60, 0.04);
+			padding: 1.5rem;
+			border-left: 3px solid #dc143c;
+			margin: 1.5rem 0;
+		}
+
+		.highlight-box p {
+			font-family: "Heading", sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			color: #dc143c;
+			line-height: 1.5;
+			margin: 0;
+			font-style: italic;
+		}
+
+		/* Single Column Content */
+		.single-column {
+			max-width: 1100px;
+			margin: 0 auto;
+		}
+
+		.single-column .column-content {
+			font-size: 0.95rem;
+			line-height: 1.7;
+		}
+
+		/* Philosophy List */
+		.philosophy-list {
+			list-style: none;
+			padding: 0;
+			margin: 0.8rem 0;
+		}
+
+		.philosophy-list li {
+			font-family: "base", sans-serif;
+			font-size: 0.95rem;
+			color: #444;
+			padding: 0.5rem 0 0.5rem 2rem;
+			position: relative;
+			line-height: 1.6;
+		}
+
+		.philosophy-list li::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 14px 14px;
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.content-section {
+				padding: 5rem 5vw 2.5rem;
+			}
+
+			.section-title {
+				font-size: 1.8rem;
+			}
+
+			.two-column {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+		}
+	</style>
 </head>
 <body>
-
 	<nav>
     <div class="logo">
-      <img id="site-logo" src="./assets/logo.png" alt="Twin Tech Logo">
+      <a href="index.html"><img id="site-logo" src="./assets/logo.png" alt="Twin Tech Logo"></a>
     </div>
 		<ul class="navigation">
 			<li><a href="index.html">Home</a></li>
@@ -47,111 +200,67 @@
 		</div>
 	</nav>
 
-    <header class="blog-header">
-        <h1>Our Blog</h1>
-        <p>Insights, news, and stories from the Twin Tech team.</p>
-    </header>
+	<!-- Customer Focus Section -->
+	<section class="content-section" id="customer-focus">
+		<div class="section-header">
+			<div class="section-label">Excellence</div>
+			<h2 class="section-title">Customer Focus</h2>
+		</div>
 
-    <main class="blog-section">
-        <div class="blog-grid">
-            <!-- Blog Card 1 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Industry News</span>
-                    <h3>The Future of Adhesive Technology</h3>
-                    <p class="excerpt">Discover the latest trends and innovations in the adhesive industry and what they mean for manufacturing and construction.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 15, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 2 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1521790797524-12432c82538e?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Productivity</span>
-                    <h3>5 Ways to Boost Your Workshop's Efficiency</h3>
-                    <p class="excerpt">Simple changes and the right products can make a huge difference in your daily workflow and output quality.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 22, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 3 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1607863680198-23d4b2565df0?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">DIY Projects</span>
-                    <h3>A Guide to Perfect Car Detailing at Home</h3>
-                    <p class="excerpt">Learn the secrets from the pros on how to get a showroom shine on your vehicle using our Evershine products.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 28, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 4 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Company Culture</span>
-                    <h3>Inside Twin Tech: Our Commitment to Quality</h3>
-                    <p class="excerpt">A look behind the scenes at our manufacturing process and the values that drive our team to deliver the best.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 01, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 5 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Maintenance Tips</span>
-                    <h3>Extending the Life of Your Machinery</h3>
-                    <p class="excerpt">Proper maintenance is key. We share our top tips for using industrial sprays to protect and prolong your equipment's lifespan.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 05, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 6 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Community</span>
-                    <h3>Partnering with Local Distributors</h3>
-                    <p class="excerpt">Read about our successful partnership program and how we're growing together with businesses across the country.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 12, 2026</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+		<div class="two-column" style="margin-top: 5rem;">
+			<div class="column-content">
+				<h3>Infrastructure</h3>
+				<p>Twin Tech India owes our success to our sound infrastructural set up. Comprising of a fully integrated manufacturing set up and contemporary technology, we have a state-of-the-art production line room to manufacture products.</p>
+				<p>Our highly mechanized manufacturing unit is operated under checked in labs before they are dispatched for final packaging. Our technocrats also ensure the pressure of the sprays and that they are leak proof, safe and easy to use.</p>
 
+				<h3 style="margin-top: 3rem;">Quality Assurance</h3>
+				<p>Twin Tech India has achieved high level of efficiency and facilitates the maintenance of excellent working environment. We source the best quality products for the satisfaction of our clients.</p>
+				<p>We boast of strong, skilled and diligent workforces who have the potential to give their best in every aspect of performance. Strong working force along with the latest storage, packaging and delivery facilities enable for swift and timely delivery of small and bulk orders.</p>
+				<p>We believe that quality is essential for the success of business, and hence, we have adopted good quality procedures and try to instill these methods into the organization's culture.</p>
+			</div>
+
+			<div class="column-content">
+				<h3>Client Satisfaction</h3>
+				<p>Twin Tech India Pvt. Ltd. is a private corporation that has realized tremendous growth both in the number of products offered and the number of customers served. The main reason for this growth as an aerosol manufacturer is our unwavering commitment to providing complete customer satisfaction.</p>
+				<p>The Sprayzet Products line is specifically designed to help eliminate cost delays, speed repair time, reduce labor costs and make job easier and faster. Before our products reach our customers, they are lab and field tested to assure that they meet the highest performance standards.</p>
+				
+				<h3 style="margin-top: 2rem;">Our Philosophy</h3>
+				<ul class="philosophy-list">
+					<li>Dedication to quality</li>
+					<li>Competitive pricing</li>
+					<li>Supreme customer service</li>
+				</ul>
+				<p>All the aerosols are available under the registered brand name "Sprayzet" or can be packaged under your private label.</p>
+			</div>
+		</div>
+
+		<div class="single-column" style="margin-top: 2rem; text-align: center;">
+			<div class="column-content">
+				<p>The credit for the success of our company goes to our skilled professionals who help in providing best quality products at a very impressive rates coupled with quick delivery.</p>
+			</div>
+		</div>
+
+		<div style="display: flex; gap: 1.5rem; margin-top: 2rem; justify-content: center; flex-wrap: wrap;">
+			<div class="highlight-box" style="flex: 1; min-width: 280px; text-align: center;">
+				<p>"Our highly committed workforce is the pillars of our strength"</p>
+			</div>
+
+			<div class="highlight-box" style="flex: 1; min-width: 280px; text-align: center;">
+				<p>"Due to our strict quality measures, we have mastered the art of producing flawless industrial products"</p>
+			</div>
+
+			<div class="highlight-box" style="flex: 1; min-width: 280px; text-align: center;">
+				<p>"Clients we have an exhaustive list of immensely satisfied customers all over the globe."</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
 	<footer>
 		<div class="top">
-      <div class="logo">
-        <img id="site-logo-footer" src="" alt="Twin Tech Logo">
-      </div>
+			<div class="logo">
+				<img src="./assets/logo.png">
+			</div>
 			<div class="footer-info animate-text">
 				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care products, self-adhesive tapes and home care products for various industries worldwide.
 			</div>
@@ -162,7 +271,7 @@
 			<ul class="nav-1">
 				<h3>Quick Links</h3>
 				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home</a></li>
-				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
+				<li><a href="about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
 				<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Our Clients</a></li>
 				<li><a href="contact-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Contact</a></li>
 			</ul>
@@ -203,7 +312,44 @@
 			<span>©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
-    <script src="app.js"></script>
-    <script src="hero.js"></script>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+	<script>
+		gsap.registerPlugin(ScrollTrigger);
+
+		// Animate section headers
+		gsap.utils.toArray('.section-header').forEach((header) => {
+			gsap.from(header, {
+				scrollTrigger: {
+					trigger: header,
+					start: 'top 80%',
+					end: 'top 50%',
+					toggleActions: 'play none none reverse'
+				},
+				y: 50,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'power3.out'
+			});
+		});
+
+		// Animate highlight boxes
+		gsap.utils.toArray('.highlight-box').forEach((box) => {
+			gsap.from(box, {
+				scrollTrigger: {
+					trigger: box,
+					start: 'top 85%',
+					end: 'top 60%',
+					toggleActions: 'play none none reverse'
+				},
+				x: -50,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'power3.out'
+			});
+		});
+	</script>
 </body>
 </html>
