@@ -29,8 +29,8 @@
 
     'work-section': `
       <h2>Our Products</h2>
-      <h1 class="animate-text">Products That Power Your Brand</h1>
-      <p class="details">At Twin Tech India Pvt. Ltd., we deliver high-quality products tailored to meet diverse industrial needs, including aerosols, tapes, and household items. We are committed to delivering the highest quality products to our clients.</p>
+      <h1 class="animate-text">Powering Progress Through Innovation</h1>
+      <p class="details">Twin Tech India Pvt. Ltd. drive excellence through three specialized brands: SprayZet for industrial maintenance, Evershine for high-performance car care, and Twin Tapes for precision adhesive solutions.</p>
     `,
 
     'products-section': `
