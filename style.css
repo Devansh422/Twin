@@ -849,6 +849,9 @@ img{
             align-items: center;
             justify-content: center;
         }
+        .canvas-container canvas{
+          z-index: 999;
+        }
 
         /* Desktop Hover State */
         @media (min-width: 1024px) {
@@ -908,3 +911,43 @@ img{
                 font-size: 1.2rem;
             }
         }
+
+
+.item-visual .bg-logo{
+  position: absolute;
+  top:0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.item-visual .bg-logo .logo{
+  height: fit-content;
+  width: 12rem;
+  margin-bottom: -5rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  will-change: transform, left, bottom;
+  transition: 0.2s;
+}
+
+
+.item-visual .bg-logo .logo.evershine{
+  margin-bottom: -1rem;
+}
+
+.item-card:hover .item-visual .bg-logo .logo.sparyzet{
+  left: 0;
+  bottom: 40%;
+  transform: translateX(0);
+}
+
+.item-card:hover .item-visual .bg-logo .logo.evershine{
+  left: 100%;
+  bottom: 20%;
+  transform: translateX(-100%);
+}
