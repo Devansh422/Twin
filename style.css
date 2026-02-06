@@ -391,6 +391,7 @@ img{
 
 .num-card .counter-wrapper {
   display: flex;
+  align-items: baseline;
   justify-content: center;
   color: #fff;
   font-family: "heading";
