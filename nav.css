@@ -85,7 +85,7 @@ nav button{
 	cursor: pointer;
 }
 
-nav button:nth-child(2){
+nav .action_buttons button{
 	color: #000;
 }
 
