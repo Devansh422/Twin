@@ -1,16 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Twin Tech</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="nav.css">
-    <link rel="stylesheet" type="text/css" href="footer.css">
-    <link rel="stylesheet" type="text/css" href="blog.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="nav.css">
+	<link rel="stylesheet" type="text/css" href="footer.css">
+	<title>Career - Twin Tech</title>
+    <style>
+        .career-form-section {
+            padding: 5rem 2rem;
+            background-color: #fcfcfc;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 3rem;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .form-container h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            font-family: 'heading', sans-serif;
+            font-weight: 700;
+        }
+        .form-container .sub-heading-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 600;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-field.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-field label {
+            color: #555;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'base', sans-serif;
+        }
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #ED1D21;
+            box-shadow: 0 0 0 2px rgba(237, 29, 33, 0.1);
+        }
+        .form-field textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .form-field input[type="file"] {
+            padding: 0.6rem;
+            background: #f8f8f8;
+            cursor: pointer;
+        }
+        .submit-btn {
+            grid-column: 1 / -1;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: #ED1D21;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 1.5rem;
+            text-transform: capitalize;
+        }
+        .submit-btn:hover {
+            background-color: #d4181c;
+        }
+        .submit-btn:active {
+            transform: scale(0.99);
+        }
+
+        @media (max-width: 768px) {
+            .career-form-section {
+                padding: 3rem 1rem;
+            }
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+            .form-container h1 {
+                font-size: 2.2rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            .form-container .sub-heading-text {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
 	<nav>
     <div class="logo">
       <img id="site-logo" src="./assets/logo.png" alt="Twin Tech Logo">
@@ -51,112 +172,49 @@
 		</div>
 	</nav>
 
-    <header class="blog-header">
-        <h1>Our Blog</h1>
-        <p>Insights, news, and stories from the Twin Tech team.</p>
-    </header>
-
-    <main class="blog-section">
-        <div class="blog-grid">
-            <!-- Blog Card 1 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Industry News</span>
-                    <h3>The Future of Adhesive Technology</h3>
-                    <p class="excerpt">Discover the latest trends and innovations in the adhesive industry and what they mean for manufacturing and construction.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 15, 2026</span>
+    <main>
+        <section class="career-form-section">
+            <div class="form-container">
+                <h1>Apply For Job</h1>
+                <p class="sub-heading-text">At Twin India, We Are Looking For Hard Workers And Dedicated Professionals To Join Us In Our Interesting And Challenging Place. Diversity And Challenge Are Welcomed In An Environment Where People’s Contributions Are Valued And Respected.</p>
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-field full-width">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="apply-for">Apply For</label>
+                            <input type="text" id="apply-for" name="apply-for" placeholder="Apply For">
+                        </div>
+                        <div class="form-field">
+                            <label for="resume">Upload Your Resume</label>
+                            <input type="file" id="resume" name="resume">
+                        </div>
+                        <div class="form-field full-width">
+                            <label for="details">Details</label>
+                            <textarea id="details" name="details" placeholder="Details"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="submit-btn">Send</button>
                     </div>
-                </div>
+                </form>
             </div>
-            <!-- Blog Card 2 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1521790797524-12432c82538e?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Productivity</span>
-                    <h3>5 Ways to Boost Your Workshop's Efficiency</h3>
-                    <p class="excerpt">Simple changes and the right products can make a huge difference in your daily workflow and output quality.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 22, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 3 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1607863680198-23d4b2565df0?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">DIY Projects</span>
-                    <h3>A Guide to Perfect Car Detailing at Home</h3>
-                    <p class="excerpt">Learn the secrets from the pros on how to get a showroom shine on your vehicle using our Evershine products.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Jan 28, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 4 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Company Culture</span>
-                    <h3>Inside Twin Tech: Our Commitment to Quality</h3>
-                    <p class="excerpt">A look behind the scenes at our manufacturing process and the values that drive our team to deliver the best.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 01, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 5 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Maintenance Tips</span>
-                    <h3>Extending the Life of Your Machinery</h3>
-                    <p class="excerpt">Proper maintenance is key. We share our top tips for using industrial sprays to protect and prolong your equipment's lifespan.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 05, 2026</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Card 6 -->
-            <div class="blog-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Blog Post Image">
-                </div>
-                <div class="card-content">
-                    <span class="category">Community</span>
-                    <h3>Partnering with Local Distributors</h3>
-                    <p class="excerpt">Read about our successful partnership program and how we're growing together with businesses across the country.</p>
-                    <div class="card-footer">
-                        <a href="#" class="read-more-btn">Read More &rarr;</a>
-                        <span class="post-meta">Feb 12, 2026</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
 
-  <div class="black-strip"></div>
 	<footer>
 		<div class="top">
-			<div class="logo">
-				<img id="site-logo-footer" src="">
-			</div>
+      <div class="logo">
+        <img id="site-logo-footer" src="" alt="Twin Tech Logo">
+      </div>
 			<div class="footer-info animate-text">
 				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care products, self-adhesive tapes and home care products for various industries worldwide.
 			</div>
@@ -189,27 +247,26 @@
 				<h3>Get In Touch</h3>
 				<li><a href="mailto:twin@twinindia.com"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>twin@twinindia.com</a></li>
 				<li><a href="mailto:sales@twinindia.com"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>sales@twinindia.com</a></li>
-				<li><a href="tel:919310052702"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>+91-9310052702</a></li>
+				<li><a href="tel:0120-4127715"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>0120-4127715</a></li>
 			</ul>
 		</div>
 			<ul class="address">
-				<li><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Office Address</b><br>A-304, Solitairian City Center, Knowledge Park III<br>Greater NOIDA (UP) India - 201308</a></li>
-				<li style="margin-top: 1.5rem;"><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Work Address</b><br>R-51, 52 & 53, UPSIDC, Sikandrabad,<br>Uttar Pradesh - 203205 </a></li>
+				<li><a href="#"><b>Office Address</b><br>A-304, Solitairian City Center, Knowledge Park III<br>Greater NOIDA (UP) India - 201308</a></li>
+				<li><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Work Address</b><br>R-51, 52 & 53, UPSIDC, Sikandrabad,<br>Uttar Pradesh - 203205 </a></li>
 				<ul class="socials">
-					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a></li>
 					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></li>
 					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a></li>
 					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></li>
 				</ul>
 			</ul>
 		</div>
-		<div class="black-strip"></div>
+    <div class="black-strip"> </div>
 		<div class="bottom">
 			<span>©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
-    <script src="app.js"></script>
-    <script src="hero.js"></script>
+
     <script src="assets-config.js"></script>
     <script src="assets-apply.js" defer></script>
 </body>
