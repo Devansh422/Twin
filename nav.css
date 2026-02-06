@@ -52,7 +52,7 @@ nav ul li a{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 1rem;
+	line-height: 1.2;
 	font-family: "base";
 	color:#000;
 	gap: 0.2rem;

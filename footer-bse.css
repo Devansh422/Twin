@@ -59,10 +59,8 @@ footer .mid .footer-navs ul h3{
 }
 
 footer .mid .footer-navs ul li{
-	min-height: 1.8rem;
+	height: 1.8rem;
 	width: 100%;
-    display: flex;
-    align-items: center;
 }
 
 footer .mid .footer-navs ul li a{
@@ -112,11 +110,10 @@ footer .mid .address li a{
 
 footer .mid .address ul{
 	display: flex;
-	margin-top: 3rem;
+	margin-top: 0.5rem;
 	list-style-type: none;
 	gap: 0.8rem;
 	justify-content: flex-end;
-	z-index: 999;
 }
 
 footer .mid .address ul a{
@@ -141,27 +138,15 @@ footer .mid .address ul li:hover a svg{
 }
 
 footer .bottom {
-	width: 100vw;
-	transform: translateX(-5rem);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 3rem;
-	color: #fff;
-	background: var(--color);
+	padding-bottom: 2rem;
 }
 
 footer .bottom span{
 	text-align: center;
 	font-size: 0.9rem;
-}
-
-footer .black-strip{
-	width: 100vw;
-	transform: translateX(-5rem);
-	height: 5rem;
-	margin-top: -2rem;
-	background: #000;
 }
 
 @media (max-width: 1200px) {
