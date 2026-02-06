@@ -11,7 +11,7 @@
       </div>
       <div class="num-card">
         <div class="counter-wrapper">
-            <span class="count" data-target="15">0</span>
+            <span class="count" data-target="25">0</span>
             <span class="suffix">+</span>
         </div>
         <h3>Years of Experience</h3>
