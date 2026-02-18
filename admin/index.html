@@ -1979,26 +1979,10 @@
         /* ═══════════════════════════════════════════
            EXPORT
            ═══════════════════════════════════════════ */
-        function exportAllData() {
-            const ex = {};
-            // Reconstruct export structure from API data
-            for (const b of BRANDS) {
-                ex[b.key] = { products: productsData[b.key] || [], details: {} };
-            }
-            // Add details back if needed, but the structure is slightly different now.
-            // Simplified export:
-            const exportData = {
-                products: productsData,
-                details: detailsData,
-                blogPosts: blogPosts,
-                inquiries: inquiriesData
-            };
-
-            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-            a.download = 'twin-tech-export-' + new Date().toISOString().split('T')[0] + '.json'; a.click();
-            showToast('Data exported!', 'success');
-        }
+        /* ═══════════════════════════════════════════
+           EXPORT & INIT (Already defined above)
+           ═══════════════════════════════════════════ */
+        // Removed duplicate exportAllData and init functions.
 
         /* ═══════════════════════════════════════════
            TOAST
@@ -2009,15 +1993,6 @@
             setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300) }, 3000);
         }
 
-        /* ═══════════════════════════════════════════
-           INIT
-           ═══════════════════════════════════════════ */
-        async function init() {
-            await loadDefaultData();
-            currentData = getProductData(currentBrand);
-            currentDetails = getProductDetails(currentBrand);
-            renderBrandList(); renderProducts();
-        }
 
         /* ═══════════════════════════════════════════
            BRAND CREATION
