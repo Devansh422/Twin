@@ -1366,21 +1366,70 @@
 
     <script>
         /* ═══════════════════════════════════════════
-           AUTH
+           AUTH & SESSION
            ═══════════════════════════════════════════ */
-        const ADMIN_USER = 'admin', ADMIN_PASS = 'twin@2026';
-        function doLogin() {
-            if (document.getElementById('loginUser').value.trim() === ADMIN_USER && document.getElementById('loginPass').value === ADMIN_PASS) {
-                sessionStorage.setItem('adminAuth', 'true'); unlockApp(); init();
-            } else document.getElementById('loginError').classList.add('show');
+        async function doLogin() {
+            const u = document.getElementById('loginUser').value.trim();
+            const p = document.getElementById('loginPass').value;
+            try {
+                const res = await fetch('../api/auth.php?action=login', {
+                    method: 'POST', body: JSON.stringify({ username: u, password: p })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    unlockApp(); init();
+                    startSessionTimer();
+                } else {
+                    document.getElementById('loginError').classList.add('show');
+                }
+            } catch (e) { console.error(e); alert('Login failed. Check console.'); }
         }
-        function doLogout() { sessionStorage.removeItem('adminAuth'); location.reload(); }
+
+        async function doLogout() {
+            await fetch('../api/auth.php?action=logout');
+            location.reload();
+        }
+
+        async function checkSession() {
+            try {
+                const res = await fetch('../api/auth.php?action=check');
+                const data = await res.json();
+                if (data.success) {
+                    unlockApp(); init();
+                    startSessionTimer();
+                }
+            } catch (e) { console.log('Not logged in'); }
+        }
+
         function unlockApp() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('sidebarEl').style.display = '';
             document.getElementById('mainApp').classList.remove('locked');
         }
-        if (sessionStorage.getItem('adminAuth') === 'true') { unlockApp(); document.addEventListener('DOMContentLoaded', init); }
+
+        // Session Timeout Logic
+        let sessionTimer;
+        const TIMEOUT_DURATION = 20 * 60 * 1000; // 20 minutes
+
+        function startSessionTimer() {
+            resetSessionTimer();
+            window.addEventListener('mousemove', resetSessionTimer);
+            window.addEventListener('keydown', resetSessionTimer);
+            window.addEventListener('click', resetSessionTimer);
+        }
+
+        function resetSessionTimer() {
+            clearTimeout(sessionTimer);
+            sessionTimer = setTimeout(async () => {
+                alert('Session timed out due to inactivity.');
+                await doLogout();
+            }, TIMEOUT_DURATION);
+
+            // Optionally notify backend to keep session alive
+            // fetch('../api/auth.php?action=refresh'); 
+        }
+
+        document.addEventListener('DOMContentLoaded', checkSession);
 
         /* ═══════════════════════════════════════════
            IMAGE COMPRESSION
@@ -1409,6 +1458,7 @@
             });
         }
 
+        // Global variables for image upload handling
         let pendingProductImage = null;
         let pendingBlogImage = null;
 
@@ -1462,55 +1512,63 @@
         /* ═══════════════════════════════════════════
            DATA
            ═══════════════════════════════════════════ */
-        const BUILTIN_BRANDS = [
-            { key: 'evershine', label: 'Evershine', lsKey: 'adminProducts_evershine', detLs: 'adminDetails_evershine', builtin: true },
-            { key: 'sprayzet', label: 'SprayZet', lsKey: 'adminProducts_sprayzet', detLs: 'adminDetails_sprayzet', builtin: true },
-            { key: 'twin-tapes', label: 'Twin Tapes', lsKey: 'adminProducts_twin-tapes', detLs: 'adminDetails_twin-tapes', builtin: true },
-            { key: 'twinzy', label: 'Twinzy', lsKey: 'adminProducts_twinzy', detLs: 'adminDetails_twinzy', builtin: true }
-        ];
-        function getCustomBrands() {
-            try { return JSON.parse(localStorage.getItem('adminCustomBrands') || '[]'); } catch { return []; }
-        }
-        function saveCustomBrands(list) { localStorage.setItem('adminCustomBrands', JSON.stringify(list)); }
-        function getAllBrands() {
-            const custom = getCustomBrands().map(b => ({
-                key: b.key, label: b.label, lsKey: 'adminProducts_' + b.key, detLs: 'adminDetails_' + b.key, builtin: false
-            }));
-            return [...BUILTIN_BRANDS, ...custom];
-        }
-        let BRANDS = getAllBrands();
-        const DEFAULT_DATA = {};
-        let currentBrand = BRANDS[0], currentMode = 'products';
-        let currentData = {}, currentDetails = {};
+        /* ═══════════════════════════════════════════
+           DATA
+           ═══════════════════════════════════════════ */
+        // We now fetch everything from the backend
+        let BRANDS = ['evershine', 'sprayzet', 'twin-tapes', 'twinzy']; // Fixed brands for UI order if needed, or dynamic
+        // Actually, let's just use the data structure returned by the API
+
+        let currentBrand = 'evershine', currentMode = 'products';
+        let productsData = {}; // structure: { brand: { category: [items] } }
+        let detailsData = {}; // structure: { productName: { ... } }
+        let blogPosts = [];
+        let inquiriesData = [];
+
+        let currentData = []; // flattened list for current view
         let featuresTags = [], benefitsTags = [], searchQuery = '';
 
-        async function loadDefaultData() {
-            const files = { 'evershine': '../assets/car-care-logic.js', 'sprayzet': '../assets/product-logic.js', 'twin-tapes': '../assets/twin-tapes-logic.js', 'twinzy': '../assets/twinzy-logic.js' };
-            for (const [brand, file] of Object.entries(files)) {
-                try {
-                    const text = await (await fetch(file)).text();
-                    const m = text.match(/(?:const|let|var)\s+productsData\s*=\s*(\{[\s\S]*?\n\});/);
-                    if (m) try { DEFAULT_DATA[brand] = new Function('return ' + m[1])(); } catch (e) { DEFAULT_DATA[brand] = {}; }
-                } catch (e) { DEFAULT_DATA[brand] = {}; }
-            }
-            try { DEFAULT_DATA._details = await (await fetch('../assets/evershine-details.json')).json(); } catch (e) { DEFAULT_DATA._details = {}; }
-            try { DEFAULT_DATA._blogs = await loadDefaultBlogs(); } catch (e) { DEFAULT_DATA._blogs = []; }
-        }
-
-        async function loadDefaultBlogs() {
+        async function init() {
             try {
-                const resp = await fetch('../blog-data.js');
-                const text = await resp.text();
-                return new Function(text + '; return defaultBlogPosts;')();
-            } catch (e) { return []; }
+                const res = await fetch('../api/dashboard_data.php');
+                const data = await res.json();
+                if (!data.success) {
+                    if (data.message === 'Unauthorized') { doLogout(); return; }
+                    alert('Failed to load data: ' + data.message);
+                    return;
+                }
+
+                const d = data.data;
+                productsData = d.products;
+                detailsData = d.details;
+                blogPosts = d.blogs;
+                inquiriesData = d.inquiries;
+
+                // Dynamically build brands list from data keys + defaults
+                const dataBrands = Object.keys(productsData);
+                const allBrands = new Set([...BRANDS, ...dataBrands]);
+                BRANDS = Array.from(allBrands).map(b => ({
+                    key: b,
+                    label: b.charAt(0).toUpperCase() + b.slice(1).replace('-', ' '),
+                    builtin: ['evershine', 'sprayzet', 'twin-tapes', 'twinzy'].includes(b)
+                }));
+
+                // Set initial state
+                if (BRANDS.length > 0) currentBrand = BRANDS[0].key;
+
+                renderBrandList();
+                switchBrand(currentBrand); // Render initial view
+
+            } catch (e) {
+                console.error(e); alert('Error loading dashboard.');
+            }
         }
 
-        function getProductData(b) { const s = localStorage.getItem(b.lsKey); if (s) try { return JSON.parse(s) } catch { }; return JSON.parse(JSON.stringify(DEFAULT_DATA[b.key] || {})); }
-        function getProductDetails(b) { const s = localStorage.getItem(b.detLs); if (s) try { return JSON.parse(s) } catch { }; return JSON.parse(JSON.stringify(DEFAULT_DATA._details || {})); }
-        function saveProductData(b, d) { localStorage.setItem(b.lsKey, JSON.stringify(d)); }
-        function saveProductDetails(b, d) { localStorage.setItem(b.detLs, JSON.stringify(d)); }
-        function getBlogPosts() { const s = localStorage.getItem('adminBlogPosts'); if (s) try { return JSON.parse(s) } catch { }; return JSON.parse(JSON.stringify(DEFAULT_DATA._blogs || [])); }
-        function saveBlogPosts(p) { localStorage.setItem('adminBlogPosts', JSON.stringify(p)); }
+        // Helper to get current brand's data
+        function getCurrentBrandProducts() {
+            return productsData[currentBrand] || {};
+        }
+
 
         /* ═══════════════════════════════════════════
            UI
@@ -1531,12 +1589,16 @@
         }
 
         function switchBrand(key) {
-            currentBrand = BRANDS.find(b => b.key === key); currentMode = 'products';
-            currentData = getProductData(currentBrand); currentDetails = getProductDetails(currentBrand);
-            document.getElementById('currentTitle').textContent = currentBrand.label;
+            currentBrand = key;
+            currentMode = 'products';
+            currentData = productsData[currentBrand] || {};
+            // currentDetails is now looked up dynamically or we can set a reference
+            // But renderProducts uses `detailsData` directly or we might need to adjust it
+
+            document.getElementById('currentTitle').textContent = BRANDS.find(b => b.key === key)?.label || key;
             document.getElementById('addBtn').textContent = '+ Add Product';
             document.getElementById('addBtn').onclick = openAddProductModal;
-            document.getElementById('addBtn').style.display = ''; // Show add button
+            document.getElementById('addBtn').style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
             renderBrandList(); renderProducts();
         }
@@ -1546,9 +1608,17 @@
             document.getElementById('currentTitle').textContent = 'Blog Posts';
             document.getElementById('addBtn').textContent = '+ Add Post';
             document.getElementById('addBtn').onclick = openAddBlogModal;
-            document.getElementById('addBtn').style.display = ''; // Show add button
+            document.getElementById('addBtn').style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
             renderBrandList(); renderBlogPosts();
+        }
+
+        function switchToInquiries() {
+            currentMode = 'inquiries';
+            document.getElementById('currentTitle').textContent = 'Inquiries';
+            document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('searchInput').value = ''; searchQuery = '';
+            renderBrandList(); renderInquiries();
         }
 
         function renderProducts() {
@@ -1563,9 +1633,7 @@
                 total += prods.length;
                 html += `<div class="category-section"><div class="category-header"><h3>${cat} <span class="cat-count">(${prods.length})</span></h3></div><div class="products-grid-admin">`;
                 prods.forEach((p, i) => {
-                    let imgSrc;
-                    if (p.imageData) imgSrc = p.imageData;
-                    else { const enc = p.imagePath.split('/').map(s => encodeURIComponent(s)).join('/'); imgSrc = '../' + enc; }
+                    let imgSrc = p.imageData || p.imagePath; // Support both
                     html += `<div class="product-card-admin">
         <img class="card-img" src="${imgSrc}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
         <div class="card-body"><div class="card-name" title="${p.name}">${p.name}</div><div class="card-category">${cat}</div></div>
@@ -1580,7 +1648,7 @@
 
         function renderBlogPosts() {
             const c = document.getElementById('mainContent');
-            let posts = getBlogPosts();
+            let posts = blogPosts;
             if (searchQuery) posts = posts.filter(p => p.title.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery));
             document.getElementById('countBadge').textContent = posts.length + ' post' + (posts.length !== 1 ? 's' : '');
             if (!posts.length) { c.innerHTML = '<div class="empty-state"><div class="icon">📝</div><h3>No blog posts</h3><p>Create your first post to get started.</p></div>'; return; }
@@ -1634,7 +1702,7 @@
             pendingProductImage = p.imageData || null;
             if (pendingProductImage) { document.getElementById('prodPreviewImg').src = pendingProductImage; document.getElementById('prodImagePreview').style.display = 'inline-block'; document.getElementById('prodUploadZone').style.display = 'none'; }
             else { document.getElementById('prodImagePreview').style.display = 'none'; document.getElementById('prodUploadZone').style.display = ''; }
-            const det = currentDetails[p.name] || currentDetails['default'] || {};
+            const det = detailsData[p.name] || {};
             document.getElementById('prodDescription').value = det.description || '';
             document.getElementById('prodPackSize').value = det.packSize || '';
             document.getElementById('prodForm').value = det.form || '';
@@ -1672,39 +1740,78 @@
             document.getElementById('tableDataRows').appendChild(r);
         }
 
-        function saveProduct() {
-            const name = document.getElementById('prodName').value.trim(), category = document.getElementById('prodCategory').value.trim(), imagePath = document.getElementById('prodImagePath').value.trim();
+        async function saveProduct() {
+            const name = document.getElementById('prodName').value.trim();
+            const category = document.getElementById('prodCategory').value.trim();
+            const imagePath = document.getElementById('prodImagePath').value.trim();
             if (!name || !category) { showToast('Please fill in Product Name and Category.', 'error'); return; }
-            const ev = document.getElementById('editIndex').value, isEdit = ev !== '-1';
-            const product = { name, imagePath: imagePath || '', category };
-            if (pendingProductImage) product.imageData = pendingProductImage;
-            if (isEdit) {
-                const { cat: oldCat, index } = JSON.parse(ev);
-                if (oldCat !== category) { currentData[oldCat].splice(index, 1); if (!currentData[oldCat].length) delete currentData[oldCat]; if (!currentData[category]) currentData[category] = []; currentData[category].push(product); }
-                else currentData[category][index] = product;
-            } else { if (!currentData[category]) currentData[category] = []; currentData[category].push(product); }
-            // Details
-            const desc = document.getElementById('prodDescription').value.trim(), ps = document.getElementById('prodPackSize').value.trim(), fm = document.getElementById('prodForm').value.trim(), av = document.getElementById('prodAvailability').value;
+
+            const ev = document.getElementById('editIndex').value;
+            const isEdit = ev !== '-1';
+
+            // Collect details
+            const desc = document.getElementById('prodDescription').value.trim();
+            const ps = document.getElementById('prodPackSize').value.trim();
+            const fm = document.getElementById('prodForm').value.trim();
+            const av = document.getElementById('prodAvailability').value;
             const td = {}; document.querySelectorAll('#tableDataRows .table-data-row').forEach(r => { const ins = r.querySelectorAll('input'); const k = ins[0].value.trim(), v = ins[1].value.trim(); if (k) td[k] = v; });
-            if (desc || ps || fm || featuresTags.length || benefitsTags.length || Object.keys(td).length) {
-                currentDetails[name] = { description: desc || 'Professional quality product.', availability: av, tableData: Object.keys(td).length ? td : undefined, features: featuresTags.length ? [...featuresTags] : undefined, benefits: benefitsTags.length ? [...benefitsTags] : undefined, packSize: ps || 'Various', form: fm || 'Standard' };
+
+            const details = { description: desc || 'Professional quality product.', availability: av, tableData: Object.keys(td).length ? td : undefined, features: featuresTags.length ? [...featuresTags] : undefined, benefits: benefitsTags.length ? [...benefitsTags] : undefined, packSize: ps || 'Various', form: fm || 'Standard' };
+
+            let productId = 0;
+            if (isEdit) {
+                const { cat, index } = JSON.parse(ev);
+                productId = currentData[cat][index].id;
             }
-            saveProductData(currentBrand, currentData); saveProductDetails(currentBrand, currentDetails);
-            closeModal('productModal'); renderProducts(); showToast(isEdit ? 'Product updated!' : 'Product added!', 'success');
+
+            const payload = {
+                action: isEdit ? 'edit' : 'add',
+                id: productId,
+                brand: currentBrand,
+                category,
+                name,
+                imagePath,
+                imageData: pendingProductImage,
+                description: desc,
+                details: details
+            };
+
+            try {
+                const res = await fetch('../api/products.php', { method: 'POST', body: JSON.stringify(payload) });
+                const data = await res.json();
+                if (data.success) {
+                    closeModal('productModal');
+                    await init(); // Refresh all data
+                    showToast('Product saved!', 'success');
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); }
         }
 
         function confirmDeleteProduct(encCat, index) {
             const cat = decodeURIComponent(encCat), p = currentData[cat][index];
             document.getElementById('confirmTitle').textContent = 'Delete Product';
             document.getElementById('confirmMessage').textContent = `Delete "${p.name}"? This cannot be undone.`;
-            document.getElementById('confirmDeleteBtn').onclick = () => { deleteProduct(cat, index); };
+            document.getElementById('confirmDeleteBtn').onclick = () => { deleteProduct(p.id); };
             openModal('confirmModal');
         }
-        function deleteProduct(cat, index) {
-            const p = currentData[cat][index]; if (currentDetails[p.name]) delete currentDetails[p.name];
-            currentData[cat].splice(index, 1); if (!currentData[cat].length) delete currentData[cat];
-            saveProductData(currentBrand, currentData); saveProductDetails(currentBrand, currentDetails);
-            closeModal('confirmModal'); renderProducts(); showToast('Product deleted.', 'info');
+
+        async function deleteProduct(id) {
+            try {
+                const res = await fetch('../api/products.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'delete', id: id })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    closeModal('confirmModal');
+                    await init();
+                    showToast('Product deleted.', 'info');
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); }
         }
 
         /* ═══════════════════════════════════════════
@@ -1739,30 +1846,57 @@
             pendingBlogImage = null; removeBlogImage();
         }
 
-        function saveBlogPost() {
+        async function saveBlogPost() {
             const title = document.getElementById('blogTitle').value.trim();
             if (!title) { showToast('Please enter a post title.', 'error'); return; }
+
+            const idx = parseInt(document.getElementById('blogEditIndex').value);
+            const isEdit = idx >= 0;
+            const id = isEdit ? blogPosts[idx].id : null;
+
             const post = {
-                id: 'post-' + Date.now(),
+                action: 'save',
+                id: id,
                 title,
                 category: document.getElementById('blogCategory').value.trim() || 'Uncategorized',
                 date: document.getElementById('blogDate').value,
                 image: document.getElementById('blogImageUrl').value.trim(),
+                imageData: pendingBlogImage,
                 excerpt: document.getElementById('blogExcerpt').value.trim(),
                 content: document.getElementById('blogContent').value.trim()
             };
-            if (pendingBlogImage) post.imageData = pendingBlogImage;
-            const posts = getBlogPosts(), idx = parseInt(document.getElementById('blogEditIndex').value);
-            if (idx >= 0) posts[idx] = post; else posts.unshift(post);
-            saveBlogPosts(posts); closeModal('blogModal'); renderBlogPosts();
-            showToast(idx >= 0 ? 'Post updated!' : 'Post published!', 'success');
+
+            try {
+                const res = await fetch('../api/manage_content.php?type=blog', { method: 'POST', body: JSON.stringify(post) });
+                const data = await res.json();
+                if (data.success) {
+                    closeModal('blogModal');
+                    await init();
+                    showToast('Post saved!', 'success');
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); }
         }
 
         function confirmDeleteBlog(index) {
-            const posts = getBlogPosts(), p = posts[index];
+            const p = blogPosts[index];
             document.getElementById('confirmTitle').textContent = 'Delete Blog Post';
             document.getElementById('confirmMessage').textContent = `Delete "${p.title}"? This cannot be undone.`;
-            document.getElementById('confirmDeleteBtn').onclick = () => { posts.splice(index, 1); saveBlogPosts(posts); closeModal('confirmModal'); renderBlogPosts(); showToast('Post deleted.', 'info'); };
+            document.getElementById('confirmDeleteBtn').onclick = async () => {
+                try {
+                    const res = await fetch('../api/manage_content.php?type=blog', {
+                        method: 'POST',
+                        body: JSON.stringify({ action: 'delete', id: p.id })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        closeModal('confirmModal');
+                        await init();
+                        showToast('Post deleted.', 'info');
+                    }
+                } catch (e) { console.error(e); showToast('Error deleting', 'error'); }
+            };
             openModal('confirmModal');
         }
 
@@ -1784,7 +1918,7 @@
 
         function renderInquiries() {
             const c = document.getElementById('mainContent');
-            let data = getInquiries();
+            let data = inquiriesData;
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
                 data = data.filter(d =>
@@ -1822,15 +1956,22 @@
         }
 
         function confirmDeleteInquiry(index) {
+            const item = inquiriesData[index];
             document.getElementById('confirmTitle').textContent = 'Delete Inquiry';
             document.getElementById('confirmMessage').textContent = `Delete this inquiry? This cannot be undone.`;
-            document.getElementById('confirmDeleteBtn').onclick = () => {
-                const data = getInquiries();
-                data.splice(index, 1);
-                saveInquiries(data);
-                closeModal('confirmModal');
-                renderInquiries();
-                showToast('Inquiry deleted.', 'info');
+            document.getElementById('confirmDeleteBtn').onclick = async () => {
+                try {
+                    const res = await fetch('../api/manage_content.php?type=inquiry', {
+                        method: 'POST',
+                        body: JSON.stringify({ action: 'delete', id: item.id })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        closeModal('confirmModal');
+                        await init();
+                        showToast('Inquiry deleted.', 'info');
+                    }
+                } catch (e) { console.error(e); showToast('Error deleting', 'error'); }
             };
             openModal('confirmModal');
         }
@@ -1840,10 +1981,20 @@
            ═══════════════════════════════════════════ */
         function exportAllData() {
             const ex = {};
-            BRANDS.forEach(b => { ex[b.key] = { products: getProductData(b), details: getProductDetails(b) }; });
-            ex.blogPosts = getBlogPosts();
-            ex.inquiries = getInquiries();
-            const blob = new Blob([JSON.stringify(ex, null, 2)], { type: 'application/json' });
+            // Reconstruct export structure from API data
+            for (const b of BRANDS) {
+                ex[b.key] = { products: productsData[b.key] || [], details: {} };
+            }
+            // Add details back if needed, but the structure is slightly different now.
+            // Simplified export:
+            const exportData = {
+                products: productsData,
+                details: detailsData,
+                blogPosts: blogPosts,
+                inquiries: inquiriesData
+            };
+
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
             a.download = 'twin-tech-export-' + new Date().toISOString().split('T')[0] + '.json'; a.click();
             showToast('Data exported!', 'success');
@@ -1885,38 +2036,31 @@
             const name = document.getElementById('newBrandName').value.trim();
             const key = document.getElementById('newBrandKey').value.trim();
             if (!name || !key) { showToast('Please enter a brand name.', 'error'); return; }
-            // Check for duplicates
             if (BRANDS.find(b => b.key === key)) { showToast('A brand with this key already exists.', 'error'); return; }
-            // Save
-            const customs = getCustomBrands();
-            customs.push({ key, label: name });
-            saveCustomBrands(customs);
-            // Initialize empty product data
-            localStorage.setItem('adminProducts_' + key, JSON.stringify({}));
-            localStorage.setItem('adminDetails_' + key, JSON.stringify({}));
-            // Refresh brands list
-            BRANDS = getAllBrands();
+
+            // Add to local list temporarily (will persist when product added)
+            BRANDS.push({ key, label: name, builtin: false });
+            productsData[key] = {}; // Initialize empty data
+
             closeModal('brandModal');
             switchBrand(key);
-            showToast('Brand "' + name + '" created! View the page at brand/index.html?brand=' + key, 'success');
+            showToast('Brand "' + name + '" created! Add a product to save it permanently.', 'success');
         }
 
         function deleteCustomBrand(key) {
-            const customs = getCustomBrands();
-            const brand = customs.find(b => b.key === key);
-            if (!brand) return;
+            // Since we don't have a brands table, deleting a brand means deleting all its products?
+            // Or just removing it from view if empty.
+            // If it has products, we should probably warn or delete them.
+            // For now, let's just remove it from the list locally and warn user.
+
             document.getElementById('confirmTitle').textContent = 'Delete Brand';
-            document.getElementById('confirmMessage').textContent = `Delete "${brand.label}" and all its products? This cannot be undone.`;
+            document.getElementById('confirmMessage').textContent = `Delete brand "${key}"? Products will be hidden until re-added.`;
             document.getElementById('confirmDeleteBtn').onclick = () => {
-                const updated = customs.filter(b => b.key !== key);
-                saveCustomBrands(updated);
-                localStorage.removeItem('adminProducts_' + key);
-                localStorage.removeItem('adminDetails_' + key);
-                BRANDS = getAllBrands();
+                BRANDS = BRANDS.filter(b => b.key !== key);
                 closeModal('confirmModal');
-                if (currentBrand.key === key) switchBrand(BRANDS[0].key);
-                else { renderBrandList(); }
-                showToast('Brand deleted.', 'info');
+                if (currentBrand === key) switchBrand(BRANDS[0].key);
+                else renderBrandList();
+                showToast('Brand removed from view.', 'info');
             };
             openModal('confirmModal');
         }
