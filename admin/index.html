@@ -1072,6 +1072,82 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--text-muted)
         }
+
+        /* ── INQUIRIES TABLE ── */
+        .inquiries-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: .75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .inquiries-table th,
+        .inquiries-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .inquiries-table th {
+            background: var(--bg-input);
+            font-weight: 600;
+            font-size: .8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .inquiries-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .inquiries-table tr:hover {
+            background: #fafafa;
+        }
+
+        .inq-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .inq-type {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: #eee;
+            color: #555;
+        }
+
+        .inq-type.Contact {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .inq-type.Distributor {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .inq-type.Career {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .inq-details {
+            font-size: 0.9rem;
+        }
+
+        .inq-details div {
+            margin-bottom: 0.2rem;
+        }
+
+        .inq-details strong {
+            font-weight: 600;
+            color: var(--text-light);
+        }
     </style>
 </head>
 
@@ -1111,6 +1187,8 @@
             <div id="brandItems"></div>
             <div class="nav-section-label" style="margin-top:.75rem">Content</div>
             <div class="brand-item" id="blogNavItem" onclick="switchToBlogs()"><span class="dot"></span>Blog Posts</div>
+            <div class="brand-item" id="inquiriesNavItem" onclick="switchToInquiries()"><span
+                    class="dot"></span>Inquiries</div>
         </div>
         <div class="sidebar-footer">
             <button class="export-btn" onclick="exportAllData()">⬇ Export All Data</button>
@@ -1458,6 +1536,7 @@
             document.getElementById('currentTitle').textContent = currentBrand.label;
             document.getElementById('addBtn').textContent = '+ Add Product';
             document.getElementById('addBtn').onclick = openAddProductModal;
+            document.getElementById('addBtn').style.display = ''; // Show add button
             document.getElementById('searchInput').value = ''; searchQuery = '';
             renderBrandList(); renderProducts();
         }
@@ -1467,6 +1546,7 @@
             document.getElementById('currentTitle').textContent = 'Blog Posts';
             document.getElementById('addBtn').textContent = '+ Add Post';
             document.getElementById('addBtn').onclick = openAddBlogModal;
+            document.getElementById('addBtn').style.display = ''; // Show add button
             document.getElementById('searchInput').value = ''; searchQuery = '';
             renderBrandList(); renderBlogPosts();
         }
@@ -1521,7 +1601,9 @@
 
         function doSearch() {
             searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-            if (currentMode === 'products') renderProducts(); else renderBlogPosts();
+            if (currentMode === 'products') renderProducts();
+            else if (currentMode === 'blogs') renderBlogPosts();
+            else if (currentMode === 'inquiries') renderInquiries();
         }
 
         /* ═══════════════════════════════════════════
@@ -1685,12 +1767,82 @@
         }
 
         /* ═══════════════════════════════════════════
+           INQUIRIES
+           ═══════════════════════════════════════════ */
+        function getInquiries() {
+            try { return JSON.parse(localStorage.getItem('adminInquiries') || '[]'); } catch { return []; }
+        }
+        function saveInquiries(data) { localStorage.setItem('adminInquiries', JSON.stringify(data)); }
+
+        function switchToInquiries() {
+            currentMode = 'inquiries';
+            document.getElementById('currentTitle').textContent = 'Inquiries';
+            document.getElementById('addBtn').style.display = 'none'; // Hide add button
+            document.getElementById('searchInput').value = ''; searchQuery = '';
+            renderBrandList(); renderInquiries();
+        }
+
+        function renderInquiries() {
+            const c = document.getElementById('mainContent');
+            let data = getInquiries();
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                data = data.filter(d =>
+                    d.type.toLowerCase().includes(q) ||
+                    JSON.stringify(d.data).toLowerCase().includes(q) ||
+                    (d.date && d.date.toLowerCase().includes(q))
+                );
+            }
+            document.getElementById('countBadge').textContent = data.length + ' inquiries';
+
+            if (!data.length) {
+                c.innerHTML = '<div class="empty-state"><div class="icon">📨</div><h3>No inquiries</h3><p>Messages from contact forms will appear here.</p></div>';
+                return;
+            }
+
+            let html = '<table class="inquiries-table"><thead><tr><th style="width:140px">Date / Type</th><th>Details</th><th style="width:80px">Action</th></tr></thead><tbody>';
+            data.forEach((item, index) => {
+                let details = '';
+                for (const [key, val] of Object.entries(item.data)) {
+                    details += `<div><strong>${key}:</strong> ${val}</div>`;
+                }
+                html += `<tr>
+                    <td style="vertical-align:top">
+                        <div class="inq-date">${item.date}</div>
+                        <div style="margin-top:0.3rem"><span class="inq-type ${item.type}">${item.type}</span></div>
+                    </td>
+                    <td class="inq-details" style="vertical-align:top">${details}</td>
+                    <td style="vertical-align:top;text-align:right">
+                        <button class="btn btn-danger btn-sm" onclick="confirmDeleteInquiry(${index})" title="Delete">🗑</button>
+                    </td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            c.innerHTML = html;
+        }
+
+        function confirmDeleteInquiry(index) {
+            document.getElementById('confirmTitle').textContent = 'Delete Inquiry';
+            document.getElementById('confirmMessage').textContent = `Delete this inquiry? This cannot be undone.`;
+            document.getElementById('confirmDeleteBtn').onclick = () => {
+                const data = getInquiries();
+                data.splice(index, 1);
+                saveInquiries(data);
+                closeModal('confirmModal');
+                renderInquiries();
+                showToast('Inquiry deleted.', 'info');
+            };
+            openModal('confirmModal');
+        }
+
+        /* ═══════════════════════════════════════════
            EXPORT
            ═══════════════════════════════════════════ */
         function exportAllData() {
             const ex = {};
             BRANDS.forEach(b => { ex[b.key] = { products: getProductData(b), details: getProductDetails(b) }; });
             ex.blogPosts = getBlogPosts();
+            ex.inquiries = getInquiries();
             const blob = new Blob([JSON.stringify(ex, null, 2)], { type: 'application/json' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
             a.download = 'twin-tech-export-' + new Date().toISOString().split('T')[0] + '.json'; a.click();
