@@ -1148,6 +1148,61 @@
             font-weight: 600;
             color: var(--text-light);
         }
+
+        .inq-details-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .inq-primary {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.35rem;
+        }
+
+        .inq-row {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 0.5rem;
+        }
+
+        .inq-k {
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .inq-v {
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .inq-extra {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .inq-chip {
+            display: inline-flex;
+            gap: 0.4rem;
+            align-items: baseline;
+            padding: 0.35rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+        }
+
+        .inq-chip-k {
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: capitalize;
+        }
+
+        .inq-chip-v {
+            color: var(--text);
+            word-break: break-word;
+        }
     </style>
 </head>
 
@@ -1530,6 +1585,19 @@
         let currentData = []; // flattened list for current view
         let featuresTags = [], benefitsTags = [], searchQuery = '';
 
+        let initInFlight = null;
+
+        async function fetchJsonSafe(url, options = {}) {
+            const res = await fetch(url, { cache: 'no-store', ...options });
+            const text = await res.text();
+            try {
+                return { ok: res.ok, status: res.status, json: JSON.parse(text) };
+            } catch (e) {
+                const preview = text ? text.slice(0, 300) : '';
+                throw new Error(`Invalid JSON from ${url} (HTTP ${res.status}). ${preview}`);
+            }
+        }
+
         function getBrandLabel(brandKey) {
             const found = Array.isArray(BRANDS) ? BRANDS.find(b => (typeof b === 'object' ? b.key : b) === brandKey) : null;
             if (found && typeof found === 'object') return found.label || brandKey;
@@ -1550,12 +1618,14 @@
         }
 
         async function init() {
-            try {
-                const res = await fetch('../api/dashboard_data.php', { cache: 'no-store' });
-                const data = await res.json();
+            if (initInFlight)
+                return initInFlight;
+
+            initInFlight = (async () => {
+                const { json: data } = await fetchJsonSafe('../api/dashboard_data.php');
                 if (!data.success) {
                     if (data.message === 'Unauthorized') { doLogout(); return; }
-                    alert('Failed to load data: ' + data.message);
+                    showToast('Failed to load data: ' + (data.message || 'Unknown error'), 'error');
                     return;
                 }
 
@@ -1580,9 +1650,14 @@
                 renderBrandList();
                 switchBrand(currentBrand); // Render initial view
 
-            } catch (e) {
-                console.error(e); alert('Error loading dashboard.');
-            }
+            })().catch(e => {
+                console.error(e);
+                showToast('Error loading dashboard. Open console for details.', 'error');
+            }).finally(() => {
+                initInFlight = null;
+            });
+
+            return initInFlight;
         }
 
         // Helper to get current brand's data
@@ -1958,16 +2033,38 @@
                 return;
             }
 
-            let html = '<table class="inquiries-table"><thead><tr><th style="width:140px">Date / Type</th><th>Details</th><th style="width:80px">Action</th></tr></thead><tbody>';
+            let html = '<table class="inquiries-table"><thead><tr><th style="width:160px">Date / Type</th><th>Details</th><th style="width:80px">Action</th></tr></thead><tbody>';
             data.forEach((item, index) => {
-                let details = '';
-                for (const [key, val] of Object.entries(item.data)) {
-                    details += `<div><strong>${key}:</strong> ${val}</div>`;
+                const d = item.data || {};
+                const name = d.name || '';
+                const email = d.email || '';
+                const phone = d.phone || '';
+
+                const extraEntries = Object.entries(d).filter(([k, v]) => !['name', 'email', 'phone'].includes(k) && v !== null && v !== undefined && String(v).trim() !== '');
+
+                let details = '<div class="inq-details-wrap">';
+                details += '<div class="inq-primary">';
+                if (name) details += `<div class="inq-row"><span class="inq-k">Name</span><span class="inq-v">${name}</span></div>`;
+                if (email) details += `<div class="inq-row"><span class="inq-k">Email</span><span class="inq-v">${email}</span></div>`;
+                if (phone) details += `<div class="inq-row"><span class="inq-k">Phone</span><span class="inq-v">${phone}</span></div>`;
+                details += '</div>';
+
+                if (extraEntries.length) {
+                    details += '<div class="inq-extra">';
+                    extraEntries.forEach(([key, val]) => {
+                        const k = String(key).replace(/_/g, ' ');
+                        details += `<div class="inq-chip"><span class="inq-chip-k">${k}</span><span class="inq-chip-v">${val}</span></div>`;
+                    });
+                    details += '</div>';
                 }
+
+                details += '</div>';
+
+                const typeClass = String(item.type || 'Other').replace(/[^A-Za-z0-9_-]/g, '');
                 html += `<tr>
                     <td style="vertical-align:top">
                         <div class="inq-date">${item.date}</div>
-                        <div style="margin-top:0.3rem"><span class="inq-type ${item.type}">${item.type}</span></div>
+                        <div style="margin-top:0.3rem"><span class="inq-type ${typeClass}">${item.type}</span></div>
                     </td>
                     <td class="inq-details" style="vertical-align:top">${details}</td>
                     <td style="vertical-align:top;text-align:right">
