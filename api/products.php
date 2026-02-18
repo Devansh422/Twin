@@ -49,8 +49,6 @@ if ($method === 'POST') {
     $brand = $input['brand'] ?? '';
     $category = $input['category'] ?? '';
     $name = $input['name'] ?? '';
-    if (!$brand || !$category || !$name)
-        sendResponse(false, 'Missing required fields');
 
     $desc = $input['description'] ?? '';
     $details = json_encode($input['details'] ?? []);
@@ -58,16 +56,22 @@ if ($method === 'POST') {
     $imgData = $input['imageData'] ?? null;
 
     if ($action === 'add') {
+        if (!$brand || !$category || !$name)
+            sendResponse(false, 'Missing required fields');
         $stmt = $pdo->prepare("INSERT INTO products (brand, category, name, image_path, image_data, description, details) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$brand, $category, $name, $imgPath, $imgData, $desc, $details]);
         sendResponse(true, 'Product added');
     } elseif ($action === 'edit') {
+        if (!$brand || !$category || !$name)
+            sendResponse(false, 'Missing required fields');
         $id = $input['id'] ?? 0;
         $stmt = $pdo->prepare("UPDATE products SET brand=?, category=?, name=?, image_path=?, image_data=?, description=?, details=? WHERE id=?");
         $stmt->execute([$brand, $category, $name, $imgPath, $imgData, $desc, $details, $id]);
         sendResponse(true, 'Product updated');
     } elseif ($action === 'delete') {
         $id = $input['id'] ?? 0;
+        if (!$id)
+            sendResponse(false, 'Missing id');
         $stmt = $pdo->prepare("DELETE FROM products WHERE id=?");
         $stmt->execute([$id]);
         sendResponse(true, 'Product deleted');

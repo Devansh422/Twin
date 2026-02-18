@@ -1373,7 +1373,9 @@
             const p = document.getElementById('loginPass').value;
             try {
                 const res = await fetch('../api/auth.php?action=login', {
-                    method: 'POST', body: JSON.stringify({ username: u, password: p })
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: u, password: p })
                 });
                 const data = await res.json();
                 if (data.success) {
@@ -1528,9 +1530,28 @@
         let currentData = []; // flattened list for current view
         let featuresTags = [], benefitsTags = [], searchQuery = '';
 
+        function getBrandLabel(brandKey) {
+            const found = Array.isArray(BRANDS) ? BRANDS.find(b => (typeof b === 'object' ? b.key : b) === brandKey) : null;
+            if (found && typeof found === 'object') return found.label || brandKey;
+            return String(brandKey || '');
+        }
+
+        function resolveAdminImageSrc(imagePath, imageData) {
+            if (imageData) return imageData;
+            if (!imagePath) return '';
+            let p = String(imagePath).trim();
+            if (!p) return '';
+            if (p.startsWith('data:') || /^https?:\/\//i.test(p) || p.startsWith('/')) return p;
+            p = p.replace(/\\/g, '/');
+            if (p.startsWith('../')) p = p.slice(3);
+            if (p.startsWith('./')) p = p.slice(2);
+            const encoded = p.split('/').map(encodeURIComponent).join('/');
+            return '../' + encoded;
+        }
+
         async function init() {
             try {
-                const res = await fetch('../api/dashboard_data.php');
+                const res = await fetch('../api/dashboard_data.php', { cache: 'no-store' });
                 const data = await res.json();
                 if (!data.success) {
                     if (data.message === 'Unauthorized') { doLogout(); return; }
@@ -1576,7 +1597,7 @@
         function renderBrandList() {
             let html = '';
             BRANDS.forEach(b => {
-                const isActive = currentMode === 'products' && b.key === currentBrand.key;
+                const isActive = currentMode === 'products' && b.key === currentBrand;
                 html += `<div class="brand-item ${isActive ? 'active' : ''}" onclick="switchBrand('${b.key}')" style="position:relative"><span class="dot"></span>${b.label}`;
                 if (!b.builtin) {
                     html += `<a href="../brand/index.html?brand=${b.key}" target="_blank" onclick="event.stopPropagation()" style="margin-left:auto;font-size:.6rem;color:var(--color);text-decoration:none" title="View page">↗</a>`;
@@ -1633,7 +1654,7 @@
                 total += prods.length;
                 html += `<div class="category-section"><div class="category-header"><h3>${cat} <span class="cat-count">(${prods.length})</span></h3></div><div class="products-grid-admin">`;
                 prods.forEach((p, i) => {
-                    let imgSrc = p.imageData || p.imagePath; // Support both
+                    let imgSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
                     html += `<div class="product-card-admin">
         <img class="card-img" src="${imgSrc}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
         <div class="card-body"><div class="card-name" title="${p.name}">${p.name}</div><div class="card-category">${cat}</div></div>
@@ -1687,7 +1708,7 @@
             document.getElementById('editIndex').value = '-1';
             clearProductForm(); populateCategoryList();
             document.getElementById('tableDataRows').innerHTML = '';
-            addTableRow('Brand', currentBrand.label); addTableRow('Packing Type', ''); addTableRow('Packaging', ''); addTableRow('Packaging Size', '');
+            addTableRow('Brand', getBrandLabel(currentBrand)); addTableRow('Packing Type', ''); addTableRow('Packaging', ''); addTableRow('Packaging Size', '');
             openModal('productModal');
         }
 
@@ -1700,7 +1721,8 @@
             document.getElementById('prodImagePath').value = p.imagePath || '';
             // Image preview
             pendingProductImage = p.imageData || null;
-            if (pendingProductImage) { document.getElementById('prodPreviewImg').src = pendingProductImage; document.getElementById('prodImagePreview').style.display = 'inline-block'; document.getElementById('prodUploadZone').style.display = 'none'; }
+            const previewSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
+            if (previewSrc) { document.getElementById('prodPreviewImg').src = previewSrc; document.getElementById('prodImagePreview').style.display = 'inline-block'; document.getElementById('prodUploadZone').style.display = 'none'; }
             else { document.getElementById('prodImagePreview').style.display = 'none'; document.getElementById('prodUploadZone').style.display = ''; }
             const det = detailsData[p.name] || {};
             document.getElementById('prodDescription').value = det.description || '';
@@ -1709,7 +1731,7 @@
             document.getElementById('prodAvailability').value = det.availability || 'In stock';
             const tr = document.getElementById('tableDataRows'); tr.innerHTML = '';
             if (det.tableData) Object.entries(det.tableData).forEach(([k, v]) => addTableRow(k, v));
-            else { addTableRow('Brand', currentBrand.label); addTableRow('Packing Type', ''); addTableRow('Packaging', ''); addTableRow('Packaging Size', ''); }
+            else { addTableRow('Brand', getBrandLabel(currentBrand)); addTableRow('Packing Type', ''); addTableRow('Packaging', ''); addTableRow('Packaging Size', ''); }
             featuresTags = det.features ? [...det.features] : []; benefitsTags = det.benefits ? [...det.benefits] : [];
             renderTags('features'); renderTags('benefits');
             populateCategoryList(); openModal('productModal');
@@ -1777,7 +1799,7 @@
             };
 
             try {
-                const res = await fetch('../api/products.php', { method: 'POST', body: JSON.stringify(payload) });
+                const res = await fetch('../api/products.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await res.json();
                 if (data.success) {
                     closeModal('productModal');
@@ -1801,6 +1823,7 @@
             try {
                 const res = await fetch('../api/products.php', {
                     method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'delete', id: id })
                 });
                 const data = await res.json();
@@ -1826,7 +1849,7 @@
         }
 
         function openEditBlogModal(index) {
-            const posts = getBlogPosts(), p = posts[index]; if (!p) return;
+            const p = blogPosts[index]; if (!p) return;
             document.getElementById('bModalTitle').textContent = 'Edit Blog Post';
             document.getElementById('blogEditIndex').value = String(index);
             document.getElementById('blogTitle').value = p.title || '';
@@ -1867,7 +1890,7 @@
             };
 
             try {
-                const res = await fetch('../api/manage_content.php?type=blog', { method: 'POST', body: JSON.stringify(post) });
+                const res = await fetch('../api/manage_content.php?type=blog', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(post) });
                 const data = await res.json();
                 if (data.success) {
                     closeModal('blogModal');
@@ -1887,6 +1910,7 @@
                 try {
                     const res = await fetch('../api/manage_content.php?type=blog', {
                         method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'delete', id: p.id })
                     });
                     const data = await res.json();
@@ -1963,6 +1987,7 @@
                 try {
                     const res = await fetch('../api/manage_content.php?type=inquiry', {
                         method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'delete', id: item.id })
                     });
                     const data = await res.json();
