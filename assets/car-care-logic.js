@@ -196,33 +196,44 @@ let productsData = {
     ]
 };
 
-// Admin panel localStorage override
-(function () {
-    try {
-        const saved = localStorage.getItem('adminProducts_evershine');
-        if (saved) productsData = JSON.parse(saved);
-    } catch (e) { }
-})();
+// Admin panel localStorage override REMOVED - using API source of truth
+// (function () { ... })();
 
 // allProducts will be rebuilt inside initDynamicProducts
 let allProducts = [];
 
 let productDetails = {};
 
+// Replaced localStorage/static logic with API fetch
 async function fetchProductDetails() {
-    // Check localStorage first (admin panel)
     try {
-        const savedDetails = localStorage.getItem('adminDetails_evershine');
-        if (savedDetails) {
-            productDetails = JSON.parse(savedDetails);
-            return;
+        // 1. Fetch Products from DB
+        const response = await fetch('../api/products.php?brand=evershine');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+            productsData = result.data;
+            // Build productDetails from DB details
+            Object.values(result.data).forEach(products => {
+                products.forEach(p => {
+                    if (p.details) {
+                        productDetails[p.name] = { ...p.details, description: p.details.description || p.description };
+                    }
+                });
+            });
+        } else {
+            console.error('API Error:', result.message);
         }
-    } catch (e) { }
-    try {
-        const response = await fetch('../assets/evershine-details.json');
-        productDetails = await response.json();
+
+        // Fallback: load static details for products not yet in DB
+        const detailsResp = await fetch('../assets/evershine-details.json');
+        const staticDetails = await detailsResp.json();
+        Object.keys(staticDetails).forEach(key => {
+            if (!productDetails[key]) productDetails[key] = staticDetails[key];
+        });
+
     } catch (error) {
-        console.error('Error loading product details:', error);
+        console.error('Error loading data:', error);
     }
 }
 

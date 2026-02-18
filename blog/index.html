@@ -127,17 +127,24 @@
     <script src="../blog-data.js"></script>
     <script>
         (function () {
-            function getBlogPosts() {
+            async function getBlogPosts() {
+                // Try fetching from database API first
                 try {
-                    const saved = localStorage.getItem('adminBlogPosts');
-                    if (saved) return JSON.parse(saved);
-                } catch (e) { }
+                    const res = await fetch('../api/blogs.php');
+                    const data = await res.json();
+                    if (data.success && data.data && data.data.length > 0) {
+                        return data.data;
+                    }
+                } catch (e) {
+                    console.error('Error fetching blogs from API:', e);
+                }
+                // Fallback to static default data
                 return typeof defaultBlogPosts !== 'undefined' ? defaultBlogPosts : [];
             }
 
-            function renderBlogGrid() {
+            async function renderBlogGrid() {
                 const grid = document.getElementById('blogGrid');
-                const posts = getBlogPosts();
+                const posts = await getBlogPosts();
                 if (!posts.length) {
                     grid.innerHTML = '<p style="text-align:center;color:#888;padding:4rem 0;">No blog posts yet.</p>';
                     return;

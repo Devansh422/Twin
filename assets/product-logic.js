@@ -238,34 +238,37 @@ let productsData = {
     ]
 };
 
-// Admin panel localStorage override
-(function () {
-    try {
-        const saved = localStorage.getItem('adminProducts_sprayzet');
-        if (saved) productsData = JSON.parse(saved);
-    } catch (e) { }
-})();
-
 // allProducts will be rebuilt inside initDynamicProducts
 let allProducts = [];
 
 let productDetails = {};
 
 async function fetchProductDetails() {
-    // Check localStorage first (admin panel)
     try {
-        const savedDetails = localStorage.getItem('adminDetails_sprayzet');
-        if (savedDetails) {
-            productDetails = JSON.parse(savedDetails);
-            return;
+        const response = await fetch('../api/products.php?brand=sprayzet');
+        const result = await response.json();
+        if (result.success && result.data) {
+            productsData = result.data;
+            // Build productDetails from DB details
+            Object.values(result.data).forEach(products => {
+                products.forEach(p => {
+                    if (p.details) {
+                        productDetails[p.name] = { ...p.details, description: p.details.description || p.description };
+                    }
+                });
+            });
         }
-    } catch (e) { }
-    try {
-        const response = await fetch('../assets/evershine-details.json'); // Reusing the same data store
-        productDetails = await response.json();
     } catch (error) {
-        console.error('Error loading product details:', error);
+        console.error('Error loading products from API:', error);
     }
+    // Fallback: load static details for products not yet in DB
+    try {
+        const response = await fetch('../assets/evershine-details.json');
+        const staticDetails = await response.json();
+        Object.keys(staticDetails).forEach(key => {
+            if (!productDetails[key]) productDetails[key] = staticDetails[key];
+        });
+    } catch (e) { }
 }
 
 async function initDynamicProducts() {
