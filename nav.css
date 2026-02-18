@@ -19,7 +19,14 @@ nav .logo{
 	width: 9rem;
 	height: auto;
 }
+nav .logo a {
+	display: block;
+	width: 100%;
+}
 nav .logo img{
+	width: 100%;
+	height: auto;
+	display: block;
 	margin-top: 0rem;
 }
 

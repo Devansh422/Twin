@@ -1,10 +1,19 @@
-(function(){
-  function applyAssets(){
+(function () {
+  function applyAssets() {
     if (!window.ASSETS) return;
-    const logo = document.getElementById('site-logo');
-    if (logo) logo.src = window.ASSETS.logo || logo.src;
-    const logoFooter = document.getElementById('site-logo-footer');
-    if (logoFooter) logoFooter.src = window.ASSETS.logo || logoFooter.src;
+    var logoSrc = window.ASSETS.logo || '';
+
+    var logo = document.getElementById('site-logo');
+    // For index.html, src is empty -> set it. For sub-pages, src is set -> leave it.
+    if (logo && (!logo.getAttribute('src') || logo.getAttribute('src') === '')) {
+      logo.src = logoSrc;
+    }
+
+    var logoFooter = document.getElementById('site-logo-footer');
+    // Footer logos are usually empty -> set them
+    if (logoFooter && (!logoFooter.getAttribute('src') || logoFooter.getAttribute('src') === '')) {
+      logoFooter.src = logoSrc;
+    }
   }
 
   if (document.readyState === 'loading') {
