@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="stylesheet" type="text/css" href="../nav.css">
+    <link rel="stylesheet" type="text/css" href="../footer.css">
+    <title id="pageTitle">Products - Twin Tech India</title>
+    <style>
+        .products-showcase {
+            padding-top: 8rem;
+        }
+
+        .products-showcase h2 {
+            font-family: "Heading", sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--color);
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-family: "base", sans-serif;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .product-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .filter-tag {
+            font-family: "base", sans-serif;
+            padding: .8rem 2rem;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            transition: all .3s ease;
+            text-transform: capitalize;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+            transition: left .3s ease;
+            z-index: -1;
+        }
+
+        .filter-tag:hover {
+            border-color: #dc143c;
+            color: #dc143c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220, 20, 60, .2);
+        }
+
+        .filter-tag.active {
+            background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+            color: #fff;
+            border-color: #dc143c;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, .3);
+        }
+
+        .filter-tag.active::before {
+            left: 0;
+        }
+
+        .product-count {
+            text-align: center;
+            font-family: "base", sans-serif;
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 2000px;
+            margin: 0 auto;
+            padding: 8rem 2rem;
+            background: #eee;
+        }
+
+        .product-card {
+            background: #fff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .08);
+            cursor: pointer;
+            position: relative;
+            transition: box-shadow .3s ease;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: #fff;
+            flex-grow: 1;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 20px;
+            display: block;
+        }
+
+        .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .product-info {
+            padding: 2rem;
+            position: relative;
+            background: #fff;
+        }
+
+        .product-name {
+            font-family: "Heading", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: #222;
+        }
+
+        .product-category {
+            font-family: "base", sans-serif;
+            font-size: .95rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        /* Modal */
+        .product-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .product-modal-overlay.active {
+            display: flex;
+        }
+
+        .product-modal {
+            background: #fff;
+            border-radius: 1rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .2);
+            animation: slideUp .3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .modal-img-col {
+            width: 40%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-img-col img {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .modal-content-col {
+            width: 60%;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal-content-col h2 {
+            font-family: "heading", sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: .5rem;
+        }
+
+        .modal-content-col .modal-category {
+            font-size: .8rem;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: .08em;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content-col .modal-description {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .modal-content-col .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content-col .info-item label {
+            font-size: .65rem;
+            text-transform: uppercase;
+            color: #999;
+            letter-spacing: .06em;
+            display: block;
+        }
+
+        .modal-content-col .info-item span {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-table td {
+            padding: .5rem .75rem;
+            border-bottom: 1px solid #eee;
+            font-size: .85rem;
+        }
+
+        .modal-table td:first-child {
+            color: #888;
+            font-weight: 500;
+            width: 40%;
+        }
+
+        .modal-features h4,
+        .modal-benefits h4 {
+            font-family: "heading", sans-serif;
+            font-size: .9rem;
+            margin-bottom: .5rem;
+            color: var(--color);
+        }
+
+        .modal-features ul,
+        .modal-benefits ul {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-features li,
+        .modal-benefits li {
+            font-size: .85rem;
+            color: #555;
+            margin-bottom: .3rem;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            color: #333;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            padding: 0 1.3rem;
+            height: 2.8rem;
+            border-radius: 100px;
+            background: var(--color);
+            border: none;
+            color: #fff;
+            font-family: "base", sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        @media (max-width:768px) {
+            .products-showcase {
+                padding: 5rem 5vw;
+            }
+
+            .products-showcase h2 {
+                font-size: 2.5rem;
+            }
+
+            .product-filters {
+                gap: .5rem;
+                margin-bottom: 3rem;
+            }
+
+            .filter-tag {
+                padding: .6rem 1.5rem;
+                font-size: .9rem;
+            }
+
+            .product-card {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-modal {
+                flex-direction: column;
+            }
+
+            .modal-img-col,
+            .modal-content-col {
+                width: 100%;
+            }
+        }
+
+        .empty-brand {
+            text-align: center;
+            padding: 6rem 2rem;
+            color: #888;
+        }
+
+        .empty-brand h3 {
+            font-family: "heading", sans-serif;
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: .5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading-overlay"
+        style="position:fixed;inset:0;background:#ED1D21;z-index:10000;display:flex;justify-content:center;align-items:center;transition:opacity .5s;">
+        <div
+            style="width:50px;height:50px;border:4px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;">
+        </div>
+        <style>
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg)
+                }
+            }
+        </style>
+    </div>
+
+    <nav>
+        <div class="logo"><a href="../index.html"><img id="site-logo" src="../assets/logo.png" alt="Twin Tech Logo"></a>
+        </div>
+        <ul class="navigation">
+            <li><a href="../index.html">Home</a></li>
+            <li class="has-dropdown">
+                <a href="../about-us/about-us.html" class="dropdown">About Us <span><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="../about-us/about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg></span>Overview</a></li>
+                    <li><a href="../customer/customer.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg></span>Customer Focus</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown">Our Brands<span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg></span></a>
+                <ul class="dropdown-menu" id="brandsDropdown">
+                    <li><a href="../evershine/evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg></span>Evershine</a></li>
+                    <li><a href="../sprayzet/sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg></span>SprayZet</a></li>
+                    <li><a href="../twin-tapes/twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg></span>Twin Tapes</a></li>
+                    <li><a href="../twinzy/twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg></span>Twinzy</a></li>
+                </ul>
+            </li>
+            <li><a href="../gallery/gallery.html">Gallery</a></li>
+            <li><a href="../blog/blog.html">Blog</a></li>
+            <li><a href="../contact-us/contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <section class="products-showcase">
+        <h2 id="brandHeading">Products</h2>
+        <p class="section-subtitle" id="brandSubtitle">Browse our product catalog</p>
+        <div class="product-filters" id="productFilters"></div>
+        <p class="product-count">Showing <span id="product-count">0</span> products</p>
+    </section>
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- Product Modal -->
+    <div class="product-modal-overlay" id="productModal">
+        <button class="modal-close-btn" id="closeModal">✕</button>
+        <div class="product-modal">
+            <div class="modal-img-col"><img id="modalProductImg" src="" alt="Product"></div>
+            <div class="modal-content-col">
+                <h2 id="modalProductName"></h2>
+                <div class="modal-category" id="modalProductCategory"></div>
+                <p class="modal-description" id="modalProductDescription"></p>
+                <div class="info-grid">
+                    <div class="info-item"><label>Pack Size</label><span id="modalPackSize">-</span></div>
+                    <div class="info-item"><label>Form</label><span id="modalForm">-</span></div>
+                    <div class="info-item"><label>Availability</label><span id="modalAvailability">In stock</span></div>
+                </div>
+                <h4 id="modalTableName" style="font-family:'heading';margin-bottom:.5rem;display:none"></h4>
+                <table class="modal-table" id="modalProductTable" style="display:none"></table>
+                <div class="modal-features" id="featuresSection" style="display:none">
+                    <h4>Key Features</h4>
+                    <ul id="modalFeatures"></ul>
+                </div>
+                <div class="modal-benefits" id="benefitsSection" style="display:none">
+                    <h4>Benefits</h4>
+                    <ul id="modalBenefits"></ul>
+                </div>
+                <a href="https://api.whatsapp.com/send/?phone=9310052702&text&type=phone_number&app_absent=0"
+                    target="_blank" class="cta-button">Get a Quote</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="top">
+            <div class="logo"><img id="site-logo-footer" src="../assets/logo.png"></div>
+            <div class="footer-info">Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial
+                aerosol sprays, car care products, self-adhesive tapes and home care products.</div>
+        </div>
+        <div class="line"></div>
+        <div class="bottom"><span>©Copyright 2026. All Rights Reserved.</span></div>
+    </footer>
+
+    <script src="../assets-config.js"></script>
+    <script src="../assets-apply.js" defer></script>
+    <script>
+        (function () {
+            // Get brand key from URL
+            const params = new URLSearchParams(window.location.search);
+            const brandKey = params.get('brand');
+            if (!brandKey) { document.getElementById('productsGrid').innerHTML = '<div class="empty-brand"><h3>No brand specified</h3><p>Use ?brand=brand-key in the URL.</p></div>'; removeOverlay(); return; }
+
+            // Load brand info
+            const brandMeta = JSON.parse(localStorage.getItem('adminCustomBrands') || '[]');
+            const brand = brandMeta.find(b => b.key === brandKey);
+            const brandLabel = brand ? brand.label : brandKey.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+            document.title = brandLabel + ' Products - Twin Tech India';
+            document.getElementById('pageTitle').textContent = document.title;
+            document.getElementById('brandHeading').textContent = brandLabel;
+            document.getElementById('brandSubtitle').textContent = 'Explore our ' + brandLabel + ' product range';
+
+            // Inject custom brands into nav dropdown
+            if (brandMeta.length) {
+                const dropdown = document.getElementById('brandsDropdown');
+                brandMeta.forEach(b => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="../brand/index.html?brand=${b.key}"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>${b.label}</a>`;
+                    dropdown.appendChild(li);
+                });
+            }
+
+            // Load product data
+            const lsKey = 'adminProducts_' + brandKey;
+            const detailsKey = 'adminDetails_' + brandKey;
+            let productsData = {};
+            let productDetails = {};
+
+            try { const s = localStorage.getItem(lsKey); if (s) productsData = JSON.parse(s); } catch (e) { }
+            try { const s = localStorage.getItem(detailsKey); if (s) productDetails = JSON.parse(s); } catch (e) { }
+
+            // Build products
+            const allProducts = [];
+            Object.entries(productsData).forEach(([category, products]) => {
+                products.forEach(p => {
+                    allProducts.push({ ...p, category, rawCategory: category, filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-') });
+                });
+            });
+
+            if (!allProducts.length) {
+                document.getElementById('productsGrid').innerHTML = '<div class="empty-brand"><h3>No products yet</h3><p>Add products to this brand from the Admin Panel.</p></div>';
+                document.getElementById('productFilters').style.display = 'none';
+                removeOverlay(); return;
+            }
+
+            // Render filters
+            const filtersContainer = document.getElementById('productFilters');
+            const categories = Object.keys(productsData);
+            const allBtn = document.createElement('button');
+            allBtn.className = 'filter-tag active'; allBtn.setAttribute('data-filter', 'all'); allBtn.textContent = 'All Products';
+            filtersContainer.appendChild(allBtn);
+            categories.forEach(cat => {
+                const btn = document.createElement('button'); btn.className = 'filter-tag';
+                const slug = cat.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                btn.setAttribute('data-filter', slug);
+                btn.textContent = cat.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                filtersContainer.appendChild(btn);
+            });
+
+            // Render grid
+            const grid = document.getElementById('productsGrid');
+            allProducts.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-category', product.filterSlug);
+                let imgSrc;
+                if (product.imageData) imgSrc = product.imageData;
+                else { const enc = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/'); imgSrc = '../' + enc; }
+                card.innerHTML = `
+        <div class="product-image-wrapper">
+          <img src="${imgSrc}" alt="${product.name}" class="product-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
+          <div class="product-overlay"></div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">${product.name}</h3>
+          <p class="product-category">${product.rawCategory}</p>
+        </div>`;
+                card.addEventListener('click', () => openProductModal(product.name, imgSrc, product.rawCategory));
+                grid.appendChild(card);
+            });
+
+            document.getElementById('product-count').textContent = allProducts.length;
+
+            // Filter logic
+            filtersContainer.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    filtersContainer.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                    tag.classList.add('active');
+                    const filter = tag.getAttribute('data-filter');
+                    let count = 0;
+                    grid.querySelectorAll('.product-card').forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) { card.style.display = ''; count++; }
+                        else card.style.display = 'none';
+                    });
+                    document.getElementById('product-count').textContent = count;
+                });
+            });
+
+            // Modal
+            function openProductModal(name, imgSrc, category) {
+                const modal = document.getElementById('productModal');
+                const key = Object.keys(productDetails).find(k => k.toLowerCase() === name.toLowerCase());
+                const det = productDetails[key] || productDetails['default'] || {};
+                document.getElementById('modalProductName').textContent = name;
+                document.getElementById('modalProductImg').src = imgSrc;
+                document.getElementById('modalProductCategory').textContent = category;
+                document.getElementById('modalProductDescription').textContent = det.description || '';
+                document.getElementById('modalPackSize').textContent = det.packSize || '-';
+                document.getElementById('modalForm').textContent = det.form || '-';
+                document.getElementById('modalAvailability').textContent = det.availability || 'In stock';
+                const table = document.getElementById('modalProductTable');
+                const tableName = document.getElementById('modalTableName');
+                table.innerHTML = '';
+                if (det.tableData && Object.keys(det.tableData).length) {
+                    Object.entries(det.tableData).forEach(([k, v]) => { table.innerHTML += `<tr><td>${k}</td><td>${v}</td></tr>`; });
+                    table.style.display = 'table'; tableName.textContent = name; tableName.style.display = 'block';
+                } else { table.style.display = 'none'; tableName.style.display = 'none'; }
+                const featEl = document.getElementById('modalFeatures'), featSec = document.getElementById('featuresSection');
+                if (det.features && det.features.length) { featEl.innerHTML = det.features.map(f => `<li>${f}</li>`).join(''); featSec.style.display = 'block'; } else featSec.style.display = 'none';
+                const benEl = document.getElementById('modalBenefits'), benSec = document.getElementById('benefitsSection');
+                if (det.benefits && det.benefits.length) { benEl.innerHTML = det.benefits.map(b => `<li>${b}</li>`).join(''); benSec.style.display = 'block'; } else benSec.style.display = 'none';
+                modal.classList.add('active'); document.body.style.overflow = 'hidden';
+            }
+
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('productModal').classList.remove('active'); document.body.style.overflow = '';
+            });
+            document.getElementById('productModal').addEventListener('click', e => {
+                if (e.target === document.getElementById('productModal')) { document.getElementById('productModal').classList.remove('active'); document.body.style.overflow = ''; }
+            });
+
+            removeOverlay();
+
+            function removeOverlay() {
+                setTimeout(() => {
+                    const o = document.getElementById('loading-overlay');
+                    if (o) { o.style.opacity = '0'; setTimeout(() => o.remove(), 500); }
+                }, 500);
+            }
+        })();
+    </script>
+</body>
+
+</html>

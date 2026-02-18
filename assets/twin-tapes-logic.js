@@ -1,5 +1,5 @@
 
-const productsData = {
+let productsData = {
     "Twin Tapes": [
         { "name": "DS POLYESTER TAPE", "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/1. DS POLYESTER TAPE.jpg", "category": "Twin Tapes" },
         { "name": "Red-Polyester-Tape FILMIC LINER", "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/10.Red-Polyester-Tape FILMIC LINER.jpg", "category": "Twin Tapes" },
@@ -29,11 +29,27 @@ const productsData = {
     ]
 };
 
+// Admin panel localStorage override
+(function () {
+    try {
+        const saved = localStorage.getItem('adminProducts_twin-tapes');
+        if (saved) productsData = JSON.parse(saved);
+    } catch (e) { }
+})();
+
 let productDetails = {};
 
 async function fetchProductDetails() {
+    // Check localStorage first (admin panel)
     try {
-        const response = await fetch('./assets/evershine-details.json');
+        const savedDetails = localStorage.getItem('adminDetails_twin-tapes');
+        if (savedDetails) {
+            productDetails = JSON.parse(savedDetails);
+            return;
+        }
+    } catch (e) { }
+    try {
+        const response = await fetch('../assets/evershine-details.json');
         productDetails = await response.json();
     } catch (error) {
         console.error('Error loading product details:', error);
@@ -42,7 +58,7 @@ async function fetchProductDetails() {
 
 async function initDynamicProducts() {
     await fetchProductDetails();
-    
+
     const filtersContainer = document.querySelector('.product-filters');
     const gridContainer = document.querySelector('.products-grid');
     const countElement = document.getElementById('product-count');
@@ -54,16 +70,16 @@ async function initDynamicProducts() {
 
     filtersContainer.innerHTML = '<button class="filter-tag active" data-filter="all" style="cursor: default;">All Products</button>';
 
-    const allProducts = productsData["Twin Tapes"].map(p => ({...p, rawCategory: "Twin Tapes"}));
+    const allProducts = productsData["Twin Tapes"].map(p => ({ ...p, rawCategory: "Twin Tapes" }));
 
     gridContainer.innerHTML = '';
     allProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.setAttribute('data-category', "Twin Tapes");
-        
+
         const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
-        const imgSrc = './' + encodedPath;
+        const imgSrc = product.imageData || ('../' + encodedPath);
 
         const displayName = product.name.replace(/^\d+\.\s*/, '').replace(/-/g, ' ').replace(/\.jpg|\.jpeg|\.png/i, '');
 
@@ -99,7 +115,7 @@ function attachEventListeners() {
 
         hoverTimeline
             .to(img, {
-                rotation: 1, 
+                rotation: 1,
                 duration: 0.6,
                 ease: 'power2.out'
             }, 0)
@@ -124,7 +140,7 @@ function attachEventListeners() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             const rotateX = (y - centerY) / 50;
             const rotateY = (centerX - x) / 50;
 
@@ -171,7 +187,7 @@ function attachEventListeners() {
 
 function openProductModal(name, imgSrc, category) {
     const modal = document.getElementById('productModal');
-    
+
     // Case-insensitive lookup
     const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
     const details = productDetails[detailKey] || productDetails['default'];
@@ -224,12 +240,12 @@ function openProductModal(name, imgSrc, category) {
 
     modal.style.display = 'flex';
     gsap.set(modal, { opacity: 0 });
-    gsap.to(modal, { 
-        opacity: 1, 
+    gsap.to(modal, {
+        opacity: 1,
         duration: 0.5,
         ease: 'power2.out'
     });
-    
+
     const contentCol = modal.querySelector('.modal-content-col');
     if (contentCol) contentCol.scrollTop = 0;
 
@@ -241,15 +257,15 @@ function closeProductModal() {
     const modal = document.getElementById('productModal');
     if (!modal) return;
 
-    gsap.to(modal, { 
-        opacity: 0, 
-        duration: 0.3, 
+    gsap.to(modal, {
+        opacity: 0,
+        duration: 0.3,
         ease: 'power2.in',
         onComplete: () => {
             modal.style.display = 'none';
             document.body.style.overflow = '';
             if (window.lenis) window.lenis.start();
-        } 
+        }
     });
 }
 

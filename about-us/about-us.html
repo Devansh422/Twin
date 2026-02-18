@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../style.css">
+	<link rel="stylesheet" type="text/css" href="../nav.css">
+	<link rel="stylesheet" type="text/css" href="../footer.css">
+	<title>About Us - Twin Tech India</title>
+	<style>
+		/* Content Sections */
+		.content-section {
+			padding: 3rem 5vw;
+			position: relative;
+		}
+
+		.content-section:nth-child(even) {
+			background: #fdfdfd;
+		}
+
+		.content-section:nth-child(odd) {
+			background: #fff;
+		}
+
+		.section-header {
+			text-align: center;
+			margin-bottom: 2rem;
+		}
+
+		.section-label {
+			font-family: "base", sans-serif;
+			font-size: 0.8rem;
+			color: #667eea;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: 600;
+			margin-bottom: 0.4rem;
+		}
+
+		.section-title {
+			font-family: "Heading", sans-serif;
+			font-size: 2.2rem;
+			font-weight: 800;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.section-description {
+			font-family: "base", sans-serif;
+			font-size: 0.95rem;
+			color: #666;
+			max-width: 800px;
+			margin: 0 auto;
+			line-height: 1.6;
+		}
+
+		/* Two Column Layout */
+		.two-column {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 2.5rem;
+			max-width: 1400px;
+			margin: 2rem auto 0;
+			align-items: start;
+		}
+
+		.column-content {
+			font-family: "base", sans-serif;
+			font-size: 0.9rem;
+			color: #444;
+			line-height: 1.6;
+		}
+
+		.column-content h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.column-content p {
+			margin-bottom: 0.8rem;
+		}
+
+		/* Highlight Box */
+		.highlight-box {
+			background: rgba(220, 20, 60, 0.04);
+			padding: 1.5rem;
+			border-left: 3px solid #dc143c;
+			margin: 1.5rem 0;
+		}
+
+		.highlight-box p {
+			font-family: "Heading", sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			color: #dc143c;
+			line-height: 1.2;
+			margin: 0;
+			font-style: italic;
+		}
+
+		/* Single Column Content */
+		.single-column {
+			margin: 0 auto;
+		}
+
+		.single-column .column-content {
+			font-size: 0.95rem;
+			line-height: 1.6;
+		}
+
+		/* Feature Cards */
+		.feature-cards {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.5rem;
+			max-width: 1400px;
+			margin: 2.5rem auto 0;
+		}
+
+		.feature-card {
+			background: #fff;
+			padding: 1.5rem;
+			box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+			transition: all 0.4s ease;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 3px;
+			background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+			transform: scaleX(0);
+			transform-origin: left;
+			transition: transform 0.4s ease;
+		}
+
+		.feature-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 10px 35px rgba(102, 126, 234, 0.12);
+		}
+
+		.feature-card:hover::before {
+			transform: scaleX(1);
+		}
+
+		.feature-card h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 1.3rem;
+			font-weight: 700;
+			color: var(--color);
+			margin-bottom: 0.8rem;
+		}
+
+		.feature-card p {
+			font-family: "base", sans-serif;
+			font-size: 0.85rem;
+			color: #666;
+			line-height: 1.6;
+			margin-bottom: 0.6rem;
+		}
+
+		/* Philosophy List */
+		.philosophy-list {
+			list-style: none;
+			padding: 0;
+			margin: 0.8rem 0;
+		}
+
+		.philosophy-list li {
+			font-family: "base", sans-serif;
+			font-size: 0.95rem;
+			color: #444;
+			padding: 0.5rem 0 0.5rem 2rem;
+			position: relative;
+			line-height: 1.6;
+		}
+
+		.philosophy-list li::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 14px 14px;
+		}
+
+		/* Stats Section */
+		.stats-section {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			padding: 3rem 5vw;
+			text-align: center;
+			margin: 3rem 0;
+		}
+
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 1.5rem;
+			max-width: 1400px;
+			margin: 0 auto;
+		}
+
+		.stat-item h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 2.5rem;
+			font-weight: 900;
+			color: #fff;
+			margin-bottom: 0.4rem;
+		}
+
+		.stat-item p {
+			font-family: "base", sans-serif;
+			font-size: 0.9rem;
+			color: rgba(255, 255, 255, 0.85);
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.about-hero {
+				padding: 5rem 5vw 2rem;
+			}
+
+			.about-hero h1 {
+				font-size: 2rem;
+			}
+
+			.about-hero .subtitle {
+				font-size: 0.9rem;
+			}
+
+			.content-section {
+				padding: 2.5rem 5vw;
+			}
+
+			.section-title {
+				font-size: 1.8rem;
+			}
+
+			.two-column {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+
+			.feature-cards {
+				grid-template-columns: 1fr;
+				gap: 1rem;
+			}
+			}
+
+			.feature-card {
+				padding: 1.2rem;
+			
+			.highlight-box {
+				padding: 1.2rem;
+			}
+
+			.highlight-box p {
+				font-size: 0.9rem;
+			}
+		}
+
+		#hero-section .gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(45deg,rgba(0, 0, 0, 0.7) 0%, rgba(94, 94, 94, 0) 70%);
+  z-index: 99;
+  pointer-events: none;
+}
+	</style>
+</head>
+<body>
+	<nav>
+    <div class="logo">
+      <a href="../index.html"><img id="site-logo" src="../assets/logo.png" alt="Twin Tech Logo"></a>
+    </div>
+		<ul class="navigation">
+			<li><a href="../index.html">Home</a></li>
+			<li class="has-dropdown">
+				<a href="../about-us/about-us.html" class="dropdown">About Us <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="../about-us/about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Overview</a></li>
+					<li><a href="../customer/customer.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Customer Focus</a></li>
+					<li><a href="../application/application.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Application Areas</a></li>
+					<li><a href="../career/career.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Career</a></li>
+				</ul>
+			</li>
+			<li class="has-dropdown">
+				<a href="#" class="dropdown">Our Brands<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="../evershine/evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Evershine</a></li>
+					<li><a href="../sprayzet/sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>SprayZet</a></li>
+					<li><a href="../twin-tapes/twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twin Tapes</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Silox</a></li>
+					<li><a href="../twinzy/twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twinzy</a></li>
+				</ul>
+			</li>
+			<li><a href="../gallery/gallery.html">Gallery</a></li>
+			<li><a href="../distributor/distributor.html">Become a Distributor</a></li>
+			<li><a href="../blog/blog.html">Blog</a></li>
+			<li><a href="../contact-us/contact-us.html">Contact Us</a></li>
+		</ul>
+		<div class="action_buttons">
+			<button class="whatsapp">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z" fill="currentColor"/>
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z" fill="currentColor"/>
+				</svg>
+			</button>
+		</div>
+	</nav>
+
+	<div class="main-container">
+	<!-- About Us Hero Section -->
+	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
+		<img src="../assets/about.webp" alt="About Us Background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+		<div class="hero-content">
+			<h1 class="animate-text" style="font-size: 2.5rem;">About Twin Tech India Pvt. Ltd.</h1>
+			<p class="sub-text">Leading manufacturer of aerosols, sprays, and specialty industrial products. Committed to quality, innovation, and customer satisfaction since our inception.</p>
+			<div class="cta-button">
+				<button class="cta-button">Enquire Now</button>
+			</div>
+		</div>
+		<div class="gradient"></div>
+	</section>
+
+	<!-- Overview Section -->
+	<section class="content-section" id="overview">
+		<div class="section-header">
+			<div class="section-label">Our Story</div>
+			<h2 class="section-title">Company Overview</h2>
+		</div>
+
+		<div class="single-column">
+			<div class="column-content">
+				<h3>TWIN TECH INDIA PVT. LTD</h3>
+				<p><strong>Aerosol Spray Manufacturer</strong></p>
+				<p>Twin Tech India Pvt. Ltd is a leading name in manufacturing and supplying of aerosols and sprays in a multitude of industrial application. Biodegradable, user & environment friendly, all our sprays are custom designed for easy use. We promote our aerosols for different applications under the registered brand name of <strong>SPRAYZET</strong>.</p>
+				<p>We also do contract aerosol packaging for a variety of companies and industries, with extensive private label aerosol filling / packaging capabilities.</p>
+			</div>
+
+			<div class="highlight-box">
+				<p>"We have earned a good reputation in the industry through our committed and outstanding customer management system and have created a benchmark as a manufacturer of various industrial aerosols."</p>
+			</div>
+
+			<div class="column-content">
+				<p>"Twin Tech" is the manufacturer, exporter & supplier of specialty industrial maintenance aerosols like On-Line Contact Cleaner, Carbon Remover, Electronic Cleaner, Insulating Spray Varnish, Bus-Bar Coatings, Penetrating Oil, Moisture Displacer, Rust Preservatives, Rust-Remover, Anti-Seize Compound, Silicon-Free Mould Release Agent, Mould & Die Protector, Mould Cleaner, Galvanizing Coating, etc.</p>
+				
+				<p>Twin Tech India Pvt. Ltd is also manufacturing various Aerosol machines like Aerosol propellant Filling Machine, Aerosol Semi-Automatic Crimping Machine, Aerosol Crimping Machine (Bottle), Aerosol Valve's Deep Tube Cutting Machine etc. The company has been supplying these machines in India and abroad, with a sound record of trouble free operations. The machines supplied are of a very high quality and are low on maintenance. It requires minimum degree of operating skills to work on these machines, which helps the customers to cut down the costs of employing skilled labor.</p>
+				
+				<p>Twin Tech India Pvt. Ltd is also manufacturing self adhesive tapes, home care products eg: Mosquito Repellent under brand name "Hacker", Home Cleaning Products, "Twinzy" Air Deo, Car Care products under brand name "Evershine".</p>
+				
+				<p>We have been capable to meet the demands of different industries with our new technology, consistent production method with the most efficient manner. Our products are appropriate for clients based across agriculture, plastic, engineering, textile, food manufacturing, construction and automotive industries. We have been able to meet the bulk demands in well-organized method.</p>
+			</div>
+
+			<div class="highlight-box">
+				<p>"While maintaining a high level of quality in its products, the company also ensures a timely delivery of the machines to all its clients, which has helped the company to earn the goodwill of its customers."</p>
+			</div>
+
+			<div class="column-content">
+				<p>With a vast experience in Industry, the reputation we have achieved throughout the years has been the result of our hard work and unwavering commitment to providing complete customer satisfaction with maintaining quality standard in the products.</p>
+			</div>
+		</div>
+	</section>
+	</div>
+
+	<footer>
+		<div class="top">
+			<div class="logo">
+				<img id="site-logo-footer" src="" alt="Twin Tech Logo">
+			</div>
+			<div class="footer-info animate-text">
+				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care products, self-adhesive tapes and home care products for various industries worldwide.
+			</div>
+		</div>
+		<div class="line"></div>
+		<div class="mid">
+			<div class="footer-navs">
+				<ul class="nav-1">
+					<h3>Quick Links</h3>
+					<li><a href="../index.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Home</a></li>
+					<li><a href="../about-us/about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>About Us</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Our Clients</a></li>
+					<li><a href="../contact-us/contact-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Contact</a></li>
+				</ul>
+				<ul class="nav-2">
+					<h3>Brands</h3>
+					<li><a href="../evershine/evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Evershine</a></li>
+					<li><a href="../sprayzet/sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>SprayZet</a></li>
+					<li><a href="../twin-tapes/twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twin Tapes</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Silox</a></li>
+					<li><a href="../twinzy/twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>Twinzy</a></li>
+				</ul>
+				<ul class="nav-3">
+					<h3>Download Catalog</h3>
+					<li><a href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf" target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg></span>Evershine</a></li>
+					<li><a href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/1.%20SPRAYZET/SPRAYZET%20CATALOGUE%20NEW.pdf" target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg></span>SprayZet</a></li>
+					<li><a href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/3.%20TWIN%20TAPE/TAPE%20CATALOUGE.pdf" target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg></span>Twin Tapes</a></li>
+				</ul>
+				<ul class="nav-4">
+					<h3>Get In Touch</h3>
+					<li><a href="mailto:twin@twinindia.com"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>twin@twinindia.com</a></li>
+					<li><a href="mailto:sales@twinindia.com"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>sales@twinindia.com</a></li>
+					<li><a href="tel:919310052702"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>91-9310052702</a></li>
+				</ul>
+			</div>
+			<ul class="address">
+				<li><a href="#"><b>Office Address</b><br>A-304, Solitairian City Center, Knowledge Park III<br>Greater NOIDA (UP) India - 201308</a></li>
+				<li><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Work Address</b><br>R-51, 52 & 53, UPSIDC, Sikandrabad,<br>Uttar Pradesh - 203205 </a></li>
+				<ul class="socials">
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></li>
+				</ul>
+			</ul>
+		</div>
+		<div class="black-strip"> </div>
+		<div class="bottom">
+			<span>©Copyright 2026. All Rights Reserved.</span>
+		</div>
+	</footer>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+	<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+	<script>
+		gsap.registerPlugin(ScrollTrigger);
+
+		// Animate hero section
+		gsap.from('.hero-content h1', {
+			y: 100,
+			opacity: 0,
+			duration: 1,
+			ease: 'power3.out'
+		});
+
+		gsap.from('.hero-content .sub-text', {
+			y: 50,
+			opacity: 0,
+			duration: 1,
+			delay: 0.3,
+			ease: 'power3.out'
+		});
+
+		// CTA Button Script
+		document.addEventListener("DOMContentLoaded", () => {
+			/* ✅ Inject CTA CSS Automatically */
+			const style = document.createElement("style");
+			style.innerHTML = `
+				.cta-button {
+					padding: 0 1.3rem;
+					height: 2.8rem;
+					border-radius: 100px;
+					background: var(--color, #ff3b3b);
+					border: none;
+					color: #fff;
+					font-family: "base", sans-serif;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					gap: 0.4rem;
+					cursor: pointer;
+					text-decoration: none;
+					user-select: none;
+				}
+
+				.cta-button > .button-content {
+					height: 1.5rem;
+					width: fit-content;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					line-height: 1;
+				}
+
+				.cta-button > .arrow {
+					height: 1.5rem;
+					width: 1.5rem;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				.cta-button > .arrow svg {
+					height: 1.2rem;
+					width: 1.2rem;
+					display: block;
+					transform: rotate(-45deg);
+					will-change: transform;
+					transition: 0.2s;
+				}
+
+				.cta-button:hover .arrow svg {
+					transform: rotate(0deg);
+				}
+			`;
+			document.head.appendChild(style);
+
+			/* ✅ Auto Convert Any Element with class="cta-button" */
+			function applyCTAStyles() {
+				document.querySelectorAll(".cta-button").forEach((el) => {
+					if (el.dataset.ctaProcessed) return;
+					const text = el.textContent.trim();
+					el.innerHTML = "";
+					el.innerHTML = `
+						<span class="button-content">${text}</span>
+						<span class="arrow">
+							<svg xmlns="http://www.w3.org/2000/svg"
+								width="24" height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<path d="M5 12h14"/>
+								<path d="m12 5 7 7-7 7"/>
+							</svg>
+						</span>
+					`;
+					el.dataset.ctaProcessed = "true";
+				});
+			}
+			applyCTAStyles();
+		});
+
+		// Animate section headers
+		gsap.utils.toArray('.section-header').forEach((header) => {
+			gsap.from(header, {
+				scrollTrigger: {
+					trigger: header,
+					start: 'top 80%',
+					end: 'top 50%',
+					toggleActions: 'play none none reverse'
+				},
+				y: 50,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'power3.out'
+			});
+		});
+
+		// Animate feature cards
+		gsap.utils.toArray('.feature-card').forEach((card, index) => {
+			gsap.from(card, {
+				scrollTrigger: {
+					trigger: card,
+					start: 'top 85%',
+					end: 'top 60%',
+					toggleActions: 'play none none reverse'
+				},
+				y: 80,
+				opacity: 0,
+				duration: 0.8,
+				delay: index * 0.15,
+				ease: 'power3.out'
+			});
+		});
+
+		// Animate highlight boxes
+		gsap.utils.toArray('.highlight-box').forEach((box) => {
+			gsap.from(box, {
+				scrollTrigger: {
+					trigger: box,
+					start: 'top 85%',
+					end: 'top 60%',
+					toggleActions: 'play none none reverse'
+				},
+				x: -50,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'power3.out'
+			});
+		});
+
+		// Smooth scroll for anchor links
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				e.preventDefault();
+				const target = document.querySelector(this.getAttribute('href'));
+				if (target) {
+					target.scrollIntoView({
+						behavior: 'smooth',
+						block: 'start'
+					});
+				}
+			});
+		});
+	</script>
+    <script src="../assets-config.js"></script>
+    <script src="../assets-apply.js" defer></script>
+</body>
+</html>
+
+
+
+
+

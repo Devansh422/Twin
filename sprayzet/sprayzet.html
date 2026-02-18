@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../style.css">
+	<link rel="stylesheet" type="text/css" href="../nav.css">
+	<link rel="stylesheet" type="text/css" href="../footer.css">
+	<title>Industrial Maintenance - Twin Tech India</title>
+	<style>
+		/* Products Showcase Section */
+		.products-showcase {
+			padding-top: 8rem;
+		}
+
+		.products-showcase h2 {
+			font-family: "Heading", sans-serif;
+			font-size: 4rem;
+			font-weight: 800;
+			text-align: center;
+			margin-bottom: 1rem;
+			color: var(--color);
+			line-height: 1.2;
+		}
+
+		.section-subtitle {
+			font-family: "base", sans-serif;
+			text-align: center;
+			font-size: 1.2rem;
+			color: #666;
+			margin-bottom: 2rem;
+			font-weight: 300;
+			line-height: 1.6;
+		}
+
+		/* Product Filter Tags */
+		.product-filters {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 1rem;
+			max-width: 1200px;
+			margin: 0 auto 4rem;
+			padding: 0 2rem;
+		}
+
+		.filter-tag {
+			font-family: "base", sans-serif;
+			padding: 0.8rem 2rem;
+			background: #fff;
+			border: 2px solid #e0e0e0;
+			border-radius: 50px;
+			cursor: pointer;
+			font-size: 1rem;
+			font-weight: 500;
+			color: #666;
+			transition: all 0.3s ease;
+			text-transform: capitalize;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.filter-tag::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+			transition: left 0.3s ease;
+			z-index: -1;
+		}
+
+		.filter-tag:hover {
+			border-color: #dc143c;
+			color: #dc143c;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 15px rgba(220, 20, 60, 0.2);
+		}
+
+		.filter-tag.active {
+			background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+			color: #fff;
+			border-color: #dc143c;
+			box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+		}
+
+		.filter-tag.active::before {
+			left: 0;
+		}
+
+		.product-count {
+			text-align: center;
+			font-family: "base", sans-serif;
+			font-size: 1rem;
+			color: #888;
+			margin-bottom: 2rem;
+			font-weight: 300;
+			line-height: 1.6;
+		}
+
+		.products-grid {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 2rem;
+			max-width: 2000px;
+			margin: 0 auto;
+			padding: 2rem;
+			background-color: #eeeeee;
+			padding: 8rem 0;
+		}
+
+		.product-card {
+			background: #fff;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+			cursor: pointer;
+			position: relative;
+			transition: box-shadow 0.3s ease;
+			width: 400px;
+			height: 400px;
+			display: flex;
+			flex-direction: column;
+			border-radius: 10px;
+		}
+
+		.product-image-wrapper {
+			position: relative;
+			width: 100%;
+			height: 300px;
+			overflow: hidden;
+			background: #fff;
+			flex-grow: 1;
+		}
+
+		.product-img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			padding: 20px;
+			display: block;
+		}
+
+		.product-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.product-info {
+			padding: 2rem;
+			position: relative;
+			background: #fff;
+		}
+
+		.product-name {
+			font-family: "Heading", sans-serif;
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin-bottom: 0.5rem;
+			color: #222;
+		}
+
+		.product-category {
+			font-family: "base", sans-serif;
+			font-size: 0.95rem;
+			color: #888;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 400;
+		}
+
+		@media (max-width: 768px) {
+			.products-showcase {
+				padding: 5rem 5vw;
+			}
+
+			.products-showcase h2 {
+				font-size: 2.5rem;
+			}
+
+			.product-filters {
+				gap: 0.5rem;
+				margin-bottom: 3rem;
+			}
+
+			.filter-tag {
+				padding: 0.6rem 1.5rem;
+				font-size: 0.9rem;
+			}
+
+			.products-grid {
+				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+				gap: 2rem;
+			}
+
+			.product-image-wrapper {
+				height: 250px;
+			}
+
+			.product-info {
+				padding: 1.5rem;
+			}
+
+			.product-name {
+				font-size: 1.2rem;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div id="loading-overlay"
+		style="position: fixed; inset: 0; background: #ED1D21; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s;">
+		<div
+			style="width: 50px; height: 50px; border: 4px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;">
+		</div>
+		<style>
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
+		</style>
+	</div>
+	<nav>
+		<div class="logo">
+			<a href="../index.html"><img id="site-logo" src="../assets/logo.png" alt="Twin Tech Logo"></a>
+		</div>
+		<ul class="navigation">
+			<li><a href="../index.html">Home</a></li>
+			<li class="has-dropdown">
+				<a href="../about-us/about-us.html" class="dropdown">About Us <span><svg
+							xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="lucide lucide-chevron-down-icon lucide-chevron-down">
+							<path d="m6 9 6 6 6-6" />
+						</svg></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="../about-us/about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Overview</a></li>
+					<li><a href="../customer/customer.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Customer Focus</a></li>
+					<li><a href="../application/application.html"><span><svg xmlns="http://www.w3.org/2000/svg"
+									width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Application Areas</a></li>
+					<li><a href="../career/career.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Career</a></li>
+				</ul>
+			</li>
+			<li class="has-dropdown">
+				<a href="#" class="dropdown">Our Brands<span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+							height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+							stroke-linecap="round" stroke-linejoin="round"
+							class="lucide lucide-chevron-down-icon lucide-chevron-down">
+							<path d="m6 9 6 6 6-6" />
+						</svg></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="../evershine/evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Evershine</a></li>
+					<li><a href="../sprayzet/sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>SprayZet</a></li>
+					<li><a href="../twin-tapes/twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Twin Tapes</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Silox</a></li>
+					<li><a href="../twinzy/twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Twinzy</a></li>
+				</ul>
+			</li>
+			<li><a href="../gallery/gallery.html">Gallery</a></li>
+			<li><a href="../distributor/distributor.html">Become a Distributor</a></li>
+			<li><a href="../blog/blog.html">Blog</a></li>
+			<li><a href="../contact-us/contact-us.html">Contact Us</a></li>
+		</ul>
+		<div class="action_buttons">
+			<button class="whatsapp">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z"
+						fill="currentColor" />
+					<path fill-rule="evenodd" clip-rule="evenodd"
+						d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z"
+						fill="currentColor" />
+				</svg>
+			</button>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
+		<video autoplay muted loop playsinline
+			style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+			<source src="../assets/Sprayzet.mp4" type="video/mp4">
+		</video>
+		<div class="hero-content">
+			<h1>Industrial Maintenance<br>Aerosol Solutions</h1>
+			<span class="sub-text">Professional-grade aerosol products engineered for precision cleaning, rust
+				protection, and industrial maintenance applications</span>
+			<div style="display:flex; gap: 1rem;">
+				<button class="cta-button" style="font-size: 0.9rem;">Request Quote</button>
+				<a class="cta-button" style="font-size: 0.9rem;"
+					href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/1.%20SPRAYZET/SPRAYZET%20CATALOGUE%20NEW.pdf"
+					target="_blank" style="text-decoration:none;"><button>Download Catalog</button></a>
+			</div>
+		</div>
+	</section>
+	<!-- Products Showcase Section -->
+	<section class="products-showcase">
+		<h2>Our Industrial Products</h2>
+		<p class="section-subtitle">Professional-grade maintenance solutions for industrial applications</p>
+
+		<!-- Filter Tags -->
+		<div class="product-filters"></div>
+
+		<p class="product-count">Showing <span id="product-count">0</span> products</p>
+
+		<div class="products-grid"></div>
+	</section>
+
+	<!-- Footer -->
+	<footer>
+		<div class="top">
+			<div class="logo">
+				<img id="site-logo-footer" src="" alt="Twin Tech Logo">
+			</div>
+			<div class="footer-info animate-text">
+				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care
+				products, self-adhesive tapes and home care products for various industries worldwide.
+			</div>
+		</div>
+		<div class="line"></div>
+		<div class="mid">
+			<div class="footer-navs">
+				<ul class="nav-1">
+					<h3>Quick Links</h3>
+					<li><a href="../index.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Home</a></li>
+					<li><a href="../about-us/about-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>About Us</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Our Clients</a></li>
+					<li><a href="../contact-us/contact-us.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Contact</a></li>
+				</ul>
+				<ul class="nav-2">
+					<h3>Brands</h3>
+					<li><a href="../evershine/evershine.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Evershine</a></li>
+					<li><a href="../sprayzet/sprayzet.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>SprayZet</a></li>
+					<li><a href="../twin-tapes/twin-tapes.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Twin Tapes</a></li>
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Silox</a></li>
+					<li><a href="../twinzy/twinzy.html"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-right-icon lucide-arrow-right">
+									<path d="M5 12h14" />
+									<path d="m12 5 7 7-7 7" />
+								</svg></span>Twinzy</a></li>
+				</ul>
+				<ul class="nav-3">
+					<h3>Download Catalog</h3>
+					<li><a href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf"
+							target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line">
+									<path d="M12 17V3" />
+									<path d="m6 11 6 6 6-6" />
+									<path d="M19 21H5" />
+								</svg></span>Evershine</a></li>
+					<li><a href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/1.%20SPRAYZET/SPRAYZET%20CATALOGUE%20NEW.pdf"
+							target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line">
+									<path d="M12 17V3" />
+									<path d="m6 11 6 6 6-6" />
+									<path d="M19 21H5" />
+								</svg></span>SprayZet</a></li>
+					<li><a href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/3.%20TWIN%20TAPE/TAPE%20CATALOUGE.pdf"
+							target="_blank"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line">
+									<path d="M12 17V3" />
+									<path d="m6 11 6 6 6-6" />
+									<path d="M19 21H5" />
+								</svg></span>Twin Tapes</a></li>
+				</ul>
+				<ul class="nav-4">
+					<h3>Get In Touch</h3>
+					<li><a href="mailto:twin@twinindia.com"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-mail-icon lucide-mail">
+									<path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+									<rect x="2" y="4" width="20" height="16" rx="2" />
+								</svg></span>twin@twinindia.com</a></li>
+					<li><a href="mailto:sales@twinindia.com"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-mail-icon lucide-mail">
+									<path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+									<rect x="2" y="4" width="20" height="16" rx="2" />
+								</svg></span>sales@twinindia.com</a></li>
+					<li><a href="tel:919310052702"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round"
+									class="lucide lucide-phone-icon lucide-phone">
+									<path
+										d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
+								</svg></span>91-9310052702</a></li>
+				</ul>
+			</div>
+			<ul class="address">
+				<li><a href="#"><b>Office Address</b><br>A-304, Solitairian City Center, Knowledge Park III<br>Greater
+						NOIDA (UP) India - 201308</a></li>
+				<li><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Work Address</b><br>R-51, 52 & 53,
+						UPSIDC, Sikandrabad,<br>Uttar Pradesh - 203205 </a></li>
+				<ul class="socials">
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram">
+								<rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+								<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+								<line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+							</svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin">
+								<path
+									d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+								<rect width="4" height="12" x="2" y="9" />
+								<circle cx="4" cy="4" r="2" />
+							</svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube">
+								<path
+									d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+								<path d="m10 15 5-3-5-3z" />
+							</svg></a></li>
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook">
+								<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+							</svg></a></li>
+				</ul>
+			</ul>
+		</div>
+		<div class="black-strip"> </div>
+		<div class="bottom">
+			<span>©Copyright 2026. All Rights Reserved.</span>
+		</div>
+	</footer>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+
+			/* ✅ Inject CTA CSS Automatically */
+			const style = document.createElement("style");
+			style.innerHTML = `
+    .cta-button {
+      padding: 0 1.3rem;
+      height: 2.8rem;
+      border-radius: 100px;
+      background: var(--color, #ff3b3b);
+      border: none;
+      color: #fff;
+      font-family: "base", sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .cta-button > .button-content {
+      height: 1.5rem;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .cta-button > .arrow {
+      height: 1.5rem;
+      width: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-button > .arrow svg {
+      height: 1.2rem;
+      width: 1.2rem;
+      display: block;
+      transform: rotate(-45deg);
+      will-change: transform;
+      transition: 0.2s;
+    }
+
+    .cta-button:hover .arrow svg {
+      transform: rotate(0deg);
+    }
+  `;
+			document.head.appendChild(style);
+
+			/* ✅ Auto Convert Any Element with class="cta-button" */
+			window.applyCTAStyles = function () {
+				document.querySelectorAll(".cta-button").forEach((el) => {
+
+					// Prevent double processing
+					if (el.dataset.ctaProcessed) return;
+
+					// Save text
+					const text = el.textContent.trim();
+
+					// Clear content
+					el.innerHTML = "";
+
+					// Build CTA Structure
+					el.innerHTML = `
+        <span class="button-content">${text}</span>
+        <span class="arrow">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </span>
+      `;
+
+					// Mark as processed
+					el.dataset.ctaProcessed = "true";
+				});
+			}
+
+			// Run once on page load
+			window.applyCTAStyles();
+
+		});
+	</script>
+
+
+	<script src="../assets-config.js"></script>
+	<script src="../assets-apply.js"></script>
+	<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+	<script src="../assets/product-logic.js"></script>
+	<script>
+		gsap.registerPlugin(ScrollTrigger);
+
+		// Initialize Lenis Smooth Scroll
+		window.lenis = new Lenis({
+			duration: 1.2,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			direction: "vertical",
+			gestureDirection: "vertical",
+			smooth: true,
+			mouseMultiplier: 1,
+			smoothTouch: false,
+			touchMultiplier: 2,
+			infinite: false,
+		});
+
+		window.lenis.on("scroll", ScrollTrigger.update);
+		gsap.ticker.add((time) => window.lenis.raf(time * 1000));
+		gsap.ticker.lagSmoothing(0);
+
+		// Text animation setup
+		const wrapElements = (elems, wrapType, wrapClass) => {
+			elems.forEach(char => {
+				if (char.parentElement && char.parentElement.classList.contains(wrapClass)) return;
+				const wrapEl = document.createElement(wrapType);
+				wrapEl.classList = wrapClass;
+				char.parentNode.appendChild(wrapEl);
+				wrapEl.appendChild(char);
+			});
+		};
+
+		const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE']);
+
+		const hasDirectText = (el) => {
+			for (const node of el.childNodes) {
+				if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length) return true;
+			}
+			return false;
+		};
+
+		const collectTextTargets = (scopeEl) => {
+			const targets = [];
+			const stack = [...scopeEl.children];
+
+			if (hasDirectText(scopeEl) && !scopeEl.dataset.animateTextProcessed && !SKIP_TAGS.has(scopeEl.tagName)) {
+				targets.push(scopeEl);
+				return targets;
+			}
+
+			while (stack.length) {
+				const el = stack.shift();
+				if (!(el instanceof HTMLElement)) continue;
+				if (SKIP_TAGS.has(el.tagName)) continue;
+				if (el.dataset.animateTextProcessed) continue;
+
+				if (hasDirectText(el)) {
+					targets.push(el);
+					continue;
+				}
+
+				stack.unshift(...el.children);
+			}
+
+			return targets;
+		};
+
+		async function initAnimateText() {
+			if (document.readyState === 'loading') {
+				await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+			}
+
+			await new Promise(resolve => requestAnimationFrame(resolve));
+
+			const animateScopes = [...document.querySelectorAll('.animate-text')];
+			if (!animateScopes.length) return;
+
+			const targetsToAnimate = animateScopes.flatMap(collectTextTargets);
+			if (!targetsToAnimate.length) return;
+
+			targetsToAnimate.forEach(el => {
+				el.dataset.animateTextProcessed = '1';
+				el.setAttribute('data-splitting', '');
+			});
+
+			try {
+				Splitting({ target: targetsToAnimate });
+			} catch {
+				Splitting();
+			}
+
+			await new Promise(resolve => setTimeout(resolve, 50));
+
+			targetsToAnimate.forEach(el => {
+				const allChars = el.querySelectorAll('.char');
+				if (!allChars.length) return;
+
+				const tl = gsap.timeline({
+					scrollTrigger: {
+						trigger: el,
+						start: 'top bottom',
+						end: 'top top+=10%',
+						toggleActions: 'play resume resume reset'
+					}
+				});
+
+				const words = [...el.querySelectorAll('.word')];
+				if (words.length) {
+					words.forEach(word => {
+						const chars = word.querySelectorAll('.char');
+						if (!chars.length) return;
+						wrapElements(chars, 'span', 'char-wrap');
+						tl.fromTo(chars,
+							{
+								willChange: 'transform',
+								transformOrigin: '0% 50%',
+								xPercent: 105
+							},
+							{
+								duration: 1,
+								ease: 'expo',
+								xPercent: 0,
+								stagger: 0.042
+							},
+							0
+						);
+					});
+					return;
+				}
+
+				wrapElements(allChars, 'span', 'char-wrap');
+				tl.fromTo(allChars,
+					{
+						willChange: 'transform',
+						transformOrigin: '0% 50%',
+						xPercent: 105
+					},
+					{
+						duration: 1,
+						ease: 'expo',
+						xPercent: 0,
+						stagger: 0.042
+					},
+					0
+				);
+			});
+
+			await new Promise(resolve => requestAnimationFrame(resolve));
+			ScrollTrigger.refresh();
+
+			setTimeout(() => ScrollTrigger.refresh(), 100);
+			setTimeout(() => ScrollTrigger.refresh(), 500);
+		}
+
+		initAnimateText();
+
+		if (document.fonts && document.fonts.ready) {
+			document.fonts.ready.then(() => {
+				setTimeout(() => ScrollTrigger.refresh(), 100);
+			});
+		}
+
+		// Counter animation
+		const counters = document.querySelectorAll(".counter-item");
+
+		counters.forEach(counter => {
+			const originalText = counter.innerText;
+			const match = originalText.match(/(\d+)(\D*)/);
+
+			if (match) {
+				const targetNumber = match[1];
+				const suffix = match[2];
+
+				counter.innerHTML = '';
+
+				const digits = targetNumber.split("");
+
+				digits.forEach((digit, index) => {
+					const container = document.createElement("div");
+					container.classList.add("digit-container");
+
+					const strip = document.createElement("div");
+					strip.classList.add("digit-strip");
+
+					for (let i = 0; i <= 9; i++) {
+						const numberSpan = document.createElement("span");
+						numberSpan.innerText = i;
+						strip.appendChild(numberSpan);
+					}
+
+					container.appendChild(strip);
+					counter.appendChild(container);
+
+					gsap.to(strip, {
+						yPercent: -(parseInt(digit) * 10),
+						duration: 2,
+						ease: "power2.inOut",
+						delay: index * 0.1,
+						scrollTrigger: {
+							trigger: counter,
+							start: "top 85%",
+							toggleActions: "play none none reverse",
+						}
+					});
+				});
+
+				if (suffix) {
+					const suffixSpan = document.createElement("div");
+					suffixSpan.classList.add("suffix");
+					suffixSpan.innerText = suffix;
+					counter.appendChild(suffixSpan);
+				}
+			}
+		});
+
+		// Product Cards GSAP Hover Animations
+		document.querySelectorAll('.product-card').forEach((card) => {
+			const img = card.querySelector('.product-img');
+			const overlay = card.querySelector('.product-overlay');
+			const productName = card.querySelector('.product-name');
+			const productCategory = card.querySelector('.product-category');
+			const imageWrapper = card.querySelector('.product-image-wrapper');
+
+			// Create timeline for hover in
+			const hoverTimeline = gsap.timeline({ paused: true });
+
+			hoverTimeline
+				.to(card, {
+					scale: 1.05,
+					boxShadow: '0 20px 60px rgba(220, 20, 60, 0.3)',
+					duration: 0.4,
+					ease: 'power2.out'
+				}, 0)
+				.to(img, {
+					scale: 1.2,
+					rotation: 3,
+					duration: 0.6,
+					ease: 'power2.out'
+				}, 0)
+				.to(overlay, {
+					opacity: 0.7,
+					duration: 0.4,
+					ease: 'power2.out'
+				}, 0)
+				.to(productName, {
+					y: -5,
+					color: '#dc143c',
+					duration: 0.3,
+					ease: 'back.out(1.7)'
+				}, 0.1)
+				.to(productCategory, {
+					y: -5,
+					color: '#dc143c',
+					duration: 0.3,
+					ease: 'back.out(1.7)'
+				}, 0.15);
+
+			// Mouse enter
+			card.addEventListener('mouseenter', () => {
+				hoverTimeline.play();
+			});
+
+			// Mouse leave
+			card.addEventListener('mouseleave', () => {
+				hoverTimeline.reverse();
+			});
+
+			// 3D tilt effect on mouse move
+			card.addEventListener('mousemove', (e) => {
+				const rect = card.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
+
+				const centerX = rect.width / 2;
+				const centerY = rect.height / 2;
+
+				const rotateX = (y - centerY) / 10;
+				const rotateY = (centerX - x) / 10;
+
+				gsap.to(imageWrapper, {
+					rotationX: rotateX,
+					rotationY: rotateY,
+					transformPerspective: 1000,
+					duration: 0.3,
+					ease: 'power2.out'
+				});
+			});
+
+			// Reset tilt on mouse leave
+			card.addEventListener('mouseleave', () => {
+				gsap.to(imageWrapper, {
+					rotationX: 0,
+					rotationY: 0,
+					duration: 0.5,
+					ease: 'power2.out'
+				});
+			});
+		});
+
+		// Scroll-triggered entrance animation for product cards
+		gsap.utils.toArray('.product-card').forEach((card, index) => {
+			gsap.from(card, {
+				scrollTrigger: {
+					trigger: card,
+					start: 'top 90%',
+					end: 'top 60%',
+					toggleActions: 'play none none reverse'
+				},
+				y: 80,
+				opacity: 0,
+				rotation: -5,
+				duration: 0.8,
+				delay: index * 0.1,
+				ease: 'power3.out'
+			});
+		});
+	</script>
+
+	<!-- Product Detail Popup Modal -->
+	<style>
+		.product-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.85);
+			backdrop-filter: blur(8px);
+			z-index: 10001;
+			display: none;
+			justify-content: center;
+			align-items: center;
+			opacity: 0;
+		}
+
+		.modal-container {
+			background: #fff;
+			width: 95%;
+			max-width: 1200px;
+			height: 75vh;
+			border-radius: 1rem;
+			position: relative;
+			overflow: hidden;
+			display: flex;
+			flex-direction: row;
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+		}
+
+		.modal-close {
+			position: absolute;
+			top: 0.75rem;
+			right: 0.75rem;
+			background: #f0f0f0;
+			border: none;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 10;
+			transition: all 0.3s ease;
+		}
+
+		.modal-close:hover {
+			background: #ed1d21;
+			color: #fff;
+			transform: rotate(90deg);
+		}
+
+		.modal-image-col {
+			flex: 0 0 320px;
+			background: #f9f9f9;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 1.5rem;
+			gap: 1rem;
+		}
+
+		.modal-image-col img {
+			max-width: 100%;
+			max-height: 250px;
+			object-fit: contain;
+			filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+		}
+
+		/* Product Info Table Styles */
+		.product-info-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 0.5rem 0;
+			border: 1px solid #e0e0e0;
+		}
+
+		.product-info-table td {
+			padding: 0.4rem 0.8rem;
+			border: 1px solid #e0e0e0;
+			font-family: "base", sans-serif;
+			font-size: 0.8rem;
+		}
+
+		.product-info-table tr td:first-child {
+			background: #fcfcfc;
+			color: #666;
+			width: 40%;
+			text-align: left;
+			font-weight: 600;
+		}
+
+		.product-info-table tr td:last-child {
+			color: #222;
+			text-align: left;
+		}
+
+		.availability-tag {
+			margin: 0.5rem 0;
+			font-family: "base", sans-serif;
+			padding-bottom: 0.2rem;
+			font-size: 0.85rem;
+		}
+
+		.availability-tag span:first-child {
+			color: #ed1d21;
+			font-weight: 700;
+		}
+
+		.availability-tag span:last-child {
+			color: #555;
+		}
+
+		.modal-content-col {
+			flex: 1;
+			padding: 1.5rem;
+			overflow-y: auto;
+			min-height: 0;
+			overscroll-behavior: contain;
+			scrollbar-width: thin;
+			scrollbar-color: #ed1d21 #f0f0f0;
+		}
+
+		.modal-content-col::-webkit-scrollbar {
+			width: 6px;
+		}
+
+		.modal-content-col::-webkit-scrollbar-track {
+			background: #f0f0f0;
+		}
+
+		.modal-content-col::-webkit-scrollbar-thumb {
+			background-color: #ed1d21;
+			border-radius: 10px;
+		}
+
+		.modal-header h2 {
+			font-family: "Heading", sans-serif;
+			font-size: 1.5rem;
+			color: #222;
+			margin-bottom: 0.1rem;
+			line-height: 1.2;
+		}
+
+		.modal-category {
+			font-family: "base", sans-serif;
+			color: #ed1d21;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-bottom: 0.4rem;
+			font-size: 0.7rem;
+			display: block;
+		}
+
+		.modal-description {
+			font-family: "base", sans-serif;
+			color: #555;
+			line-height: 1.6;
+			margin-bottom: 0.8rem;
+			font-size: 0.8rem;
+		}
+
+		/* Grid for Features and Benefits */
+		.modal-info-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1rem;
+			margin-bottom: 0.8rem;
+		}
+
+		.modal-section {
+			margin-bottom: 0.4rem;
+		}
+
+		.modal-section h3 {
+			font-family: "Heading", sans-serif;
+			font-size: 0.95rem;
+			color: #333;
+			margin-bottom: 0.3rem;
+			border-bottom: 2px solid #eee;
+			padding-bottom: 0.2rem;
+			line-height: 1.2;
+		}
+
+		.modal-list {
+			list-style: none;
+			padding: 0;
+		}
+
+		.modal-list li {
+			font-family: "base", sans-serif;
+			font-size: 0.75rem;
+			color: #666;
+			margin-bottom: 0.2rem;
+			display: flex;
+			align-items: flex-start;
+			gap: 0.4rem;
+			line-height: 1.6;
+		}
+
+		.modal-list li::before {
+			content: '•';
+			color: #ed1d21;
+			font-weight: bold;
+		}
+
+		.modal-specs {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0.8rem;
+			background: #f8f8f8;
+			padding: 0.8rem 1.2rem;
+			border-radius: 8px;
+		}
+
+		.spec-item span:first-child {
+			display: block;
+			font-size: 0.7rem;
+			color: #888;
+			text-transform: uppercase;
+			margin-bottom: 0.1rem;
+		}
+
+		.spec-item span:last-child {
+			font-weight: 600;
+			color: #333;
+			font-size: 0.85rem;
+		}
+
+		@media (max-width: 768px) {
+			.modal-container {
+				flex-direction: column;
+				width: 95%;
+				height: 90vh;
+			}
+
+			.modal-image-col {
+				padding: 1.5rem;
+				flex: 0 0 auto;
+				min-height: 180px;
+				gap: 1rem;
+			}
+
+			.modal-image-col img {
+				max-height: 150px;
+			}
+
+			.modal-content-col {
+				padding: 1.5rem;
+			}
+
+			.modal-header h2 {
+				font-size: 1.5rem;
+			}
+
+			.modal-info-grid {
+				grid-template-columns: 1fr;
+				gap: 1rem;
+			}
+		}
+	</style>
+
+	<div class="product-modal" id="productModal">
+		<div class="modal-container">
+			<button class="modal-close" id="closeModal">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+			<div class="modal-image-col">
+				<img id="modalProductImg" src="" alt="Product Image">
+				<a href="https://api.whatsapp.com/send/?phone=9310052702&text&type=phone_number&app_absent=0"
+					target="_blank" class="cta-button">Get a Quote</a>
+			</div>
+			<div class="modal-content-col">
+				<div class="modal-header">
+					<span class="modal-category" id="modalProductCategory">Category</span>
+					<h2 id="modalProductName" style="color:#ed1d21;">Product Name</h2>
+				</div>
+
+				<p class="modal-description" id="modalProductDescription">
+					Description goes here...
+				</p>
+
+				<div class="availability-tag">
+					<span>Availability:</span> <span id="modalAvailability">In stock</span>
+				</div>
+
+				<h2 id="modalTableName"
+					style="font-family:'Heading'; font-size:1.3rem; margin-top:0.5rem; line-height: 1.2;">Product
+					Details</h2>
+				<table class="product-info-table" id="modalProductTable">
+					<!-- Dynamically populated -->
+				</table>
+
+				<div class="modal-info-grid">
+					<div class="modal-section" id="featuresSection">
+						<h3>Key Features</h3>
+						<ul class="modal-list" id="modalFeatures"></ul>
+					</div>
+					<div class="modal-section" id="benefitsSection">
+						<h3>Benefits</h3>
+						<ul class="modal-list" id="modalBenefits"></ul>
+					</div>
+				</div>
+
+				<div class="modal-section">
+					<h3>Additional Information</h3>
+					<div class="modal-specs">
+						<div class="spec-item">
+							<span>Pack Size</span>
+							<span id="modalPackSize">N/A</span>
+						</div>
+						<div class="spec-item">
+							<span>Form</span>
+							<span id="modalForm">Aerosol/Liquid</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

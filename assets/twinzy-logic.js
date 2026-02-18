@@ -1,41 +1,57 @@
 ﻿
-const productsData = {
-  "AIR FRESHNER": [
-    {
-      "name": "CITRUS",
-      "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER CITRUS.jpg",
-      "category": "AIR FRESHNER"
-    },
-    {
-      "name": "JASMINE",
-      "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER JASMINE.jpg",
-      "category": "AIR FRESHNER"
-    },
-    {
-      "name": "LAVENDER",
-      "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER LAVENDER.jpg",
-      "category": "AIR FRESHNER"
-    }
-  ],
-  "FURNITURE POLISH": [
-    {
-      "name": "FURNITURE POLISH 1",
-      "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/1.png",
-      "category": "FURNITURE POLISH"
-    },
-    {
-      "name": "FURNITURE POLISH 5",
-      "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/5.png",
-      "category": "FURNITURE POLISH"
-    }
-  ]
+let productsData = {
+    "AIR FRESHNER": [
+        {
+            "name": "CITRUS",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER CITRUS.jpg",
+            "category": "AIR FRESHNER"
+        },
+        {
+            "name": "JASMINE",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER JASMINE.jpg",
+            "category": "AIR FRESHNER"
+        },
+        {
+            "name": "LAVENDER",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER LAVENDER.jpg",
+            "category": "AIR FRESHNER"
+        }
+    ],
+    "FURNITURE POLISH": [
+        {
+            "name": "FURNITURE POLISH 1",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/1.png",
+            "category": "FURNITURE POLISH"
+        },
+        {
+            "name": "FURNITURE POLISH 5",
+            "imagePath": "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/5.png",
+            "category": "FURNITURE POLISH"
+        }
+    ]
 };
+
+// Admin panel localStorage override
+(function () {
+    try {
+        const saved = localStorage.getItem('adminProducts_twinzy');
+        if (saved) productsData = JSON.parse(saved);
+    } catch (e) { }
+})();
 
 let productDetails = {};
 
 async function fetchProductDetails() {
+    // Check localStorage first (admin panel)
     try {
-        const response = await fetch('./assets/evershine-details.json');
+        const savedDetails = localStorage.getItem('adminDetails_twinzy');
+        if (savedDetails) {
+            productDetails = JSON.parse(savedDetails);
+            return;
+        }
+    } catch (e) { }
+    try {
+        const response = await fetch('../assets/evershine-details.json');
         productDetails = await response.json();
     } catch (error) {
         console.error('Error loading product details:', error);
@@ -44,7 +60,7 @@ async function fetchProductDetails() {
 
 async function initDynamicProducts() {
     await fetchProductDetails();
-    
+
     const filtersContainer = document.querySelector('.product-filters');
     const gridContainer = document.querySelector('.products-grid');
     const countElement = document.getElementById('product-count');
@@ -57,7 +73,7 @@ async function initDynamicProducts() {
     // 1. Generate Filters
     const categories = Object.keys(productsData);
     let filterHTML = '<button class="filter-tag active" data-filter="all">All Products</button>';
-    
+
     categories.forEach(cat => {
         filterHTML += `<button class="filter-tag" data-filter="${cat}">${cat.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</button>`;
     });
@@ -69,10 +85,10 @@ async function initDynamicProducts() {
     categories.forEach(cat => {
         const products = productsData[cat];
         products.forEach(p => {
-             allProducts.push({
-                 ...p,
-                 rawCategory: cat
-             });
+            allProducts.push({
+                ...p,
+                rawCategory: cat
+            });
         });
     });
 
@@ -82,10 +98,10 @@ async function initDynamicProducts() {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.setAttribute('data-category', product.rawCategory);
-        
+
         // Image path handling
         const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
-        const imgSrc = './' + encodedPath;
+        const imgSrc = product.imageData || ('../' + encodedPath);
 
         card.innerHTML = `
             <div class="product-image-wrapper">
@@ -105,7 +121,7 @@ async function initDynamicProducts() {
 
     // Re-initialize event listeners
     attachEventListeners();
-    
+
     // Initial animation for cards
     animateCardsEntrance();
 }
@@ -120,14 +136,14 @@ function attachEventListeners() {
 
         productCards.forEach((card, index) => {
             const cardCategory = card.getAttribute('data-category');
-            
+
             if (window.gsap) gsap.killTweensOf(card);
-            
+
             if (category === 'all' || cardCategory === category) {
                 visibleCount++;
-                card.style.display = 'block'; 
+                card.style.display = 'block';
                 if (window.gsap) {
-                    gsap.fromTo(card, 
+                    gsap.fromTo(card,
                         {
                             opacity: 0,
                             x: -20,
@@ -144,13 +160,13 @@ function attachEventListeners() {
                 }
             } else {
                 if (window.gsap) {
-                   gsap.to(card, {
+                    gsap.to(card, {
                         opacity: 0,
                         x: 20,
                         duration: 0.3,
                         ease: 'power2.in',
                         onComplete: () => {
-                             card.style.display = 'none';
+                            card.style.display = 'none';
                         }
                     });
                 } else {
@@ -160,7 +176,7 @@ function attachEventListeners() {
         });
 
         if (productCountElement) {
-             gsap.to(productCountElement, {
+            gsap.to(productCountElement, {
                 scale: 1.5,
                 color: '#dc143c',
                 duration: 0.1,
@@ -205,7 +221,7 @@ function attachEventListeners() {
 
         hoverTimeline
             .to(img, {
-                rotation: 1, 
+                rotation: 1,
                 duration: 0.6,
                 ease: 'power2.out'
             }, 0)
@@ -236,7 +252,7 @@ function attachEventListeners() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             const rotateX = (y - centerY) / 50;
             const rotateY = (centerX - x) / 50;
 
@@ -284,7 +300,7 @@ function attachEventListeners() {
 
 function openProductModal(name, imgSrc, category) {
     const modal = document.getElementById('productModal');
-    
+
     // Case-insensitive lookup
     const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
     const details = productDetails[detailKey] || productDetails['default'];
@@ -337,12 +353,12 @@ function openProductModal(name, imgSrc, category) {
 
     modal.style.display = 'flex';
     gsap.set(modal, { opacity: 0 });
-    gsap.to(modal, { 
-        opacity: 1, 
+    gsap.to(modal, {
+        opacity: 1,
         duration: 0.5,
         ease: 'power2.out'
     });
-    
+
     const contentCol = modal.querySelector('.modal-content-col');
     if (contentCol) contentCol.scrollTop = 0;
 
@@ -354,15 +370,15 @@ function closeProductModal() {
     const modal = document.getElementById('productModal');
     if (!modal) return;
 
-    gsap.to(modal, { 
-        opacity: 0, 
-        duration: 0.3, 
+    gsap.to(modal, {
+        opacity: 0,
+        duration: 0.3,
         ease: 'power2.in',
         onComplete: () => {
             modal.style.display = 'none';
             document.body.style.overflow = '';
             if (window.lenis) window.lenis.start();
-        } 
+        }
     });
 }
 

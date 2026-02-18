@@ -1,4 +1,4 @@
-const productsData = {
+let productsData = {
     "CLEANERS AND DEGREASERS": [
         {
             "name": "SAFETY SOLVENT",
@@ -238,24 +238,30 @@ const productsData = {
     ]
 };
 
-// Flatten to array for easier handling if needed, or iterate
-const allProducts = [];
-Object.entries(productsData).forEach(([category, products]) => {
-    products.forEach(p => {
-        allProducts.push({
-            ...p,
-            category: category,
-            rawCategory: category,
-            filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-        });
-    });
-});
+// Admin panel localStorage override
+(function () {
+    try {
+        const saved = localStorage.getItem('adminProducts_sprayzet');
+        if (saved) productsData = JSON.parse(saved);
+    } catch (e) { }
+})();
+
+// allProducts will be rebuilt inside initDynamicProducts
+let allProducts = [];
 
 let productDetails = {};
 
 async function fetchProductDetails() {
+    // Check localStorage first (admin panel)
     try {
-        const response = await fetch('./assets/evershine-details.json'); // Reusing the same data store
+        const savedDetails = localStorage.getItem('adminDetails_sprayzet');
+        if (savedDetails) {
+            productDetails = JSON.parse(savedDetails);
+            return;
+        }
+    } catch (e) { }
+    try {
+        const response = await fetch('../assets/evershine-details.json'); // Reusing the same data store
         productDetails = await response.json();
     } catch (error) {
         console.error('Error loading product details:', error);
@@ -264,7 +270,20 @@ async function fetchProductDetails() {
 
 async function initDynamicProducts() {
     await fetchProductDetails();
-    
+
+    // Rebuild allProducts from current productsData
+    allProducts = [];
+    Object.entries(productsData).forEach(([category, products]) => {
+        products.forEach(p => {
+            allProducts.push({
+                ...p,
+                category: category,
+                rawCategory: category,
+                filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+            });
+        });
+    });
+
     const filtersContainer = document.querySelector('.product-filters');
     const gridContainer = document.querySelector('.products-grid');
     const countElement = document.getElementById('product-count');
@@ -277,7 +296,7 @@ async function initDynamicProducts() {
 
     // 1. Generate Filter Buttons
     const categories = Object.keys(productsData);
-    
+
     const allBtn = document.createElement('button');
     allBtn.className = 'filter-tag active';
     allBtn.setAttribute('data-filter', 'all');
@@ -290,7 +309,7 @@ async function initDynamicProducts() {
         btn.className = 'filter-tag';
         btn.setAttribute('data-filter', slug);
         const displayName = cat.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-        
+
         btn.textContent = displayName.replace(' And ', ' & ');
         filtersContainer.appendChild(btn);
     });
@@ -301,10 +320,10 @@ async function initDynamicProducts() {
         card.className = 'product-card';
         card.setAttribute('data-product', index + 1);
         card.setAttribute('data-category', product.filterSlug);
-        
+
         // Image path handling
         const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
-        const imgSrc = './' + encodedPath;
+        const imgSrc = product.imageData || ('../' + encodedPath);
 
         card.innerHTML = `
             <div class="product-image-wrapper">
@@ -324,7 +343,7 @@ async function initDynamicProducts() {
 
     // Re-initialize event listeners
     attachEventListeners();
-    
+
     // Initial animation for cards
     animateCardsEntrance();
 }
@@ -339,14 +358,14 @@ function attachEventListeners() {
 
         productCards.forEach((card, index) => {
             const cardCategory = card.getAttribute('data-category');
-            
+
             if (window.gsap) gsap.killTweensOf(card);
-            
+
             if (category === 'all' || cardCategory === category) {
                 visibleCount++;
-                card.style.display = 'block'; 
+                card.style.display = 'block';
                 if (window.gsap) {
-                    gsap.fromTo(card, 
+                    gsap.fromTo(card,
                         {
                             opacity: 0,
                             x: -20,
@@ -363,13 +382,13 @@ function attachEventListeners() {
                 }
             } else {
                 if (window.gsap) {
-                   gsap.to(card, {
+                    gsap.to(card, {
                         opacity: 0,
                         x: 20,
                         duration: 0.3,
                         ease: 'power2.in',
                         onComplete: () => {
-                             card.style.display = 'none';
+                            card.style.display = 'none';
                         }
                     });
                 } else {
@@ -379,7 +398,7 @@ function attachEventListeners() {
         });
 
         if (productCountElement) {
-             if (window.gsap) {
+            if (window.gsap) {
                 gsap.killTweensOf(productCountElement);
                 gsap.to(productCountElement, {
                     innerText: visibleCount,
@@ -464,7 +483,7 @@ function attachEventListeners() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             // Reduced intensity by increasing the divisor from 10 to 50
             const rotateX = (y - centerY) / 50;
             const rotateY = (centerX - x) / 50;
@@ -513,7 +532,7 @@ function attachEventListeners() {
 
 function openProductModal(name, imgSrc, category) {
     const modal = document.getElementById('productModal');
-    
+
     // Case-insensitive lookup
     const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
     const details = productDetails[detailKey] || productDetails['default'];
@@ -567,12 +586,12 @@ function openProductModal(name, imgSrc, category) {
 
     modal.style.display = 'flex';
     gsap.set(modal, { opacity: 0 });
-    gsap.to(modal, { 
-        opacity: 1, 
+    gsap.to(modal, {
+        opacity: 1,
         duration: 0.5,
         ease: 'power2.out'
     });
-    
+
     // Reset scroll position
     const contentCol = modal.querySelector('.modal-content-col');
     if (contentCol) contentCol.scrollTop = 0;
@@ -586,22 +605,22 @@ function closeProductModal() {
     const modal = document.getElementById('productModal');
     if (!modal) return;
 
-    gsap.to(modal, { 
-        opacity: 0, 
-        duration: 0.3, 
+    gsap.to(modal, {
+        opacity: 0,
+        duration: 0.3,
         ease: 'power2.in',
         onComplete: () => {
             modal.style.display = 'none';
             document.body.style.overflow = '';
             if (window.lenis) window.lenis.start();
-        } 
+        }
     });
 }
 
 function animateCardsEntrance() {
     // Check if preloader exists
     const preloader = document.getElementById('loading-overlay');
-    
+
     // Check helper
     const checkAllLoaded = () => {
         if (preloader && preloader.style.opacity !== '0') {
@@ -641,7 +660,7 @@ function animateCardsEntrance() {
     }
 
     if (!window.gsap || !window.ScrollTrigger) return;
-    
+
     gsap.utils.toArray('.product-card').forEach((card, index) => {
         // Disabled entrance animation as requested
         // gsap.from(card, {
