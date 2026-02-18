@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel – Twin Tech India</title>
+    <link rel="icon" href="data:,">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <style>
@@ -1636,13 +1637,29 @@
                 inquiriesData = d.inquiries;
 
                 // Dynamically build brands list from data keys + defaults
+                const prevBrands = BRANDS;
                 const dataBrands = Object.keys(productsData);
-                const allBrands = new Set([...BRANDS, ...dataBrands]);
-                BRANDS = Array.from(allBrands).map(b => ({
-                    key: b,
-                    label: b.charAt(0).toUpperCase() + b.slice(1).replace('-', ' '),
-                    builtin: ['evershine', 'sprayzet', 'twin-tapes', 'twinzy'].includes(b)
-                }));
+                const prevBrandKeys = Array.isArray(prevBrands)
+                    ? prevBrands
+                        .map(b => (typeof b === 'object' && b ? b.key : b))
+                        .filter(Boolean)
+                        .map(String)
+                    : [];
+
+                const allBrandKeys = Array.from(new Set([...prevBrandKeys, ...dataBrands.map(String)]));
+                BRANDS = allBrandKeys.map(key => {
+                    const existing = Array.isArray(prevBrands)
+                        ? prevBrands.find(b => (typeof b === 'object' && b ? b.key : b) === key)
+                        : null;
+
+                    const existingLabel = (existing && typeof existing === 'object') ? existing.label : null;
+                    const label = existingLabel || (key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' '));
+                    return {
+                        key,
+                        label,
+                        builtin: ['evershine', 'sprayzet', 'twin-tapes', 'twinzy'].includes(key)
+                    };
+                });
 
                 // Set initial state
                 if (BRANDS.length > 0) currentBrand = BRANDS[0].key;
