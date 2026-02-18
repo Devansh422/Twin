@@ -526,7 +526,7 @@
     <script src="../assets-config.js"></script>
     <script src="../assets-apply.js" defer></script>
     <script>
-        (function () {
+        (async function () {
             // Get brand key from URL
             const params = new URLSearchParams(window.location.search);
             const brandKey = params.get('brand');
@@ -553,13 +553,34 @@
             }
 
             // Load product data
-            const lsKey = 'adminProducts_' + brandKey;
-            const detailsKey = 'adminDetails_' + brandKey;
             let productsData = {};
             let productDetails = {};
 
-            try { const s = localStorage.getItem(lsKey); if (s) productsData = JSON.parse(s); } catch (e) { }
-            try { const s = localStorage.getItem(detailsKey); if (s) productDetails = JSON.parse(s); } catch (e) { }
+            try {
+                const res = await fetch(`../api/products.php?brand=${encodeURIComponent(brandKey)}`);
+                const api = await res.json();
+                if (api.success && api.data) {
+                    productsData = api.data;
+                    Object.values(api.data).forEach(products => {
+                        products.forEach(p => {
+                            if (p.details) {
+                                productDetails[p.name] = { ...p.details, description: p.details.description || p.description };
+                            }
+                        });
+                    });
+                }
+            } catch (e) {
+                console.error('Failed to load brand products from API:', e);
+            }
+
+            // Fallback details for items without DB details
+            try {
+                const detailsResp = await fetch('../assets/evershine-details.json');
+                const staticDetails = await detailsResp.json();
+                Object.keys(staticDetails).forEach(k => {
+                    if (!productDetails[k]) productDetails[k] = staticDetails[k];
+                });
+            } catch (e) { }
 
             // Build products
             const allProducts = [];
