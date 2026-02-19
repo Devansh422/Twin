@@ -12,26 +12,12 @@
         </div>
         <div class="about-content-col">
             <span class="eyebrow">Who We Are</span>
-            <h2>Innovating Industrial & consumer Solutions</h2>
-            <p class="lead">Twin Tech India Pvt. Ltd is a premier manufacturer and supplier of aerosols, sprays, and specialty machines.</p>
-            <p>Our flagship brand, <strong>SPRAYZET</strong>, leads with custom-designed, biodegradable aerosols for agriculture, engineering, and food industries. From "Evershine" car care to "Twinzy" air deodorizers, we deliver private label excellence built on quality and efficiency.</p>
-            
-            <ul class="highlights">
-                <li>
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <strong>Custom Manufacturing</strong>
-                        <span>Tailored aerosol and chemical solutions.</span>
-                    </div>
-                </li>
-                <li>
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <strong>Eco-Friendly</strong>
-                        <span>Biodegradable products meeting global standards.</span>
-                    </div>
-                </li>
-            </ul>
+            <h2>Innovating Industrial & Consumer Solutions Since 2000</h2>
+            <p class="lead"><b>Twin Tech India Pvt. Ltd.</b> is a leading manufacturer of industrial maintenance aerosols, car care products, self-adhesive tapes, and home care solutions.</p>
+            <p>With over <strong>25 years of industry experience</strong>, we specialize in delivering high-performance products designed for durability, efficiency, and reliability across industrial and consumer applications.
+From precision-engineered maintenance sprays to premium automotive care and strong adhesive solutions, our products are manufactured under strict quality standards to ensure consistent performance.
+<br><strong>We also provide contract aerosol packaging with private label capabilities, ensuring quality and efficiency.</strong> 
+</p>
 
             <a href="about-us/" class="cta-button" style="width: fit-content">
                 Discover More

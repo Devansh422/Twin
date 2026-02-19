@@ -219,6 +219,16 @@
 </head>
 
 <body>
+		.hero-cta-actions {
+			display: flex;
+			gap: 1rem;
+		}
+
+		@media (max-width: 768px) {
+			.hero-cta-actions {
+				flex-direction: column;
+			}
+		}
 	<div id="loading-overlay"
 		style="position: fixed; inset: 0; background: #ED1D21; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s;">
 		<div
@@ -342,7 +352,7 @@
 			<h1>Twinzy Home Care<br>Freshness Reimagined</h1>
 			<span class="sub-text">Premium home care products aimed at revitalizing your living spaces and preserving
 				your furniture's beauty</span>
-			<div style="display:flex; gap: 1rem;">
+			<div class="hero-cta-actions">
 				<button class="cta-button" style="font-size: 0.9rem;">Request Quote</button>
 				<button class="cta-button" style="font-size: 0.9rem;">Download Catalog</button>
 			</div>

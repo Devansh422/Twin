@@ -9,6 +9,17 @@
 	<link rel="stylesheet" type="text/css" href="../footer.css">
 	<title>Twin Tapes - Twin Tech India</title>
 	<style>
+		.hero-cta-actions {
+			display: flex;
+			gap: 1rem;
+		}
+
+		@media (max-width: 768px) {
+			.hero-cta-actions {
+				flex-direction: column;
+			}
+		}
+
 		/* Products Showcase Section */
 		.products-showcase {
 			padding-top: 8rem;
@@ -342,7 +353,7 @@
 			<h1>Twin Tapes<br>Bonding Excellence</h1>
 			<span class="sub-text">High-performance adhesive tapes engineered for industrial, commercial, and domestic
 				applications.</span>
-			<div style="display:flex; gap: 1rem;">
+			<div class="hero-cta-actions">
 				<button class="cta-button" style="font-size: 0.9rem;">Request Quote</button>
 				<a class="cta-button" style="font-size: 0.9rem;"
 					href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/3.%20TWIN%20TAPE/TAPE%20CATALOUGE.pdf"

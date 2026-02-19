@@ -29,8 +29,8 @@
 
     'work-section': `
       <h2>Our Brands</h2>
-      <h1 class="animate-text">Powering Progress Through Innovation</h1>
-      <p class="details">Twin Tech India Pvt. Ltd. drive excellence through three specialized brands: SprayZet for industrial maintenance, Evershine for high-performance car care, and Twin Tapes for precision adhesive solutions.</p>
+      <h1 class="animate-text">Engineering Excellence Through Trusted Brands</h1>
+      <p class="details">Twin Tech India Pvt. Ltd. drive excellence through three specialized brands delivering performance, precision, and reliability across industrial, automotive, and adhesive solutions.</p>
     `,
 
     'products-section': `

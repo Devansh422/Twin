@@ -9,6 +9,18 @@
 	<link rel="stylesheet" type="text/css" href="../footer.css">
 	<title>Car Care Products - Twin Tech India</title>
 	<style>
+		.hero-cta-actions {
+			display: flex;
+			gap: 1rem;
+		}
+
+		@media (max-width: 768px) {
+			.hero-cta-actions {
+				flex-direction: column;
+				gap: 0rem;
+			}
+		}
+
 		/* Products Showcase Section */
 		.products-showcase {
 			padding-top: 8rem;
@@ -342,7 +354,7 @@
 			<h1>Car Care Products<br>That Shine</h1>
 			<span class="sub-text">Premium automotive care solutions designed to protect, restore, and maintain your
 				vehicle's beauty and performance</span>
-			<div style="display:flex; gap: 1rem;">
+			<div class="hero-cta-actions">
 				<button class="cta-button" style="font-size: 0.9rem;">Request Quote</button>
 				<a class="cta-button" style="font-size: 0.9rem;"
 					href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf"
