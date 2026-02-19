@@ -1,4 +1,21 @@
+for evershine 
+common product details table is
+Packing Type: Cans
+
+Packaging: 24 Pcs in one box
+
+Packaging Size: 500 ml / 700 ml cans
+
+
 for sprayzet
+common details for the table
+Brand: Sprayzet
+
+Packing Type: Cans
+
+Packaging: 24 Pcs in one box
+
+Packaging Size: 700 ml / 500 ml cans
 
 Part No.
 Product Name
