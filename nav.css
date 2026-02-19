@@ -541,3 +541,34 @@ nav .search-toggle{
 		height: 40px;
 	}
 }
+
+@media (max-width: 576px){
+	.search-overlay{
+		padding-top: 1rem;
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+		padding-bottom: 1rem;
+	}
+
+	.search-container{
+		width: 100%;
+		max-width: none;
+		max-height: calc(100dvh - 2rem);
+		display: flex;
+		flex-direction: column;
+	}
+
+	.search-input-wrapper{
+		padding: 0.75rem 0.9rem;
+	}
+
+	#global-search-input{
+		font-size: 16px;
+	}
+
+	.search-results{
+		max-height: none;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+}
