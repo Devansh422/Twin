@@ -1183,8 +1183,9 @@
 			}
 		});
 
-		// Product Cards GSAP Hover Animations
-		document.querySelectorAll('.product-card').forEach((card) => {
+		// Product Cards GSAP Hover Animations (disable on touch/mobile)
+		const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+		if (canHover) document.querySelectorAll('.product-card').forEach((card) => {
 			const img = card.querySelector('.product-img');
 			const overlay = card.querySelector('.product-overlay');
 			const productName = card.querySelector('.product-name');

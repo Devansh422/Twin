@@ -92,6 +92,10 @@ nav button{
 	cursor: pointer;
 }
 
+nav .nav-toggle{
+	display: none;
+}
+
 nav .action_buttons button{
 	color: #000;
 }
@@ -227,4 +231,123 @@ nav .subdropdown-menu li{
 nav .subdropdown-menu li a{
 	height: 2.5rem;
 	padding: 0 1rem;
+}
+
+@media (max-width: 1023px){
+	nav{
+		padding: 0.5rem 1rem;
+		width: 100%;
+	}
+
+	nav .logo{ width: 7.5rem; }
+
+	nav .nav-toggle{
+		display: flex;
+		color: #000;
+	}
+
+	nav ul.navigation{
+		position: fixed;
+		top: 4.2rem;
+		left: 0;
+		right: 0;
+		flex-direction: column;
+		gap: 0;
+		padding: 0.75rem 1rem;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		max-height: calc(100vh - 4.2rem);
+		overflow: auto;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-10px);
+		transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+		z-index: 9999998;
+	}
+
+	nav.nav-open ul.navigation{
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	nav ul li{
+		height: auto;
+		justify-content: flex-start;
+		width: 100%;
+		overflow: visible;
+	}
+
+	nav ul li a{
+		justify-content: space-between;
+		padding: 0.75rem 0.5rem;
+		width: 100%;
+	}
+
+	/* Mobile dropdown: tap-to-open via .open */
+	nav .dropdown-menu{
+		position: static;
+		box-shadow: none;
+		margin-top: 0;
+		transform: none;
+		opacity: 1;
+		visibility: visible;
+		display: none;
+		padding: 0.25rem 0;
+		border-radius: 0;
+		background: transparent;
+	}
+
+	/* On mobile, ignore :hover flyout behavior entirely */
+	nav ul li.has-dropdown:hover > .dropdown-menu{
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+	}
+
+	nav ul li.has-dropdown.open > .dropdown-menu{
+		display: flex;
+	}
+
+	/* Mobile subdropdown: stack under parent instead of flyout */
+	nav .subdropdown-menu{
+		position: static;
+		box-shadow: none;
+		margin-left: 0;
+		transform: none;
+		opacity: 1;
+		visibility: visible;
+		display: none;
+		padding: 0.25rem 0;
+		border-radius: 0;
+		background: transparent;
+	}
+
+	nav .dropdown-menu li.has-subdropdown:hover > .subdropdown-menu{
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+	}
+
+	nav .dropdown-menu li.has-subdropdown.open > .subdropdown-menu{
+		display: flex;
+	}
+
+	nav .subdropdown-menu li a{
+		padding-left: 2rem;
+	}
+
+	nav .dropdown-menu li a{
+		padding-left: 1.25rem;
+	}
+
+	nav .dropdown-menu li a:hover{
+		background: transparent;
+	}
+
+	nav .dropdown-menu li a:hover span{
+		width: 0;
+	}
 }

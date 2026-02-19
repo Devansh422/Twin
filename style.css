@@ -425,8 +425,7 @@ img{
 /* Update Media query for numbers */
 @media (max-width: 1000px){
   .numbers {
-     gap: 1.5rem;
-     padding: 3rem;
+     padding: 2rem;
   }
 }
 
@@ -876,8 +875,7 @@ img{
         @media (max-width: 1023px) {
             .content-showcase-wrapper {
                 height: auto;
-                min-height: 100vh;
-                padding-top: 100px; /* Space for nav */
+                padding: 1rem;
             }
             .showcase-grid {
                 flex-direction: column;
@@ -913,6 +911,15 @@ img{
                 margin-bottom: 0.5rem;
                 font-size: 1.2rem;
             }
+
+            .item-card .item-info-panel .item-desc-wrapper{
+              text-align: justify;
+              opacity: 1;
+            }
+
+            .num-card{
+              padding: 1rem;
+            }
         }
 
 
@@ -943,14 +950,16 @@ img{
   margin-bottom: -1rem;
 }
 
-.item-card:hover .item-visual .bg-logo .logo.sparyzet{
-  left: 0;
-  bottom: 40%;
-  transform: translateX(0);
-}
+@media (min-width: 1024px) {
+  .item-card:hover .item-visual .bg-logo .logo.sparyzet{
+    left: 0;
+    bottom: 40%;
+    transform: translateX(0);
+  }
 
-.item-card:hover .item-visual .bg-logo .logo.evershine{
-  left: 100%;
-  bottom: 20%;
-  transform: translateX(-100%);
+  .item-card:hover .item-visual .bg-logo .logo.evershine{
+    left: 100%;
+    bottom: 20%;
+    transform: translateX(-100%);
+  }
 }
