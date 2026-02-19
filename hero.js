@@ -84,42 +84,49 @@
 
   function setupBrandSlider() {
     const tracks = ["track-1", "track-2", "track-3"];
-    const imageFolder = "brand/";
-    const totalImages = 6;
+    const imageFolder = "assets/Logos/";
+    // All logo images: Asset 335.png to Asset 430.png (96 total)
+    const allImages = [];
+    for (let i = 335; i <= 430; i++) {
+      allImages.push(`Asset ${i}.png`);
+    }
+
+    // Split images across 3 tracks (32 each)
+    const perTrack = Math.ceil(allImages.length / 3);
+    const trackImages = [
+      allImages.slice(0, perTrack),
+      allImages.slice(perTrack, perTrack * 2),
+      allImages.slice(perTrack * 2)
+    ];
 
     tracks.forEach((trackId, idx) => {
       const track = document.getElementById(trackId);
       if (!track) return;
 
-      function createImage(index) {
+      const images = trackImages[idx];
+
+      function createImage(filename) {
         const img = document.createElement("img");
-        img.src = `${imageFolder}img-${index}.jpg`;
-        img.alt = `Brand ${index}`;
+        // Filenames contain spaces; encode to a safe URL.
+        img.src = encodeURI(`${imageFolder}${filename}`);
+        img.alt = `Client Logo`;
         img.classList.add("brand-logo");
         return img;
       }
 
-      // Fill tracks with images
-      // Row 1: 1-6, Row 2: 4-6 then 1-3, Row 3: 2-6 then 1
-      const order = [
-        [1, 2, 3, 4, 5, 6],
-        [4, 5, 6, 1, 2, 3],
-        [3, 6, 2, 5, 1, 4]
-      ];
-
-      const currentOrder = order[idx] || order[0];
-
-      // Clone enough times to cover viewport + buffer
-      // Duplicating 6 times to ensure no gaps even on very wide screens
-      for (let k = 0; k < 6; k++) {
-        currentOrder.forEach(i => track.appendChild(createImage(i)));
-      } // Duplicate for loop
+      // Duplicate enough times to ensure seamless infinite scroll
+      // Keep this an even number so the -50% loop boundary stays seamless.
+      const duplicates = 4;
+      for (let k = 0; k < duplicates; k++) {
+        images.forEach(file => track.appendChild(createImage(file)));
+      }
 
       if (window.gsap) {
         // Wait for images to load to get correct widths if needed, 
         // though % based works, we use a small timeout to let the browser settle
         setTimeout(() => {
-          const speed = 15 + (idx * 5); // Slightly faster
+          // Much slower durations for easier reading of logos
+          const speed = 90 + (idx * 15);
           const direction = (idx % 2 === 0) ? -1 : 1;
 
           if (direction === 1) {
