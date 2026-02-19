@@ -1,12 +1,16 @@
 <?php
 // api/manage_content.php
-// Combined logic for Blogs and Inquiries deletion
+// Combined logic for Blogs and Inquiries management
 require_once 'config.php';
 session_start();
 if (!isset($_SESSION['admin_logged_in']))
     sendResponse(false, 'Unauthorized');
 
 $pdo = getDBConnection();
+if (!$pdo) {
+    sendResponse(false, 'Database connection failed');
+}
+
 $input = json_decode(file_get_contents('php://input'), true);
 
 $type = $_GET['type'] ?? ''; // 'blog' or 'inquiry'
@@ -15,14 +19,23 @@ if ($type === 'blog') {
     $action = $input['action'] ?? '';
 
     if ($action === 'save') {
-        $id = $input['id'] ?? null; // If ID exists, it's an edit
-        $title = $input['title'];
-        $cat = $input['category'];
-        $date = $input['date'];
-        $img = $input['image'];
-        $imgDat = $input['imageData'];
-        $exc = $input['excerpt'];
-        $cont = $input['content'];
+        $id = isset($input['id']) && is_numeric($input['id']) ? (int)$input['id'] : null;
+        $title = trim($input['title'] ?? '');
+        $cat = trim($input['category'] ?? 'Uncategorized');
+        $date = $input['date'] ?? null;
+        $img = trim($input['image'] ?? '');
+        $imgDat = $input['imageData'] ?? null;
+        $exc = trim($input['excerpt'] ?? '');
+        $cont = trim($input['content'] ?? '');
+
+        if (!$title) {
+            sendResponse(false, 'Title is required');
+        }
+
+        // Validate date format
+        if ($date && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            sendResponse(false, 'Invalid date format');
+        }
 
         if ($id) {
             $stmt = $pdo->prepare("UPDATE blog_posts SET title=?, category=?, published_date=?, image_path=?, image_data=?, excerpt=?, content=? WHERE id=?");
@@ -34,20 +47,29 @@ if ($type === 'blog') {
         sendResponse(true, 'Blog post saved');
 
     } elseif ($action === 'delete') {
-        $id = $input['id'];
+        $id = isset($input['id']) && is_numeric($input['id']) ? (int)$input['id'] : 0;
+        if (!$id) {
+            sendResponse(false, 'Missing blog post ID');
+        }
         $stmt = $pdo->prepare("DELETE FROM blog_posts WHERE id=?");
         $stmt->execute([$id]);
         sendResponse(true, 'Blog post deleted');
+    } else {
+        sendResponse(false, 'Invalid action');
     }
 
 } elseif ($type === 'inquiry') {
-    // Only delete needed for inquiries
     $action = $input['action'] ?? '';
     if ($action === 'delete') {
-        $id = $input['id'];
+        $id = isset($input['id']) && is_numeric($input['id']) ? (int)$input['id'] : 0;
+        if (!$id) {
+            sendResponse(false, 'Missing inquiry ID');
+        }
         $stmt = $pdo->prepare("DELETE FROM inquiries WHERE id=?");
         $stmt->execute([$id]);
         sendResponse(true, 'Inquiry deleted');
+    } else {
+        sendResponse(false, 'Invalid action');
     }
 } else {
     sendResponse(false, 'Invalid type');

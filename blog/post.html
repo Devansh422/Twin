@@ -4,12 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Twin Tech</title>
+    <title>Blog Post - Twin Tech</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link rel="stylesheet" type="text/css" href="../nav.css">
     <link rel="stylesheet" type="text/css" href="../footer.css">
     <link rel="stylesheet" type="text/css" href="../blog.css">
     <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=rALIt6YzcIzf"></script>
+    <style>
+        .blog-post-container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        .blog-post-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #ED1D21;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .blog-post-back:hover {
+            color: #333;
+        }
+
+        .blog-post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-post-category {
+            background: #ED1D21;
+            color: #fff;
+            padding: 0.2rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .blog-post-date {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .blog-post-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #222;
+        }
+
+        .blog-post-cover {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .blog-post-excerpt {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            font-style: italic;
+        }
+
+        .blog-post-content {
+            font-size: 1.05rem;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .blog-post-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .blog-post-loading {
+            text-align: center;
+            padding: 6rem 2rem;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .blog-post-error {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .blog-post-error h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .blog-post-error p {
+            color: #888;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post-error a {
+            color: #ED1D21;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .blog-post-title {
+                font-size: 1.8rem;
+            }
+
+            .blog-post-container {
+                padding: 2rem 1rem 3rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -21,34 +143,33 @@
         <ul class="navigation">
             <li><a href="../index.html">Home</a></li>
             <li class="has-dropdown">
-                <a href="../about-us/" class="dropdown">About Us <span><svg
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                <a href="../about-us/" class="dropdown">About Us <span><svg xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-chevron-down-icon lucide-chevron-down">
                             <path d="m6 9 6 6 6-6" />
                         </svg></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="../about-us/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../about-us/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Overview</a></li>
-                    <li><a href="../customer/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../customer/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Customer Focus</a></li>
-                    <li><a href="../application/"><span><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-arrow-right">
+                    <li><a href="../application/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Application Areas</a></li>
-                    <li><a href="../career/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../career/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
@@ -63,20 +184,20 @@
                             <path d="m6 9 6 6 6-6" />
                         </svg></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="../evershine/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../evershine/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Evershine</a></li>
-                    <li><a href="../sprayzet/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../sprayzet/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>SprayZet</a></li>
-                    <li><a href="../twin-tapes/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../twin-tapes/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
@@ -87,8 +208,8 @@
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Silox</a></li>
-                    <li><a href="../twinzy/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../twinzy/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
@@ -114,72 +235,9 @@
         </div>
     </nav>
 
-    <header class="blog-header">
-        <h1>Our Blog</h1>
-        <p>Insights, news, and stories from the Twin Tech team.</p>
-    </header>
-
-    <main class="blog-section">
-        <div class="blog-grid" id="blogGrid">
-            <!-- Blog cards rendered dynamically by JS -->
-        </div>
-    </main>
-
-    <script src="../blog-data.js"></script>
-    <script>
-        (function () {
-            function escapeHtml(str) {
-                if (!str) return '';
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            async function getBlogPosts() {
-                try {
-                    const res = await fetch('../api/blogs.php');
-                    const data = await res.json();
-                    if (data.success && data.data && data.data.length > 0) {
-                        return data.data;
-                    }
-                } catch (e) {
-                    console.error('Error fetching blogs from API:', e);
-                }
-                return typeof defaultBlogPosts !== 'undefined' ? defaultBlogPosts : [];
-            }
-
-            async function renderBlogGrid() {
-                const grid = document.getElementById('blogGrid');
-                const posts = await getBlogPosts();
-                if (!posts.length) {
-                    grid.innerHTML = '<p style="text-align:center;color:#888;padding:4rem 0;">No blog posts yet.</p>';
-                    return;
-                }
-                grid.innerHTML = posts.map(post => {
-                    const img = post.imageData || post.image || '';
-                    const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
-                    const postLink = post.id ? 'post.html?id=' + encodeURIComponent(post.id) : '#';
-                    return `<div class="blog-card">
-            <div class="card-image">
-              ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(post.title)}">` : '<div style="height:200px;background:#eee;display:flex;align-items:center;justify-content:center;color:#aaa;">No Image</div>'}
-            </div>
-            <div class="card-content">
-              <span class="category">${escapeHtml(post.category) || 'Uncategorized'}</span>
-              <h3>${escapeHtml(post.title)}</h3>
-              <p class="excerpt">${escapeHtml(post.excerpt)}</p>
-              <div class="card-footer">
-                <a href="${postLink}" class="read-more-btn">Read More &rarr;</a>
-                <span class="post-meta">${dateStr}</span>
-              </div>
-            </div>
-          </div>`;
-                }).join('');
-            }
-
-            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderBlogGrid);
-            else renderBlogGrid();
-        })();
-    </script>
+    <div class="blog-post-container" id="postContainer">
+        <div class="blog-post-loading" id="postLoading">Loading post...</div>
+    </div>
 
     <div class="black-strip"></div>
     <footer>
@@ -204,22 +262,22 @@
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Home</a></li>
-                    <li><a href="../about-us/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../about-us/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>About Us</a></li>
-                    <li><a href="../customer/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../customer/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Our Clients</a></li>
-                    <li><a href="../contact-us/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../contact-us/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
@@ -228,22 +286,22 @@
                 </ul>
                 <ul class="nav-2">
                     <h3>Brands</h3>
-                    <li><a href="../evershine/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../evershine/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Evershine</a></li>
-                    <li><a href="../sprayzet/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../sprayzet/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>SprayZet</a></li>
-                    <li><a href="../twin-tapes/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../twin-tapes/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
@@ -256,8 +314,8 @@
                                     <path d="M5 12h14" />
                                     <path d="m12 5 7 7-7 7" />
                                 </svg></span>Silox</a></li>
-                    <li><a href="../twinzy/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li><a href="../twinzy/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-arrow-right-icon lucide-arrow-right">
                                     <path d="M5 12h14" />
@@ -360,6 +418,79 @@
             <span>©Copyright 2026. All Rights Reserved.</span>
         </div>
     </footer>
+
+    <script src="../blog-data.js"></script>
+    <script>
+        (function () {
+            function escapeHtml(str) {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            function formatContent(text) {
+                if (!text) return '<p>No content available for this post yet.</p>';
+                // Convert plain text to paragraphs (split on double newlines)
+                return text.split(/\n\s*\n/).map(para => '<p>' + escapeHtml(para.trim()) + '</p>').join('');
+            }
+
+            async function loadPost() {
+                const params = new URLSearchParams(window.location.search);
+                const postId = params.get('id');
+                const container = document.getElementById('postContainer');
+                const loading = document.getElementById('postLoading');
+
+                if (!postId) {
+                    container.innerHTML = `<div class="blog-post-error"><h2>Post Not Found</h2><p>No blog post ID was specified.</p><a href="index.html">&larr; Back to Blog</a></div>`;
+                    return;
+                }
+
+                let post = null;
+
+                // Try API first
+                try {
+                    const res = await fetch('../api/blogs.php?id=' + encodeURIComponent(postId));
+                    const data = await res.json();
+                    if (data.success && data.data) {
+                        post = data.data;
+                    }
+                } catch (e) {
+                    console.error('Error fetching blog post:', e);
+                }
+
+                // Fallback to static data
+                if (!post && typeof defaultBlogPosts !== 'undefined') {
+                    post = defaultBlogPosts.find(p => String(p.id) === String(postId));
+                }
+
+                if (!post) {
+                    container.innerHTML = `<div class="blog-post-error"><h2>Post Not Found</h2><p>The blog post you're looking for doesn't exist.</p><a href="index.html">&larr; Back to Blog</a></div>`;
+                    return;
+                }
+
+                const img = post.imageData || post.image || '';
+                const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : '';
+
+                document.title = escapeHtml(post.title) + ' - Twin Tech Blog';
+
+                container.innerHTML = `
+                    <a href="index.html" class="blog-post-back">&larr; Back to Blog</a>
+                    <div class="blog-post-meta">
+                        <span class="blog-post-category">${escapeHtml(post.category) || 'Uncategorized'}</span>
+                        <span class="blog-post-date">${dateStr}</span>
+                    </div>
+                    <h1 class="blog-post-title">${escapeHtml(post.title)}</h1>
+                    ${img ? `<img class="blog-post-cover" src="${escapeHtml(img)}" alt="${escapeHtml(post.title)}" onerror="this.style.display='none'">` : ''}
+                    ${post.excerpt ? `<div class="blog-post-excerpt">${escapeHtml(post.excerpt)}</div>` : ''}
+                    <div class="blog-post-content">${formatContent(post.content)}</div>
+                `;
+            }
+
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadPost);
+            else loadPost();
+        })();
+    </script>
     <script src="../app.js"></script>
     <script src="../hero.js"></script>
     <script src="../assets-config.js"></script>

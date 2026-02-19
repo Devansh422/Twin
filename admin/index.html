@@ -1747,9 +1747,10 @@
                 html += `<div class="category-section"><div class="category-header"><h3>${cat} <span class="cat-count">(${prods.length})</span></h3></div><div class="products-grid-admin">`;
                 prods.forEach((p, i) => {
                     let imgSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
+                    const safeName = escapeHtmlAttr(p.name);
                     html += `<div class="product-card-admin">
-        <img class="card-img" src="${imgSrc}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
-        <div class="card-body"><div class="card-name" title="${p.name}">${p.name}</div><div class="card-category">${cat}</div></div>
+        <img class="card-img" src="${escapeHtmlAttr(imgSrc)}" alt="${safeName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
+        <div class="card-body"><div class="card-name" title="${safeName}">${safeName}</div><div class="card-category">${escapeHtmlAttr(cat)}</div></div>
         <div class="card-actions"><button class="btn btn-secondary btn-sm" onclick="openEditProductModal('${encodeURIComponent(cat)}',${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteProduct('${encodeURIComponent(cat)}',${i})">🗑 Delete</button></div>
       </div>`;
                 });
@@ -1762,20 +1763,24 @@
         function renderBlogPosts() {
             const c = document.getElementById('mainContent');
             let posts = blogPosts;
-            if (searchQuery) posts = posts.filter(p => p.title.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery));
+            if (searchQuery) posts = posts.filter(p => p.title.toLowerCase().includes(searchQuery) || (p.category||'').toLowerCase().includes(searchQuery));
             document.getElementById('countBadge').textContent = posts.length + ' post' + (posts.length !== 1 ? 's' : '');
             if (!posts.length) { c.innerHTML = '<div class="empty-state"><div class="icon">📝</div><h3>No blog posts</h3><p>Create your first post to get started.</p></div>'; return; }
             c.innerHTML = '<div class="blog-grid-admin">' + posts.map((p, i) => {
                 const img = p.imageData || p.image || '';
                 const d = p.date ? new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+                const safeTitle = escapeHtmlAttr(p.title);
+                const safeCat = escapeHtmlAttr(p.category || 'Uncategorized');
+                const safeExcerpt = escapeHtmlAttr(p.excerpt || '');
+                const viewLink = p.id ? '../blog/post.html?id=' + encodeURIComponent(p.id) : '#';
                 return `<div class="blog-card-admin">
-      ${img ? `<img class="blog-img" src="${img}" alt="${p.title}" onerror="this.style.display='none'">` : ''}
+      ${img ? `<img class="blog-img" src="${escapeHtmlAttr(img)}" alt="${safeTitle}" onerror="this.style.display='none'">` : ''}
       <div class="blog-body">
-        <div class="blog-meta"><span class="blog-cat">${p.category || 'Uncategorized'}</span><span class="blog-date">${d}</span></div>
-        <div class="blog-title">${p.title}</div>
-        <div class="blog-excerpt">${p.excerpt || ''}</div>
+        <div class="blog-meta"><span class="blog-cat">${safeCat}</span><span class="blog-date">${d}</span></div>
+        <div class="blog-title">${safeTitle}</div>
+        <div class="blog-excerpt">${safeExcerpt}</div>
       </div>
-      <div class="card-actions"><button class="btn btn-secondary btn-sm" onclick="openEditBlogModal(${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteBlog(${i})">🗑 Delete</button></div>
+      <div class="card-actions"><a class="btn btn-secondary btn-sm" href="${viewLink}" target="_blank" style="text-decoration:none">👁 View</a><button class="btn btn-secondary btn-sm" onclick="openEditBlogModal(${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteBlog(${i})">🗑 Delete</button></div>
     </div>`;
             }).join('') + '</div>';
         }
@@ -2019,18 +2024,6 @@
         /* ═══════════════════════════════════════════
            INQUIRIES
            ═══════════════════════════════════════════ */
-        function getInquiries() {
-            try { return JSON.parse(localStorage.getItem('adminInquiries') || '[]'); } catch { return []; }
-        }
-        function saveInquiries(data) { localStorage.setItem('adminInquiries', JSON.stringify(data)); }
-
-        function switchToInquiries() {
-            currentMode = 'inquiries';
-            document.getElementById('currentTitle').textContent = 'Inquiries';
-            document.getElementById('addBtn').style.display = 'none'; // Hide add button
-            document.getElementById('searchInput').value = ''; searchQuery = '';
-            renderBrandList(); renderInquiries();
-        }
 
         function renderInquiries() {
             const c = document.getElementById('mainContent');
@@ -2119,9 +2112,38 @@
            EXPORT
            ═══════════════════════════════════════════ */
         /* ═══════════════════════════════════════════
-           EXPORT & INIT (Already defined above)
+           HELPERS
            ═══════════════════════════════════════════ */
-        // Removed duplicate exportAllData and init functions.
+        function escapeHtmlAttr(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        /* ═══════════════════════════════════════════
+           EXPORT
+           ═══════════════════════════════════════════ */
+        function exportAllData() {
+            const exportData = {
+                exportDate: new Date().toISOString(),
+                brands: BRANDS,
+                products: productsData,
+                details: detailsData,
+                blogPosts: blogPosts,
+                inquiries: inquiriesData
+            };
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'twin-tech-export-' + new Date().toISOString().slice(0, 10) + '.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Data exported successfully!', 'success');
+        }
 
         /* ═══════════════════════════════════════════
            TOAST

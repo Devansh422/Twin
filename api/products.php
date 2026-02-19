@@ -1,12 +1,13 @@
 <?php
 // api/products.php
 require_once 'config.php';
-// Auth check moved to POST method only
-// session_start(); // already called in config or here? config doesn't start session.
 session_start();
 
 $pdo = getDBConnection();
-$input = json_decode(file_get_contents('php://input'), true);
+if (!$pdo) {
+    sendResponse(false, 'Database connection failed');
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
@@ -44,15 +45,19 @@ if ($method === 'POST') {
     if (!isset($_SESSION['admin_logged_in']))
         sendResponse(false, 'Unauthorized');
 
-    // Add or Edit
-    $action = $input['action'] ?? 'add';
-    $brand = $input['brand'] ?? '';
-    $category = $input['category'] ?? '';
-    $name = $input['name'] ?? '';
+    $input = json_decode(file_get_contents('php://input'), true);
+    if (!$input) {
+        sendResponse(false, 'Invalid JSON input');
+    }
 
-    $desc = $input['description'] ?? '';
+    $action = $input['action'] ?? 'add';
+    $brand = trim($input['brand'] ?? '');
+    $category = trim($input['category'] ?? '');
+    $name = trim($input['name'] ?? '');
+
+    $desc = trim($input['description'] ?? '');
     $details = json_encode($input['details'] ?? []);
-    $imgPath = $input['imagePath'] ?? '';
+    $imgPath = trim($input['imagePath'] ?? '');
     $imgData = $input['imageData'] ?? null;
 
     if ($action === 'add') {
@@ -64,17 +69,20 @@ if ($method === 'POST') {
     } elseif ($action === 'edit') {
         if (!$brand || !$category || !$name)
             sendResponse(false, 'Missing required fields');
-        $id = $input['id'] ?? 0;
+        $id = isset($input['id']) && is_numeric($input['id']) ? (int)$input['id'] : 0;
+        if (!$id) sendResponse(false, 'Missing product ID');
         $stmt = $pdo->prepare("UPDATE products SET brand=?, category=?, name=?, image_path=?, image_data=?, description=?, details=? WHERE id=?");
         $stmt->execute([$brand, $category, $name, $imgPath, $imgData, $desc, $details, $id]);
         sendResponse(true, 'Product updated');
     } elseif ($action === 'delete') {
-        $id = $input['id'] ?? 0;
+        $id = isset($input['id']) && is_numeric($input['id']) ? (int)$input['id'] : 0;
         if (!$id)
-            sendResponse(false, 'Missing id');
+            sendResponse(false, 'Missing product ID');
         $stmt = $pdo->prepare("DELETE FROM products WHERE id=?");
         $stmt->execute([$id]);
         sendResponse(true, 'Product deleted');
+    } else {
+        sendResponse(false, 'Invalid action');
     }
 }
 ?>
