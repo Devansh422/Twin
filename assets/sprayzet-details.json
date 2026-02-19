@@ -1,0 +1,1129 @@
+{
+    "SAFETY SOLVENT": {
+        "description": "No CFC's, non-flammable, non-conductive, non-corrosive, ultra-high dielectric strength, fast drying \"on-line\" cleaner & degreaser. Leaves no sticky/oily residues.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6001",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "No CFC's — environmentally safe",
+            "Non-flammable and non-conductive",
+            "Non-corrosive formulation",
+            "Ultra-high dielectric strength",
+            "Fast drying on-line cleaner & degreaser",
+            "Leaves no sticky or oily residues"
+        ],
+        "benefits": [
+            "Safe for insulators, bus-bars, and generators",
+            "Cleans commutators, cables, and slip-rings",
+            "Prevents short-circuiting and leakages",
+            "Eliminates fire hazards from contaminated equipment"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "SAFE CLEAN": {
+        "description": "Off-Line, precision synthetic cleaner cum degreaser designed for use in electrical maintenance. Di-electric & residueless. Safe for most plastics. Ozone friendly formulation.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6002",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Off-Line precision synthetic cleaner",
+            "Di-electric properties for electrical safety",
+            "Residueless finish after application",
+            "Safe for most plastics",
+            "Ozone friendly formulation"
+        ],
+        "benefits": [
+            "Maintains motors and circuit breakers safely",
+            "Cleans contactors, relays, switches, and coils",
+            "Prevents overheating and arcing",
+            "Efficient degreasing of electrical systems"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "ELECTRONIC CLEANER": {
+        "description": "Fully safe on plastics & metals. Fast cleaning, residueless, low-odor formulation. Fully di-electric with mild flux-removing action.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6003",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Fully safe on plastics and metals",
+            "Fast cleaning action",
+            "Residueless and low-odor formulation",
+            "Fully di-electric",
+            "Mild flux-removing action"
+        ],
+        "benefits": [
+            "Safe cleaning of sensitive plastic electrical components",
+            "Ideal for relays, limit switches, and PCBs",
+            "Cleans electronic assemblies without damage",
+            "Quick evaporation with no residue"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "FOAM CLEANER": {
+        "description": "100% ozone-safe, non-flammable foam cleaner. Will not allow plastic to crack, yellow, or age. Contains no toxic chemicals.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6004",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "100% ozone-safe formulation",
+            "Non-flammable foam cleaner",
+            "Will not crack, yellow, or age plastics",
+            "Contains no toxic chemicals",
+            "Heavy-duty foaming action"
+        ],
+        "benefits": [
+            "Cleans glass, computer systems, and plastic surfaces",
+            "Safe for machines, equipment, and industrial flooring",
+            "Effective kitchen and office cleaning",
+            "Multi-surface compatibility"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Foaming Spray"
+    },
+    "TUFF CLEAN": {
+        "description": "Paint and varnish remover. 100% biodegradable, non-corrosive, and non-staining. Penetrates directly to the metal for degreasing.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6007",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "100% biodegradable formulation",
+            "Non-corrosive and non-staining",
+            "Penetrates directly to the metal surface",
+            "Powerful paint and varnish removal"
+        ],
+        "benefits": [
+            "Safely removes baked-on dirt and grease",
+            "Strips tough varnishes without damaging base metal",
+            "Deep metal degreasing capability",
+            "Eco-friendly industrial cleaning solution"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "CARBON REMOVER": {
+        "description": "High-performance carbon removing spray designed to dissolve and remove heavy carbon deposits from engine components and industrial machinery.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Dissolves heavy carbon deposits",
+            "Fast-acting penetrating formula",
+            "Non-corrosive to base metals",
+            "Effective on baked-on carbon residues"
+        ],
+        "benefits": [
+            "Restores engine component efficiency",
+            "Deep cleaning of industrial machinery parts",
+            "Reduces maintenance downtime",
+            "Improves performance of carbon-fouled equipment"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "GASKET REMOVER": {
+        "description": "Eco-friendly, solvent-based high-strength remover. Formulated to dissolve hard, baked-on sealants.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#1606",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Eco-friendly formulation",
+            "Solvent-based high-strength remover",
+            "Dissolves hard, baked-on sealants",
+            "Fast-acting formula"
+        ],
+        "benefits": [
+            "Removes baked-on gaskets and adhesives",
+            "Strips polymerized oils and greases",
+            "Cleans carbon deposits, paints, and lacquers",
+            "Safe for base metal surfaces"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "FABRIC SPOT REMOVER": {
+        "description": "Specialized spot-removing formula. Leaves no stains behind on the base material.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#1619",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Specialized spot-removing formula",
+            "Leaves no stains on the base material",
+            "Quick-acting formulation",
+            "Safe for industrial fabrics"
+        ],
+        "benefits": [
+            "Removes oil and grease spots from fabrics",
+            "Effective on most food spots",
+            "Ideal for industrial fabric maintenance",
+            "Note: Colorfastness testing recommended on synthetics"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "OPTICAL FIBRE CABLE CLEANER": {
+        "description": "Safe formulation designed to effectively dissolve and lift contaminants without damaging sensitive fiber optics.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#1620",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Safe for sensitive fiber optics",
+            "Effectively dissolves contaminants",
+            "Lifts residues without damage",
+            "Precision cleaning formulation"
+        ],
+        "benefits": [
+            "Cleans grease and oxides from optic fiber cables",
+            "Removes condensation, dust, dirt, and grime",
+            "Safe for optic fiber connections",
+            "Maintains signal quality and integrity"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "ELECTRICAL BREAKER CLEANER": {
+        "description": "Specially designed to reduce maintenance downtime. Moderate evaporation provides deep penetration into deposits.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#1622",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Specially designed for breaker maintenance",
+            "Moderate evaporation rate",
+            "Deep penetration into stubborn deposits",
+            "Reduces maintenance downtime"
+        ],
+        "benefits": [
+            "Cleans electrical breakers and auxiliaries",
+            "No dismantling of components required",
+            "Safe for rotating machines and windings",
+            "Efficient in-situ cleaning"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "AIR DUSTER": {
+        "description": "Clean, dry gas aerosol. Powerful, effective, and ozone-safe. The directional spray button controls the gas jet precisely.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#5999",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Clean, dry gas aerosol",
+            "Powerful and effective jet",
+            "Ozone-safe formulation",
+            "Directional spray button for precise control"
+        ],
+        "benefits": [
+            "Safely removes dust and dirt from computers",
+            "Ideal for delicate electronic parts and data centers",
+            "The professional's choice for contamination-free cleaning",
+            "No moisture or residue left behind"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "BEARING SOLVENT": {
+        "description": "Synthetic heavy-duty cleaner cum degreaser. Starts working immediately on contact to break down stubborn contaminants.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#4810",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Synthetic heavy-duty formulation",
+            "Starts working immediately on contact",
+            "Breaks down stubborn contaminants",
+            "Evaporates completely leaving no residue"
+        ],
+        "benefits": [
+            "Fast cleaning of machinery parts and engines",
+            "Degreases bearings, metal molds, and dies",
+            "Complete evaporation after cleaning",
+            "Versatile industrial degreasing solution"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "PEN OIL": {
+        "description": "Heavy-duty rust penetration spray with a uniquely low surface tension and unmatched penetration. Non-acidic and non-corrosive formulation.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6005",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Heavy-duty rust penetration spray",
+            "Uniquely low surface tension",
+            "Unmatched penetration power",
+            "Non-acidic and non-corrosive"
+        ],
+        "benefits": [
+            "Penetrates and re-opens severely rusted assemblies",
+            "Frees rusted nuts and bolts",
+            "Effectively cleans caked-up old grease residues",
+            "Safe for bearing maintenance"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "ALL-4 (Multi-Purpose Rust Remover)": {
+        "description": "General purpose rust cleaner. Non-toxic and silicone-free. Its low surface tension offers superior \"wettability\" and surface coverage.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6006",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "General purpose rust cleaning action",
+            "Non-toxic and silicone-free",
+            "Low surface tension for superior wettability",
+            "Excellent surface coverage"
+        ],
+        "benefits": [
+            "Displaces moisture from components",
+            "Restores valves and industrial parts",
+            "Provides anti-corrosion protection",
+            "Light lubrication for industrial components"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "RUST INHIBITOR": {
+        "description": "Absorbs and neutralizes surface moisture rather than just overlaying it. Lubricant compatible, so removal is not required before use.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6035",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Absorbs and neutralizes surface moisture",
+            "Not just an overlay — actively neutralizes",
+            "Lubricant compatible",
+            "No removal required before applying lubricants"
+        ],
+        "benefits": [
+            "Prevents rusting of bearings, gears, and rotors",
+            "Protects gauges during indoor storage",
+            "Safe for usage and shipment protection",
+            "100% reliable corrosion prevention"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "AIR TOOL LUBE": {
+        "description": "Formulated to meet special requirements for industrial and agricultural tools. Absorbs water and eliminates ice build-up and frost. Contains blended rust and corrosion inhibitors.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#1623",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Formulated for industrial and agricultural tools",
+            "Absorbs water and eliminates ice build-up",
+            "Contains blended rust and corrosion inhibitors",
+            "Special base fluid oil minimizes wear"
+        ],
+        "benefits": [
+            "Lubricates all air tools effectively",
+            "Removes deep moisture penetration from tools",
+            "Forms an anti-rust film on tool surfaces",
+            "Provides continuous lubrication and reduces stoppage"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "RED INSULATING VARNISH": {
+        "description": "Tough, flexible air-dry insulation and protection coating. Provides Class H insulation. Also available in Green & Clear colors.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6009",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Tough and flexible air-dry coating",
+            "Provides Class H insulation",
+            "Available in Red, Green & Clear colors",
+            "Excellent penetration into windings"
+        ],
+        "benefits": [
+            "Penetrates into windings and coils",
+            "Seals out dust and moisture",
+            "Protects clamps, plates, poles, and cage",
+            "Ideal for thermostats and bus-bars"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "ANTI-TRACK": {
+        "description": "High-performance anti-tracking insulating compound that prevents electrical tracking and carbon deposits on high-voltage electrical components.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Anti-tracking insulating compound",
+            "Prevents carbon tracking on HV components",
+            "High dielectric strength",
+            "Weather and moisture resistant"
+        ],
+        "benefits": [
+            "Protects high-voltage electrical equipment",
+            "Prevents surface tracking and flashover",
+            "Extends insulator service life",
+            "Suitable for outdoor and indoor electrical systems"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "BATTERY TERMINAL COATING": {
+        "description": "Anti-sulfation and anti-corrosion coating that will not crack or peel. Resistant to heat, gasoline, oil, and grease.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#BTC0119",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Anti-sulfation and anti-corrosion coating",
+            "Will not crack or peel",
+            "Resistant to heat, gasoline, oil, and grease",
+            "Durable protective layer"
+        ],
+        "benefits": [
+            "Protects battery terminals and connections",
+            "Prevents current losses from corrosion",
+            "Enhances battery life significantly",
+            "Ideal for vehicle plug connectors"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "PCB COATING": {
+        "description": "Protective conformal coating spray for printed circuit boards and electronic assemblies. Provides a thin, transparent protective layer.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Conformal coating for PCBs",
+            "Thin, transparent protective layer",
+            "Moisture and dust resistant",
+            "High dielectric strength"
+        ],
+        "benefits": [
+            "Protects printed circuit boards from environmental damage",
+            "Enhances reliability of electronic assemblies",
+            "Prevents short circuits from moisture",
+            "Mass-protecting PCBs in production environments"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "MOISTURE DISPLACER": {
+        "description": "Di-electric fluid that restores electrical properties lost due to moisture, corrosion, dust, and carbon.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Part No": "#6013",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Di-electric fluid formulation",
+            "Restores electrical properties",
+            "Displaces moisture effectively",
+            "Prevents arcing and sparking"
+        ],
+        "benefits": [
+            "Cleans and de-waters electrical systems",
+            "Prevents corrosion in electronic systems",
+            "Improves conductivity of components",
+            "Provides long-term protection"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "DRY GRAPHITE CONDUCTIVE SEALANT": {
+        "description": "Conductive graphite-based sealant spray that provides electrical conductivity along with sealing and lubricating properties.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Graphite-based conductive sealant",
+            "Provides electrical conductivity",
+            "Sealing and lubricating properties",
+            "Dry film application"
+        ],
+        "benefits": [
+            "Establishes conductive paths on surfaces",
+            "Seals against moisture and contaminants",
+            "Lubricates while maintaining conductivity",
+            "Ideal for EMI/RFI shielding applications"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "COLD GALVANIZING COMPOUND": {
+        "description": "Zinc-rich protective coating that provides galvanic (cathodic) protection to ferrous metals. Equivalent to hot-dip galvanizing.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Zinc-rich protective coating",
+            "Provides galvanic (cathodic) protection",
+            "Equivalent to hot-dip galvanizing",
+            "Durable weather-resistant finish"
+        ],
+        "benefits": [
+            "Mass galvanic protection for structural steel",
+            "Protects weld joints from corrosion",
+            "Touch-up for damaged galvanized surfaces",
+            "Long-term outdoor corrosion resistance"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "BELT DRESSING": {
+        "description": "Specialized belt dressing spray that improves belt grip and reduces slippage, squealing, and premature wear on all types of belts.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Improves belt grip and traction",
+            "Reduces slippage and squealing",
+            "Compatible with all belt types",
+            "Quick-drying formula"
+        ],
+        "benefits": [
+            "Extends belt service life",
+            "Eliminates belt noise and vibration",
+            "Prevents premature belt wear",
+            "Easy spray-on application"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "ZINC SPRAY": {
+        "description": "High-purity zinc coating spray providing cathodic protection and corrosion resistance for ferrous metals and welded joints.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "High-purity zinc coating",
+            "Cathodic corrosion protection",
+            "Excellent adhesion to metal surfaces",
+            "Weather and humidity resistant"
+        ],
+        "benefits": [
+            "Protects welded joints and cut edges",
+            "Touch-up for galvanized surfaces",
+            "Corrosion-resistant finish for steel structures",
+            "Compatible with most top-coat paints"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "PTFE DRY FILM LUBRICANT": {
+        "description": "Provides a dry, friction-reducing Teflon film. Ideal for applications where wet lubricants would attract dust and dirt.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Dry, friction-reducing Teflon film",
+            "Does not attract dust or dirt",
+            "Clean, non-staining lubrication",
+            "Long-lasting dry film protection"
+        ],
+        "benefits": [
+            "Ideal for gears, chains, and hinges",
+            "Perfect for bearings and textile equipment",
+            "Reduces friction without wet residue",
+            "Clean lubrication in dust-sensitive areas"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "DRY MOLY LUBRICANT": {
+        "description": "Dry lubrication suited for high-temperature environments. Provides long-lasting, drip-free lubrication in extreme industrial and textile applications.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Dry molybdenum disulfide lubricant",
+            "Suited for high-temperature environments",
+            "Long-lasting, drip-free lubrication",
+            "Excellent load-bearing capacity"
+        ],
+        "benefits": [
+            "Ideal for extreme industrial applications",
+            "Perfect for textile equipment lubrication",
+            "No dripping or mess in high-heat areas",
+            "Reduces friction under heavy loads"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "DRY GRAPHITE LUBRICANT": {
+        "description": "Dry graphite lubrication for environments where conventional wet lubricants cannot be used. Provides excellent conductivity and friction reduction.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Dry graphite formulation",
+            "Excellent conductivity properties",
+            "Clean, non-staining application",
+            "High-temperature stability"
+        ],
+        "benefits": [
+            "Long-lasting lubrication for textile equipment",
+            "Drip-free lubrication in extreme environments",
+            "Ideal where wet lubricants attract contaminants",
+            "Reduces friction on sliding surfaces"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "WHITE LITHIUM GREASE": {
+        "description": "Heavy-duty, water-resistant grease for metal-to-metal lubrication. Provides thick, enduring lubrication for demanding applications.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Heavy-duty white lithium grease",
+            "Water-resistant formulation",
+            "Metal-to-metal lubrication",
+            "Thick, enduring lubrication"
+        ],
+        "benefits": [
+            "Ideal for hinges, latches, and locks",
+            "Perfect for heavy machinery lubrication",
+            "Withstands water washout",
+            "Long-lasting protection against wear"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "MOLY CHAIN LUBE": {
+        "description": "Deep-penetrating heavy-duty chain lubricant with molybdenum disulfide. Reduces wear, friction, and rust on industrial drive chains.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Deep-penetrating formula with MoS2",
+            "Heavy-duty chain lubrication",
+            "Anti-rust and anti-wear properties",
+            "Excellent adhesion — reduces fling-off"
+        ],
+        "benefits": [
+            "Reduces wear and friction on drive chains",
+            "Prevents rust and corrosion",
+            "Penetrates deep into chain links",
+            "Extends chain and sprocket life"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "WIRE ROPE LUBE": {
+        "description": "Deep-penetrating heavy-duty lubricant designed specifically for wire ropes and cables. Reduces wear, friction, and prevents rust.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Deep-penetrating wire rope formula",
+            "Heavy-duty lubrication",
+            "Anti-rust protection",
+            "Reduces internal wire friction"
+        ],
+        "benefits": [
+            "Extends wire rope service life",
+            "Penetrates deep into rope strands",
+            "Prevents corrosion in harsh environments",
+            "Reduces friction and wear on cables"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "DRIPLESS OIL": {
+        "description": "High-viscosity oil that stays in place without dripping. Ideal for overhead lubrication, vertical tracks, and open gears.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "High-viscosity stay-put formula",
+            "Will not drip from vertical surfaces",
+            "Excellent adhesion properties",
+            "Long-lasting lubrication"
+        ],
+        "benefits": [
+            "Ideal for overhead lubrication points",
+            "Perfect for vertical tracks and guides",
+            "Lubricates open gears without mess",
+            "Reduces maintenance frequency"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "MOLY ANTI-SEIZE": {
+        "description": "Molybdenum-based anti-seize compound for threaded fasteners and metal joints. Prevents galling and seizing under high heat and pressure.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Molybdenum-based anti-seize compound",
+            "High-temperature resistant",
+            "Prevents galling and seizing",
+            "Easy spray application"
+        ],
+        "benefits": [
+            "Protects threaded fasteners from seizure",
+            "Enables easy disassembly of metal joints",
+            "Withstands extreme heat and pressure",
+            "Reduces maintenance time on bolted connections"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "CU-ANTI-SEIZE": {
+        "description": "Copper-based anti-seize compound for threaded fasteners and metal joints. Prevents galling, corrosion, and seizing under extreme heat or pressure.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Copper-based anti-seize compound",
+            "Extreme heat and pressure resistance",
+            "Anti-galling and anti-corrosion",
+            "Uniform spray application"
+        ],
+        "benefits": [
+            "Prevents seizure of threaded fasteners",
+            "Protects metal joints from corrosion",
+            "Enables easy post-service disassembly",
+            "Ideal for high-temperature bolted connections"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "HIGH TEMPERATURE PAINT": {
+        "description": "Heat-resistant protective coating for surfaces exposed to extreme thermal stress. Maintains adhesion and appearance at high temperatures.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Heat-resistant protective coating",
+            "Maintains adhesion at high temperatures",
+            "Durable color retention",
+            "Quick-drying formula"
+        ],
+        "benefits": [
+            "Protects exhausts and boilers",
+            "Ideal for industrial machinery under thermal stress",
+            "Prevents corrosion at high temperatures",
+            "Professional finish on heat-exposed surfaces"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "DPT KIT": {
+        "description": "Non-destructive testing kit containing Cleaner, Penetrant, and Developer sprays for detecting surface-breaking defects, microscopic cracks, and flaws in metals.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "3-Can Kit",
+            "Packaging Size": "500 ml each"
+        },
+        "features": [
+            "Complete 3-part NDT testing kit",
+            "Fast-drying pre-cleaning solvent (Cleaner)",
+            "High-visibility dye penetrant",
+            "White developer for defect visualization"
+        ],
+        "benefits": [
+            "Detects surface-breaking defects in metals",
+            "Reveals microscopic cracks and flaws",
+            "Easy inspection and quality control",
+            "Essential for welding and structural testing"
+        ],
+        "packSize": "500 ml x 3",
+        "form": "Aerosol Spray Kit"
+    },
+    "ANTI-SPATTER": {
+        "description": "Prevents molten metal spatter from adhering to surfaces during welding operations. Keeps work areas and equipment clean.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Prevents molten spatter adhesion",
+            "Non-silicone formulation",
+            "Does not affect weld quality",
+            "Easy spray-on application"
+        ],
+        "benefits": [
+            "Keeps welding tables clean",
+            "Protects torches and surrounding metal",
+            "Reduces post-weld cleanup time",
+            "Improves overall welding efficiency"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "MOULD CLEAN": {
+        "description": "High-performance blend of safe organic solvents. Fast-drying, non-flammable, and leaves zero residues.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "High-performance organic solvents",
+            "Fast-drying formula",
+            "Non-flammable",
+            "Leaves zero residues"
+        ],
+        "benefits": [
+            "Dissolves release agents and protective coatings",
+            "Removes oil and grease from metal molds and dies",
+            "Will not damage base metal",
+            "Quick turnaround for mold cleaning"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "MOULD & DIE PROTECTOR": {
+        "description": "Synthetic oil-based semi-flowable mold & die protection coating (available in Green, Red & Clear). Neutralizes surface moisture.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Synthetic oil-based protection coating",
+            "Semi-flowable formula",
+            "Available in Green, Red & Clear",
+            "Neutralizes surface moisture"
+        ],
+        "benefits": [
+            "Flows into innermost cavities of molds and dies",
+            "Provides superior long-term rust protection",
+            "Effective short-term corrosion prevention",
+            "Protects molds during storage and transit"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "SILCO-R (SILICONE SPRAY)": {
+        "description": "Silicone-based mold release agent. Leaves a colorless spray film that provides the correct amount of release agent every time to prevent excess build-up.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Silicone-based mold release agent",
+            "Colorless spray film",
+            "Controlled release agent application",
+            "Prevents excess build-up"
+        ],
+        "benefits": [
+            "Increases life of dies and molds",
+            "Improves surface finishes for plastic and rubber",
+            "Works with polyester and nylon molding",
+            "Prevents sticking and reduces rejection rates"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "SILCO-FREE (NON-SILICONE SPRAY)": {
+        "description": "Silicone-free formula that does not transfer to molded parts and keeps molds clean with extremely low build-up.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Silicone-free release formula",
+            "Does not transfer to molded parts",
+            "Keeps molds clean",
+            "Extremely low build-up"
+        ],
+        "benefits": [
+            "Excellent release for plastics and rubbers",
+            "Safe for injection and compression molding",
+            "Ideal for rotational molding applications",
+            "No contamination of finished parts"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "WAX KOTE": {
+        "description": "Wax-based coating specifically designed for plastic injection molds. Self de-molds upon mold usage.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "Wax-based mold coating",
+            "Self de-molds upon mold usage",
+            "Designed for plastic injection molds",
+            "Easy and even application"
+        ],
+        "benefits": [
+            "Protects injection molds during production",
+            "Significantly reduces cleaning requirements",
+            "Lowers rejection rates",
+            "Extends mold service life"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "TEFLON GEL": {
+        "description": "PTFE-based gel lubricant providing long-lasting, clean lubrication for precision mold components and sliding surfaces.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "PTFE-based gel lubricant",
+            "Long-lasting clean lubrication",
+            "Non-drip gel consistency",
+            "Precision application"
+        ],
+        "benefits": [
+            "Ideal for mold ejector pins and slides",
+            "Lubricates precision mold components",
+            "Stays in place on vertical surfaces",
+            "Reduces friction on sliding surfaces"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Gel Spray"
+    },
+    "RUBBER RELEASE": {
+        "description": "High-performance release spray providing excellent persistence of water repellency and luster.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "High-performance release spray",
+            "Excellent water repellency",
+            "Persistent luster on molded parts",
+            "Clean release action"
+        ],
+        "benefits": [
+            "Ideal for urethane casting and plastics",
+            "Perfect for tire molding operations",
+            "Effective rubber part releasing",
+            "Reduces defects in molded products"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    },
+    "SPRAYZET BULK CONSUMABLES": {
+        "description": "Comprehensive range of bulk industrial chemicals including Carbo Clean, Electro Clean, Machine-O-Kleen, Paint Stripper, Rust Protector, Rust Convertor, PCB Coating, Koncrete Scrub, and Cold Galvanising — available in bulk packaging for large-scale industrial use.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Bulk Containers",
+            "Packaging": "Drums / Cans",
+            "Packaging Size": "5 Ltr / 20 Ltr / 210 Ltr"
+        },
+        "features": [
+            "Wide range of bulk industrial chemicals",
+            "Heavy-duty formulations for large-scale use",
+            "Available in multiple container sizes",
+            "Industrial-grade quality"
+        ],
+        "benefits": [
+            "Cost-effective bulk purchasing for factories",
+            "Covers cleaning, degreasing, rust protection, and coating",
+            "Suitable for heavy industrial and manufacturing use",
+            "Consistent quality across large volumes"
+        ],
+        "packSize": "5 Ltr / 20 Ltr / 210 Ltr",
+        "form": "Liquid / Coating"
+    },
+    "default": {
+        "description": "Professional quality industrial maintenance product manufactured under the brand Sprayzet by Twin Tech India, with advanced chemical technology for superior results.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Sprayzet",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "700 ml / 500 ml"
+        },
+        "features": [
+            "High-performance industrial formulation",
+            "Quick and easy application",
+            "Manufactured under ISO standards",
+            "Environmentally responsible components"
+        ],
+        "benefits": [
+            "Ensures optimal equipment performance",
+            "Provides durable industrial protection",
+            "Reduces long-term maintenance costs",
+            "Professional-grade results"
+        ],
+        "packSize": "700 ml / 500 ml",
+        "form": "Aerosol Spray"
+    }
+}

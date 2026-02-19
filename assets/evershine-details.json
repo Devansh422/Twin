@@ -1,26 +1,26 @@
 {
     "ALL-IN-ONE": {
-        "description": "A versatile multi-purpose professional spray designed for cleaning, protecting and lubricating various surfaces of two-wheelers and cars.",
+        "description": "Multipurpose rust penetrator, cleaner, and light lubricant for two-wheelers. Non-toxic, biodegradable, and silicone-free. Loosens adhesives, displaces moisture, restores electrical values, and re-opens jammed assemblies.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
-            "Advanced formula for deep cleaning",
-            "Protective coating against dust and rust",
-            "Quick-drying non-greasy finish",
-            "Safe on plastic, rubber, and metal"
+            "Multipurpose rust penetrator and cleaner",
+            "Non-toxic and biodegradable formulation",
+            "Silicone-free for safe use",
+            "Light lubrication properties"
         ],
         "benefits": [
-            "Restores original shine of the vehicle",
-            "Extends life of rubber and plastic parts",
-            "Provides long-lasting protection",
-            "Easy application for all users"
+            "Loosens adhesives and displaces moisture",
+            "Restores electrical values in components",
+            "Re-opens jammed assemblies easily",
+            "Versatile multi-purpose two-wheeler solution"
         ],
-        "packSize": "500ML",
+        "packSize": "500 ml / 700 ml",
         "form": "Aerosol Spray"
     },
     "SAFE CLEAN": {
@@ -99,13 +99,13 @@
         "form": "Aerosol Spray"
     },
     "ADHESIVE CHAIN LUBE": {
-        "description": "High-performance adhesive lubricant specifically formulated for motorcycle chains, providing superior lubrication under extreme pressure.",
+        "description": "Specialized heavy-duty adhesive lubricant formulated for two-wheeler and industrial drive chains. Provides superior lubrication under extreme pressure with excellent adhesion to prevent fling-off.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Excellent adhesion property - no fling-off",
@@ -123,13 +123,13 @@
         "form": "Aerosol Spray"
     },
     "BRAKE CLEANER": {
-        "description": "Heavy-duty cleaner that instantly dissolves grease, oil, and brake fluid from brake systems without leaving any residue.",
+        "description": "Precision fast-drying cleaner that instantly dissolves carbon, grease, oil, and brake fluid from automotive and industrial braking systems without leaving any residue.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Fast-acting penetrating formula",
@@ -147,13 +147,13 @@
         "form": "Aerosol Spray"
     },
     "CHAIN CLEANER": {
-        "description": "Deep-cleansing agent designed to remove old lubricant, dirt, and grime from chains before re-lubrication.",
+        "description": "Deep-cleansing agent designed to remove old lubricant, dirt, and grime from two-wheeler and industrial chains before re-lubrication.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Effective against stubborn grease",
@@ -171,13 +171,13 @@
         "form": "Aerosol Spray"
     },
     "SILENCER COATING": {
-        "description": "Heat-resistant protective coating specifically designed to prevent rust and corrosion on vehicle exhaust systems.",
+        "description": "Thermal and anti-rust protective rubber coating specifically designed for vehicle exhaust systems. Protects against heat, moisture, salt, and debris.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Withstands temperatures up to 600°C",
@@ -195,13 +195,13 @@
         "form": "Aerosol Spray"
     },
     "TYRE SHINER": {
-        "description": "Professional grade foam or spray that gives your tires a rich, deep black 'new tire' look with a protective layer.",
+        "description": "Professional grade foam or spray that gives your tires a rich, deep black 'new tire' look with a protective UV barrier layer.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol / Liquid",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml / 5 Ltr"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "UV protective barrier against cracking",
@@ -219,13 +219,13 @@
         "form": "Spray / Liquid"
     },
     "VINYL CARE": {
-        "description": "Restorative conditioner for interior vinyl, plastic, and leather surfaces that cleans and protects against fading.",
+        "description": "Surface restorer and protectant for vehicle interiors, vinyl, plastic, and rubber trims. Cleans and shines interior cabins while providing UV protection.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Anti-static formula repels dust",
@@ -247,9 +247,9 @@
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Liquid",
-            "Packaging": "24 Bottles per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Carnauba-enriched formula",
@@ -271,9 +271,9 @@
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Will not wash away or melt",
@@ -295,9 +295,9 @@
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Prevents rubber from sticking and freezing",
@@ -319,9 +319,9 @@
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "12 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
             "Extremely bitter deterrent substance",
@@ -339,28 +339,532 @@
         "form": "Aerosol Spray"
     },
     "AC DISINFECTANT": {
-        "description": "Powerful enzymatic cleaner that kills bacteria and fungi in the air conditioning system, eliminating foul odors.",
+        "description": "Odorless, nontoxic, biodegradable disinfecting spray formulation. Kills bacteria and fungi in air conditioning systems, eliminating foul odors and preventing the spread of viruses.",
         "availability": "In stock",
         "tableData": {
             "Brand": "Evershine",
-            "Packing Type": "Aerosol Can",
-            "Packaging": "24 Cans per box",
-            "Packaging Size": "500 ml"
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
         },
         "features": [
+            "Odorless and nontoxic formulation",
+            "Biodegradable disinfecting spray",
             "Kills 99.9% of germs and bacteria",
-            "Deodorizes air vents and evaporator",
-            "Safe for aluminum and plastic parts",
             "Easy foaming application"
         ],
         "benefits": [
-            "Provides fresh and healthy interior air",
-            "Improves AC cooling efficiency",
-            "Removes musty and damp smells",
-            "Prevents respiratory issues"
+            "Sanitizes AC vents and public areas",
+            "Prevents the spread of viruses",
+            "Safe for clinics and industrial cleaning",
+            "Provides fresh and healthy interior air"
         ],
-        "packSize": "500ML",
+        "packSize": "500 ml / 700 ml",
         "form": "Aerosol Spray"
+    },
+    "ELECTRICAL CONTACT CLEANER": {
+        "description": "Precision electrical contact cleaner that safely removes oxidation, dust, and contaminants from electrical connections and components.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
+        },
+        "features": [
+            "Precision cleaning for electrical contacts",
+            "Removes oxidation and contaminants",
+            "Fast-drying and residue-free",
+            "Safe for plastics and metals"
+        ],
+        "benefits": [
+            "Restores electrical conductivity",
+            "Prevents intermittent connections",
+            "Safe for automotive electrical systems",
+            "Quick and easy maintenance application"
+        ],
+        "packSize": "500 ml / 700 ml",
+        "form": "Aerosol Spray"
+    },
+    "UNDERBODY ANTI-RUST COATING": {
+        "description": "Bitumen-based anti-rust rubber coating. Forms a thick, watertight seal that resists salt corrosion, water, and debris.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 1 Ltr"
+        },
+        "features": [
+            "Bitumen-based anti-rust rubber coating",
+            "Forms thick, watertight seal",
+            "Resists salt corrosion and water",
+            "Flexible rubbery protective skin"
+        ],
+        "benefits": [
+            "Protects vehicle underbodies from rust",
+            "Seals cracks and leaks effectively",
+            "Ideal for repair work and weld joints",
+            "Guards against road debris and moisture"
+        ],
+        "packSize": "500 ml / 1 Ltr",
+        "form": "Aerosol / Liquid Coating"
+    },
+    "CAR WASH SHAMPOO": {
+        "description": "Premium car wash shampoo that produces rich foam for effective cleaning while being gentle on vehicle paint and clear coat finishes.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "12 Bottles per box",
+            "Packaging Size": "1 Ltr / 5 Ltr"
+        },
+        "features": [
+            "Rich foaming formula",
+            "pH balanced for vehicle paint",
+            "Gentle on clear coat finishes",
+            "Effective dirt and grime removal"
+        ],
+        "benefits": [
+            "Produces streak-free clean finish",
+            "Safe for all vehicle exterior surfaces",
+            "Economical concentrated formula",
+            "Leaves a glossy, protected surface"
+        ],
+        "packSize": "1 Ltr / 5 Ltr",
+        "form": "Liquid Shampoo"
+    },
+    "COOLANT": {
+        "description": "Engine cooling fluid designed to regulate engine temperatures in automotive and stationary industrial engines. Available in bulk for commercial use.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "12 Bottles per box",
+            "Packaging Size": "1 Ltr / 5 Ltr"
+        },
+        "features": [
+            "Advanced engine cooling formula",
+            "Anti-freeze and anti-boil protection",
+            "Corrosion inhibitors for engine metals",
+            "Compatible with all coolant systems"
+        ],
+        "benefits": [
+            "Regulates engine temperature efficiently",
+            "Prevents overheating and freezing",
+            "Protects radiator and engine internals",
+            "Available in bulk for commercial fleets"
+        ],
+        "packSize": "1 Ltr / 5 Ltr",
+        "form": "Liquid"
+    },
+    "DASHNOARD SHINER": {
+        "description": "Surface restorer and protectant for vehicle dashboards, interiors, and rubber trims. Cleans and shines while providing UV protection.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
+        },
+        "features": [
+            "Surface restorer and protectant",
+            "UV protection for dashboards",
+            "Anti-static formula repels dust",
+            "Pleasant fragrance after use"
+        ],
+        "benefits": [
+            "Restores dashboard to showroom shine",
+            "Cleans industrial cabins and vehicle interiors",
+            "Protects rubber trims from fading",
+            "Leaves no greasy or oily residue"
+        ],
+        "packSize": "500 ml / 700 ml",
+        "form": "Aerosol Spray"
+    },
+    "ALL-IN-ONE (Rust-Off)": {
+        "description": "Multipurpose rust penetrator, cleaner, and light lubricant. Non-toxic, biodegradable, and silicone-free.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
+        },
+        "features": [
+            "Multipurpose rust penetrator and cleaner",
+            "Light lubricant properties",
+            "Non-toxic and biodegradable",
+            "Silicone-free formulation"
+        ],
+        "benefits": [
+            "Loosens adhesives and displaces moisture",
+            "Restores electrical values in components",
+            "Re-opens jammed assemblies easily",
+            "Safe multi-purpose automotive solution"
+        ],
+        "packSize": "500 ml / 700 ml",
+        "form": "Aerosol Spray"
+    },
+    "ENGINE LACQUER COATING": {
+        "description": "Specially designed acrylic high-temperature coating. Provides a high-gloss, water-repellent protective paint that maintains flexibility.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Acrylic high-temperature coating",
+            "High-gloss water-repellent finish",
+            "Maintains flexibility under heat",
+            "Durable protective paint"
+        ],
+        "benefits": [
+            "Preserves engine compartments in vehicles",
+            "Protects ignition leads from dampness",
+            "Repels dirt and dust effectively",
+            "Professional finish for passenger and commercial vehicles"
+        ],
+        "packSize": "500 ml",
+        "form": "Aerosol Spray"
+    },
+    "BATTERY TERMINAL COATING": {
+        "description": "High water, wear-proof, and acid-resistant coating. Will not crack or peel. Protects vehicle electronic systems from corrosion and sulfation.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml"
+        },
+        "features": [
+            "Waterproof and wear-proof coating",
+            "Acid-resistant formulation",
+            "Will not crack or peel",
+            "Anti-sulfation protection"
+        ],
+        "benefits": [
+            "Protects battery terminals from corrosion",
+            "Enhances battery life significantly",
+            "Safeguards vehicle electronic systems",
+            "Prevents current losses at connections"
+        ],
+        "packSize": "500 ml",
+        "form": "Aerosol Spray"
+    },
+    "THROTLLE BODY CLEANER": {
+        "description": "Precision fast-drying cleaner designed to remove carbon, grease, and brake fluid from automotive and industrial systems.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "500 ml / 700 ml"
+        },
+        "features": [
+            "Precision fast-drying cleaner",
+            "Removes carbon and grease deposits",
+            "Cleans throttle bodies effectively",
+            "Leaves no residue"
+        ],
+        "benefits": [
+            "Improves throttle response and performance",
+            "Restores smooth idle operation",
+            "Safe for automotive braking systems",
+            "Reduces emissions from clogged components"
+        ],
+        "packSize": "500 ml / 700 ml",
+        "form": "Aerosol Spray"
+    },
+    "ENGINE OIL ADDITIVES": {
+        "description": "Advanced engine oil additive that enhances lubricant performance, reduces friction, and extends engine life.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "250 ml"
+        },
+        "features": [
+            "Enhances lubricant performance",
+            "Advanced friction reduction formula",
+            "Compatible with all engine oil types",
+            "Anti-wear additive technology"
+        ],
+        "benefits": [
+            "Extends engine life and performance",
+            "Reduces engine noise and vibration",
+            "Improves fuel efficiency",
+            "Protects against sludge build-up"
+        ],
+        "packSize": "250 ml",
+        "form": "Liquid Additive"
+    },
+    "PETROL ADDITIVES": {
+        "description": "Fuel system cleaner additive for petrol engines. Cleans injectors, intake valves, and combustion chambers for optimal performance.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "250 ml"
+        },
+        "features": [
+            "Cleans fuel injectors and intake valves",
+            "Removes combustion chamber deposits",
+            "Restores engine power and response",
+            "Compatible with catalytic converters"
+        ],
+        "benefits": [
+            "Improves fuel economy",
+            "Reduces emissions and exhaust smoke",
+            "Restores lost engine performance",
+            "Prevents fuel system corrosion"
+        ],
+        "packSize": "250 ml",
+        "form": "Liquid Additive"
+    },
+    "DIESEL ADDITIVES": {
+        "description": "Diesel fuel system treatment that cleans injectors, improves cetane number, and optimizes diesel engine performance.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "250 ml"
+        },
+        "features": [
+            "Cleans diesel fuel injectors",
+            "Improves cetane number",
+            "Anti-gelling properties for cold weather",
+            "Water dispersant technology"
+        ],
+        "benefits": [
+            "Optimizes diesel engine performance",
+            "Reduces black smoke emissions",
+            "Improves cold starting reliability",
+            "Extends injector and pump life"
+        ],
+        "packSize": "250 ml",
+        "form": "Liquid Additive"
+    },
+    "ENGINE OIL FLUSH": {
+        "description": "Engine cleaning flush that dissolves sludge, varnish, and harmful deposits before an oil change for a clean engine interior.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "250 ml"
+        },
+        "features": [
+            "Dissolves sludge and varnish deposits",
+            "Cleans engine internals before oil change",
+            "Fast-acting 10-minute formula",
+            "Safe for all engine types"
+        ],
+        "benefits": [
+            "Ensures clean engine for fresh oil",
+            "Removes harmful deposits and contaminants",
+            "Improves oil circulation and performance",
+            "Extends new oil effectiveness"
+        ],
+        "packSize": "250 ml",
+        "form": "Liquid"
+    },
+    "RADIATOR FLUSH": {
+        "description": "Radiator cleaning flush that removes scale, rust, and deposits from the cooling system to restore optimal heat transfer.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "250 ml"
+        },
+        "features": [
+            "Removes scale and rust from cooling system",
+            "Restores optimal heat transfer",
+            "Compatible with all coolant types",
+            "Fast-acting cleaning formula"
+        ],
+        "benefits": [
+            "Prevents engine overheating",
+            "Restores radiator efficiency",
+            "Cleans heater core for better cabin heat",
+            "Extends cooling system component life"
+        ],
+        "packSize": "250 ml",
+        "form": "Liquid"
+    },
+    "WIND SHIELD CLEANER": {
+        "description": "Concentrated windshield washer fluid that effectively removes bugs, road grime, and film for crystal-clear visibility.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Bottle",
+            "Packaging": "24 Bottles per box",
+            "Packaging Size": "250 ml"
+        },
+        "features": [
+            "Concentrated washer fluid formula",
+            "Removes bugs and road grime",
+            "Streak-free cleaning action",
+            "Anti-smear technology"
+        ],
+        "benefits": [
+            "Crystal-clear windshield visibility",
+            "Effective in all weather conditions",
+            "Dilutable for economical use",
+            "Safe for wiper rubber and paint"
+        ],
+        "packSize": "250 ml",
+        "form": "Liquid"
+    },
+    "Car-Shampoo-Bulk": {
+        "description": "Bulk car wash shampoo concentrate for commercial car wash operations and fleet maintenance.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Drum / Can",
+            "Packaging": "Bulk",
+            "Packaging Size": "5 Ltr / 20 Ltr"
+        },
+        "features": [
+            "Concentrated bulk shampoo formula",
+            "Rich foaming action",
+            "pH balanced for vehicle paint",
+            "High dilution ratio"
+        ],
+        "benefits": [
+            "Cost-effective for commercial car washes",
+            "Ideal for fleet maintenance operations",
+            "Safe for all vehicle finishes",
+            "Produces streak-free results"
+        ],
+        "packSize": "5 Ltr / 20 Ltr",
+        "form": "Liquid"
+    },
+    "COOLANT BULK": {
+        "description": "Bulk engine coolant for commercial and fleet applications. Regulates engine temperature with anti-freeze and anti-boil protection.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Drum / Can",
+            "Packaging": "Bulk",
+            "Packaging Size": "5 Ltr / 20 Ltr"
+        },
+        "features": [
+            "Bulk coolant formulation",
+            "Anti-freeze and anti-boil protection",
+            "Long-life corrosion inhibitors",
+            "Compatible with all system types"
+        ],
+        "benefits": [
+            "Economical for fleet maintenance",
+            "Consistent engine temperature control",
+            "Protects radiators and water pumps",
+            "Reduced per-unit cost for bulk buyers"
+        ],
+        "packSize": "5 Ltr / 20 Ltr",
+        "form": "Liquid"
+    },
+    "Engine-Lacquer-Coating-Bulk": {
+        "description": "Bulk engine lacquer coating for commercial and workshop use. Acrylic high-temperature coating with high-gloss, water-repellent finish.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Can / Drum",
+            "Packaging": "Bulk",
+            "Packaging Size": "5 Ltr / 20 Ltr"
+        },
+        "features": [
+            "Acrylic high-temperature bulk coating",
+            "High-gloss water-repellent finish",
+            "Maintains flexibility",
+            "Durable protective layer"
+        ],
+        "benefits": [
+            "Economical for workshop use",
+            "Preserves engine compartments at scale",
+            "Professional-grade finish",
+            "Repels dirt and dust effectively"
+        ],
+        "packSize": "5 Ltr / 20 Ltr",
+        "form": "Liquid Coating"
+    },
+    "Tyre-Shiner-Bulk": {
+        "description": "Bulk tyre shiner liquid for commercial detailing and car wash businesses. Gives tires a rich, deep black finish with UV protection.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Can / Drum",
+            "Packaging": "Bulk",
+            "Packaging Size": "5 Ltr / 20 Ltr"
+        },
+        "features": [
+            "Bulk liquid tyre shiner",
+            "UV protective formula",
+            "Water-based non-slippery",
+            "Dust repellent technology"
+        ],
+        "benefits": [
+            "Cost-effective for commercial detailing",
+            "Makes tires look brand new at scale",
+            "Long-lasting showroom shine",
+            "Easy application with minimal effort"
+        ],
+        "packSize": "5 Ltr / 20 Ltr",
+        "form": "Liquid"
+    },
+    "Vinyl-Protector-Bulk": {
+        "description": "Bulk vinyl protector for commercial interior detailing. Cleans and protects dashboards, vinyl surfaces, and rubber trims.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Can / Drum",
+            "Packaging": "Bulk",
+            "Packaging Size": "5 Ltr / 20 Ltr"
+        },
+        "features": [
+            "Bulk vinyl protection formula",
+            "UV protection and anti-static",
+            "Restores color and suppleness",
+            "Pleasant fragrance"
+        ],
+        "benefits": [
+            "Economical for commercial detailing operations",
+            "Protects dashboards from cracking and fading",
+            "Keeps interiors fresh and clean at scale",
+            "Non-greasy formula for professional results"
+        ],
+        "packSize": "5 Ltr / 20 Ltr",
+        "form": "Liquid"
+    },
+    "1": {
+        "description": "Premium aerosol spray paint available in a wide range of colors. Fast-drying, excellent coverage, and suitable for various surfaces.",
+        "availability": "In stock",
+        "tableData": {
+            "Brand": "Evershine",
+            "Packing Type": "Cans",
+            "Packaging": "24 Pcs in one box",
+            "Packaging Size": "400 ml"
+        },
+        "features": [
+            "Wide range of vibrant colors",
+            "Fast-drying formula",
+            "Excellent surface coverage and adhesion",
+            "Suitable for metal, wood, and plastic"
+        ],
+        "benefits": [
+            "Professional finish for automotive and industrial use",
+            "Easy spray application without brush marks",
+            "Durable and weather-resistant finish",
+            "Versatile for DIY and professional projects"
+        ],
+        "packSize": "400 ml",
+        "form": "Aerosol Spray Paint"
     },
     "CITRUS": {
         "description": "High-quality air freshener with a refreshing citrus scent, designed to eliminate odors and leave a long-lasting fragrance in homes and offices.",

@@ -263,7 +263,7 @@ async function fetchProductDetails() {
     }
     // Fallback: load static details for products not yet in DB
     try {
-        const response = await fetch('../assets/evershine-details.json');
+        const response = await fetch('../assets/sprayzet-details.json');
         const staticDetails = await response.json();
         Object.keys(staticDetails).forEach(key => {
             if (!productDetails[key]) productDetails[key] = staticDetails[key];

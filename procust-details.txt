@@ -1,0 +1,279 @@
+for sprayzet
+
+Part No.
+Product Name
+Description & Features
+Applications
+#6001
+Safety Solvent
+No CFC's, non-flammable, non-conductive, non-corrosive, ultra-high dielectric strength, fast drying "on-line" cleaner & degreaser. Leaves no sticky/oily residues.
+Insulators, bus-bars, generators, commutators, cables, slip-rings, motor casings. Prevents short-circuiting, leakages, and fire hazards.
+#6002
+Safe Clean
+Off-Line, precision synthetic cleaner cum degreaser for electrical maintenance. Di-electric & residueless. Safe for most plastics. Ozone friendly formulation.
+Cleaning electrical systems, maintaining motors, circuit breakers, contactors, relays, switches, coils. Prevents overheating and arcing.
+#6003
+Electronic Cleaner
+Fully safe on plastics & metals. Fast cleaning, residueless, low-odor formulation. Fully di-electric with mild flux-removing action.
+Safe and easy cleaning of sensitive plastic electrical components (relays, limit switches), PCBs, and electronic assemblies.
+#6004
+Foam Cleaner
+100% ozone-safe, non-flammable foam cleaner. Will not allow plastic to crack, yellow, or age. Contains no toxic chemicals.
+Cleaning glass, computer systems, plastic surfaces, machines, equipment, industrial flooring, and kitchens.
+#6005
+Pen Oil
+Heavy-duty rust penetrator. Penetrates and re-opens severely rusted assemblies. Uniquely low surface tension, non-acidic, and non-corrosive.
+Severely rusted assemblies, nuts, bolts, and bearing maintenance (effectively cleans caked-up old grease residues).
+#6006
+All-4
+General purpose rust cleaner. Non-toxic, silicone-free. Low surface tension offers superior "wettability" and coverage.
+Displacing moisture, restoring valves, anti-corrosion, and light lubrication for industrial components.
+#6007
+Tuff Clean
+Paint and varnish remover. 100% biodegradable, non-corrosive, and non-staining. Penetrates directly to the metal for degreasing.
+Safely removes baked-on dirt, grease, and tough varnishes without damaging the base metal.
+#6013
+Moisture Displacer
+Di-electric fluid that restores electrical properties lost to moisture, corrosion, dust, and carbon. Prevents arcing & sparking.
+Cleaning, de-watering, and improving conductivity in electrical/electronic systems. Provides long-term protection.
+#6035
+Rust Inhibitor
+Absorbs surface moisture for 100% reliable protection. Neutralizes moisture before providing a protective layer. Lubricant compatible.
+Prevents rusting/corrosion of bearings, gears, rotors, and gauges during indoor storage, usage, and shipment.
+#1606
+Gasket Remover
+Eco-friendly, solvent-based high-strength remover. Formulated to dissolve hard, baked-on sealants.
+Removing baked-on gaskets, adhesives, polymerized oils, greases, carbon deposits, paints, and lacquers.
+#1619
+Fabric Spot Remover
+Specialized spot-removing formula. Leaves no stains behind on the base material.
+Removing oil, greases, and most food spots from industrial fabrics (Note: Needs colorfastness testing on synthetics).
+#1620
+Optical Fibre Cleaner
+Safe formulation designed to effectively dissolve and lift contaminants without damaging sensitive fiber optics.
+Cleaning grease, oxides, condensation, dust, dirt, and grime from optic fiber cables and connections.
+#1622
+Breaker Cleaner
+Specially designed to reduce maintenance downtime. Moderate evaporation provides deep penetration into deposits.
+Cleans electrical breakers and their auxiliaries without dismantling components, including rotating machines/windings.
+#1623
+Air Tool Lube
+Formulated to meet special requirements for industrial/agricultural tools. Absorbs water and eliminates ice build-up and frost.
+Lubricating air tools, moisture removal, and forming a thin anti-rust film on tool surfaces to reduce stoppage ratio.
+#4810
+Bearing Solvent
+Synthetic heavy-duty cleaner cum degreaser. Starts working immediately on contact to break down stubborn contaminants.
+Fast cleaning and degreasing of machinery parts, engines, bearings, metal molds, and dies. Evaporates completely.
+#5999
+Air Duster
+Clean, dry gas aerosol. Powerful, effective, and ozone-safe. The directional spray button controls the gas jet precisely.
+The pro's choice for safely removing dust and dirt without contaminating computers, delicate parts, or data centers.
+
+
+
+Part No.
+Product Name
+Description & Features
+Applications
+#6005
+Pen Oil
+Heavy-duty rust penetration spray with a uniquely low surface tension and unmatched penetration. Non-acidic and non-corrosive formulation.
+Penetrates and re-opens severely rusted assemblies, nuts, bolts, and effectively cleans caked-up old grease residues.
+#6006
+All-4
+General purpose rust cleaner. Non-toxic and silicone-free. Its low surface tension offers superior "wettability" and surface coverage.
+Used for displacing moisture, restoring valves, anti-corrosion, and light lubrication for industrial components.
+#6035
+Rust Inhibitor
+Absorbs and neutralizes surface moisture rather than just overlaying it. Lubricant compatible, so removal is not required before use.
+Prevents rusting and corrosion of bearings, gears, rotors, and gauges during indoor storage, usage, and shipment.
+#1623
+Air Tool Lube
+Absorbs water and eliminates ice build-up/frost. Contains blended rust and corrosion inhibitors and a special base fluid oil to minimize wear.
+Used for all air tools. Removes moisture penetrating deep into the tool, forms an anti-rust film, and provides continuous lubrication.
+
+
+
+
+Part No.
+Product Name
+Description & Features
+Applications
+#6009
+Red Insulating Varnish
+Tough, flexible air-dry insulation and protection coating. Provides Class H insulation. Also available in Green & Clear colors.
+Penetrates into windings & coils, seals out dust/moisture. Used on clamps, plates, poles, cage, thermostats, and bus-bars.
+#6013
+Moisture Displacer
+Di-electric fluid that restores electrical properties lost due to moisture, corrosion, dust, and carbon.
+Multi-application fluid for cleaning, de-watering, preventing corrosion, and improving conductivity in electrical/electronic systems.
+#BTC0119
+Battery Terminal Coating
+Anti-sulfation and anti-corrosion coating that will not crack or peel. Resistant to heat, gasoline, oil, and grease.
+Used especially for battery terminals, connections, and plug connectors in vehicles to prevent current losses and enhance battery life.
+#UBC0115B
+Under Body Anti-Rust Coating
+Bitumen-based anti-rust rubber coating. Forms a thick, watertight seal that resists salt corrosion, water, and debris.
+Applied to vehicle underbodies, repair work, and weld joints. Seals cracks and leaks under a rubbery skin.
+N/A
+Engine Lacquer Coating
+Specially designed acrylic high-temperature coating. Provides a high-gloss, water-repellent protective paint that maintains flexibility.
+Preserves engine compartments in passenger/commercial vehicles. Protects ignition leads from dampness and repels dirt/dust.
+
+
+Part No.
+Product Name
+Description & Features
+Applications
+N/A
+Mould Clean
+High-performance blend of safe organic solvents. Fast-drying, non-flammable, and leaves zero residues.
+Quickly dissolves and rinses away release agents, protective coatings, oil, and grease from metal molds and dies without damaging the base metal.
+N/A
+Mould & Die Protector
+Synthetic oil-based semi-flowable mold & die protection coating (available in Green, Red & Clear). Neutralizes surface moisture.
+Flows into the innermost cavities of molds/dies to provide superior long and short-term rust and corrosion protection.
+N/A
+Silco-R (Silicone Release)
+Silicone-based mold release agent. Leaves a colorless spray film that provides the correct amount of release agent every time to prevent excess build-up.
+Prevents sticking to increase the life of dies and molds. Improves surface finishes for plastic, rubber, polyester, and nylon.
+N/A
+Silco-Free Release Agent
+Silicone-free formula that does not transfer to the molded parts and keeps molds clean with extremely low build-up.
+Excellent release agent for plastics and natural/synthetic rubbers. Safe for injection, compression, and rotational molding.
+N/A
+Wax Kote
+Wax-based coating specifically designed for plastic injection molds. Self de-molds upon mold usage.
+Protects injection molds while significantly reducing the need for cleaning and lowering rejection rates.
+N/A
+Rubber Release Agent
+High-performance release spray providing excellent persistence of water repellency and luster.
+Ideal for urethane casting, plastics, tire molding, and releasing rubber parts.
+
+
+
+Product Name
+Description & Applications
+PTFE Dry Film Lubricant
+Provides a dry, friction-reducing Teflon film. Ideal for gears, chains, hinges, and bearings where wet lubricants would attract dust.
+Dry Graphite / Moly Lubricant
+Dry lubrication for textile equipment and high-temperature environments where long-lasting, drip-free lubrication is required.
+White Lithium Grease
+Heavy-duty, water-resistant grease for metal-to-metal lubrication (hinges, latches, heavy machinery).
+Moly / Cu-Antiseize
+Copper and Molybdenum-based anti-seize compounds. Applied to threaded fasteners and metal joints to prevent galling, corrosion, and seizing under extreme heat or pressure.
+Wire Rope & Chain Lube
+Specialized heavy-duty lubricants designed to penetrate deep into wire ropes and drive chains to reduce wear and prevent rust.
+Anti-Spatter Spray
+Used during welding operations to prevent molten spatter from sticking to welding tables, torches, and nearby metal areas.
+
+
+
+Product Name
+Description & Features
+Applications
+Cleaner
+Fast-drying pre-cleaning solvent for surface preparation.
+Removes dirt, grease, and oil before applying the penetrant to ensure accurate testing.
+Penetrant
+High-visibility dye penetrant spray.
+Seeps into surface-breaking defects, microscopic cracks, and flaws in metals.
+Developer
+White developer spray designed to draw out the penetrant.
+Makes flaws highly visible against the white background for easy inspection and quality control.
+
+
+Product Name
+Description & Features
+Applications
+PTFE Dry Film Lubricant
+Provides a dry, friction-reducing Teflon film.
+Ideal for gears, chains, hinges, and textile equipment where wet lubricants would attract dust and dirt.
+Dry Moly / Graphite Lube
+Dry lubrication suited for high-temperature environments.
+Provides long-lasting, drip-free lubrication in extreme industrial and textile applications.
+White Lithium Grease
+Heavy-duty, water-resistant metal-to-metal grease.
+Used for hinges, latches, and heavy machinery requiring thick, enduring lubrication.
+Wire Rope & Moly Chain Lube
+Deep-penetrating heavy-duty lubricants.
+Reduces wear, friction, and rust on wire ropes, industrial drive chains, and cables.
+Dripless Oil
+High-viscosity oil that stays in place without dripping.
+Ideal for overhead lubrication, vertical tracks, and open gears.
+Moly & Cu-Antiseize
+Molybdenum and Copper-based antiseize compounds.
+Applied to threaded fasteners and metal joints to prevent galling and seizing under high heat.
+Anti-Spatter Spray
+Prevents molten metal spatter from adhering.
+Applied to welding tables, torches, and surrounding metal zones during welding operations.
+High Temp. Paint
+Heat-resistant protective coating.
+Used on exhausts, boilers, and industrial machinery operating under high thermal stress.
+
+
+
+
+Product Name
+Description & Features
+Applications
+Carbo Clean (Bulk)
+Bulk carbon removing liquid.
+Deep cleaning of heavy carbon deposits in industrial machinery and engine blocks.
+Electro Clean (Bulk)
+Bulk precision electrical cleaner.
+Mass cleaning of electrical panels, motors, and contactors.
+Machine-O-Kleen (Bulk)
+Industrial machinery cleaner and degreaser.
+Heavy-duty degreasing for shop floors and large manufacturing equipment.
+Paint Stripper (Bulk)
+Heavy-duty liquid paint and varnish remover.
+Stripping old paint and coatings off large metal structures.
+Rust Protector-(S) & Rustonil (Bulk)
+Large-scale rust inhibition and protection fluids.
+Protecting bulk metal parts, gears, and shipments from corrosion.
+Rust Convertor (Bulk)
+Chemical treatment that converts active rust.
+Neutralizes rust on structural beams and machinery, prepping the surface for paint.
+PCB Coating (Bulk)
+Bulk protective conformal coating.
+Mass-protecting printed circuit boards and electronic assemblies to enhance reliability.
+Koncrete Scrub (Bulk)
+Heavy-duty concrete cleaning solution.
+Removing grease, grime, and industrial stains from factory floors.
+Cold Galvanising (Bulk)
+Zinc-rich protective coating liquid.
+Mass galvanic protection for structural steel and weld joints.
+
+
+
+Product Name
+Description & Features
+Applications
+All in One (Rust-Off)
+Multipurpose rust penetrator, cleaner, and light lubricant. Non-toxic, biodegradable, and silicone-free.
+Loosens adhesives, displaces moisture, restores electrical values, and re-opens jammed assemblies.
+Battery Terminal Coating
+High water, wear-proof, and acid-resistant coating. Will not crack or peel.
+Protects vehicle electronic systems and battery terminals from corrosion and sulfation, enhancing battery life.
+Brake & Throttle Body Cleaner
+Precision fast-drying cleaner.
+Removes carbon, grease, and brake fluid from automotive and industrial braking systems.
+Adhesive Chain Lube / Chain Cleaner
+Specialized formulas for drive chains.
+Cleaning and heavy-duty lubrication of two-wheeler and industrial chains.
+Silencer & Under Body Coating
+Thermal and anti-rust protective rubber coatings.
+Protecting vehicle exhausts and underbodies from heat, moisture, salt, and debris.
+Radiator Coolant
+Engine cooling fluid available in bulk.
+Regulating engine temperatures in automotive and stationary industrial engines.
+Vinyl Protectant & Dashboard Shiner
+Surface restorer and protectant.
+Cleaning and shining industrial cabins, vehicle interiors, and rubber trims.
+AC Disinfectant / Floor Sanitizer
+Odorless, nontoxic, biodegradable disinfecting spray formulation.
+Sanitizing AC vents, public areas, clinics, and industrial cleaning tools to prevent the spread of viruses.
+
+
+

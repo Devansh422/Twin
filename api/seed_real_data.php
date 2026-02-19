@@ -90,17 +90,36 @@ foreach ($blogs as $b) {
 // 3. Load Product Details
 // ==========================================
 echo "<h3>3. Loading Product Details...</h3>";
-$detailsFile = '../assets/evershine-details.json';
 $globalDetails = [];
-if (file_exists($detailsFile)) {
-    $json = file_get_contents($detailsFile);
-    $globalDetails = json_decode($json, true);
-    if (!$globalDetails)
-        echo "Warning: Failed to decode details JSON.<br>";
-    else
-        echo "Loaded details for " . count($globalDetails) . " items.<br>";
+
+// Load Evershine details
+$evershinePath = '../assets/evershine-details.json';
+if (file_exists($evershinePath)) {
+    $json = file_get_contents($evershinePath);
+    $evDetails = json_decode($json, true);
+    if ($evDetails) {
+        $globalDetails = array_merge($globalDetails, $evDetails);
+        echo "Loaded details for " . count($evDetails) . " Evershine items.<br>";
+    } else {
+        echo "Warning: Failed to decode Evershine details JSON.<br>";
+    }
 } else {
-    echo "Warning: Details file not found at $detailsFile<br>";
+    echo "Warning: Evershine details file not found at $evershinePath<br>";
+}
+
+// Load Sprayzet details
+$sprayzetPath = '../assets/sprayzet-details.json';
+if (file_exists($sprayzetPath)) {
+    $json = file_get_contents($sprayzetPath);
+    $spDetails = json_decode($json, true);
+    if ($spDetails) {
+        $globalDetails = array_merge($globalDetails, $spDetails);
+        echo "Loaded details for " . count($spDetails) . " Sprayzet items.<br>";
+    } else {
+        echo "Warning: Failed to decode Sprayzet details JSON.<br>";
+    }
+} else {
+    echo "Warning: Sprayzet details file not found at $sprayzetPath<br>";
 }
 
 // Function to find details case-insensitive

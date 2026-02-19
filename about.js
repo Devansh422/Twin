@@ -5,8 +5,8 @@
             <div class="image-frame" style="height:500px">
                 <img src="assets/director.webp" alt="Twin Tech Director" loading="lazy" />
                 <div class="exp-badge">
-                    <span class="years">25+</span>
-                    <span class="text">Years Experience</span>
+                    <span class="years">Mr. P.K Sharma</span>
+                    <span class="text">(Managing Director)</span>
                 </div>
             </div>
         </div>

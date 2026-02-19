@@ -224,17 +224,18 @@ async function fetchProductDetails() {
         } else {
             console.error('API Error:', result.message);
         }
+    } catch (error) {
+        console.error('Error loading products from API:', error);
+    }
 
-        // Fallback: load static details for products not yet in DB
+    // Fallback: load static details for products not yet in DB
+    try {
         const detailsResp = await fetch('../assets/evershine-details.json');
         const staticDetails = await detailsResp.json();
         Object.keys(staticDetails).forEach(key => {
             if (!productDetails[key]) productDetails[key] = staticDetails[key];
         });
-
-    } catch (error) {
-        console.error('Error loading data:', error);
-    }
+    } catch (e) { }
 }
 
 async function initDynamicProducts() {
