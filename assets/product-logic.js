@@ -245,7 +245,7 @@ let productDetails = {};
 
 async function fetchProductDetails() {
     try {
-        const response = await fetch('../api/products.php?brand=sprayzet');
+        const response = await fetch('../api/products.php?brand=sprayzet', { cache: 'no-store' });
         const result = await response.json();
         if (result.success && result.data) {
             productsData = result.data;
@@ -325,8 +325,8 @@ async function initDynamicProducts() {
         card.setAttribute('data-category', product.filterSlug);
 
         // Image path handling
-        const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
-        const imgSrc = product.imageData || ('../' + encodedPath);
+        const encodedPath = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
+        const imgSrc = product.imageData || (encodedPath ? ('../' + encodedPath) : '');
 
         card.innerHTML = `
             <div class="product-image-wrapper">

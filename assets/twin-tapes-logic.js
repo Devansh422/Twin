@@ -33,7 +33,7 @@ let productDetails = {};
 
 async function fetchProductDetails() {
     try {
-        const response = await fetch('../api/products.php?brand=twin-tapes');
+        const response = await fetch('../api/products.php?brand=twin-tapes', { cache: 'no-store' });
         const result = await response.json();
         if (result.success && result.data) {
             productsData = result.data;
@@ -81,8 +81,8 @@ async function initDynamicProducts() {
         card.className = 'product-card';
         card.setAttribute('data-category', "Twin Tapes");
 
-        const encodedPath = product.imagePath.split('/').map(s => encodeURIComponent(s)).join('/');
-        const imgSrc = product.imageData || ('../' + encodedPath);
+        const encodedPath = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
+        const imgSrc = product.imageData || (encodedPath ? ('../' + encodedPath) : '');
 
         const displayName = product.name.replace(/^\d+\.\s*/, '').replace(/-/g, ' ').replace(/\.jpg|\.jpeg|\.png/i, '');
 

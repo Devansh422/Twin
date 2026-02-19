@@ -14,6 +14,10 @@ ini_set('display_errors', 0); // Security: Don't show errors to user
 
 // Set Headers for CORS (if needed) and JSON
 header('Content-Type: application/json');
+// Prevent stale API data (especially important when hosting/CDN caches GET responses)
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
 header('Access-Control-Allow-Origin: *'); // Adjust for security in production
 header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
