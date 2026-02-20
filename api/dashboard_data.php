@@ -46,10 +46,9 @@ try {
         ];
 
         // Frontend expects a separate 'details' object keyed by product name
-        if ($p['details']) {
-            $det = json_decode($p['details'], true);
-            $data['details'][$p['name']] = array_merge($det, ['description' => $p['description']]);
-        }
+        $det = $p['details'] ? json_decode($p['details'], true) : [];
+        if (!is_array($det)) $det = [];
+        $data['details'][$p['name']] = array_merge($det, ['description' => $p['description'] ?? '']);
 
         $data['products'][$brand][$cat][] = $prodObj;
     }

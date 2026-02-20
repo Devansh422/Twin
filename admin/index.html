@@ -1661,11 +1661,12 @@
                     };
                 });
 
-                // Set initial state
-                if (BRANDS.length > 0) currentBrand = BRANDS[0].key;
+                // Preserve current brand if it still exists, else default to first
+                const brandStillExists = BRANDS.some(b => b.key === currentBrand);
+                if (!brandStillExists && BRANDS.length > 0) currentBrand = BRANDS[0].key;
 
                 renderBrandList();
-                switchBrand(currentBrand); // Render initial view
+                switchBrand(currentBrand); // Render current view
 
             })().catch(e => {
                 console.error(e);
@@ -1746,12 +1747,13 @@
                 total += prods.length;
                 html += `<div class="category-section"><div class="category-header"><h3>${cat} <span class="cat-count">(${prods.length})</span></h3></div><div class="products-grid-admin">`;
                 prods.forEach((p, i) => {
+                    const origIndex = currentData[cat].indexOf(p);
                     let imgSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
                     const safeName = escapeHtmlAttr(p.name);
                     html += `<div class="product-card-admin">
         <img class="card-img" src="${escapeHtmlAttr(imgSrc)}" alt="${safeName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
         <div class="card-body"><div class="card-name" title="${safeName}">${safeName}</div><div class="card-category">${escapeHtmlAttr(cat)}</div></div>
-        <div class="card-actions"><button class="btn btn-secondary btn-sm" onclick="openEditProductModal('${encodeURIComponent(cat)}',${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteProduct('${encodeURIComponent(cat)}',${i})">🗑 Delete</button></div>
+        <div class="card-actions"><button class="btn btn-secondary btn-sm" onclick="openEditProductModal('${encodeURIComponent(cat)}',${origIndex})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteProduct('${encodeURIComponent(cat)}',${origIndex})">🗑 Delete</button></div>
       </div>`;
                 });
                 html += '</div></div>';
@@ -1822,7 +1824,7 @@
             if (previewSrc) { document.getElementById('prodPreviewImg').src = previewSrc; document.getElementById('prodImagePreview').style.display = 'inline-block'; document.getElementById('prodUploadZone').style.display = 'none'; }
             else { document.getElementById('prodImagePreview').style.display = 'none'; document.getElementById('prodUploadZone').style.display = ''; }
             const det = detailsData[p.name] || {};
-            document.getElementById('prodDescription').value = det.description || '';
+            document.getElementById('prodDescription').value = det.description || p.description || '';
             document.getElementById('prodPackSize').value = det.packSize || '';
             document.getElementById('prodForm').value = det.form || '';
             document.getElementById('prodAvailability').value = det.availability || 'In stock';
@@ -1855,7 +1857,7 @@
 
         function addTableRow(k = '', v = '') {
             const r = document.createElement('div'); r.className = 'table-data-row';
-            r.innerHTML = `<input type="text" placeholder="Key" value="${k}"><input type="text" placeholder="Value" value="${v}"><button class="remove-row" onclick="this.parentElement.remove()">×</button>`;
+            r.innerHTML = `<input type="text" placeholder="Key" value="${escapeHtmlAttr(k)}"><input type="text" placeholder="Value" value="${escapeHtmlAttr(v)}"><button class="remove-row" onclick="this.parentElement.remove()">×</button>`;
             document.getElementById('tableDataRows').appendChild(r);
         }
 
