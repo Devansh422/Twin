@@ -897,10 +897,42 @@
         /* ── TABLE DATA ── */
         .table-data-row {
             display: grid;
-            grid-template-columns: 1fr 1fr auto;
+            grid-template-columns: auto 1fr 1fr auto;
             gap: .5rem;
             margin-bottom: .5rem;
-            align-items: center
+            align-items: center;
+            transition: background .15s, box-shadow .15s;
+            padding: .25rem .3rem;
+            border-radius: .4rem
+        }
+
+        .table-data-row.dragging {
+            opacity: .4;
+            background: var(--bg-input)
+        }
+
+        .table-data-row.drag-over {
+            box-shadow: 0 -2px 0 0 var(--color);
+        }
+
+        .table-data-row .drag-handle {
+            cursor: grab;
+            color: var(--text-muted);
+            font-size: .85rem;
+            padding: .2rem;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            opacity: .5;
+            transition: opacity .15s
+        }
+
+        .table-data-row:hover .drag-handle {
+            opacity: 1
+        }
+
+        .table-data-row .drag-handle:active {
+            cursor: grabbing
         }
 
         .table-data-row input {
@@ -918,18 +950,47 @@
             border-color: var(--color)
         }
 
-        .table-data-row .remove-row {
-            background: none;
-            border: none;
-            color: var(--danger);
-            cursor: pointer;
-            font-size: 1rem;
-            padding: .3rem;
-            border-radius: .25rem
+        .table-row-actions {
+            display: flex;
+            gap: .15rem;
+            align-items: center
         }
 
-        .table-data-row .remove-row:hover {
+        .table-row-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .85rem;
+            padding: .2rem;
+            border-radius: .25rem;
+            color: var(--text-muted);
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px
+        }
+
+        .table-row-actions button:hover {
+            background: var(--bg-input);
+            color: var(--text)
+        }
+
+        .table-row-actions .remove-row {
+            color: var(--danger)
+        }
+
+        .table-row-actions .remove-row:hover {
             background: rgba(239, 68, 68, .08)
+        }
+
+        .table-row-actions .insert-row {
+            color: var(--success)
+        }
+
+        .table-row-actions .insert-row:hover {
+            background: rgba(34, 197, 94, .08)
         }
 
         .add-row-btn {
@@ -1753,7 +1814,7 @@
                     html += `<div class="product-card-admin">
         <img class="card-img" src="${escapeHtmlAttr(imgSrc)}" alt="${safeName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f5f5f5%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-family=%22sans-serif%22 font-size=%2214%22>No Image</text></svg>'">
         <div class="card-body"><div class="card-name" title="${safeName}">${safeName}</div><div class="card-category">${escapeHtmlAttr(cat)}</div></div>
-        <div class="card-actions"><button class="btn btn-secondary btn-sm" onclick="openEditProductModal('${encodeURIComponent(cat)}',${origIndex})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteProduct('${encodeURIComponent(cat)}',${origIndex})">🗑 Delete</button></div>
+        <div class="card-actions"><button class="btn btn-secondary btn-sm" onclick="openEditProductModal('${encodeURIComponent(cat)}',${origIndex})">✏️ Edit</button><button class="btn btn-secondary btn-sm" onclick="duplicateProduct('${encodeURIComponent(cat)}',${origIndex})" title="Duplicate">📋 Duplicate</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteProduct('${encodeURIComponent(cat)}',${origIndex})">🗑 Delete</button></div>
       </div>`;
                 });
                 html += '</div></div>';
@@ -1855,10 +1916,59 @@
 
         function removeTag(type, i) { (type === 'features' ? featuresTags : benefitsTags).splice(i, 1); renderTags(type); }
 
-        function addTableRow(k = '', v = '') {
+        function addTableRow(k = '', v = '', refRow = null) {
             const r = document.createElement('div'); r.className = 'table-data-row';
-            r.innerHTML = `<input type="text" placeholder="Key" value="${escapeHtmlAttr(k)}"><input type="text" placeholder="Value" value="${escapeHtmlAttr(v)}"><button class="remove-row" onclick="this.parentElement.remove()">×</button>`;
-            document.getElementById('tableDataRows').appendChild(r);
+            r.draggable = true;
+            r.innerHTML = `<span class="drag-handle" title="Drag to reorder">⠿</span><input type="text" placeholder="Key" value="${escapeHtmlAttr(k)}"><input type="text" placeholder="Value" value="${escapeHtmlAttr(v)}"><div class="table-row-actions"><button class="insert-row" onclick="addTableRow('','',this.closest('.table-data-row'))" title="Insert row above">＋</button><button title="Move up" onclick="moveTableRow(this.closest('.table-data-row'),-1)">▲</button><button title="Move down" onclick="moveTableRow(this.closest('.table-data-row'),1)">▼</button><button class="remove-row" onclick="this.closest('.table-data-row').remove()" title="Remove row">×</button></div>`;
+            initRowDrag(r);
+            const container = document.getElementById('tableDataRows');
+            if (refRow) { container.insertBefore(r, refRow); }
+            else { container.appendChild(r); }
+        }
+
+        function moveTableRow(row, dir) {
+            const container = row.parentElement;
+            if (dir === -1 && row.previousElementSibling) {
+                container.insertBefore(row, row.previousElementSibling);
+            } else if (dir === 1 && row.nextElementSibling) {
+                container.insertBefore(row.nextElementSibling, row);
+            }
+        }
+
+        /* ── Table Row Drag & Drop ── */
+        let dragSrcRow = null;
+        function initRowDrag(row) {
+            row.addEventListener('dragstart', function(e) {
+                dragSrcRow = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', '');
+            });
+            row.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                document.querySelectorAll('.table-data-row.drag-over').forEach(r => r.classList.remove('drag-over'));
+                dragSrcRow = null;
+            });
+            row.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                if (this !== dragSrcRow) this.classList.add('drag-over');
+            });
+            row.addEventListener('dragleave', function() {
+                this.classList.remove('drag-over');
+            });
+            row.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+                if (dragSrcRow && dragSrcRow !== this) {
+                    const container = this.parentElement;
+                    const allRows = [...container.children];
+                    const fromIdx = allRows.indexOf(dragSrcRow);
+                    const toIdx = allRows.indexOf(this);
+                    if (fromIdx < toIdx) { container.insertBefore(dragSrcRow, this.nextElementSibling); }
+                    else { container.insertBefore(dragSrcRow, this); }
+                }
+            });
         }
 
         async function saveProduct() {
@@ -1916,6 +2026,39 @@
             document.getElementById('confirmMessage').textContent = `Delete "${p.name}"? This cannot be undone.`;
             document.getElementById('confirmDeleteBtn').onclick = () => { deleteProduct(p.id); };
             openModal('confirmModal');
+        }
+
+        async function duplicateProduct(encCat, index) {
+            const cat = decodeURIComponent(encCat), p = currentData[cat][index]; if (!p) return;
+            const det = detailsData[p.name] || {};
+            const payload = {
+                action: 'add',
+                brand: currentBrand,
+                category: cat,
+                name: p.name + ' (Copy)',
+                imagePath: p.imagePath || '',
+                imageData: p.imageData || null,
+                description: p.description || det.description || '',
+                details: {
+                    description: det.description || p.description || '',
+                    availability: det.availability || 'In stock',
+                    tableData: det.tableData || undefined,
+                    features: det.features ? [...det.features] : undefined,
+                    benefits: det.benefits ? [...det.benefits] : undefined,
+                    packSize: det.packSize || '',
+                    form: det.form || ''
+                }
+            };
+            try {
+                const res = await fetch('../api/products.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const data = await res.json();
+                if (data.success) {
+                    await init();
+                    showToast('Product duplicated!', 'success');
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); }
         }
 
         async function deleteProduct(id) {
