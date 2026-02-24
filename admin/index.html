@@ -1265,6 +1265,42 @@
             color: var(--text);
             word-break: break-word;
         }
+
+        /* ── SPINNER OVERLAY ── */
+        .spinner-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .spinner-overlay.active {
+            display: flex;
+        }
+        .spinner-ring {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: var(--color);
+            border-radius: 50%;
+            animation: spinnerSpin 0.7s linear infinite;
+        }
+        .spinner-label {
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        @keyframes spinnerSpin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -1480,6 +1516,7 @@
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
+    <div class="spinner-overlay" id="spinnerOverlay"><div class="spinner-ring"></div><span class="spinner-label" id="spinnerLabel"></span></div>
 
     <script>
         /* ═══════════════════════════════════════════
@@ -2008,6 +2045,7 @@
                 details: details
             };
 
+            showSpinner('Saving product…');
             try {
                 const res = await fetch('../api/products.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await res.json();
@@ -2018,7 +2056,7 @@
                 } else {
                     showToast('Error: ' + data.message, 'error');
                 }
-            } catch (e) { console.error(e); showToast('Server error', 'error'); }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); } finally { hideSpinner(); }
         }
 
         function confirmDeleteProduct(encCat, index) {
@@ -2050,6 +2088,7 @@
                     form: det.form || ''
                 }
             };
+            showSpinner('Duplicating product…');
             try {
                 const res = await fetch('../api/products.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await res.json();
@@ -2059,10 +2098,11 @@
                 } else {
                     showToast('Error: ' + data.message, 'error');
                 }
-            } catch (e) { console.error(e); showToast('Server error', 'error'); }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); } finally { hideSpinner(); }
         }
 
         async function deleteProduct(id) {
+            showSpinner('Deleting product…');
             try {
                 const res = await fetch('../api/products.php', {
                     method: 'POST',
@@ -2077,7 +2117,7 @@
                 } else {
                     showToast('Error: ' + data.message, 'error');
                 }
-            } catch (e) { console.error(e); showToast('Server error', 'error'); }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); } finally { hideSpinner(); }
         }
 
         /* ═══════════════════════════════════════════
@@ -2132,6 +2172,7 @@
                 content: document.getElementById('blogContent').value.trim()
             };
 
+            showSpinner('Saving post…');
             try {
                 const res = await fetch('../api/manage_content.php?type=blog', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(post) });
                 const data = await res.json();
@@ -2142,7 +2183,7 @@
                 } else {
                     showToast('Error: ' + data.message, 'error');
                 }
-            } catch (e) { console.error(e); showToast('Server error', 'error'); }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); } finally { hideSpinner(); }
         }
 
         function confirmDeleteBlog(index) {
@@ -2150,6 +2191,7 @@
             document.getElementById('confirmTitle').textContent = 'Delete Blog Post';
             document.getElementById('confirmMessage').textContent = `Delete "${p.title}"? This cannot be undone.`;
             document.getElementById('confirmDeleteBtn').onclick = async () => {
+                showSpinner('Deleting post…');
                 try {
                     const res = await fetch('../api/manage_content.php?type=blog', {
                         method: 'POST',
@@ -2162,7 +2204,7 @@
                         await init();
                         showToast('Post deleted.', 'info');
                     }
-                } catch (e) { console.error(e); showToast('Error deleting', 'error'); }
+                } catch (e) { console.error(e); showToast('Error deleting', 'error'); } finally { hideSpinner(); }
             };
             openModal('confirmModal');
         }
@@ -2298,6 +2340,18 @@
             const t = document.createElement('div'); t.className = 'toast ' + type; t.textContent = msg;
             document.getElementById('toastContainer').appendChild(t);
             setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300) }, 3000);
+        }
+
+        /* ═══════════════════════════════════════════
+           SPINNER
+           ═══════════════════════════════════════════ */
+        function showSpinner(message) {
+            const overlay = document.getElementById('spinnerOverlay');
+            document.getElementById('spinnerLabel').textContent = message || '';
+            overlay.classList.add('active');
+        }
+        function hideSpinner() {
+            document.getElementById('spinnerOverlay').classList.remove('active');
         }
 
 

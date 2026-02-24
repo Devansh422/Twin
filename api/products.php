@@ -15,6 +15,22 @@ if ($method === 'GET') {
     if (!$brand)
         sendResponse(false, 'Brand required');
 
+    // Return flat list of all products for search
+    if ($brand === 'all') {
+        $stmt = $pdo->query("SELECT name, brand, category, image_path FROM products ORDER BY brand, category, name");
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchData = [];
+        foreach ($products as $p) {
+            $searchData[] = [
+                'name' => $p['name'],
+                'brand' => $p['brand'],
+                'category' => $p['category'],
+                'imagePath' => $p['image_path']
+            ];
+        }
+        sendResponse(true, 'All products fetched', $searchData);
+    }
+
     $stmt = $pdo->prepare("SELECT * FROM products WHERE brand = ?");
     $stmt->execute([$brand]);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -73,13 +73,19 @@ async function initDynamicProducts() {
 
     filtersContainer.innerHTML = '<button class="filter-tag active" data-filter="all" style="cursor: default;">All Products</button>';
 
-    const allProducts = productsData["Twin Tapes"].map(p => ({ ...p, rawCategory: "Twin Tapes" }));
+    // Build allProducts from all categories dynamically (not hardcoded key)
+    let allProducts = [];
+    Object.entries(productsData).forEach(([category, products]) => {
+        products.forEach(p => {
+            allProducts.push({ ...p, rawCategory: category });
+        });
+    });
 
     gridContainer.innerHTML = '';
     allProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        card.setAttribute('data-category', "Twin Tapes");
+        card.setAttribute('data-category', product.rawCategory);
 
         const encodedPath = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
         const imgSrc = product.imageData || (encodedPath ? ('../' + encodedPath) : '');
@@ -112,7 +118,7 @@ async function initDynamicProducts() {
             const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
             
             // Open the modal
-            openProductModal(targetProduct.name, imgSrc, targetProduct.category);
+            openProductModal(targetProduct.name, imgSrc, targetProduct.rawCategory || targetProduct.category);
         }
     }
 
@@ -185,7 +191,7 @@ function attachEventListeners() {
         card.addEventListener('click', () => {
             const name = card.querySelector('.product-name').textContent;
             const imgSrc = card.querySelector('.product-img').src;
-            const category = "Twin Tapes";
+            const category = card.getAttribute('data-category') || 'Twin Tapes';
             openProductModal(name, imgSrc, category);
         });
     });
