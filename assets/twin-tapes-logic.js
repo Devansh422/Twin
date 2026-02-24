@@ -100,6 +100,22 @@ async function initDynamicProducts() {
 
     if (countElement) countElement.textContent = allProducts.length;
 
+    // Check for URL parameters to open specific product
+    const urlParams = new URLSearchParams(window.location.search);
+    const productParam = urlParams.get('product');
+
+    if (productParam) {
+        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
+        if (targetProduct) {
+             // Create image source path securely
+            const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
+            const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
+            
+            // Open the modal
+            openProductModal(targetProduct.name, imgSrc, targetProduct.category);
+        }
+    }
+
     attachEventListeners();
     animateCardsEntrance();
 }

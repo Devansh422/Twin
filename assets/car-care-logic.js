@@ -316,6 +316,21 @@ async function initDynamicProducts() {
 
     // Initial animation for cards
     animateCardsEntrance();
+
+    // Check URL for product parameter to open modal automatically
+    const urlParams = new URLSearchParams(window.location.search);
+    const productParam = urlParams.get('product');
+    if (productParam) {
+        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.trim().toLowerCase());
+        if (targetProduct) {
+            const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
+            const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
+            // Small delay to ensure modal logic is ready and transition is smooth
+            setTimeout(() => {
+                openProductModal(targetProduct.name, imgSrc, targetProduct.category);
+            }, 500);
+        }
+    }
 }
 
 function attachEventListeners() {

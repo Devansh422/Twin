@@ -122,6 +122,25 @@ async function initDynamicProducts() {
     // Update count
     if (countElement) countElement.textContent = allProducts.length;
 
+    // Check for URL parameters to open specific product
+    const urlParams = new URLSearchParams(window.location.search);
+    const productParam = urlParams.get('product');
+
+    if (productParam) {
+        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
+        if (targetProduct) {
+             // Create image source path securely
+            const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
+            const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
+            
+            // Format category name for consistency
+            const formattedCategory = targetProduct.rawCategory.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+            // Open the modal
+            openProductModal(targetProduct.name, imgSrc, formattedCategory);
+        }
+    }
+
     // Re-initialize event listeners
     attachEventListeners();
 

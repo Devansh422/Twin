@@ -99,37 +99,37 @@
 
         // ===== TWIN TAPES =====
         { name: "DS POLYESTER TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/1. DS POLYESTER TAPE.jpg" },
-        { name: "Red Polyester Tape FILMIC LINER", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/10.Red-Polyester-Tape FILMIC LINER.jpg" },
+        { name: "Red-Polyester-Tape FILMIC LINER", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/10.Red-Polyester-Tape FILMIC LINER.jpg" },
         { name: "MASKING TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/11. MASKING TAPE.jpg" },
-        { name: "SURFACE PROTECTION TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/12. SURFACE-PROTECTION-TAPE.jpg" },
+        { name: "SURFACE-PROTECTION-TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/12. SURFACE-PROTECTION-TAPE.jpg" },
         { name: "SS FOAM TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/13. SS FOAM TAPE.jpg" },
-        { name: "Acrylic Foam Tape (VHB TAPE)", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/14. Acrylic-Foam-Tape (VHB TAPE).jpg" },
-        { name: "Kraft Paper Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/15. Kraft-Paper-Tape.jpg" },
+        { name: "Acrylic-Foam-Tape (VHB TAPE)", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/14. Acrylic-Foam-Tape (VHB TAPE).jpg" },
+        { name: "Kraft-Paper-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/15. Kraft-Paper-Tape.jpg" },
         { name: "BOPP TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/16. BOPP TAPE.jpg" },
-        { name: "PVC Insulation Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/17. PVC-Insulation-Tape.jpg" },
+        { name: "PVC-Insulation-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/17. PVC-Insulation-Tape.jpg" },
         { name: "ADVERTISEMENT & BOPP PRINTED TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/18. ADVERTISEMENT & BOPP PRINTED TAPE.jpg" },
-        { name: "Silicon Self-Fusing Hit Tape (SF-555)", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/19. Silicon-Self-Fusing-Hit-Tape (SF-555).jpg" },
-        { name: "Tissue Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/2.Tissue-Tape.jpg" },
+        { name: "Silicon-Self-Fusing-Hit-Tape (SF-555)", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/19. Silicon-Self-Fusing-Hit-Tape (SF-555).jpg" },
+        { name: "Tissue-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/2.Tissue-Tape.jpg" },
         { name: "Self Amalgamating Tape (SF-556)", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/20. Self Amalgamating Tape (SF-556).jpg" },
-        { name: "Pink Rayon Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/21. Pink-Rayon-Tape.jpg" },
-        { name: "Kapton Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/22. Kapton-Tape.jpg" },
-        { name: "Cotton Cloth Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/23. Cotton-Cloth-Tape.jpg" },
-        { name: "HDPE Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/24 HDPE-Tape.jpg" },
+        { name: "Pink-Rayon-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/21. Pink-Rayon-Tape.jpg" },
+        { name: "Kapton-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/22. Kapton-Tape.jpg" },
+        { name: "Cotton-Cloth-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/23. Cotton-Cloth-Tape.jpg" },
+        { name: "HDPE-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/24 HDPE-Tape.jpg" },
         { name: "SINGLE SIDE POLYESTER TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/25 SINGLE SIDE POLYESTER TAPE.jpeg" },
-        { name: "Cloth Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/3.Cloth-Tape.jpg" },
+        { name: "Cloth-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/3.Cloth-Tape.jpg" },
         { name: "DS FOAM TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/4. DS FOAM TAPE.jpg" },
-        { name: "Floor Marking Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/5. Floor-Marking-Tape.jpg" },
+        { name: "Floor-Marking-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/5. Floor-Marking-Tape.jpg" },
         { name: "ALUMINIUM FOIL TAPE", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/6. ALUMINIUM FOIL TAPE.jpg" },
-        { name: "Duct Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/7.Duct-Tape.jpg" },
-        { name: "Filament Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/8.Filament-Tape.jpg" },
-        { name: "Blue Door Holding Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/9. Blue-Door-Holding-Tape.jpg" },
+        { name: "Duct-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/7.Duct-Tape.jpg" },
+        { name: "Filament-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/8.Filament-Tape.jpg" },
+        { name: "Blue-Door-Holding-Tape", brand: "Twin Tapes", category: "Twin Tapes", brandPage: "twin-tapes/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/3. TWIN TAPE/9. Blue-Door-Holding-Tape.jpg" },
 
         // ===== TWINZY =====
-        { name: "Air Freshener - Citrus", brand: "Twinzy", category: "Air Freshener", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER CITRUS.jpg" },
-        { name: "Air Freshener - Jasmine", brand: "Twinzy", category: "Air Freshener", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER JASMINE.jpg" },
-        { name: "Air Freshener - Lavender", brand: "Twinzy", category: "Air Freshener", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER LAVENDER.jpg" },
-        { name: "Furniture Polish", brand: "Twinzy", category: "Furniture Polish", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/1.png" },
-        { name: "Furniture Polish Premium", brand: "Twinzy", category: "Furniture Polish", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/5.png" }
+        { name: "CITRUS", brand: "Twinzy", category: "Air Freshener", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER CITRUS.jpg" },
+        { name: "JASMINE", brand: "Twinzy", category: "Air Freshener", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER JASMINE.jpg" },
+        { name: "LAVENDER", brand: "Twinzy", category: "Air Freshener", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/1. AIR FRESHNER/AIR FRESHNER LAVENDER.jpg" },
+        { name: "FURNITURE POLISH 1", brand: "Twinzy", category: "Furniture Polish", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/1.png" },
+        { name: "FURNITURE POLISH 5", brand: "Twinzy", category: "Furniture Polish", brandPage: "twinzy/", imagePath: "BRAND WISE PRODUCTS-20260130T003450Z-3-001/BRAND WISE PRODUCTS/4. TWINZY/1. HOME CARE PRODUCTS/2. FURNITURE POLISH/5.png" }
     ];
 
     // Inject search button into nav action_buttons
@@ -222,7 +222,7 @@
         for (var i = 0; i < matches.length; i++) {
             var p = matches[i];
             var imgSrc = basePath + encodeURI(p.imagePath);
-            var href = basePath + p.brandPage;
+            var href = basePath + p.brandPage + '?product=' + encodeURIComponent(p.name);
             html += '<a href="' + href + '" class="search-result-item">' +
                 '<img src="' + imgSrc + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
                 '<div class="search-result-info">' +
