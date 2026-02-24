@@ -1884,7 +1884,8 @@
             const previewSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
             if (previewSrc) { document.getElementById('prodPreviewImg').src = previewSrc; document.getElementById('prodImagePreview').style.display = 'inline-block'; document.getElementById('prodUploadZone').style.display = 'none'; }
             else { document.getElementById('prodImagePreview').style.display = 'none'; document.getElementById('prodUploadZone').style.display = ''; }
-            const det = detailsData[p.name] || {};
+            // Look up details by product ID (avoids name collision), fallback to embedded details, then name-keyed
+            const det = (p.details) || detailsData[p.id] || detailsData[p.name] || {};
             document.getElementById('prodDescription').value = det.description || p.description || '';
             document.getElementById('prodPackSize').value = det.packSize || '';
             document.getElementById('prodForm').value = det.form || '';
@@ -2030,7 +2031,7 @@
 
         async function duplicateProduct(encCat, index) {
             const cat = decodeURIComponent(encCat), p = currentData[cat][index]; if (!p) return;
-            const det = detailsData[p.name] || {};
+            const det = (p.details) || detailsData[p.id] || detailsData[p.name] || {};
             const payload = {
                 action: 'add',
                 brand: currentBrand,

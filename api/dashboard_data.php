@@ -35,20 +35,22 @@ try {
         if (!isset($data['products'][$brand][$cat]))
             $data['products'][$brand][$cat] = [];
 
-        // Extract details for separate details object if needed, or keep attached
+        // Decode details JSON and embed directly in product object (keyed by ID, no name collisions)
+        $det = $p['details'] ? json_decode($p['details'], true) : [];
+        if (!is_array($det)) $det = [];
+
         $prodObj = [
             'id' => $p['id'],
             'name' => $p['name'],
             'imagePath' => $p['image_path'],
             'imageData' => $p['image_data'],
             'description' => $p['description'],
-            // merge JSON details
+            'details' => $det,
         ];
 
-        // Frontend expects a separate 'details' object keyed by product name
-        $det = $p['details'] ? json_decode($p['details'], true) : [];
-        if (!is_array($det)) $det = [];
-        $data['details'][$p['name']] = array_merge($det, ['description' => $p['description'] ?? '']);
+        // Also keep backward-compatible name-keyed details map (uses product ID suffix to avoid collisions)
+        $detWithDesc = array_merge($det, ['description' => $p['description'] ?? '']);
+        $data['details'][$p['id']] = $detWithDesc;
 
         $data['products'][$brand][$cat][] = $prodObj;
     }
