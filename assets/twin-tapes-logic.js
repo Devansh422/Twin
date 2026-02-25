@@ -92,6 +92,8 @@ async function initDynamicProducts() {
 
         const displayName = product.name.replace(/^\d+\.\s*/, '').replace(/-/g, ' ').replace(/\.jpg|\.jpeg|\.png/i, '');
 
+        card.setAttribute('data-product-name', product.name);
+
         card.innerHTML = `
             <div class="product-image-wrapper">
                 <img src="${imgSrc}" alt="${displayName}" class="product-img">
@@ -189,7 +191,7 @@ function attachEventListeners() {
 
         // Add Modal Click Listener
         card.addEventListener('click', () => {
-            const name = card.querySelector('.product-name').textContent;
+            const name = card.getAttribute('data-product-name') || card.querySelector('.product-name').textContent;
             const imgSrc = card.querySelector('.product-img').src;
             const category = card.getAttribute('data-category') || 'Twin Tapes';
             openProductModal(name, imgSrc, category);
@@ -213,11 +215,20 @@ function attachEventListeners() {
 function openProductModal(name, imgSrc, category) {
     const modal = document.getElementById('productModal');
 
-    // Case-insensitive lookup
-    const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
-    const details = productDetails[detailKey] || productDetails['default'];
+    // Case-insensitive lookup (try raw name, then cleaned name without dashes)
+    let detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
+    if (!detailKey) {
+        const cleanName = name.replace(/-/g, ' ');
+        detailKey = Object.keys(productDetails).find(key => key.replace(/-/g, ' ').toLowerCase() === cleanName.toLowerCase());
+    }
+    const details = productDetails[detailKey] || productDetails['default'] || {
+        description: name,
+        packSize: 'Contact for details',
+        form: 'Contact for details',
+        availability: 'In stock'
+    };
 
-    if (!modal || !details) return;
+    if (!modal) return;
 
     document.getElementById('modalProductName').textContent = name;
     document.getElementById('modalTableName').textContent = name;

@@ -26,8 +26,8 @@
     var allSiteProducts = [];
     var searchLoaded = false;
 
-    function loadSearchProducts() {
-        if (searchLoaded) return Promise.resolve();
+    function loadSearchProducts(forceRefresh) {
+        if (searchLoaded && !forceRefresh) return Promise.resolve();
         return fetch(basePath + 'api/products.php?brand=all', { cache: 'no-store' })
             .then(function (res) { return res.json(); })
             .then(function (result) {
@@ -97,14 +97,16 @@
             document.getElementById('global-search-input').focus();
         }, 100);
         document.body.style.overflow = 'hidden';
-        // Fetch products on first open
+        // Always fetch fresh product data when search opens
+        var resultsContainer = document.getElementById('search-results');
         if (!searchLoaded) {
-            var resultsContainer = document.getElementById('search-results');
             resultsContainer.innerHTML = '<div class="no-results">Loading products...</div>';
-            loadSearchProducts().then(function () {
-                resultsContainer.innerHTML = '';
-            });
         }
+        loadSearchProducts(true).then(function () {
+            if (!document.getElementById('global-search-input').value.trim()) {
+                resultsContainer.innerHTML = '';
+            }
+        });
     }
 
     function closeSearch() {

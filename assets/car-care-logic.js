@@ -520,9 +520,14 @@ function openProductModal(name, imgSrc, category) {
 
     // Case-insensitive lookup
     const detailKey = Object.keys(productDetails).find(key => key.toLowerCase() === name.toLowerCase());
-    const details = productDetails[detailKey] || productDetails['default'];
+    const details = productDetails[detailKey] || productDetails['default'] || {
+        description: name,
+        packSize: 'Contact for details',
+        form: 'Contact for details',
+        availability: 'In stock'
+    };
 
-    if (!modal || !details) return;
+    if (!modal) return;
 
     document.getElementById('modalProductName').textContent = name;
     document.getElementById('modalTableName').textContent = name;
