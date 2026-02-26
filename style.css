@@ -784,24 +784,21 @@ img{
         }
 
         .showcase-grid{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap; /* Allow wrapping */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             width: 100%;
-            gap: 1.5rem; /* Increased gap slightly */
+            gap: 1.5rem;
             max-width: 1400px;
         }        
         .item-card{
             position: relative;
             height: 400px;
-            width: 400px;
+            width: 100%;
             background: #e5e5e5;
             border-radius: 0.5rem;
-            will-change: width;
             transition: 0.3s cubic-bezier(0.89, 0.01, 0.46, 1);
             padding: 0.5rem;
-            flex-shrink: 0;
+            min-width: 0;
         }
         
         .item-card .item-visual{
@@ -809,8 +806,12 @@ img{
             height: 300px;
             width: 100%;
             will-change: margin-top;
+            overflow-y: hidden;
             transition: 0.3s cubic-bezier(0.89, 0.01, 0.46, 1);
         }
+        .item-card .item-visual::-webkit-scrollbar {
+  display: none;
+}
         .item-card .item-info-panel{
             width: 100%;
             height: 40px;
@@ -846,6 +847,9 @@ img{
             opacity: 0; /* Hide initially to prevent layout jumps */
             transition: opacity 0.3s ease;
         }
+        .item-card .item-info-panel .item-desc-wrapper p{
+          font-size: 0.9rem;
+        }
         .canvas-container {
             width: 100%;
             height: 100%;
@@ -859,14 +863,11 @@ img{
 
         /* Desktop Hover State */
         @media (min-width: 1024px) {
-            .item-card:hover{
-                width: 500px;
-            }
             .item-card:hover .item-visual{
-                margin-top: -130px;
+                margin-top: -140px;
             }
             .item-card:hover .item-info-panel{
-                height: 210px;
+                height: 220px;
             }
             .item-card:hover .item-desc-wrapper {
                 opacity: 1;
@@ -880,15 +881,17 @@ img{
                 padding: 1rem;
             }
             .showcase-grid {
-                flex-direction: column;
+                grid-template-columns: 1fr;
                 height: auto;
+                justify-items: center;
             }
             .item-card {
-                width: 90%; /* Responsive width */
+                width: 90%;
                 max-width: 400px;
                 height: auto; /* Let content dictate height */
                 min-height: 450px; /* Minimum height ensures canvas space */
                 margin-bottom: 2rem;
+                overflow: hidden;
             }
             
             /* Disable the "hover expands" effect on touch devices, show content by default or structured differently */
