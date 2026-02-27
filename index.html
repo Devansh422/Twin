@@ -528,9 +528,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const webGLRender = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             
-            // Explicitly allow touch actions for scrolling on mobile
-            webGLRender.domElement.style.touchAction = 'auto';
-
             // Set size including the 140% oversized margin
             const renderWidth = mountPoint.clientWidth * 1.4;
             const renderHeight = mountPoint.clientHeight * 1.4;
@@ -550,6 +547,9 @@ document.addEventListener("DOMContentLoaded", () => {
             orbitControls.autoRotate = true;
             orbitControls.autoRotateSpeed = 2.0; 
             orbitControls.target.set(0, 0, 0);
+
+            // Explicitly allow touch actions for scrolling on mobile (Must be set AFTER OrbitControls)
+            webGLRender.domElement.style.touchAction = 'auto';
 
             await getEnvironmentMap(webGLRender, threeScene);
 
