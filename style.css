@@ -876,6 +876,10 @@ img{
 
         /* Tablet/Mobile Responsive Styles */
         @media (max-width: 1023px) {
+          .canvas-container canvas{
+          z-index: 999;
+          touch-action: auto;
+        }
             .content-showcase-wrapper {
                 height: auto;
                 padding: 1rem;
