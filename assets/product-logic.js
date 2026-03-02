@@ -618,7 +618,56 @@ function openProductModal(name, imgSrc, category) {
 
     // Reset scroll position
     const contentCol = modal.querySelector('.modal-content-col');
-    if (contentCol) contentCol.scrollTop = 0;
+    if (contentCol) {
+        contentCol.scrollTop = 0;
+        // Ensure overflow is set correctly
+        contentCol.style.overflowY = 'auto';
+        contentCol.style.maxHeight = '100%';
+    }
+
+    // Add explicit scroll controls if requested
+    let scrollControls = document.getElementById('modalScrollControls');
+    
+    if (!scrollControls) {
+        scrollControls = document.createElement('div');
+        scrollControls.id = 'modalScrollControls';
+        scrollControls.style.cssText = 'position: absolute; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1002; pointer-events: none;';
+        
+        const btnStyle = 'width: 40px; height: 40px; border-radius: 50%; background: #ed1d21; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); pointer-events: auto; transition: transform 0.2s;';
+        
+        const upBtn = document.createElement('button');
+        upBtn.innerHTML = '&#8593;';
+        upBtn.style.cssText = btnStyle;
+        
+        // Add click handler
+        upBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const col = modal.querySelector('.modal-content-col');
+            if(col) col.scrollBy({ top: -150, behavior: 'smooth' });
+        });
+        
+        const downBtn = document.createElement('button');
+        downBtn.innerHTML = '&#8595;';
+        downBtn.style.cssText = btnStyle;
+        
+        // Add click handler
+        downBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const col = modal.querySelector('.modal-content-col');
+            if(col) col.scrollBy({ top: 150, behavior: 'smooth' });
+        });
+        
+        scrollControls.appendChild(upBtn);
+        scrollControls.appendChild(downBtn);
+        
+        const container = modal.querySelector('.modal-container');
+        if (container) {
+            container.style.position = 'relative';
+            container.appendChild(scrollControls);
+        }
+    } else {
+        scrollControls.style.display = 'flex';
+    }
 
     // Disable body scroll
     document.body.style.overflow = 'hidden';
