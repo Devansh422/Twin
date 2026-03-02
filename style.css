@@ -946,7 +946,7 @@ img{
 }
 
 .item-visual .bg-logo .logo{
-  height: fit-content;
+  height: 12rem;
   width: 12rem;
   margin-bottom: -5rem;
   position: absolute;
@@ -955,11 +955,22 @@ img{
   transform: translateX(-50%);
   will-change: transform, left, bottom;
   transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.item-visual .bg-logo .logo img{
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+}
+.item-visual .bg-logo .logo.sparyzet{
+  margin-bottom: -4.5rem;
+}
 
 .item-visual .bg-logo .logo.evershine{
-  margin-bottom: -1rem;
+  margin-bottom: -2rem;
 }
 
 @media (min-width: 1024px) {
@@ -971,7 +982,7 @@ img{
 
   .item-card:hover .item-visual .bg-logo .logo.evershine{
     left: 100%;
-    bottom: 20%;
+    bottom: 12%;
     transform: translateX(-100%);
   }
 }
