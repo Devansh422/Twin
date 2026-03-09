@@ -23,36 +23,212 @@
 	<link rel="stylesheet" type="text/css" href="../footer.css">
 	<title>Private Labelling - Twin Tech India Pvt. Ltd.</title>
 	<style>
-		.coming-soon-section {
+		.distributor-form-section {
+			padding: 4rem 2rem;
+			background-color: #f9f9f9;
+		}
+
+		.form-container {
+			max-width: 900px;
+			margin: 0 auto;
+			background: #fff;
+			padding: 2rem;
+			border-radius: 8px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		}
+
+		.form-container h1 {
+			text-align: center;
+			font-size: 2.5rem;
+			margin-bottom: 0.5rem;
+			color: #333;
+		}
+
+		.form-container .sub-heading {
+			text-align: center;
+			color: #ED1D21;
+			margin-bottom: 2.5rem;
+			font-size: 1.1rem;
+			font-weight: 500;
+		}
+
+		.form-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5rem;
+		}
+
+		.form-field {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.form-field.full-width {
+			grid-column: 1 / -1;
+		}
+
+		.form-field label {
+			position: absolute;
+			top: 0.8rem;
+			left: 1rem;
+			color: #999;
+			font-size: 1rem;
+			font-weight: 500;
+			pointer-events: none;
+			transition: all 0.3s ease;
+		}
+
+		.form-field input,
+		.form-field textarea {
+			width: 100%;
+			padding: 0.8rem 1rem;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 1rem;
+			background-color: transparent;
+			transition: border-color 0.3s;
+		}
+
+		.form-field input:focus,
+		.form-field textarea:focus,
+		.form-field input:not(:placeholder-shown),
+		.form-field textarea:not(:placeholder-shown) {
+			outline: none;
+			border-color: #ED1D21;
+		}
+
+		.form-field input:focus + label,
+		.form-field textarea:focus + label,
+		.form-field input:not(:placeholder-shown) + label,
+		.form-field textarea:not(:placeholder-shown) + label {
+			top: -0.75rem;
+			left: 0.75rem;
+			font-size: 0.8rem;
+			color: #ED1D21;
+			background-color: #fff;
+			padding: 0 0.25rem;
+		}
+
+		.form-field textarea {
+			min-height: 120px;
+			resize: vertical;
+		}
+
+		.radio-group {
+			grid-column: 1 / -1;
+		}
+
+		.radio-group legend {
+			margin-bottom: 0.75rem;
+			font-weight: 600;
+			color: #555;
+			font-size: 0.9rem;
+		}
+
+		.radio-options {
+			display: flex;
+			gap: 1.5rem;
+			flex-wrap: wrap;
+		}
+
+		.radio-options label {
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			min-height: 60vh;
-			background: #fff;
-			padding: 5rem 2rem;
+			gap: 0.5rem;
+			font-weight: 500;
+			cursor: pointer;
 		}
-		.coming-soon-content {
-			text-align: center;
-			max-width: 600px;
+
+		.radio-options input {
+			accent-color: #ED1D21;
 		}
-		.coming-soon-content h1 {
-			font-family: "heading", sans-serif;
-			font-size: clamp(2.5rem, 5vw, 4rem);
-			color: #222;
-			margin-bottom: 1rem;
-		}
-		.coming-soon-content p {
-			font-family: "base", sans-serif;
+
+		.submit-btn {
+			grid-column: 1 / -1;
+			width: 100%;
+			padding: 1rem;
+			background-color: #ED1D21;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
 			font-size: 1.2rem;
-			color: #666;
-			line-height: 1.6;
+			font-weight: 600;
+			cursor: pointer;
+			transition: background-color 0.3s;
+			margin-top: 1rem;
 		}
-		.coming-soon-content .accent-line {
-			width: 60px;
-			height: 4px;
-			background: var(--color);
-			margin: 1.5rem auto;
-			border-radius: 2px;
+
+		.submit-btn:hover {
+			background-color: #d4181c;
+		}
+
+		@media (max-width: 768px) {
+			.distributor-form-section {
+				padding: 2rem 1rem;
+			}
+
+			.form-container {
+				padding: 1.5rem;
+			}
+
+			.form-container h1 {
+				font-size: 2rem;
+			}
+
+			.form-container .sub-heading {
+				font-size: 1rem;
+				margin-bottom: 2rem;
+			}
+
+			.form-grid {
+				grid-template-columns: 1fr;
+				gap: 1.25rem;
+			}
+
+			.form-field input,
+			.form-field textarea {
+				font-size: 0.9rem;
+				padding: 0.7rem 0.9rem;
+			}
+
+			.form-field label {
+				font-size: 0.9rem;
+				top: 0.7rem;
+				left: 0.9rem;
+			}
+
+			.form-field input:focus + label,
+			.form-field textarea:focus + label,
+			.form-field input:not(:placeholder-shown) + label,
+			.form-field textarea:not(:placeholder-shown) + label {
+				top: -0.7rem;
+				font-size: 0.75rem;
+			}
+
+			.radio-options {
+				gap: 1rem;
+			}
+
+			.submit-btn {
+				font-size: 1.1rem;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.form-container h1 {
+				font-size: 1.8rem;
+			}
+
+			.form-container .sub-heading {
+				font-size: 0.9rem;
+			}
+
+			.radio-options {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 0.75rem;
+			}
 		}
 	</style>
 	<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=rALIt6YzcIzf"></script>
@@ -99,13 +275,67 @@
 		</div>
 	</nav>
 
-	<section class="coming-soon-section">
-		<div class="coming-soon-content">
-			<h1>Private Labelling</h1>
-			<div class="accent-line"></div>
-			<p>Coming Soon</p>
-		</div>
-	</section>
+	<main>
+		<section class="distributor-form-section">
+			<div class="form-container">
+				<h1>Become A Distributor</h1>
+				<p class="sub-heading">Elevate Your Business With Twin Tech's Distributor Partnership.</p>
+				<form action="#" method="POST">
+					<div class="form-grid">
+						<div class="form-field">
+							<input type="text" id="name" name="name" placeholder=" " required>
+							<label for="name">Name</label>
+						</div>
+						<div class="form-field">
+							<input type="tel" id="phone" name="phone" placeholder=" " required>
+							<label for="phone">Phone Number</label>
+						</div>
+						<div class="form-field">
+							<input type="email" id="email" name="email" placeholder=" " required>
+							<label for="email">Email</label>
+						</div>
+						<div class="form-field">
+							<input type="text" id="city" name="city" placeholder=" ">
+							<label for="city">City or Town</label>
+						</div>
+						<div class="form-field full-width">
+							<input type="text" id="country" name="country" placeholder=" ">
+							<label for="country">Country</label>
+						</div>
+						<div class="form-field full-width">
+							<textarea id="business-plans" name="business-plans" placeholder=" "></textarea>
+							<label for="business-plans">Please tell us little about your current business/plans</label>
+						</div>
+						<div class="form-field">
+							<input type="text" id="company-name" name="company-name" placeholder=" ">
+							<label for="company-name">Company Name</label>
+						</div>
+						<div class="form-field">
+							<input type="text" id="representing" name="representing" placeholder=" ">
+							<label for="representing">What products are you currently representing?</label>
+						</div>
+						<div class="form-field">
+							<input type="text" id="job-title" name="job-title" placeholder=" ">
+							<label for="job-title">Job Title</label>
+						</div>
+						<div class="form-field">
+							<input type="text" id="inquiries" name="inquiries" placeholder=" ">
+							<label for="inquiries">QUESTIONS OR INQUIRIES</label>
+						</div>
+						<div class="radio-group">
+							<legend>You are a:</legend>
+							<div class="radio-options">
+								<label><input type="radio" name="trader-type" value="retailer"> Retailer</label>
+								<label><input type="radio" name="trader-type" value="wholesaler"> Wholesaler</label>
+								<label><input type="radio" name="trader-type" value="trader"> Trader</label>
+							</div>
+						</div>
+						<button type="submit" class="submit-btn">Send</button>
+					</div>
+				</form>
+			</div>
+		</section>
+	</main>
 
 	<footer>
 		<div class="top">
@@ -166,5 +396,6 @@
 	<script src="../assets-config.js"></script>
 	<script src="../assets-apply.js" defer></script>
 	<script src="../assets/global-search.js" defer></script>
+	<script src="../assets/form-handler.js" defer></script>
 </body>
 </html>
