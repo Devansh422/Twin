@@ -35,6 +35,19 @@ if ($method === 'GET') {
     $stmt->execute([$brand]);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Fetch category ordering for this brand
+    $catOrderMap = [];
+    try {
+        $catOrderStmt = $pdo->prepare("SELECT category, sort_order FROM category_order WHERE brand = ? ORDER BY sort_order ASC");
+        $catOrderStmt->execute([$brand]);
+        $catOrderRows = $catOrderStmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($catOrderRows as $row) {
+            $catOrderMap[$row['category']] = (int)$row['sort_order'];
+        }
+    } catch (Exception $e) {
+        // Table may not exist yet
+    }
+
     // Format for frontend: Group by Category
     $data = [];
     foreach ($products as $p) {
@@ -51,6 +64,15 @@ if ($method === 'GET') {
             'details' => $details,
             'category' => $cat
         ];
+    }
+
+    // Sort categories by custom order (unordered categories go to the end)
+    if (!empty($catOrderMap)) {
+        uksort($data, function($a, $b) use ($catOrderMap) {
+            $orderA = isset($catOrderMap[$a]) ? $catOrderMap[$a] : PHP_INT_MAX;
+            $orderB = isset($catOrderMap[$b]) ? $catOrderMap[$b] : PHP_INT_MAX;
+            return $orderA - $orderB;
+        });
     }
 
     sendResponse(true, 'Products fetched', $data);
@@ -117,6 +139,31 @@ if ($method === 'POST') {
         } catch (Exception $e) {
             $pdo->rollBack();
             sendResponse(false, 'Failed to update order');
+        }
+    } elseif ($action === 'reorder_categories') {
+        // Expects: { action: 'reorder_categories', brand: string, orders: [ { category: string, sort_order: int }, ... ] }
+        if (!$brand) sendResponse(false, 'Brand required');
+        $orders = $input['orders'] ?? [];
+        if (!is_array($orders) || empty($orders))
+            sendResponse(false, 'Missing category order data');
+        $pdo->beginTransaction();
+        try {
+            // Delete existing order for this brand and re-insert
+            $delStmt = $pdo->prepare("DELETE FROM category_order WHERE brand = ?");
+            $delStmt->execute([$brand]);
+            $insStmt = $pdo->prepare("INSERT INTO category_order (brand, category, sort_order) VALUES (?, ?, ?)");
+            foreach ($orders as $item) {
+                $cat = trim($item['category'] ?? '');
+                $sortOrder = isset($item['sort_order']) && is_numeric($item['sort_order']) ? (int)$item['sort_order'] : 0;
+                if ($cat !== '') {
+                    $insStmt->execute([$brand, $cat, $sortOrder]);
+                }
+            }
+            $pdo->commit();
+            sendResponse(true, 'Category order updated');
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            sendResponse(false, 'Failed to update category order');
         }
     } else {
         sendResponse(false, 'Invalid action');

@@ -69,6 +69,20 @@ CREATE TABLE `products` (
 -- Table structure for table `blog_posts`
 --
 
+CREATE TABLE `category_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand` varchar(50) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `brand_category` (`brand`, `category`),
+  KEY `idx_brand_sort` (`brand`, `sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Table structure for table `blog_posts`
+--
+
 CREATE TABLE `blog_posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,

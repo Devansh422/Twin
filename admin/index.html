@@ -1412,6 +1412,41 @@
             justify-content: space-between; gap: 1rem; z-index: 40
         }
         .reorder-save-bar .unsaved-msg { font-size: .8rem; color: var(--color); font-weight: 600 }
+
+        /* ── CATEGORY REORDER MODE ── */
+        .cat-reorder-container { padding: 0 }
+        .cat-reorder-list {
+            list-style: none; padding: 0; margin: 0;
+            border: 1px solid var(--border); border-radius: .5rem;
+            background: #fff
+        }
+        .cat-reorder-item {
+            display: flex; align-items: center; gap: .75rem;
+            padding: .85rem 1.25rem; border-bottom: 1px solid var(--border);
+            cursor: grab; transition: background .15s, box-shadow .15s, opacity .15s;
+            user-select: none
+        }
+        .cat-reorder-item:last-child { border-bottom: none }
+        .cat-reorder-item:hover { background: #fafafa }
+        .cat-reorder-item.dragging { opacity: .35; background: var(--bg-input) }
+        .cat-reorder-item.drag-over { box-shadow: 0 -2px 0 0 var(--color) }
+        .cat-reorder-item .cat-reorder-handle {
+            font-size: 1.1rem; color: var(--text-muted); flex-shrink: 0;
+            display: flex; align-items: center; opacity: .5; transition: opacity .15s
+        }
+        .cat-reorder-item:hover .cat-reorder-handle { opacity: 1 }
+        .cat-reorder-item .cat-reorder-name {
+            font-family: 'heading', sans-serif; font-size: .95rem; font-weight: 600; flex: 1;
+            display: flex; align-items: center; gap: .5rem
+        }
+        .cat-reorder-item .cat-reorder-name .cat-prod-count {
+            font-family: 'base', 'Inter', sans-serif; font-size: .7rem; color: var(--text-muted); font-weight: 500;
+            background: var(--bg-input); padding: .1rem .5rem; border-radius: 100px
+        }
+        .cat-reorder-item .cat-reorder-order {
+            font-size: .7rem; color: var(--text-muted); flex-shrink: 0;
+            background: var(--bg-input); padding: .15rem .5rem; border-radius: 100px; min-width: 24px; text-align: center
+        }
     </style>
 </head>
 
@@ -1471,6 +1506,7 @@
                 <div class="search-bar"><span class="search-icon">🔍</span><input type="text" id="searchInput"
                         placeholder="Search..." oninput="doSearch()"></div>
                 <button class="btn btn-secondary" id="reorderBtn" onclick="enterReorderMode()" title="Rearrange product sequence">↕ Reorder</button>
+                <button class="btn btn-secondary" id="reorderCatsBtn" onclick="enterCategoryReorderMode()" title="Rearrange category display order">📂 Reorder Categories</button>
                 <button class="btn btn-primary" id="addBtn" onclick="openAddProductModal()">+ Add Product</button>
             </div>
         </div>
@@ -1922,6 +1958,7 @@
             document.getElementById('addBtn').onclick = openAddProductModal;
             document.getElementById('addBtn').style.display = '';
             document.getElementById('reorderBtn').style.display = '';
+            document.getElementById('reorderCatsBtn').style.display = '';
             document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
             reorderMode = false;
@@ -1935,6 +1972,7 @@
             document.getElementById('addBtn').onclick = openAddBlogModal;
             document.getElementById('addBtn').style.display = '';
             document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('reorderCatsBtn').style.display = 'none';
             document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
             reorderMode = false;
@@ -1946,6 +1984,7 @@
             document.getElementById('currentTitle').textContent = 'Inquiries';
             document.getElementById('addBtn').style.display = 'none';
             document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('reorderCatsBtn').style.display = 'none';
             document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
             reorderMode = false;
@@ -2573,6 +2612,7 @@
             document.getElementById('addBtn').style.display = 'none';
             document.getElementById('searchInput').parentElement.style.display = 'none';
             document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('reorderCatsBtn').style.display = 'none';
             document.getElementById('currentTitle').textContent =
                 (BRANDS.find(b => b.key === currentBrand)?.label || currentBrand) + ' — Reorder Products';
             renderReorderView();
@@ -2584,6 +2624,7 @@
             document.getElementById('addBtn').style.display = '';
             document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('reorderBtn').style.display = '';
+            document.getElementById('reorderCatsBtn').style.display = '';
             switchBrand(currentBrand);
         }
 
@@ -2709,6 +2750,152 @@
                     // Stay in reorder mode with updated data
                     currentData = productsData[currentBrand] || {};
                     renderReorderView();
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); } finally { hideSpinner(); }
+        }
+
+        /* ═══════════════════════════════════════════
+           CATEGORY REORDER MODE
+           ═══════════════════════════════════════════ */
+        let catReorderMode = false;
+        let catReorderDirty = false;
+        let catReorderDragItem = null;
+
+        function enterCategoryReorderMode() {
+            if (currentMode !== 'products') return;
+            catReorderMode = true;
+            catReorderDirty = false;
+            document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('searchInput').parentElement.style.display = 'none';
+            document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('reorderCatsBtn').style.display = 'none';
+            document.getElementById('currentTitle').textContent =
+                (BRANDS.find(b => b.key === currentBrand)?.label || currentBrand) + ' — Reorder Categories';
+            renderCategoryReorderView();
+        }
+
+        function exitCategoryReorderMode() {
+            catReorderMode = false;
+            catReorderDirty = false;
+            document.getElementById('addBtn').style.display = '';
+            document.getElementById('searchInput').parentElement.style.display = '';
+            document.getElementById('reorderBtn').style.display = '';
+            document.getElementById('reorderCatsBtn').style.display = '';
+            switchBrand(currentBrand);
+        }
+
+        function renderCategoryReorderView() {
+            const c = document.getElementById('mainContent');
+            const cats = Object.keys(currentData);
+            if (!cats.length) {
+                c.innerHTML = '<div class="empty-state"><div class="icon">📂</div><h3>No categories to reorder</h3><p>Add products with categories first.</p></div>' +
+                    '<div style="padding:1rem 2rem"><button class="btn btn-secondary" onclick="exitCategoryReorderMode()">← Back</button></div>';
+                return;
+            }
+            let html = '<div class="cat-reorder-container">';
+            html += '<p style="padding:0 0 1rem;font-size:.85rem;color:var(--text-muted)">Drag categories to change their display order on the website.</p>';
+            html += '<div class="cat-reorder-list" id="catReorderList">';
+            cats.forEach((cat, i) => {
+                const prodCount = (currentData[cat] || []).length;
+                html += `<div class="cat-reorder-item" draggable="true" data-category="${escapeHtmlAttr(cat)}">
+                    <span class="cat-reorder-handle">⠿</span>
+                    <span class="cat-reorder-name">${escapeHtmlAttr(cat)} <span class="cat-prod-count">${prodCount} product${prodCount !== 1 ? 's' : ''}</span></span>
+                    <span class="cat-reorder-order">#${i + 1}</span>
+                </div>`;
+            });
+            html += '</div></div>';
+            html += `<div class="reorder-save-bar">
+                <span class="unsaved-msg" id="catReorderUnsavedMsg" style="visibility:hidden">⚠ Unsaved changes</span>
+                <div style="display:flex;gap:.5rem">
+                    <button class="btn btn-secondary" onclick="exitCategoryReorderMode()">← Cancel</button>
+                    <button class="btn btn-primary" id="saveCatReorderBtn" onclick="saveCategoryReorder()">💾 Save Category Order</button>
+                </div>
+            </div>`;
+            c.innerHTML = html;
+
+            initCatReorderListDrag(document.getElementById('catReorderList'));
+        }
+
+        function initCatReorderListDrag(list) {
+            const items = list.querySelectorAll('.cat-reorder-item');
+            items.forEach(item => {
+                item.addEventListener('dragstart', function (e) {
+                    catReorderDragItem = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', '');
+                });
+                item.addEventListener('dragend', function () {
+                    this.classList.remove('dragging');
+                    list.querySelectorAll('.cat-reorder-item.drag-over').forEach(r => r.classList.remove('drag-over'));
+                    catReorderDragItem = null;
+                    updateCatReorderNumbers(list);
+                });
+                item.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (this !== catReorderDragItem) this.classList.add('drag-over');
+                });
+                item.addEventListener('dragleave', function () {
+                    this.classList.remove('drag-over');
+                });
+                item.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    if (catReorderDragItem && catReorderDragItem !== this && catReorderDragItem.parentElement === this.parentElement) {
+                        const allItems = [...list.children];
+                        const fromIdx = allItems.indexOf(catReorderDragItem);
+                        const toIdx = allItems.indexOf(this);
+                        if (fromIdx < toIdx) {
+                            list.insertBefore(catReorderDragItem, this.nextElementSibling);
+                        } else {
+                            list.insertBefore(catReorderDragItem, this);
+                        }
+                        markCatReorderDirty();
+                    }
+                });
+            });
+        }
+
+        function updateCatReorderNumbers(list) {
+            list.querySelectorAll('.cat-reorder-item').forEach((item, i) => {
+                item.querySelector('.cat-reorder-order').textContent = '#' + (i + 1);
+            });
+        }
+
+        function markCatReorderDirty() {
+            catReorderDirty = true;
+            const msg = document.getElementById('catReorderUnsavedMsg');
+            if (msg) msg.style.visibility = 'visible';
+        }
+
+        async function saveCategoryReorder() {
+            const list = document.getElementById('catReorderList');
+            const items = list.querySelectorAll('.cat-reorder-item');
+            const orders = [];
+            items.forEach((item, i) => {
+                orders.push({ category: item.dataset.category, sort_order: i });
+            });
+            if (!orders.length) { showToast('Nothing to save', 'info'); return; }
+
+            showSpinner('Saving category order…');
+            try {
+                const res = await fetch('../api/products.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'reorder_categories', brand: currentBrand, orders })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Category order saved!', 'success');
+                    catReorderDirty = false;
+                    const msg = document.getElementById('catReorderUnsavedMsg');
+                    if (msg) msg.style.visibility = 'hidden';
+                    await init(); // Refresh data with new order
+                    currentData = productsData[currentBrand] || {};
+                    renderCategoryReorderView();
                 } else {
                     showToast('Error: ' + data.message, 'error');
                 }

@@ -24,6 +24,18 @@ try {
     $stmt = $pdo->query("SELECT * FROM products ORDER BY brand, category, sort_order ASC, created_at ASC");
     $allProducts = $stmt->fetchAll();
 
+    // Fetch all category orderings
+    $catOrderMap = [];
+    try {
+        $catOrderStmt = $pdo->query("SELECT brand, category, sort_order FROM category_order ORDER BY brand, sort_order ASC");
+        $catOrderRows = $catOrderStmt->fetchAll();
+        foreach ($catOrderRows as $row) {
+            $catOrderMap[$row['brand']][$row['category']] = (int)$row['sort_order'];
+        }
+    } catch (Exception $e) {
+        // Table may not exist yet
+    }
+
     // Structure products by brand/category for the frontend
     foreach ($allProducts as $p) {
         $brand = $p['brand']; // 'evershine', 'sprayzet', etc.
@@ -55,6 +67,19 @@ try {
 
         $data['products'][$brand][$cat][] = $prodObj;
     }
+
+    // Sort categories within each brand by custom order
+    foreach ($data['products'] as $brand => &$categories) {
+        if (isset($catOrderMap[$brand]) && !empty($catOrderMap[$brand])) {
+            $brandOrder = $catOrderMap[$brand];
+            uksort($categories, function($a, $b) use ($brandOrder) {
+                $orderA = isset($brandOrder[$a]) ? $brandOrder[$a] : PHP_INT_MAX;
+                $orderB = isset($brandOrder[$b]) ? $brandOrder[$b] : PHP_INT_MAX;
+                return $orderA - $orderB;
+            });
+        }
+    }
+    unset($categories);
 
     // 2. Fetch Blogs
     $stmt = $pdo->query("SELECT * FROM blog_posts ORDER BY published_date DESC");
