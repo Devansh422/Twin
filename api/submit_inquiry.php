@@ -29,13 +29,42 @@ foreach ($_POST as $key => $value) {
     }
 }
 
-// Handle File (Resume) for Career
+// Handle File (Resume) upload
+$documentName = null;
+$documentPath = null;
+
 if (isset($_FILES['resume']) && $_FILES['resume']['error'] === UPLOAD_ERR_OK) {
-    // For now, we won't actually save the file to disk to keep hosting simple, 
-    // or we can save it to an 'uploads' folder.
-    // Let's just save the filename metadata for now as requested by user constraints previously.
-    // If strict file storage is needed: move_uploaded_file(...)
-    $details['resume_filename'] = $_FILES['resume']['name'] . ' (' . round($_FILES['resume']['size'] / 1024, 1) . 'KB)';
+    $uploadsDir = __DIR__ . '/../uploads';
+    if (!is_dir($uploadsDir)) {
+        mkdir($uploadsDir, 0755, true);
+    }
+
+    $originalName = $_FILES['resume']['name'];
+    $fileSize = $_FILES['resume']['size'];
+    $maxSize = 10 * 1024 * 1024; // 10MB limit
+
+    if ($fileSize > $maxSize) {
+        sendResponse(false, 'File too large. Maximum size is 10MB.');
+    }
+
+    // Validate file type
+    $allowedExtensions = ['pdf', 'doc', 'docx', 'txt', 'rtf', 'jpg', 'jpeg', 'png'];
+    $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowedExtensions)) {
+        sendResponse(false, 'Invalid file type. Allowed: PDF, DOC, DOCX, TXT, RTF, JPG, PNG.');
+    }
+
+    // Generate unique filename to prevent overwrites and path traversal
+    $safeName = uniqid('doc_', true) . '.' . $ext;
+    $destPath = $uploadsDir . '/' . $safeName;
+
+    if (move_uploaded_file($_FILES['resume']['tmp_name'], $destPath)) {
+        $documentName = $originalName;
+        $documentPath = 'uploads/' . $safeName;
+        $details['resume_filename'] = $originalName . ' (' . round($fileSize / 1024, 1) . 'KB)';
+    } else {
+        error_log('Failed to move uploaded file: ' . $originalName);
+    }
 }
 
 $detailsJson = json_encode($details);
@@ -47,8 +76,8 @@ if (!$pdo) {
 }
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO inquiries (type, name, email, phone, details, message) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$type, $name, $email, $phone, $detailsJson, $message]);
+    $stmt = $pdo->prepare("INSERT INTO inquiries (type, name, email, phone, details, message, document_name, document_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$type, $name, $email, $phone, $detailsJson, $message, $documentName, $documentPath]);
     sendResponse(true, 'Inquiry submitted successfully.');
 } catch (PDOException $e) {
     error_log("Insert Inquiry Error: " . $e->getMessage());

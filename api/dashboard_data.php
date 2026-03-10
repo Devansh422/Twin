@@ -77,7 +77,7 @@ try {
     $stmt = $pdo->query("SELECT * FROM inquiries ORDER BY submitted_at DESC");
     $inquiries = $stmt->fetchAll();
     $data['inquiries'] = array_map(function ($i) {
-        return [
+        $item = [
             'id' => $i['id'],
             'type' => $i['type'],
             'date' => $i['submitted_at'],
@@ -86,6 +86,10 @@ try {
                 json_decode($i['details'], true) ?: []
             )
         ];
+        if (!empty($i['document_name'])) {
+            $item['document_name'] = $i['document_name'];
+        }
+        return $item;
     }, $inquiries);
 
     sendResponse(true, 'Data loaded', $data);

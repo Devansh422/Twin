@@ -65,9 +65,41 @@ if ($type === 'blog') {
         if (!$id) {
             sendResponse(false, 'Missing inquiry ID');
         }
+        // Delete the associated document file if it exists
+        $stmt = $pdo->prepare("SELECT document_path FROM inquiries WHERE id = ?");
+        $stmt->execute([$id]);
+        $row = $stmt->fetch();
+        if ($row && !empty($row['document_path'])) {
+            $filePath = __DIR__ . '/../' . $row['document_path'];
+            $realPath = realpath($filePath);
+            $uploadsDir = realpath(__DIR__ . '/../uploads');
+            if ($realPath && $uploadsDir && strpos($realPath, $uploadsDir) === 0 && file_exists($realPath)) {
+                unlink($realPath);
+            }
+        }
         $stmt = $pdo->prepare("DELETE FROM inquiries WHERE id=?");
         $stmt->execute([$id]);
         sendResponse(true, 'Inquiry deleted');
+    } elseif ($action === 'delete_document') {
+        $id = isset($input['id']) && is_numeric($input['id']) ? (int)$input['id'] : 0;
+        if (!$id) {
+            sendResponse(false, 'Missing inquiry ID');
+        }
+        // Delete only the document, keep the inquiry
+        $stmt = $pdo->prepare("SELECT document_path FROM inquiries WHERE id = ?");
+        $stmt->execute([$id]);
+        $row = $stmt->fetch();
+        if ($row && !empty($row['document_path'])) {
+            $filePath = __DIR__ . '/../' . $row['document_path'];
+            $realPath = realpath($filePath);
+            $uploadsDir = realpath(__DIR__ . '/../uploads');
+            if ($realPath && $uploadsDir && strpos($realPath, $uploadsDir) === 0 && file_exists($realPath)) {
+                unlink($realPath);
+            }
+        }
+        $stmt = $pdo->prepare("UPDATE inquiries SET document_name = NULL, document_path = NULL WHERE id = ?");
+        $stmt->execute([$id]);
+        sendResponse(true, 'Document deleted');
     } else {
         sendResponse(false, 'Invalid action');
     }

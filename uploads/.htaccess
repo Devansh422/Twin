@@ -1,0 +1,12 @@
+# Deny all direct access to uploaded files
+# Files should only be served via the download_document.php endpoint
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Fallback for servers without mod_rewrite
+<IfModule !mod_rewrite.c>
+    Deny from all
+</IfModule>

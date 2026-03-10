@@ -39,6 +39,8 @@ CREATE TABLE `inquiries` (
   `phone` varchar(20) DEFAULT NULL,
   `details` text, -- Stores JSON string of other fields
   `message` text,
+  `document_name` varchar(255) DEFAULT NULL, -- Original filename of uploaded document
+  `document_path` varchar(255) DEFAULT NULL, -- Server path to uploaded document
   `submitted_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

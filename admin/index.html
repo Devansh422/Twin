@@ -1266,6 +1266,62 @@
             word-break: break-word;
         }
 
+        .inq-document {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+            padding: 0.45rem 0.75rem;
+            border-radius: 8px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+        }
+
+        .inq-doc-icon {
+            font-size: 1.1rem;
+        }
+
+        .inq-doc-name {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #2e7d32;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .inq-doc-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .inq-doc-download {
+            background: #2e7d32;
+            color: #fff;
+        }
+
+        .inq-doc-download:hover {
+            background: #1b5e20;
+        }
+
+        .inq-doc-delete {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .inq-doc-delete:hover {
+            background: #ef9a9a;
+        }
+
         /* ── SPINNER OVERLAY ── */
         .spinner-overlay {
             position: fixed;
@@ -2284,7 +2340,8 @@
                 data = data.filter(d =>
                     d.type.toLowerCase().includes(q) ||
                     JSON.stringify(d.data).toLowerCase().includes(q) ||
-                    (d.date && d.date.toLowerCase().includes(q))
+                    (d.date && d.date.toLowerCase().includes(q)) ||
+                    (d.document_name && d.document_name.toLowerCase().includes(q))
                 );
             }
             document.getElementById('countBadge').textContent = data.length + ' inquiries';
@@ -2301,22 +2358,32 @@
                 const email = d.email || '';
                 const phone = d.phone || '';
 
-                const extraEntries = Object.entries(d).filter(([k, v]) => !['name', 'email', 'phone'].includes(k) && v !== null && v !== undefined && String(v).trim() !== '');
+                const extraEntries = Object.entries(d).filter(([k, v]) => !['name', 'email', 'phone', 'resume_filename'].includes(k) && v !== null && v !== undefined && String(v).trim() !== '');
 
                 let details = '<div class="inq-details-wrap">';
                 details += '<div class="inq-primary">';
-                if (name) details += `<div class="inq-row"><span class="inq-k">Name</span><span class="inq-v">${name}</span></div>`;
-                if (email) details += `<div class="inq-row"><span class="inq-k">Email</span><span class="inq-v">${email}</span></div>`;
-                if (phone) details += `<div class="inq-row"><span class="inq-k">Phone</span><span class="inq-v">${phone}</span></div>`;
+                if (name) details += `<div class="inq-row"><span class="inq-k">Name</span><span class="inq-v">${escapeHtmlAttr(name)}</span></div>`;
+                if (email) details += `<div class="inq-row"><span class="inq-k">Email</span><span class="inq-v">${escapeHtmlAttr(email)}</span></div>`;
+                if (phone) details += `<div class="inq-row"><span class="inq-k">Phone</span><span class="inq-v">${escapeHtmlAttr(phone)}</span></div>`;
                 details += '</div>';
 
                 if (extraEntries.length) {
                     details += '<div class="inq-extra">';
                     extraEntries.forEach(([key, val]) => {
                         const k = String(key).replace(/_/g, ' ');
-                        details += `<div class="inq-chip"><span class="inq-chip-k">${k}</span><span class="inq-chip-v">${val}</span></div>`;
+                        details += `<div class="inq-chip"><span class="inq-chip-k">${escapeHtmlAttr(k)}</span><span class="inq-chip-v">${escapeHtmlAttr(String(val))}</span></div>`;
                     });
                     details += '</div>';
+                }
+
+                // Show document download if available
+                if (item.document_name) {
+                    details += `<div class="inq-document">`;
+                    details += `<span class="inq-doc-icon">📄</span>`;
+                    details += `<span class="inq-doc-name" title="${escapeHtmlAttr(item.document_name)}">${escapeHtmlAttr(item.document_name)}</span>`;
+                    details += `<button class="inq-doc-btn inq-doc-download" onclick="downloadDocument(${item.id})" title="Download">⬇</button>`;
+                    details += `<button class="inq-doc-btn inq-doc-delete" onclick="confirmDeleteDocument(${index})" title="Delete Document">✕</button>`;
+                    details += `</div>`;
                 }
 
                 details += '</div>';
@@ -2335,6 +2402,34 @@
             });
             html += '</tbody></table>';
             c.innerHTML = html;
+        }
+
+        function downloadDocument(inquiryId) {
+            window.open('../api/download_document.php?id=' + inquiryId, '_blank');
+        }
+
+        function confirmDeleteDocument(index) {
+            const item = inquiriesData[index];
+            document.getElementById('confirmTitle').textContent = 'Delete Document';
+            document.getElementById('confirmMessage').textContent = `Delete the document "${item.document_name}"? The inquiry will be kept but the file will be permanently removed.`;
+            document.getElementById('confirmDeleteBtn').onclick = async () => {
+                try {
+                    const res = await fetch('../api/manage_content.php?type=inquiry', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'delete_document', id: item.id })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        closeModal('confirmModal');
+                        await init();
+                        showToast('Document deleted.', 'info');
+                    } else {
+                        showToast(data.message || 'Error deleting document', 'error');
+                    }
+                } catch (e) { console.error(e); showToast('Error deleting document', 'error'); }
+            };
+            openModal('confirmModal');
         }
 
         function confirmDeleteInquiry(index) {
