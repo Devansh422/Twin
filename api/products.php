@@ -31,7 +31,7 @@ if ($method === 'GET') {
         sendResponse(true, 'All products fetched', $searchData);
     }
 
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE brand = ?");
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE brand = ? ORDER BY category, sort_order ASC, created_at ASC");
     $stmt->execute([$brand]);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -97,6 +97,27 @@ if ($method === 'POST') {
         $stmt = $pdo->prepare("DELETE FROM products WHERE id=?");
         $stmt->execute([$id]);
         sendResponse(true, 'Product deleted');
+    } elseif ($action === 'reorder') {
+        // Expects: { action: 'reorder', orders: [ { id: int, sort_order: int }, ... ] }
+        $orders = $input['orders'] ?? [];
+        if (!is_array($orders) || empty($orders))
+            sendResponse(false, 'Missing order data');
+        $stmt = $pdo->prepare("UPDATE products SET sort_order = ? WHERE id = ?");
+        $pdo->beginTransaction();
+        try {
+            foreach ($orders as $item) {
+                $id = isset($item['id']) && is_numeric($item['id']) ? (int)$item['id'] : 0;
+                $sortOrder = isset($item['sort_order']) && is_numeric($item['sort_order']) ? (int)$item['sort_order'] : 0;
+                if ($id > 0) {
+                    $stmt->execute([$sortOrder, $id]);
+                }
+            }
+            $pdo->commit();
+            sendResponse(true, 'Product order updated');
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            sendResponse(false, 'Failed to update order');
+        }
     } else {
         sendResponse(false, 'Invalid action');
     }

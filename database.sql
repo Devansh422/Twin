@@ -56,9 +56,11 @@ CREATE TABLE `products` (
   `image_data` longtext, -- Base64 string for small images/uploads
   `description` text,
   `details` json DEFAULT NULL, -- Flexible JSON column for table data, features, etc.
+  `sort_order` int(11) NOT NULL DEFAULT 0, -- Product display order (lower = first)
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_brand_sort` (`brand`, `sort_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

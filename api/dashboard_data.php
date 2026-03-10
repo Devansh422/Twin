@@ -21,7 +21,7 @@ $data = [
 
 try {
     // 1. Fetch Products
-    $stmt = $pdo->query("SELECT * FROM products ORDER BY created_at DESC");
+    $stmt = $pdo->query("SELECT * FROM products ORDER BY brand, category, sort_order ASC, created_at ASC");
     $allProducts = $stmt->fetchAll();
 
     // Structure products by brand/category for the frontend
@@ -46,6 +46,7 @@ try {
             'imageData' => $p['image_data'],
             'description' => $p['description'],
             'details' => $det,
+            'sort_order' => (int)($p['sort_order'] ?? 0),
         ];
 
         // Also keep backward-compatible name-keyed details map (uses product ID suffix to avoid collisions)

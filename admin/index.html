@@ -1301,6 +1301,61 @@
         @keyframes spinnerSpin {
             to { transform: rotate(360deg); }
         }
+
+        /* ── REORDER MODE ── */
+        .reorder-container { padding: 0 }
+        .reorder-category { margin-bottom: 2rem }
+        .reorder-category-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: .75rem 1rem; background: var(--bg-input); border-radius: .5rem .5rem 0 0;
+            border-bottom: 2px solid var(--color)
+        }
+        .reorder-category-header h4 {
+            font-family: 'heading', sans-serif; font-size: .9rem; margin: 0;
+            display: flex; align-items: center; gap: .5rem
+        }
+        .reorder-category-header .cat-count { font-size: .7rem; color: var(--text-muted); font-weight: 500 }
+        .reorder-list {
+            list-style: none; padding: 0; margin: 0;
+            border: 1px solid var(--border); border-top: none; border-radius: 0 0 .5rem .5rem;
+            background: #fff
+        }
+        .reorder-item {
+            display: flex; align-items: center; gap: .75rem;
+            padding: .65rem 1rem; border-bottom: 1px solid var(--border);
+            cursor: grab; transition: background .15s, box-shadow .15s, opacity .15s;
+            user-select: none
+        }
+        .reorder-item:last-child { border-bottom: none }
+        .reorder-item:hover { background: #fafafa }
+        .reorder-item.dragging { opacity: .35; background: var(--bg-input) }
+        .reorder-item.drag-over { box-shadow: 0 -2px 0 0 var(--color) }
+        .reorder-item .reorder-handle {
+            font-size: 1rem; color: var(--text-muted); flex-shrink: 0;
+            display: flex; align-items: center; opacity: .5; transition: opacity .15s
+        }
+        .reorder-item:hover .reorder-handle { opacity: 1 }
+        .reorder-item .reorder-thumb {
+            width: 44px; height: 44px; border-radius: .4rem;
+            object-fit: contain; background: #f9f9f9; border: 1px solid var(--border);
+            flex-shrink: 0
+        }
+        .reorder-item .reorder-name {
+            font-size: .85rem; font-weight: 500; flex: 1;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis
+        }
+        .reorder-item .reorder-order {
+            font-size: .7rem; color: var(--text-muted); flex-shrink: 0;
+            background: var(--bg-input); padding: .15rem .5rem; border-radius: 100px; min-width: 24px; text-align: center
+        }
+        .reorder-save-bar {
+            position: sticky; bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,.95); backdrop-filter: blur(8px);
+            border-top: 1px solid var(--border);
+            padding: 1rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; gap: 1rem; z-index: 40
+        }
+        .reorder-save-bar .unsaved-msg { font-size: .8rem; color: var(--color); font-weight: 600 }
     </style>
 </head>
 
@@ -1359,6 +1414,7 @@
             <div class="topbar-actions">
                 <div class="search-bar"><span class="search-icon">🔍</span><input type="text" id="searchInput"
                         placeholder="Search..." oninput="doSearch()"></div>
+                <button class="btn btn-secondary" id="reorderBtn" onclick="enterReorderMode()" title="Rearrange product sequence">↕ Reorder</button>
                 <button class="btn btn-primary" id="addBtn" onclick="openAddProductModal()">+ Add Product</button>
             </div>
         </div>
@@ -1804,14 +1860,15 @@
             currentBrand = key;
             currentMode = 'products';
             currentData = productsData[currentBrand] || {};
-            // currentDetails is now looked up dynamically or we can set a reference
-            // But renderProducts uses `detailsData` directly or we might need to adjust it
 
             document.getElementById('currentTitle').textContent = BRANDS.find(b => b.key === key)?.label || key;
             document.getElementById('addBtn').textContent = '+ Add Product';
             document.getElementById('addBtn').onclick = openAddProductModal;
             document.getElementById('addBtn').style.display = '';
+            document.getElementById('reorderBtn').style.display = '';
+            document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
+            reorderMode = false;
             renderBrandList(); renderProducts();
         }
 
@@ -1821,7 +1878,10 @@
             document.getElementById('addBtn').textContent = '+ Add Post';
             document.getElementById('addBtn').onclick = openAddBlogModal;
             document.getElementById('addBtn').style.display = '';
+            document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
+            reorderMode = false;
             renderBrandList(); renderBlogPosts();
         }
 
@@ -1829,7 +1889,10 @@
             currentMode = 'inquiries';
             document.getElementById('currentTitle').textContent = 'Inquiries';
             document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('searchInput').parentElement.style.display = '';
             document.getElementById('searchInput').value = ''; searchQuery = '';
+            reorderMode = false;
             renderBrandList(); renderInquiries();
         }
 
@@ -2399,6 +2462,162 @@
                 showToast('Brand removed from view.', 'info');
             };
             openModal('confirmModal');
+        }
+
+        /* ═══════════════════════════════════════════
+           PRODUCT REORDER MODE
+           ═══════════════════════════════════════════ */
+        let reorderMode = false;
+        let reorderDirty = false;
+        let reorderDragItem = null;
+
+        function enterReorderMode() {
+            if (currentMode !== 'products') return;
+            reorderMode = true;
+            reorderDirty = false;
+            document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('searchInput').parentElement.style.display = 'none';
+            document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('currentTitle').textContent =
+                (BRANDS.find(b => b.key === currentBrand)?.label || currentBrand) + ' — Reorder Products';
+            renderReorderView();
+        }
+
+        function exitReorderMode() {
+            reorderMode = false;
+            reorderDirty = false;
+            document.getElementById('addBtn').style.display = '';
+            document.getElementById('searchInput').parentElement.style.display = '';
+            document.getElementById('reorderBtn').style.display = '';
+            switchBrand(currentBrand);
+        }
+
+        function renderReorderView() {
+            const c = document.getElementById('mainContent');
+            const cats = Object.keys(currentData);
+            if (!cats.length) {
+                c.innerHTML = '<div class="empty-state"><div class="icon">📦</div><h3>No products to reorder</h3><p>Add products first.</p></div>' +
+                    '<div style="padding:1rem 2rem"><button class="btn btn-secondary" onclick="exitReorderMode()">← Back</button></div>';
+                return;
+            }
+            let html = '<div class="reorder-container">';
+            cats.forEach(cat => {
+                const prods = currentData[cat];
+                if (!prods || !prods.length) return;
+                html += `<div class="reorder-category" data-category="${escapeHtmlAttr(cat)}">`;
+                html += `<div class="reorder-category-header"><h4>${escapeHtmlAttr(cat)} <span class="cat-count">(${prods.length})</span></h4></div>`;
+                html += `<div class="reorder-list" data-category="${escapeHtmlAttr(cat)}">`;
+                prods.forEach((p, i) => {
+                    const imgSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
+                    const safeName = escapeHtmlAttr(p.name);
+                    html += `<div class="reorder-item" draggable="true" data-id="${p.id}" data-index="${i}">
+                        <span class="reorder-handle">⠿</span>
+                        <img class="reorder-thumb" src="${escapeHtmlAttr(imgSrc)}" alt="${safeName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 44 44%22><rect fill=%22%23f5f5f5%22 width=%2244%22 height=%2244%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23bbb%22 font-size=%228%22>?</text></svg>'">
+                        <span class="reorder-name" title="${safeName}">${safeName}</span>
+                        <span class="reorder-order">#${i + 1}</span>
+                    </div>`;
+                });
+                html += '</div></div>';
+            });
+            html += '</div>';
+            html += `<div class="reorder-save-bar">
+                <span class="unsaved-msg" id="reorderUnsavedMsg" style="visibility:hidden">⚠ Unsaved changes</span>
+                <div style="display:flex;gap:.5rem">
+                    <button class="btn btn-secondary" onclick="exitReorderMode()">← Cancel</button>
+                    <button class="btn btn-primary" id="saveReorderBtn" onclick="saveReorder()">💾 Save Order</button>
+                </div>
+            </div>`;
+            c.innerHTML = html;
+
+            // Attach drag listeners to all reorder lists
+            c.querySelectorAll('.reorder-list').forEach(list => {
+                initReorderListDrag(list);
+            });
+        }
+
+        function initReorderListDrag(list) {
+            const items = list.querySelectorAll('.reorder-item');
+            items.forEach(item => {
+                item.addEventListener('dragstart', function (e) {
+                    reorderDragItem = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', '');
+                });
+                item.addEventListener('dragend', function () {
+                    this.classList.remove('dragging');
+                    list.querySelectorAll('.reorder-item.drag-over').forEach(r => r.classList.remove('drag-over'));
+                    reorderDragItem = null;
+                    updateReorderNumbers(list);
+                });
+                item.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (this !== reorderDragItem) this.classList.add('drag-over');
+                });
+                item.addEventListener('dragleave', function () {
+                    this.classList.remove('drag-over');
+                });
+                item.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    if (reorderDragItem && reorderDragItem !== this && reorderDragItem.parentElement === this.parentElement) {
+                        const allItems = [...list.children];
+                        const fromIdx = allItems.indexOf(reorderDragItem);
+                        const toIdx = allItems.indexOf(this);
+                        if (fromIdx < toIdx) {
+                            list.insertBefore(reorderDragItem, this.nextElementSibling);
+                        } else {
+                            list.insertBefore(reorderDragItem, this);
+                        }
+                        markReorderDirty();
+                    }
+                });
+            });
+        }
+
+        function updateReorderNumbers(list) {
+            list.querySelectorAll('.reorder-item').forEach((item, i) => {
+                item.querySelector('.reorder-order').textContent = '#' + (i + 1);
+            });
+        }
+
+        function markReorderDirty() {
+            reorderDirty = true;
+            const msg = document.getElementById('reorderUnsavedMsg');
+            if (msg) msg.style.visibility = 'visible';
+        }
+
+        async function saveReorder() {
+            const orders = [];
+            document.querySelectorAll('.reorder-list').forEach(list => {
+                list.querySelectorAll('.reorder-item').forEach((item, i) => {
+                    orders.push({ id: parseInt(item.dataset.id), sort_order: i });
+                });
+            });
+            if (!orders.length) { showToast('Nothing to save', 'info'); return; }
+
+            showSpinner('Saving product order…');
+            try {
+                const res = await fetch('../api/products.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'reorder', orders })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Product order saved!', 'success');
+                    reorderDirty = false;
+                    const msg = document.getElementById('reorderUnsavedMsg');
+                    if (msg) msg.style.visibility = 'hidden';
+                    await init(); // Refresh data with new order
+                    // Stay in reorder mode with updated data
+                    currentData = productsData[currentBrand] || {};
+                    renderReorderView();
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); } finally { hideSpinner(); }
         }
     </script>
 </body>
