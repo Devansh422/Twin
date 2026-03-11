@@ -18,10 +18,45 @@
 	<meta name="twitter:title" content="Twin Tech India Pvt. Ltd. | Industrial Sprays, Car Care, Adhesive Tapes & Home Care Manufacturer">
 	<meta name="twitter:description" content="Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality industrial aerosol sprays, car care products, self-adhesive tapes, and home care products. Trusted brands: Evershine, SprayZet, Twin Tapes, Twinzy & Silox.">
 	<meta name="twitter:image" content="assets/logo.png">
+	<link rel="preconnect" href="https://unpkg.com" crossorigin>
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+	<link rel="dns-prefetch" href="https://unpkg.com">
+	<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="nav.css">
 	<link rel="stylesheet" type="text/css" href="footer.css">
 	<title>Twin Tech India Pvt. Ltd. | Industrial Sprays, Car Care, Adhesive Tapes & Home Care Manufacturer</title>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "Twin Tech India Pvt. Ltd.",
+		"url": "https://www.twinindia.com",
+		"logo": "https://www.twinindia.com/assets/logo.png",
+		"description": "Leading manufacturer of high-quality industrial aerosol sprays, car care products, self-adhesive tapes and home care products.",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "A-304, Solitairian City Center, Knowledge Park III",
+			"addressLocality": "Greater Noida",
+			"addressRegion": "Uttar Pradesh",
+			"postalCode": "201308",
+			"addressCountry": "IN"
+		},
+		"contactPoint": {
+			"@type": "ContactPoint",
+			"telephone": "+91-9310052702",
+			"contactType": "sales",
+			"email": "sales@twinindia.com"
+		},
+		"brand": [
+			{"@type": "Brand", "name": "SprayZet", "description": "Industrial maintenance aerosol sprays for cleaning, lubrication, and protective coating"},
+			{"@type": "Brand", "name": "Evershine", "description": "Premium car care and automotive detailing products"},
+			{"@type": "Brand", "name": "Twin Tapes", "description": "High-quality self-adhesive tapes for industrial applications"},
+			{"@type": "Brand", "name": "Twinzy", "description": "Home care products including air fresheners and furniture polish"},
+			{"@type": "Brand", "name": "Silox", "description": "Specialty industrial products"}
+		]
+	}
+	</script>
     <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=rALIt6YzcIzf"></script>
 </head>
 <body>
@@ -100,57 +135,63 @@
 <div class="content-showcase-wrapper">
         <div class="showcase-grid">
             <!-- Card 1: Industrial Products -->
-            <div class="item-card">
+            <div class="item-card" itemscope itemtype="https://schema.org/Product">
                 <div class="item-visual">
                   <div class="bg-logo">
-                      <div class="logo sparyzet"><img src="./assets/sparyzet.png"></div>
+                      <div class="logo sparyzet"><img src="./assets/sparyzet.png" alt="SprayZet industrial aerosol spray brand logo" width="120" height="40" loading="lazy"></div>
                     </div>
-                    <div class="canvas-container" id="canvas-container-1"></div>
+                    <div class="canvas-container" id="canvas-container-1" role="img" aria-label="3D model of SprayZet industrial aerosol spray can">
+                      <noscript><p>Interactive 3D view of SprayZet industrial maintenance aerosol spray can</p></noscript>
+                    </div>
                 </div>
                 <div class="item-info-panel">
                     <div class="item-text-content">
-                        <h3>Industrial Products</h3>
+                        <h3 itemprop="name">Industrial Products</h3>
                     <div class="item-desc-wrapper">
-                        <p>Our aerosol range ensures high-quality cleaning, dust removal, and flaw detection, adhering to international standards for optimal performance in industrial maintenance applications.</p>
-                        <a href="sprayzet/" class="cta-button" style="width: fit-content;">View Products</a>
+                        <p itemprop="description">Our aerosol range ensures high-quality cleaning, dust removal, and flaw detection, adhering to international standards for optimal performance in industrial maintenance applications.</p>
+                        <a href="sprayzet/" class="cta-button" style="width: fit-content;" itemprop="url">View Products</a>
                     </div>
                 </div>
                 </div>
             </div>
             
             <!-- Card 2: Self Adhesive Tapes -->
-            <div class="item-card">
+            <div class="item-card" itemscope itemtype="https://schema.org/Product">
                 <div class="item-visual">
                   <div class="bg-logo">
-                      <div class="logo tape"><img src="./assets/twin-tape.png"></div>
+                      <div class="logo tape"><img src="./assets/twin-tape.png" alt="Twin Tapes self-adhesive tape brand logo" width="120" height="40" loading="lazy"></div>
                     </div>
-                    <div class="canvas-container" id="canvas-container-3"></div>
+                    <div class="canvas-container" id="canvas-container-3" role="img" aria-label="3D model of Twin Tapes industrial adhesive tape roll">
+                      <noscript><p>Interactive 3D view of Twin Tapes self-adhesive industrial tape roll</p></noscript>
+                    </div>
                 </div>
                 <div class="item-info-panel">
                     <div class="item-text-content">
-                        <h3>Self Adhesive Tapes</h3>
+                        <h3 itemprop="name">Self Adhesive Tapes</h3>
                     <div class="item-desc-wrapper">
-                        <p>We manufacture superior-quality self-adhesive tapes like Polyester, Foam, and Masking Tapes, rigorously tested to meet diverse industrial needs, offering strength, reliability, and precision.</p>
-                        <a href="twin-tapes/" class="cta-button" style="width: fit-content;">View Products</a>
+                        <p itemprop="description">We manufacture superior-quality self-adhesive tapes like Polyester, Foam, and Masking Tapes, rigorously tested to meet diverse industrial needs, offering strength, reliability, and precision.</p>
+                        <a href="twin-tapes/" class="cta-button" style="width: fit-content;" itemprop="url">View Products</a>
                     </div>
                 </div>
                 </div>
             </div>
 
             <!-- Card 3: Car Care Products -->
-            <div class="item-card">
+            <div class="item-card" itemscope itemtype="https://schema.org/Product">
                 <div class="item-visual">
                   <div class="bg-logo">
-                      <div class="logo evershine"><img src="./assets/evershine.png"></div>
+                      <div class="logo evershine"><img src="./assets/evershine.png" alt="Evershine car care products brand logo" width="120" height="40" loading="lazy"></div>
                     </div>
-                    <div class="canvas-container" id="canvas-container-2"></div>
+                    <div class="canvas-container" id="canvas-container-2" role="img" aria-label="3D model of Evershine car care aerosol spray can">
+                      <noscript><p>Interactive 3D view of Evershine premium car care aerosol spray can</p></noscript>
+                    </div>
                 </div>
                 <div class="item-info-panel">
                     <div class="item-text-content">
-                        <h3>Car Care Products</h3>
+                        <h3 itemprop="name">Car Care Products</h3>
                     <div class="item-desc-wrapper">
-                        <p>Our high-quality car care products are designed to help maintain a vehicle's shine and protect its body, keeping it looking brand new while extending its life with regular, consistent application.</p>
-                        <a href="evershine/" class="cta-button" style="width: fit-content;">View Products</a>
+                        <p itemprop="description">Our high-quality car care products are designed to help maintain a vehicle's shine and protect its body, keeping it looking brand new while extending its life with regular, consistent application.</p>
+                        <a href="evershine/" class="cta-button" style="width: fit-content;" itemprop="url">View Products</a>
                     </div>
                 </div>
                 </div>
@@ -398,8 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.ticker.lagSmoothing(0);
   </script>
 
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-
+    <!-- Three.js 3D product viewers: lazy-loaded when showcase section nears viewport -->
     <script type="importmap">
         {
             "imports": {
@@ -410,339 +450,335 @@ document.addEventListener("DOMContentLoaded", () => {
     </script>
 
     <script type="module">
-        import * as THREE from 'three';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-        // Configuration for cards
-        const modelDataConfig = [
-            {
-                id: 'canvas-container-1',
-                modelPath: window.ASSETS.blackCan || './assets/Black_Can.glb',
-                scale: 1.0,
-                // Separation of animation states
-                initialState: {
-                    position: { x: 0, y: 1, z: 0 },
-                    rotation: { x: 0, y: 0, z: 0 },
-                    scale: 1.0
-                },
-                enterState: {
-                    position: { y: 1.2, z: 1 },
-                    rotation: { x: 0.5, z: 0, spin: Math.PI * 2 },
-                    scale: 1.6,
-                    duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
-                    ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
-                },
-                leaveState: {
-                    position: { x: 0, y: 1, z: 0 },
-                    rotation: { x: 0, z: 0 },
-                    scale: 1.0,
-                    duration: 0.8,
-                    ease: "power2.inOut"
+        // Defer all Three.js loading until the product showcase scrolls near
+        const showcaseEl = document.querySelector('.content-showcase-wrapper');
+        if (showcaseEl) {
+            let loaded = false;
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !loaded) {
+                    loaded = true;
+                    observer.disconnect();
+                    init3DViewers();
                 }
-            },
-            {
-                id: 'canvas-container-2',
-                modelPath: window.ASSETS.redCan || './assets/Red_Can.glb',
-                scale: 1.0,
-                initialState: {
-                    position: { x: 0, y: 1, z: 0 },
-                    rotation: { x: 0, y: 0, z: 0 },
-                    scale: 1.0
-                },
-                enterState: {
-                    position: { y: 1, z: 1 },
-                    rotation: { x: 0.4, z: 0, spin: Math.PI * 2 },
-                    scale: 1.6,
-                    duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
-                    ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
-                },
-                leaveState: {
-                    position: { x: 0, y: 1, z: 0 },
-                    rotation: { x: 0, z: 0 },
-                    scale: 1.0,
-                    duration: 0.8,
-                    ease: "power2.inOut"
-                }
-            },
-            {
-                id: 'canvas-container-3',
-                modelPath: window.ASSETS.brownTape || './assets/Brown_Tape.glb',
-                scale: 1.0,
-                initialState: {
-                    position: { x: 0, y: 1.5, z: 0 },
-                    rotation: { x: 0, y: 0, z: 0 },
-                    scale: 1.0
-                },
-                enterState: {
-                    position: { y: 2, z: 0.5 },
-                    rotation: { x: 0.4, z: 0, spin: Math.PI },
-                    scale: 1.4,
-                    duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
-                    ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
-                },
-                leaveState: {
-                    position: { x: 0, y: 1.5, z: 0 },
-                    rotation: { x: 0, z: 0 },
-                    scale: 1.0,
-                    duration: 0.8,
-                    ease: "power2.inOut"
-                }
-            }
-        ];
-
-        // Shared Environment Map
-        let environmentTexture = null;
-
-        function getEnvironmentMap(webGLRender, threeScene) {
-            return new Promise((resolve) => {
-                if (environmentTexture) {
-                    threeScene.environment = environmentTexture;
-                    resolve(environmentTexture);
-                    return;
-                }
-                const pmremGen = new THREE.PMREMGenerator(webGLRender);
-                pmremGen.compileEquirectangularShader();
-                new RGBELoader().load(window.ASSETS.neutralHdr || './assets/neutral.hdr', (texture) => {
-                    environmentTexture = pmremGen.fromEquirectangular(texture).texture;
-                    threeScene.environment = environmentTexture;
-                    texture.dispose();
-                    pmremGen.dispose();
-                    resolve(environmentTexture);
-                });
-            });
+            }, { rootMargin: '300px 0px' });
+            observer.observe(showcaseEl);
         }
 
-        async function setupModelViewer(configs) {
-            const mountPoint = document.getElementById(configs.id);
-            if (!mountPoint) return;
+        async function init3DViewers() {
+            const [
+                THREE,
+                { GLTFLoader },
+                { RGBELoader },
+                { OrbitControls }
+            ] = await Promise.all([
+                import('three'),
+                import('three/addons/loaders/GLTFLoader.js'),
+                import('three/addons/loaders/RGBELoader.js'),
+                import('three/addons/controls/OrbitControls.js')
+            ]);
 
-            const threeScene = new THREE.Scene();
-            // Transparent background for 3D scene to layer over CSS gradient
-            threeScene.background = null; 
-
-            // Adjusted Angle: Lower elevation to avoid "top-down" look, kept at center
-            const viewCamera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); // Slightly narrower FOV for better focus
-            viewCamera.position.set(0, 0.5, 6.5); 
-
-            const webGLRender = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            
-            // Set size including the 140% oversized margin
-            const renderWidth = mountPoint.clientWidth * 1.4;
-            const renderHeight = mountPoint.clientHeight * 1.4;
-            webGLRender.setSize(renderWidth, renderHeight);
-            webGLRender.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            webGLRender.toneMapping = THREE.ACESFilmicToneMapping;
-            webGLRender.toneMappingExposure = 1.0;
-            webGLRender.outputColorSpace = THREE.SRGBColorSpace;
-            mountPoint.appendChild(webGLRender.domElement);
-
-            const orbitControls = new OrbitControls(viewCamera, webGLRender.domElement);
-            orbitControls.enableDamping = true;
-            orbitControls.dampingFactor = 0.05;
-            orbitControls.enableZoom = false; 
-            orbitControls.enablePan = false; 
-            orbitControls.enableRotate = false;
-            orbitControls.autoRotate = true;
-            orbitControls.autoRotateSpeed = 2.0; 
-            orbitControls.target.set(0, 0, 0);
-
-            // Explicitly allow touch actions for scrolling on mobile (Must be set AFTER OrbitControls)
-            webGLRender.domElement.style.touchAction = 'auto';
-
-            await getEnvironmentMap(webGLRender, threeScene);
-
-            const gltfLoader = new GLTFLoader();
-            let activeModel = null;
-            let modelGroup = new THREE.Group();
-            
-            // Apply Initial State
-            const initialProps = configs.initialState || { position: { x:0, y:0, z:0 } };
-            modelGroup.position.set(
-                initialProps.position.x || 0,
-                initialProps.position.y || 0,
-                initialProps.position.z || 0
-            );
-            modelGroup.rotation.set(
-                initialProps.rotation.x || 0,
-                initialProps.rotation.y || 0,
-                initialProps.rotation.z || 0
-            );
-            if (initialProps.scale) modelGroup.scale.setScalar(initialProps.scale);
-            
-            threeScene.add(modelGroup);
-
-            gltfLoader.load(configs.modelPath, (gltf) => {
-                const model = gltf.scene;
-                
-                // Ensure model is at local origin before measurement
-                model.position.set(0, 0, 0);
-
-                // Center and Scale model
-                const box = new THREE.Box3().setFromObject(model);
-                const size = box.getSize(new THREE.Vector3());
-                const center = box.getCenter(new THREE.Vector3());
-                
-                // Move model to center geometry at group origin
-                model.position.set(-center.x, -center.y , -center.z);
-                
-                // Fit nicely - 1.8 units fit in the 45deg camera at dist 5
-                const maxDim = Math.max(size.x, size.y, size.z);
-                const scaleFactor = 1.8 / maxDim; 
-                model.scale.setScalar(scaleFactor);
-
-                modelGroup.add(model);
-                activeModel = model;
-            });
-
-            // Handle Resize
-            const onResize = () => {
-                const width = mountPoint.clientWidth * 1.4;
-                const height = mountPoint.clientHeight * 1.4;
-                viewCamera.aspect = width / height;
-                viewCamera.updateProjectionMatrix();
-                webGLRender.setSize(width, height);
-            };
-            window.addEventListener('resize', onResize);
-            onResize(); // Initial sizing
-
-            // Interaction Logic using CSS + GSAP
-            const itemElement = mountPoint.closest('.item-card');
-            if (itemElement) {
-                let isHovered = false;
-
-
-                itemElement.addEventListener('mouseenter', () => {
-                    // Only animate if not in mobile view or verify screen width
-                    if (window.innerWidth < 1024) return;
-
-                    isHovered = true;
-                    if(modelGroup) {
-                        const enter = configs.enterState || {
-                            position: { y: 1, z: 1 },
-                            rotation: { x: 0.4, z: 0.2, spin: Math.PI * 2 },
-                            scale: 1.6,
-                            duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
-                            ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
-                        };
-
-                        // 1. Move
-                        gsap.to(modelGroup.position, {
-                            y: enter.position.y,
-                            z: enter.position.z,
-                            duration: enter.duration.position,
-                            ease: enter.ease.position
-                        });
-
-                        // 2. Rotate
-                        gsap.to(modelGroup.rotation, {
-                            y: modelGroup.rotation.y + (enter.rotation.spin || 0), 
-                            x: enter.rotation.x,
-                            z: enter.rotation.z, 
-                            duration: enter.duration.rotation,
-                            ease: enter.ease.rotation
-                        });
-
-                        // 3. Scale
-                        gsap.to(modelGroup.scale, {
-                            x: enter.scale,
-                            y: enter.scale,
-                            z: enter.scale,
-                            duration: enter.duration.scale,
-                            ease: enter.ease.scale
-                        });
-                        
-                        // 4. Continued Rotation: Increase speed
-                        orbitControls.autoRotateSpeed = 15.0; 
+            const modelDataConfig = [
+                {
+                    id: 'canvas-container-1',
+                    modelPath: window.ASSETS.blackCan || './assets/Black_Can.glb',
+                    scale: 1.0,
+                    initialState: {
+                        position: { x: 0, y: 1, z: 0 },
+                        rotation: { x: 0, y: 0, z: 0 },
+                        scale: 1.0
+                    },
+                    enterState: {
+                        position: { y: 1.2, z: 1 },
+                        rotation: { x: 0.5, z: 0, spin: Math.PI * 2 },
+                        scale: 1.6,
+                        duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                        ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                    },
+                    leaveState: {
+                        position: { x: 0, y: 1, z: 0 },
+                        rotation: { x: 0, z: 0 },
+                        scale: 1.0,
+                        duration: 0.8,
+                        ease: "power2.inOut"
                     }
-                });
+                },
+                {
+                    id: 'canvas-container-2',
+                    modelPath: window.ASSETS.redCan || './assets/Red_Can.glb',
+                    scale: 1.0,
+                    initialState: {
+                        position: { x: 0, y: 1, z: 0 },
+                        rotation: { x: 0, y: 0, z: 0 },
+                        scale: 1.0
+                    },
+                    enterState: {
+                        position: { y: 1, z: 1 },
+                        rotation: { x: 0.4, z: 0, spin: Math.PI * 2 },
+                        scale: 1.6,
+                        duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                        ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                    },
+                    leaveState: {
+                        position: { x: 0, y: 1, z: 0 },
+                        rotation: { x: 0, z: 0 },
+                        scale: 1.0,
+                        duration: 0.8,
+                        ease: "power2.inOut"
+                    }
+                },
+                {
+                    id: 'canvas-container-3',
+                    modelPath: window.ASSETS.brownTape || './assets/Brown_Tape.glb',
+                    scale: 1.0,
+                    initialState: {
+                        position: { x: 0, y: 1.5, z: 0 },
+                        rotation: { x: 0, y: 0, z: 0 },
+                        scale: 1.0
+                    },
+                    enterState: {
+                        position: { y: 2, z: 0.5 },
+                        rotation: { x: 0.4, z: 0, spin: Math.PI },
+                        scale: 1.4,
+                        duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                        ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                    },
+                    leaveState: {
+                        position: { x: 0, y: 1.5, z: 0 },
+                        rotation: { x: 0, z: 0 },
+                        scale: 1.0,
+                        duration: 0.8,
+                        ease: "power2.inOut"
+                    }
+                }
+            ];
 
-                itemElement.addEventListener('mousemove', (e) => {
-                    if (window.innerWidth < 1024) return; // Disable hover effects on mobile
-                    if(!isHovered || !modelGroup) return;
+            // Shared Environment Map
+            let environmentTexture = null;
 
-                    const enter = configs.enterState || { rotation: { x: 0.4, z: 0.2 } };
-
-                    // Add dynamic micro-tilt on top of the base tilt
-                    const rect = itemElement.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / rect.width - 0.5;
-                    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                    gsap.to(modelGroup.rotation, {
-                        x: enter.rotation.x + (y * 0.3), // Base tilt + mouse offset
-                        z: enter.rotation.z + (-x * 0.3), // Base tilt + mouse offset
-                        duration: 0.4,
-                        ease: "power1.out"
+            function getEnvironmentMap(webGLRender, threeScene) {
+                return new Promise((resolve) => {
+                    if (environmentTexture) {
+                        threeScene.environment = environmentTexture;
+                        resolve(environmentTexture);
+                        return;
+                    }
+                    const pmremGen = new THREE.PMREMGenerator(webGLRender);
+                    pmremGen.compileEquirectangularShader();
+                    new RGBELoader().load(window.ASSETS.neutralHdr || './assets/neutral.hdr', (texture) => {
+                        environmentTexture = pmremGen.fromEquirectangular(texture).texture;
+                        threeScene.environment = environmentTexture;
+                        texture.dispose();
+                        pmremGen.dispose();
+                        resolve(environmentTexture);
                     });
                 });
-
-                itemElement.addEventListener('mouseleave', () => {
-                    // Always try to reset state on leave, just in case
-                    isHovered = false;
-                    if(modelGroup) {
-                        const leave = configs.leaveState || {
-                            position: { x: 0, y: 0, z: 0 },
-                            rotation: { x: 0, z: 0 },
-                            scale: 1,
-                            duration: 0.8,
-                            ease: "power2.inOut"
-                        };
-
-                        // Return position to center
-                        gsap.to(modelGroup.position, {
-                            x: leave.position.x || 0,
-                            y: leave.position.y || 0,
-                            z: leave.position.z || 0,
-                            duration: leave.duration,
-                            ease: leave.ease
-                        });
-
-                        // Return scale to normal
-                        gsap.to(modelGroup.scale, {
-                            x: leave.scale,
-                            y: leave.scale,
-                            z: leave.scale,
-                            duration: leave.duration,
-                            ease: leave.ease
-                        });
-
-                        // Reset tilt to zero
-                        gsap.to(modelGroup.rotation, {
-                            x: leave.rotation.x || 0,
-                            z: leave.rotation.z || 0,
-                            duration: leave.duration,
-                            ease: leave.ease
-                        });
-
-                        // Return to slow rotation
-                        orbitControls.autoRotateSpeed = 2.0;
-                    }
-                });
             }
 
-            // Animation Loop
-            const animateLoop = () => {
-                requestAnimationFrame(animateLoop);
-                orbitControls.update();
-                webGLRender.render(threeScene, viewCamera);
-            };
-            animateLoop();
-        }
+            async function setupModelViewer(configs) {
+                const mountPoint = document.getElementById(configs.id);
+                if (!mountPoint) return;
 
-        // Initialize all cards
-        modelDataConfig.forEach(config => setupModelViewer(config));
+                const threeScene = new THREE.Scene();
+                threeScene.background = null;
 
-        // Hide overlay after a short delay
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const overlay = document.getElementById('loading-overlay');
-                if(overlay) {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => overlay.remove(), 500);
+                const viewCamera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+                viewCamera.position.set(0, 0.5, 6.5);
+
+                const webGLRender = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: true,
+                    powerPreference: 'high-performance'
+                });
+
+                const renderWidth = mountPoint.clientWidth * 1.4;
+                const renderHeight = mountPoint.clientHeight * 1.4;
+                webGLRender.setSize(renderWidth, renderHeight);
+                webGLRender.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                webGLRender.toneMapping = THREE.ACESFilmicToneMapping;
+                webGLRender.toneMappingExposure = 1.0;
+                webGLRender.outputColorSpace = THREE.SRGBColorSpace;
+                mountPoint.appendChild(webGLRender.domElement);
+
+                const orbitControls = new OrbitControls(viewCamera, webGLRender.domElement);
+                orbitControls.enableDamping = true;
+                orbitControls.dampingFactor = 0.05;
+                orbitControls.enableZoom = false;
+                orbitControls.enablePan = false;
+                orbitControls.enableRotate = false;
+                orbitControls.autoRotate = true;
+                orbitControls.autoRotateSpeed = 2.0;
+                orbitControls.target.set(0, 0, 0);
+
+                webGLRender.domElement.style.touchAction = 'auto';
+
+                await getEnvironmentMap(webGLRender, threeScene);
+
+                const gltfLoader = new GLTFLoader();
+                let activeModel = null;
+                let modelGroup = new THREE.Group();
+
+                const initialProps = configs.initialState || { position: { x:0, y:0, z:0 } };
+                modelGroup.position.set(
+                    initialProps.position.x || 0,
+                    initialProps.position.y || 0,
+                    initialProps.position.z || 0
+                );
+                modelGroup.rotation.set(
+                    initialProps.rotation.x || 0,
+                    initialProps.rotation.y || 0,
+                    initialProps.rotation.z || 0
+                );
+                if (initialProps.scale) modelGroup.scale.setScalar(initialProps.scale);
+
+                threeScene.add(modelGroup);
+
+                gltfLoader.load(configs.modelPath, (gltf) => {
+                    const model = gltf.scene;
+                    model.position.set(0, 0, 0);
+
+                    const box = new THREE.Box3().setFromObject(model);
+                    const size = box.getSize(new THREE.Vector3());
+                    const center = box.getCenter(new THREE.Vector3());
+
+                    model.position.set(-center.x, -center.y , -center.z);
+
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scaleFactor = 1.8 / maxDim;
+                    model.scale.setScalar(scaleFactor);
+
+                    modelGroup.add(model);
+                    activeModel = model;
+                });
+
+                const onResize = () => {
+                    const width = mountPoint.clientWidth * 1.4;
+                    const height = mountPoint.clientHeight * 1.4;
+                    viewCamera.aspect = width / height;
+                    viewCamera.updateProjectionMatrix();
+                    webGLRender.setSize(width, height);
+                };
+                window.addEventListener('resize', onResize);
+                onResize();
+
+                const itemElement = mountPoint.closest('.item-card');
+                if (itemElement) {
+                    let isHovered = false;
+
+                    itemElement.addEventListener('mouseenter', () => {
+                        if (window.innerWidth < 1024) return;
+
+                        isHovered = true;
+                        if(modelGroup) {
+                            const enter = configs.enterState || {
+                                position: { y: 1, z: 1 },
+                                rotation: { x: 0.4, z: 0.2, spin: Math.PI * 2 },
+                                scale: 1.6,
+                                duration: { position: 0.3, rotation: 1.0, scale: 0.6 },
+                                ease: { position: "power2.out", rotation: "back.out(2)", scale: "elastic.out(1, 0.75)" }
+                            };
+
+                            gsap.to(modelGroup.position, {
+                                y: enter.position.y,
+                                z: enter.position.z,
+                                duration: enter.duration.position,
+                                ease: enter.ease.position
+                            });
+
+                            gsap.to(modelGroup.rotation, {
+                                y: modelGroup.rotation.y + (enter.rotation.spin || 0),
+                                x: enter.rotation.x,
+                                z: enter.rotation.z,
+                                duration: enter.duration.rotation,
+                                ease: enter.ease.rotation
+                            });
+
+                            gsap.to(modelGroup.scale, {
+                                x: enter.scale,
+                                y: enter.scale,
+                                z: enter.scale,
+                                duration: enter.duration.scale,
+                                ease: enter.ease.scale
+                            });
+
+                            orbitControls.autoRotateSpeed = 15.0;
+                        }
+                    });
+
+                    itemElement.addEventListener('mousemove', (e) => {
+                        if (window.innerWidth < 1024) return;
+                        if(!isHovered || !modelGroup) return;
+
+                        const enter = configs.enterState || { rotation: { x: 0.4, z: 0.2 } };
+
+                        const rect = itemElement.getBoundingClientRect();
+                        const x = (e.clientX - rect.left) / rect.width - 0.5;
+                        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                        gsap.to(modelGroup.rotation, {
+                            x: enter.rotation.x + (y * 0.3),
+                            z: enter.rotation.z + (-x * 0.3),
+                            duration: 0.4,
+                            ease: "power1.out"
+                        });
+                    });
+
+                    itemElement.addEventListener('mouseleave', () => {
+                        isHovered = false;
+                        if(modelGroup) {
+                            const leave = configs.leaveState || {
+                                position: { x: 0, y: 0, z: 0 },
+                                rotation: { x: 0, z: 0 },
+                                scale: 1,
+                                duration: 0.8,
+                                ease: "power2.inOut"
+                            };
+
+                            gsap.to(modelGroup.position, {
+                                x: leave.position.x || 0,
+                                y: leave.position.y || 0,
+                                z: leave.position.z || 0,
+                                duration: leave.duration,
+                                ease: leave.ease
+                            });
+
+                            gsap.to(modelGroup.scale, {
+                                x: leave.scale,
+                                y: leave.scale,
+                                z: leave.scale,
+                                duration: leave.duration,
+                                ease: leave.ease
+                            });
+
+                            gsap.to(modelGroup.rotation, {
+                                x: leave.rotation.x || 0,
+                                z: leave.rotation.z || 0,
+                                duration: leave.duration,
+                                ease: leave.ease
+                            });
+
+                            orbitControls.autoRotateSpeed = 2.0;
+                        }
+                    });
                 }
-            }, 1000);
-        });
+
+                // Only render when the card is visible in viewport
+                let isVisible = false;
+                const visObs = new IntersectionObserver((entries) => {
+                    isVisible = entries[0].isIntersecting;
+                }, { rootMargin: '50px 0px' });
+                visObs.observe(mountPoint);
+
+                const animateLoop = () => {
+                    requestAnimationFrame(animateLoop);
+                    if (!isVisible) return;
+                    orbitControls.update();
+                    webGLRender.render(threeScene, viewCamera);
+                };
+                animateLoop();
+            }
+
+            modelDataConfig.forEach(config => setupModelViewer(config));
+        }
     </script>
 </body>
 </html>
