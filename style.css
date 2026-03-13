@@ -730,6 +730,9 @@ img{
   .about .about-container .about-details{
     font-size: 1rem;
   }
+  .about-content-col h2{
+    font-size: 1.7rem;
+  }
 
   .numbers{
     padding: 2rem;
