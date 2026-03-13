@@ -28,6 +28,11 @@
 	nav .logo img{height:40px;width:auto}
 	#hero-section{position:relative;height:100vh;overflow:hidden;background:#1a1a1a}
 	.hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#fff;text-align:center}
+	.mobile-video-showcase { display: none; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+	@media (max-width: 768px) {
+		.canvas-container { display: none !important; }
+		.mobile-video-showcase { display: block; }
+	}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="nav.css">
@@ -152,6 +157,11 @@
                     <div class="canvas-container" id="canvas-container-1" role="img" aria-label="3D model of SprayZet industrial aerosol spray can">
                       <noscript><p>Interactive 3D view of SprayZet industrial maintenance aerosol spray can</p></noscript>
                     </div>
+                    <div class="video-container">
+                      <video class="mobile-video-showcase" autoplay muted loop playsinline poster="./assets/Turnaround/p1.webp">
+                        <source src="./assets/Turnaround/p1.mp4" type="video/mp4">
+                      </video>
+                    </div>
                 </div>
                 <div class="item-info-panel">
                     <div class="item-text-content">
@@ -173,6 +183,11 @@
                     <div class="canvas-container" id="canvas-container-3" role="img" aria-label="3D model of Twin Tapes industrial adhesive tape roll">
                       <noscript><p>Interactive 3D view of Twin Tapes self-adhesive industrial tape roll</p></noscript>
                     </div>
+                    <div class="video-container">
+                      <video style="transform: scale(0.6);" class="mobile-video-showcase" autoplay muted loop playsinline poster="./assets/Turnaround/p2.webp">
+                        <source src="./assets/Turnaround/p2.mp4" type="video/mp4">
+                      </video>
+                    </div>
                 </div>
                 <div class="item-info-panel">
                     <div class="item-text-content">
@@ -193,6 +208,11 @@
                     </div>
                     <div class="canvas-container" id="canvas-container-2" role="img" aria-label="3D model of Evershine car care aerosol spray can">
                       <noscript><p>Interactive 3D view of Evershine premium car care aerosol spray can</p></noscript>
+                    </div>
+                    <div class="video-container">
+                      <video class="mobile-video-showcase" autoplay muted loop playsinline poster="./assets/Turnaround/p3.webp">
+                        <source src="./assets/Turnaround/p3.mp4" type="video/mp4">
+                      </video>
                     </div>
                 </div>
                 <div class="item-info-panel">
