@@ -33,7 +33,7 @@ CREATE TABLE `admin_users` (
 
 CREATE TABLE `inquiries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` enum('Contact','Distributor','Career') NOT NULL,
+  `type` enum('Contact','Distributor','Career','Lead') NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,

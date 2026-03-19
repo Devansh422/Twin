@@ -7,11 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Get POST data (Multipart form data handling)
-$name = $_POST['name'] ?? '';
-$email = $_POST['email'] ?? '';
-$phone = $_POST['phone'] ?? ''; // Optional
+$name = trim($_POST['name'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$phone = trim($_POST['phone'] ?? ''); // Optional
 // Determine type based on source or explicit field
 $type = 'Contact';
+if (isset($_POST['lead_source']) || (isset($_POST['source']) && $_POST['source'] === 'lead'))
+    $type = 'Lead';
 if (isset($_POST['company-name']))
     $type = 'Distributor';
 if (isset($_POST['apply-for']))

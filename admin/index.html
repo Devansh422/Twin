@@ -1484,6 +1484,8 @@
                     onclick="openNewBrandModal()">+ New</button>
             </div>
             <div id="brandItems"></div>
+            <div class="nav-section-label" style="margin-top:.75rem">Leads</div>
+            <div class="brand-item" id="leadsNavItem" onclick="switchToLeads()"><span class="dot"></span>Leads</div>
             <div class="nav-section-label" style="margin-top:.75rem">Content</div>
             <div class="brand-item" id="blogNavItem" onclick="switchToBlogs()"><span class="dot"></span>Blog Posts</div>
             <div class="brand-item" id="inquiriesNavItem" onclick="switchToInquiries()"><span
@@ -1945,7 +1947,9 @@
                 html += `</div>`;
             });
             document.getElementById('brandItems').innerHTML = html;
+            document.getElementById('leadsNavItem').className = 'brand-item' + (currentMode === 'leads' ? ' active' : '');
             document.getElementById('blogNavItem').className = 'brand-item' + (currentMode === 'blogs' ? ' active' : '');
+            document.getElementById('inquiriesNavItem').className = 'brand-item' + (currentMode === 'inquiries' ? ' active' : '');
         }
 
         function switchBrand(key) {
@@ -1989,6 +1993,18 @@
             document.getElementById('searchInput').value = ''; searchQuery = '';
             reorderMode = false;
             renderBrandList(); renderInquiries();
+        }
+
+        function switchToLeads() {
+            currentMode = 'leads';
+            document.getElementById('currentTitle').textContent = 'Leads';
+            document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('reorderCatsBtn').style.display = 'none';
+            document.getElementById('searchInput').parentElement.style.display = '';
+            document.getElementById('searchInput').value = ''; searchQuery = '';
+            reorderMode = false;
+            renderBrandList(); renderLeads();
         }
 
         function renderProducts() {
@@ -2048,6 +2064,7 @@
             if (currentMode === 'products') renderProducts();
             else if (currentMode === 'blogs') renderBlogPosts();
             else if (currentMode === 'inquiries') renderInquiries();
+            else if (currentMode === 'leads') renderLeads();
         }
 
         /* ═══════════════════════════════════════════
@@ -2391,7 +2408,7 @@
             }
 
             let html = '<table class="inquiries-table"><thead><tr><th style="width:160px">Date / Type</th><th>Details</th><th style="width:80px">Action</th></tr></thead><tbody>';
-            data.forEach((item, index) => {
+            data.forEach((item) => {
                 const d = item.data || {};
                 const name = d.name || '';
                 const email = d.email || '';
@@ -2421,7 +2438,7 @@
                     details += `<span class="inq-doc-icon">📄</span>`;
                     details += `<span class="inq-doc-name" title="${escapeHtmlAttr(item.document_name)}">${escapeHtmlAttr(item.document_name)}</span>`;
                     details += `<button class="inq-doc-btn inq-doc-download" onclick="downloadDocument(${item.id})" title="Download">⬇</button>`;
-                    details += `<button class="inq-doc-btn inq-doc-delete" onclick="confirmDeleteDocument(${index})" title="Delete Document">✕</button>`;
+                    details += `<button class="inq-doc-btn inq-doc-delete" onclick="confirmDeleteDocument(${item.id})" title="Delete Document">✕</button>`;
                     details += `</div>`;
                 }
 
@@ -2435,10 +2452,70 @@
                     </td>
                     <td class="inq-details" style="vertical-align:top">${details}</td>
                     <td style="vertical-align:top;text-align:right">
-                        <button class="btn btn-danger btn-sm" onclick="confirmDeleteInquiry(${index})" title="Delete">🗑</button>
+                        <button class="btn btn-danger btn-sm" onclick="confirmDeleteInquiry(${item.id})" title="Delete">🗑</button>
                     </td>
                 </tr>`;
             });
+            html += '</tbody></table>';
+            c.innerHTML = html;
+        }
+
+        function renderLeads() {
+            const c = document.getElementById('mainContent');
+            let data = inquiriesData.filter(d => String(d.type || '').toLowerCase() === 'lead');
+
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                data = data.filter(d =>
+                    JSON.stringify(d.data).toLowerCase().includes(q) ||
+                    (d.date && d.date.toLowerCase().includes(q))
+                );
+            }
+
+            document.getElementById('countBadge').textContent = data.length + ' lead' + (data.length !== 1 ? 's' : '');
+
+            if (!data.length) {
+                c.innerHTML = '<div class="empty-state"><div class="icon">📨</div><h3>No leads</h3><p>Homepage popup submissions will appear here.</p></div>';
+                return;
+            }
+
+            let html = '<table class="inquiries-table"><thead><tr><th style="width:160px">Date / Type</th><th>Details</th><th style="width:80px">Action</th></tr></thead><tbody>';
+            data.forEach((item) => {
+                const d = item.data || {};
+                const name = d.name || '';
+                const email = d.email || '';
+                const phone = d.phone || '';
+                const extraEntries = Object.entries(d).filter(([k, v]) => !['name', 'email', 'phone', 'resume_filename', 'lead_source'].includes(k) && v !== null && v !== undefined && String(v).trim() !== '');
+
+                let details = '<div class="inq-details-wrap">';
+                details += '<div class="inq-primary">';
+                if (name) details += `<div class="inq-row"><span class="inq-k">Name</span><span class="inq-v">${escapeHtmlAttr(name)}</span></div>`;
+                if (email) details += `<div class="inq-row"><span class="inq-k">Email</span><span class="inq-v">${escapeHtmlAttr(email)}</span></div>`;
+                if (phone) details += `<div class="inq-row"><span class="inq-k">Phone</span><span class="inq-v">${escapeHtmlAttr(phone)}</span></div>`;
+                details += '</div>';
+
+                if (extraEntries.length) {
+                    details += '<div class="inq-extra">';
+                    extraEntries.forEach(([key, val]) => {
+                        const k = String(key).replace(/_/g, ' ');
+                        details += `<div class="inq-chip"><span class="inq-chip-k">${escapeHtmlAttr(k)}</span><span class="inq-chip-v">${escapeHtmlAttr(String(val))}</span></div>`;
+                    });
+                    details += '</div>';
+                }
+                details += '</div>';
+
+                html += `<tr>
+                    <td style="vertical-align:top">
+                        <div class="inq-date">${item.date}</div>
+                        <div style="margin-top:0.3rem"><span class="inq-type Lead">Lead</span></div>
+                    </td>
+                    <td class="inq-details" style="vertical-align:top">${details}</td>
+                    <td style="vertical-align:top;text-align:right">
+                        <button class="btn btn-danger btn-sm" onclick="confirmDeleteInquiry(${item.id})" title="Delete">🗑</button>
+                    </td>
+                </tr>`;
+            });
+
             html += '</tbody></table>';
             c.innerHTML = html;
         }
@@ -2447,8 +2524,9 @@
             window.open('../api/download_document.php?id=' + inquiryId, '_blank');
         }
 
-        function confirmDeleteDocument(index) {
-            const item = inquiriesData[index];
+        function confirmDeleteDocument(inquiryId) {
+            const item = inquiriesData.find(i => i.id === inquiryId);
+            if (!item) return;
             document.getElementById('confirmTitle').textContent = 'Delete Document';
             document.getElementById('confirmMessage').textContent = `Delete the document "${item.document_name}"? The inquiry will be kept but the file will be permanently removed.`;
             document.getElementById('confirmDeleteBtn').onclick = async () => {
@@ -2471,8 +2549,9 @@
             openModal('confirmModal');
         }
 
-        function confirmDeleteInquiry(index) {
-            const item = inquiriesData[index];
+        function confirmDeleteInquiry(inquiryId) {
+            const item = inquiriesData.find(i => i.id === inquiryId);
+            if (!item) return;
             document.getElementById('confirmTitle').textContent = 'Delete Inquiry';
             document.getElementById('confirmMessage').textContent = `Delete this inquiry? This cannot be undone.`;
             document.getElementById('confirmDeleteBtn').onclick = async () => {

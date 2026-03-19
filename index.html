@@ -33,6 +33,93 @@
 		.canvas-container { display: none !important; }
 		.mobile-video-showcase { display: block; }
 	}
+  .home-lead-popup {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 2000;
+    padding: 1rem;
+  }
+  .home-lead-popup.show {
+    display: flex;
+  }
+  .home-lead-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+  .home-lead-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+  .home-lead-head h3 {
+    font-size: 1.2rem;
+    color: #111;
+    margin: 0;
+  }
+  .home-lead-close {
+    border: none;
+    background: #f3f4f6;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .home-lead-form {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .home-lead-form input {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+  .home-lead-form input:focus {
+    outline: none;
+    border-color: #ED1D21;
+    box-shadow: 0 0 0 3px rgba(237, 29, 33, 0.15);
+  }
+  .home-lead-submit {
+    margin-top: 0.25rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 10px;
+    background: #ED1D21;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .home-lead-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  .home-lead-note {
+    font-size: 0.84rem;
+    color: #4b5563;
+    margin-bottom: 0.45rem;
+  }
+  .home-lead-msg {
+    font-size: 0.82rem;
+    min-height: 1rem;
+  }
+  .home-lead-msg.error {
+    color: #b91c1c;
+  }
+  .home-lead-msg.success {
+    color: #166534;
+  }
 	</style>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="nav.css">
@@ -118,6 +205,24 @@
 			</button>
 		</div>
 	</nav>
+
+  <div class="home-lead-popup" id="homeLeadPopup" aria-hidden="true">
+    <div class="home-lead-card" role="dialog" aria-modal="true" aria-labelledby="homeLeadTitle">
+      <div class="home-lead-head">
+        <h3 id="homeLeadTitle">Let's Connect</h3>
+        <button type="button" class="home-lead-close" id="homeLeadClose" aria-label="Close popup">&#10005;</button>
+      </div>
+      <p class="home-lead-note">Share your details and our team will get in touch.</p>
+      <form id="homeLeadForm" class="home-lead-form">
+        <input type="hidden" name="lead_source" value="homepage_popup">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Contact Number" required>
+        <button type="submit" class="home-lead-submit" id="homeLeadSubmit">Submit</button>
+        <div class="home-lead-msg" id="homeLeadMsg"></div>
+      </form>
+    </div>
+  </div>
 
 
   <div class="main-container">
@@ -812,6 +917,65 @@ document.addEventListener("DOMContentLoaded", () => {
             modelDataConfig.forEach(config => setupModelViewer(config));
         }
     </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const popup = document.getElementById('homeLeadPopup');
+      const closeBtn = document.getElementById('homeLeadClose');
+      const form = document.getElementById('homeLeadForm');
+      const submitBtn = document.getElementById('homeLeadSubmit');
+      const msg = document.getElementById('homeLeadMsg');
+
+      if (!popup || !form || !submitBtn) return;
+
+      popup.classList.add('show');
+      popup.setAttribute('aria-hidden', 'false');
+
+      const closePopup = () => {
+        popup.classList.remove('show');
+        popup.setAttribute('aria-hidden', 'true');
+      };
+
+      closeBtn?.addEventListener('click', closePopup);
+      popup.addEventListener('click', (e) => {
+        if (e.target === popup) closePopup();
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msg.textContent = '';
+        msg.className = 'home-lead-msg';
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+          const res = await fetch('api/submit_inquiry.php', {
+            method: 'POST',
+            body: new FormData(form)
+          });
+          const result = await res.json();
+
+          if (result.success) {
+            msg.textContent = 'Thank you. Your details have been submitted.';
+            msg.classList.add('success');
+            form.reset();
+            setTimeout(closePopup, 1100);
+          } else {
+            msg.textContent = result.message || 'Submission failed. Please try again.';
+            msg.classList.add('error');
+          }
+        } catch (error) {
+          msg.textContent = 'Network error. Please try again.';
+          msg.classList.add('error');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
 
