@@ -16,7 +16,8 @@ $data = [
     'products' => [],
     'details' => [],
     'blogs' => [],
-    'inquiries' => []
+    'inquiries' => [],
+    'seo' => []
 ];
 
 try {
@@ -116,6 +117,15 @@ try {
         }
         return $item;
     }, $inquiries);
+
+    // 4. Fetch SEO Settings
+    try {
+        $stmt = $pdo->query("SELECT * FROM seo_settings ORDER BY page_type, page_identifier");
+        $data['seo'] = $stmt->fetchAll();
+    } catch (Exception $e) {
+        // Table may not exist yet
+        $data['seo'] = [];
+    }
 
     sendResponse(true, 'Data loaded', $data);
 

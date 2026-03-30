@@ -96,4 +96,32 @@ CREATE TABLE `blog_posts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Table structure for table `seo_settings`
+--
+
+CREATE TABLE `seo_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_type` enum('page','product','blog') NOT NULL DEFAULT 'page',
+  `page_identifier` varchar(100) NOT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `meta_keywords` text DEFAULT NULL,
+  `canonical_url` varchar(500) DEFAULT NULL,
+  `robots` varchar(100) DEFAULT 'index, follow',
+  `og_title` varchar(255) DEFAULT NULL,
+  `og_description` text DEFAULT NULL,
+  `og_image` varchar(500) DEFAULT NULL,
+  `og_type` varchar(50) DEFAULT 'website',
+  `twitter_card` varchar(50) DEFAULT 'summary_large_image',
+  `twitter_title` varchar(255) DEFAULT NULL,
+  `twitter_description` text DEFAULT NULL,
+  `twitter_image` varchar(500) DEFAULT NULL,
+  `schema_json` longtext DEFAULT NULL,
+  `custom_head` longtext DEFAULT NULL,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `page_type_identifier` (`page_type`, `page_identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 COMMIT;

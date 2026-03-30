@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/verma/Downloads/Twin/Twin -name \"*.js\" -type f -exec wc -l {})",
+      "Bash(grep -rn \"router\\\\|routing\\\\|hash\\\\|pathname\" /c/Users/verma/Downloads/Twin/Twin/*.js)",
+      "Bash(git -C /c/Users/verma/Downloads/Twin/Twin log --oneline)"
+    ]
+  }
+}

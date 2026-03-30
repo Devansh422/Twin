@@ -1447,6 +1447,49 @@
             font-size: .7rem; color: var(--text-muted); flex-shrink: 0;
             background: var(--bg-input); padding: .15rem .5rem; border-radius: 100px; min-width: 24px; text-align: center
         }
+        /* ── SEO MANAGEMENT ── */
+        .seo-page-list { display: flex; flex-direction: column; gap: .5rem }
+        .seo-page-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: .85rem 1.25rem; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: .75rem; transition: all .2s; cursor: pointer
+        }
+        .seo-page-item:hover { border-color: var(--color); box-shadow: 0 2px 8px var(--color-glow) }
+        .seo-page-item .seo-page-info { display: flex; flex-direction: column; gap: .15rem; flex: 1; min-width: 0 }
+        .seo-page-item .seo-page-name { font-family: 'heading', sans-serif; font-size: .9rem; font-weight: 600 }
+        .seo-page-item .seo-page-path { font-size: .72rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+        .seo-page-item .seo-page-meta { font-size: .72rem; color: var(--text-light); max-width: 350px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+        .seo-status-badge {
+            font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+            padding: .2rem .6rem; border-radius: 100px; flex-shrink: 0; margin-left: .75rem
+        }
+        .seo-status-badge.configured { background: #dcfce7; color: #16a34a }
+        .seo-status-badge.not-configured { background: #fef3c7; color: #d97706 }
+        .seo-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem }
+        .seo-tab {
+            padding: .6rem 1.25rem; font-size: .8rem; font-weight: 600; cursor: pointer;
+            border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s;
+            color: var(--text-muted); background: none; border-top: none; border-left: none; border-right: none
+        }
+        .seo-tab:hover { color: var(--text) }
+        .seo-tab.active { color: var(--color); border-bottom-color: var(--color) }
+        .seo-section-group { margin-bottom: 1.5rem; border: 1px solid var(--border); border-radius: .75rem; overflow: hidden }
+        .seo-section-header {
+            padding: .75rem 1rem; background: var(--bg-input); font-size: .75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted);
+            border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .5rem; cursor: pointer
+        }
+        .seo-section-header .chevron { transition: transform .2s; font-size: .6rem }
+        .seo-section-header.collapsed .chevron { transform: rotate(-90deg) }
+        .seo-section-body { padding: 1rem 1.25rem }
+        .seo-section-body.collapsed { display: none }
+        .seo-char-count { font-size: .65rem; color: var(--text-muted); text-align: right; margin-top: .15rem }
+        .seo-char-count.warn { color: #d97706 }
+        .seo-char-count.over { color: var(--danger) }
+        .seo-preview { background: var(--bg-input); border-radius: .5rem; padding: 1rem 1.25rem; margin-top: .5rem }
+        .seo-preview-title { color: #1a0dab; font-size: 1.1rem; font-weight: 400; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: Arial, sans-serif }
+        .seo-preview-url { color: #006621; font-size: .82rem; margin: .15rem 0; font-family: Arial, sans-serif }
+        .seo-preview-desc { color: #545454; font-size: .82rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-family: Arial, sans-serif }
     </style>
 </head>
 
@@ -1490,6 +1533,8 @@
             <div class="brand-item" id="blogNavItem" onclick="switchToBlogs()"><span class="dot"></span>Blog Posts</div>
             <div class="brand-item" id="inquiriesNavItem" onclick="switchToInquiries()"><span
                     class="dot"></span>Inquiries</div>
+            <div class="nav-section-label" style="margin-top:.75rem">Settings</div>
+            <div class="brand-item" id="seoNavItem" onclick="switchToSEO()"><span class="dot"></span>SEO Manager</div>
         </div>
         <div class="sidebar-footer">
             <button class="export-btn" onclick="exportAllData()">⬇ Export All Data</button>
@@ -1652,6 +1697,161 @@
     </div>
 
     <!-- ═══ CONFIRM ═══ -->
+    <!-- ═══ SEO MODAL ═══ -->
+    <div class="modal-overlay" id="seoModal">
+        <div class="modal" style="max-width:780px">
+            <div class="modal-header">
+                <h3 id="seoModalTitle">Edit SEO Settings</h3>
+                <button class="modal-close" onclick="closeModal('seoModal')">&#10005;</button>
+            </div>
+            <div class="modal-body" style="max-height:70vh;overflow-y:auto">
+                <input type="hidden" id="seoPageType" value="">
+                <input type="hidden" id="seoPageId" value="">
+
+                <!-- Google Preview -->
+                <div class="seo-preview" id="seoGooglePreview">
+                    <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);font-weight:700;margin-bottom:.5rem">Google Preview</div>
+                    <div class="seo-preview-title" id="seoPreviewTitle">Page Title</div>
+                    <div class="seo-preview-url" id="seoPreviewUrl">https://twintechindia.com/page</div>
+                    <div class="seo-preview-desc" id="seoPreviewDesc">Page description will appear here...</div>
+                </div>
+
+                <!-- Basic Meta -->
+                <div class="seo-section-group" style="margin-top:1rem">
+                    <div class="seo-section-header" onclick="toggleSeoSection(this)">
+                        <span class="chevron">&#9660;</span> Basic Meta Tags
+                    </div>
+                    <div class="seo-section-body">
+                        <div class="form-group">
+                            <label>Meta Title</label>
+                            <input type="text" id="seoMetaTitle" placeholder="Page title for search engines" oninput="updateSeoPreview()">
+                            <div class="seo-char-count" id="seoTitleCount">0 / 60 characters</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Meta Description</label>
+                            <textarea id="seoMetaDesc" rows="3" placeholder="Brief description shown in search results" oninput="updateSeoPreview()"></textarea>
+                            <div class="seo-char-count" id="seoDescCount">0 / 160 characters</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Meta Keywords</label>
+                            <input type="text" id="seoMetaKeywords" placeholder="keyword1, keyword2, keyword3">
+                            <p class="help-text">Comma-separated keywords (less important for modern SEO but still used by some engines)</p>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Canonical URL</label>
+                                <input type="text" id="seoCanonical" placeholder="https://twintechindia.com/page" oninput="updateSeoPreview()">
+                            </div>
+                            <div class="form-group">
+                                <label>Robots Directive</label>
+                                <select id="seoRobots">
+                                    <option value="index, follow">Index, Follow (default)</option>
+                                    <option value="index, nofollow">Index, No Follow</option>
+                                    <option value="noindex, follow">No Index, Follow</option>
+                                    <option value="noindex, nofollow">No Index, No Follow</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open Graph -->
+                <div class="seo-section-group">
+                    <div class="seo-section-header" onclick="toggleSeoSection(this)">
+                        <span class="chevron">&#9660;</span> Open Graph (Facebook / LinkedIn)
+                    </div>
+                    <div class="seo-section-body">
+                        <div class="form-group">
+                            <label>OG Title</label>
+                            <input type="text" id="seoOgTitle" placeholder="Leave blank to use Meta Title">
+                        </div>
+                        <div class="form-group">
+                            <label>OG Description</label>
+                            <textarea id="seoOgDesc" rows="2" placeholder="Leave blank to use Meta Description"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>OG Image URL</label>
+                                <input type="text" id="seoOgImage" placeholder="https://twintechindia.com/assets/image.png">
+                            </div>
+                            <div class="form-group">
+                                <label>OG Type</label>
+                                <select id="seoOgType">
+                                    <option value="website">Website</option>
+                                    <option value="article">Article</option>
+                                    <option value="product">Product</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Twitter Card -->
+                <div class="seo-section-group">
+                    <div class="seo-section-header" onclick="toggleSeoSection(this)">
+                        <span class="chevron">&#9660;</span> Twitter Card
+                    </div>
+                    <div class="seo-section-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Card Type</label>
+                                <select id="seoTwitterCard">
+                                    <option value="summary_large_image">Summary Large Image</option>
+                                    <option value="summary">Summary</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Twitter Image URL</label>
+                                <input type="text" id="seoTwitterImage" placeholder="Leave blank to use OG Image">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter Title</label>
+                            <input type="text" id="seoTwitterTitle" placeholder="Leave blank to use Meta Title">
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter Description</label>
+                            <textarea id="seoTwitterDesc" rows="2" placeholder="Leave blank to use Meta Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schema / JSON-LD -->
+                <div class="seo-section-group">
+                    <div class="seo-section-header" onclick="toggleSeoSection(this)">
+                        <span class="chevron">&#9660;</span> Structured Data (JSON-LD)
+                    </div>
+                    <div class="seo-section-body">
+                        <div class="form-group">
+                            <label>JSON-LD Schema</label>
+                            <textarea id="seoSchemaJson" rows="8" placeholder='{"@context":"https://schema.org","@type":"WebPage","name":"..."}' style="font-family:monospace;font-size:.78rem"></textarea>
+                            <p class="help-text">Paste valid JSON-LD for rich snippets (Organization, Product, LocalBusiness, FAQ, etc.)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Head Tags -->
+                <div class="seo-section-group">
+                    <div class="seo-section-header" onclick="toggleSeoSection(this)">
+                        <span class="chevron">&#9660;</span> Custom Head Tags
+                    </div>
+                    <div class="seo-section-body">
+                        <div class="form-group">
+                            <label>Custom HTML (injected in &lt;head&gt;)</label>
+                            <textarea id="seoCustomHead" rows="5" placeholder='<meta name="custom" content="value">' style="font-family:monospace;font-size:.78rem"></textarea>
+                            <p class="help-text">Add any custom meta tags, link tags, or scripts to the page head</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('seoModal')">Cancel</button>
+                <button class="btn btn-danger" onclick="deleteSeoEntry()" id="seoDeleteBtn" style="display:none">Delete SEO</button>
+                <button class="btn btn-primary" onclick="saveSeoSettings()">Save SEO Settings</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="confirmModal">
         <div class="modal" style="max-width:420px">
             <div class="confirm-dialog">
@@ -1830,6 +2030,7 @@
         let detailsData = {}; // structure: { productName: { ... } }
         let blogPosts = [];
         let inquiriesData = [];
+        let seoData = [];
 
         let currentData = []; // flattened list for current view
         let featuresTags = [], benefitsTags = [], searchQuery = '';
@@ -1883,6 +2084,7 @@
                 detailsData = d.details;
                 blogPosts = d.blogs;
                 inquiriesData = d.inquiries;
+                seoData = d.seo || [];
 
                 // Dynamically build brands list from data keys + defaults
                 const prevBrands = BRANDS;
@@ -1950,6 +2152,7 @@
             document.getElementById('leadsNavItem').className = 'brand-item' + (currentMode === 'leads' ? ' active' : '');
             document.getElementById('blogNavItem').className = 'brand-item' + (currentMode === 'blogs' ? ' active' : '');
             document.getElementById('inquiriesNavItem').className = 'brand-item' + (currentMode === 'inquiries' ? ' active' : '');
+            document.getElementById('seoNavItem').className = 'brand-item' + (currentMode === 'seo' ? ' active' : '');
         }
 
         function switchBrand(key) {
@@ -2065,6 +2268,7 @@
             else if (currentMode === 'blogs') renderBlogPosts();
             else if (currentMode === 'inquiries') renderInquiries();
             else if (currentMode === 'leads') renderLeads();
+            else if (currentMode === 'seo') renderSEOManager();
         }
 
         /* ═══════════════════════════════════════════
@@ -2948,6 +3152,301 @@
             catReorderDirty = true;
             const msg = document.getElementById('catReorderUnsavedMsg');
             if (msg) msg.style.visibility = 'visible';
+        }
+
+        /* ═══════════════════════════════════════════
+           SEO MANAGER
+           ═══════════════════════════════════════════ */
+        let seoActiveTab = 'pages'; // 'pages', 'products', 'blogs'
+
+        const SEO_PAGES = [
+            { id: 'home', name: 'Homepage', path: '/' },
+            { id: 'about-us', name: 'About Us', path: '/about-us/' },
+            { id: 'customer', name: 'Customer Focus', path: '/customer/' },
+            { id: 'application', name: 'Application Areas', path: '/application/' },
+            { id: 'career', name: 'Career', path: '/career/' },
+            { id: 'contact-us', name: 'Contact Us', path: '/contact-us/' },
+            { id: 'distributor', name: 'Become a Distributor', path: '/distributor/' },
+            { id: 'gallery', name: 'Gallery', path: '/gallery/' },
+            { id: 'blog', name: 'Blog (Listing)', path: '/blog/' },
+            { id: 'private-labelling', name: 'Private Labelling', path: '/private-labelling/' },
+            { id: 'upcoming-projects', name: 'Upcoming Projects', path: '/upcoming-projects/' },
+            { id: 'evershine', name: 'Evershine (Brand)', path: '/evershine/' },
+            { id: 'sprayzet', name: 'SprayZet (Brand)', path: '/sprayzet/' },
+            { id: 'twin-tapes', name: 'Twin Tapes (Brand)', path: '/twin-tapes/' },
+            { id: 'twinzy', name: 'Twinzy (Brand)', path: '/twinzy/' },
+        ];
+
+        function switchToSEO() {
+            currentMode = 'seo';
+            document.getElementById('currentTitle').textContent = 'SEO Manager';
+            document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('reorderBtn').style.display = 'none';
+            document.getElementById('reorderCatsBtn').style.display = 'none';
+            document.getElementById('searchInput').parentElement.style.display = '';
+            document.getElementById('searchInput').value = ''; searchQuery = '';
+            reorderMode = false;
+            renderBrandList(); renderSEOManager();
+        }
+
+        function getSeoForItem(pageType, pageId) {
+            return seoData.find(s => s.page_type === pageType && s.page_identifier === String(pageId));
+        }
+
+        function renderSEOManager() {
+            const c = document.getElementById('mainContent');
+            let totalConfigured = seoData.length;
+            document.getElementById('countBadge').textContent = totalConfigured + ' configured';
+
+            let html = '';
+            // Tab bar
+            html += '<div class="seo-tabs">';
+            html += `<button class="seo-tab ${seoActiveTab === 'pages' ? 'active' : ''}" onclick="seoActiveTab='pages';renderSEOManager()">Pages</button>`;
+            html += `<button class="seo-tab ${seoActiveTab === 'products' ? 'active' : ''}" onclick="seoActiveTab='products';renderSEOManager()">Products</button>`;
+            html += `<button class="seo-tab ${seoActiveTab === 'blogs' ? 'active' : ''}" onclick="seoActiveTab='blogs';renderSEOManager()">Blog Posts</button>`;
+            html += '</div>';
+
+            if (seoActiveTab === 'pages') {
+                html += renderSeoPagesList();
+            } else if (seoActiveTab === 'products') {
+                html += renderSeoProductsList();
+            } else if (seoActiveTab === 'blogs') {
+                html += renderSeoBlogsList();
+            }
+
+            c.innerHTML = html;
+        }
+
+        function renderSeoPagesList() {
+            let pages = SEO_PAGES;
+            // Also add any custom brand pages
+            BRANDS.forEach(b => {
+                if (!b.builtin && !pages.find(p => p.id === b.key)) {
+                    pages.push({ id: b.key, name: b.label + ' (Brand)', path: '/' + b.key + '/' });
+                }
+            });
+            if (searchQuery) {
+                pages = pages.filter(p => p.name.toLowerCase().includes(searchQuery) || p.id.toLowerCase().includes(searchQuery));
+            }
+            if (!pages.length) return '<div class="empty-state"><div class="icon">&#128270;</div><h3>No results</h3></div>';
+            let html = '<div class="seo-page-list">';
+            pages.forEach(p => {
+                const seo = getSeoForItem('page', p.id);
+                const configured = !!seo;
+                const title = seo && seo.meta_title ? seo.meta_title : '';
+                const desc = seo && seo.meta_description ? seo.meta_description : '';
+                html += `<div class="seo-page-item" onclick="openSeoModal('page','${p.id}','${escapeHtmlAttr(p.name)}')">
+                    <div class="seo-page-info">
+                        <div class="seo-page-name">${escapeHtmlAttr(p.name)}</div>
+                        <div class="seo-page-path">${escapeHtmlAttr(p.path)}</div>
+                        ${title ? `<div class="seo-page-meta">${escapeHtmlAttr(title)}</div>` : ''}
+                    </div>
+                    <span class="seo-status-badge ${configured ? 'configured' : 'not-configured'}">${configured ? 'Configured' : 'Not Set'}</span>
+                </div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderSeoProductsList() {
+            let allProducts = [];
+            Object.keys(productsData).forEach(brand => {
+                Object.keys(productsData[brand]).forEach(cat => {
+                    productsData[brand][cat].forEach(p => {
+                        allProducts.push({ id: p.id, name: p.name, brand: brand, category: cat });
+                    });
+                });
+            });
+            if (searchQuery) {
+                allProducts = allProducts.filter(p => p.name.toLowerCase().includes(searchQuery) || p.brand.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery));
+            }
+            if (!allProducts.length) return '<div class="empty-state"><div class="icon">&#128230;</div><h3>No products found</h3></div>';
+            let html = '<div class="seo-page-list">';
+            allProducts.forEach(p => {
+                const seo = getSeoForItem('product', p.id);
+                const configured = !!seo;
+                html += `<div class="seo-page-item" onclick="openSeoModal('product','${p.id}','${escapeHtmlAttr(p.name)}')">
+                    <div class="seo-page-info">
+                        <div class="seo-page-name">${escapeHtmlAttr(p.name)}</div>
+                        <div class="seo-page-path">${escapeHtmlAttr(p.brand)} / ${escapeHtmlAttr(p.category)}</div>
+                        ${seo && seo.meta_title ? `<div class="seo-page-meta">${escapeHtmlAttr(seo.meta_title)}</div>` : ''}
+                    </div>
+                    <span class="seo-status-badge ${configured ? 'configured' : 'not-configured'}">${configured ? 'Configured' : 'Not Set'}</span>
+                </div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderSeoBlogsList() {
+            let posts = blogPosts;
+            if (searchQuery) {
+                posts = posts.filter(p => p.title.toLowerCase().includes(searchQuery));
+            }
+            if (!posts.length) return '<div class="empty-state"><div class="icon">&#128221;</div><h3>No blog posts found</h3></div>';
+            let html = '<div class="seo-page-list">';
+            posts.forEach(p => {
+                const seo = getSeoForItem('blog', p.id);
+                const configured = !!seo;
+                html += `<div class="seo-page-item" onclick="openSeoModal('blog','${p.id}','${escapeHtmlAttr(p.title)}')">
+                    <div class="seo-page-info">
+                        <div class="seo-page-name">${escapeHtmlAttr(p.title)}</div>
+                        <div class="seo-page-path">/blog/post.html?id=${p.id}</div>
+                        ${seo && seo.meta_title ? `<div class="seo-page-meta">${escapeHtmlAttr(seo.meta_title)}</div>` : ''}
+                    </div>
+                    <span class="seo-status-badge ${configured ? 'configured' : 'not-configured'}">${configured ? 'Configured' : 'Not Set'}</span>
+                </div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function openSeoModal(pageType, pageId, displayName) {
+            document.getElementById('seoModalTitle').textContent = 'SEO: ' + displayName;
+            document.getElementById('seoPageType').value = pageType;
+            document.getElementById('seoPageId').value = pageId;
+
+            // Clear all fields
+            ['seoMetaTitle','seoMetaDesc','seoMetaKeywords','seoCanonical','seoOgTitle','seoOgDesc','seoOgImage','seoTwitterTitle','seoTwitterDesc','seoTwitterImage','seoSchemaJson','seoCustomHead'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('seoRobots').value = 'index, follow';
+            document.getElementById('seoOgType').value = 'website';
+            document.getElementById('seoTwitterCard').value = 'summary_large_image';
+
+            // Load existing data
+            const existing = getSeoForItem(pageType, pageId);
+            if (existing) {
+                document.getElementById('seoMetaTitle').value = existing.meta_title || '';
+                document.getElementById('seoMetaDesc').value = existing.meta_description || '';
+                document.getElementById('seoMetaKeywords').value = existing.meta_keywords || '';
+                document.getElementById('seoCanonical').value = existing.canonical_url || '';
+                document.getElementById('seoRobots').value = existing.robots || 'index, follow';
+                document.getElementById('seoOgTitle').value = existing.og_title || '';
+                document.getElementById('seoOgDesc').value = existing.og_description || '';
+                document.getElementById('seoOgImage').value = existing.og_image || '';
+                document.getElementById('seoOgType').value = existing.og_type || 'website';
+                document.getElementById('seoTwitterCard').value = existing.twitter_card || 'summary_large_image';
+                document.getElementById('seoTwitterTitle').value = existing.twitter_title || '';
+                document.getElementById('seoTwitterDesc').value = existing.twitter_description || '';
+                document.getElementById('seoTwitterImage').value = existing.twitter_image || '';
+                document.getElementById('seoSchemaJson').value = existing.schema_json || '';
+                document.getElementById('seoCustomHead').value = existing.custom_head || '';
+                document.getElementById('seoDeleteBtn').style.display = '';
+            } else {
+                document.getElementById('seoDeleteBtn').style.display = 'none';
+            }
+
+            updateSeoPreview();
+            openModal('seoModal');
+        }
+
+        function updateSeoPreview() {
+            const title = document.getElementById('seoMetaTitle').value || 'Page Title';
+            const desc = document.getElementById('seoMetaDesc').value || 'Page description will appear here...';
+            const canonical = document.getElementById('seoCanonical').value || 'https://twintechindia.com/';
+
+            document.getElementById('seoPreviewTitle').textContent = title;
+            document.getElementById('seoPreviewUrl').textContent = canonical;
+            document.getElementById('seoPreviewDesc').textContent = desc;
+
+            // Character counts
+            const titleLen = document.getElementById('seoMetaTitle').value.length;
+            const descLen = document.getElementById('seoMetaDesc').value.length;
+
+            const titleCount = document.getElementById('seoTitleCount');
+            titleCount.textContent = titleLen + ' / 60 characters';
+            titleCount.className = 'seo-char-count' + (titleLen > 60 ? ' over' : titleLen > 50 ? ' warn' : '');
+
+            const descCount = document.getElementById('seoDescCount');
+            descCount.textContent = descLen + ' / 160 characters';
+            descCount.className = 'seo-char-count' + (descLen > 160 ? ' over' : descLen > 140 ? ' warn' : '');
+        }
+
+        function toggleSeoSection(header) {
+            header.classList.toggle('collapsed');
+            const body = header.nextElementSibling;
+            body.classList.toggle('collapsed');
+        }
+
+        async function saveSeoSettings() {
+            const pageType = document.getElementById('seoPageType').value;
+            const pageId = document.getElementById('seoPageId').value;
+
+            // Validate JSON-LD if provided
+            const schemaVal = document.getElementById('seoSchemaJson').value.trim();
+            if (schemaVal) {
+                try { JSON.parse(schemaVal); } catch (e) {
+                    showToast('Invalid JSON-LD schema. Please check the syntax.', 'error');
+                    return;
+                }
+            }
+
+            const payload = {
+                action: 'save',
+                page_type: pageType,
+                page_identifier: pageId,
+                meta_title: document.getElementById('seoMetaTitle').value.trim(),
+                meta_description: document.getElementById('seoMetaDesc').value.trim(),
+                meta_keywords: document.getElementById('seoMetaKeywords').value.trim(),
+                canonical_url: document.getElementById('seoCanonical').value.trim(),
+                robots: document.getElementById('seoRobots').value,
+                og_title: document.getElementById('seoOgTitle').value.trim(),
+                og_description: document.getElementById('seoOgDesc').value.trim(),
+                og_image: document.getElementById('seoOgImage').value.trim(),
+                og_type: document.getElementById('seoOgType').value,
+                twitter_card: document.getElementById('seoTwitterCard').value,
+                twitter_title: document.getElementById('seoTwitterTitle').value.trim(),
+                twitter_description: document.getElementById('seoTwitterDesc').value.trim(),
+                twitter_image: document.getElementById('seoTwitterImage').value.trim(),
+                schema_json: schemaVal,
+                custom_head: document.getElementById('seoCustomHead').value.trim()
+            };
+
+            showSpinner('Saving SEO settings...');
+            try {
+                const res = await fetch('../api/seo.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('SEO settings saved!', 'success');
+                    closeModal('seoModal');
+                    await init();
+                    if (currentMode === 'seo') renderSEOManager();
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error saving SEO', 'error'); }
+            finally { hideSpinner(); }
+        }
+
+        async function deleteSeoEntry() {
+            const pageType = document.getElementById('seoPageType').value;
+            const pageId = document.getElementById('seoPageId').value;
+
+            if (!confirm('Remove all SEO settings for this item?')) return;
+
+            showSpinner('Deleting SEO settings...');
+            try {
+                const res = await fetch('../api/seo.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete', page_type: pageType, page_identifier: pageId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('SEO settings removed.', 'success');
+                    closeModal('seoModal');
+                    await init();
+                    if (currentMode === 'seo') renderSEOManager();
+                } else {
+                    showToast('Error: ' + data.message, 'error');
+                }
+            } catch (e) { console.error(e); showToast('Server error', 'error'); }
+            finally { hideSpinner(); }
         }
 
         async function saveCategoryReorder() {
