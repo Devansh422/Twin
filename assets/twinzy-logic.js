@@ -88,8 +88,10 @@ async function initDynamicProducts() {
     categories.forEach(cat => {
         const products = productsData[cat];
         products.forEach(p => {
+            const productSlug = p.slug || (window.ProductDetail ? window.ProductDetail.slugify(p.name) : String(p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
             allProducts.push({
                 ...p,
+                slug: productSlug,
                 rawCategory: cat
             });
         });
@@ -101,6 +103,8 @@ async function initDynamicProducts() {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.setAttribute('data-category', product.rawCategory);
+        card.setAttribute('data-product-slug', product.slug || '');
+        card.setAttribute('data-product-name', product.name || '');
 
         // Image path handling
         const encodedPath = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
@@ -122,22 +126,24 @@ async function initDynamicProducts() {
     // Update count
     if (countElement) countElement.textContent = allProducts.length;
 
-    // Check for URL parameters to open specific product
+    // Check for URL parameters to open specific product (slug-first lookup)
     const urlParams = new URLSearchParams(window.location.search);
     const productParam = urlParams.get('product');
 
     if (productParam) {
-        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
+        const targetProduct = window.ProductDetail
+            ? window.ProductDetail.findByParam(allProducts, productParam)
+            : allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
         if (targetProduct) {
              // Create image source path securely
             const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
             const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
-            
+
             // Format category name for consistency
             const formattedCategory = targetProduct.rawCategory.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
             // Open the modal
-            openProductModal(targetProduct.name, imgSrc, formattedCategory);
+            openProductModal(targetProduct.name, imgSrc, formattedCategory, targetProduct.slug);
         }
     }
 
@@ -301,7 +307,8 @@ function attachEventListeners() {
             const name = card.querySelector('.product-name').textContent;
             const imgSrc = card.querySelector('.product-img').src;
             const category = card.querySelector('.product-category').textContent;
-            openProductModal(name, imgSrc, category);
+            const slug = card.getAttribute('data-product-slug') || '';
+            openProductModal(name, imgSrc, category, slug);
         });
     });
 
@@ -320,7 +327,7 @@ function attachEventListeners() {
     }
 }
 
-function openProductModal(name, imgSrc, category) {
+function openProductModal(name, imgSrc, category, slug) {
     const modal = document.getElementById('productModal');
 
     // Case-insensitive lookup
@@ -391,6 +398,13 @@ function openProductModal(name, imgSrc, category) {
 
     document.body.style.overflow = 'hidden';
     if (window.lenis) window.lenis.stop();
+
+    // Sync URL + apply this product's SEO if configured in the admin
+    const finalSlug = slug || (window.ProductDetail ? window.ProductDetail.slugify(name) : '');
+    if (finalSlug && window.ProductDetail) {
+        window.ProductDetail.pushUrl(finalSlug);
+        window.ProductDetail.applySeo(finalSlug);
+    }
 }
 
 function closeProductModal() {
@@ -407,6 +421,11 @@ function closeProductModal() {
             if (window.lenis) window.lenis.start();
         }
     });
+
+    if (window.ProductDetail) {
+        window.ProductDetail.clearUrl();
+        window.ProductDetail.restoreSeo();
+    }
 }
 
 function animateCardsEntrance() {

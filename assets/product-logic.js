@@ -278,8 +278,10 @@ async function initDynamicProducts() {
     allProducts = [];
     Object.entries(productsData).forEach(([category, products]) => {
         products.forEach(p => {
+            const productSlug = p.slug || (window.ProductDetail ? window.ProductDetail.slugify(p.name) : String(p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
             allProducts.push({
                 ...p,
+                slug: productSlug,
                 category: category,
                 rawCategory: category,
                 filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
@@ -323,6 +325,8 @@ async function initDynamicProducts() {
         card.className = 'product-card';
         card.setAttribute('data-product', index + 1);
         card.setAttribute('data-category', product.filterSlug);
+        card.setAttribute('data-product-slug', product.slug || '');
+        card.setAttribute('data-product-name', product.name || '');
 
         // Image path handling
         const encodedPath = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
@@ -347,19 +351,22 @@ async function initDynamicProducts() {
     // Re-initialize event listeners
     attachEventListeners();
 
-    // Check for URL parameters to open specific product
+    // Check for URL parameters to open specific product.
+    // Resolve by slug first (canonical), name second (legacy links).
     const urlParams = new URLSearchParams(window.location.search);
     const productParam = urlParams.get('product');
 
     if (productParam) {
-        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
+        const targetProduct = window.ProductDetail
+            ? window.ProductDetail.findByParam(allProducts, productParam)
+            : allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
         if (targetProduct) {
              // Create image source path securely
             const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
             const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
-            
+
             // Open the modal
-            openProductModal(targetProduct.name, imgSrc, targetProduct.category);
+            openProductModal(targetProduct.name, imgSrc, targetProduct.category, targetProduct.slug);
         }
     }
 
@@ -530,7 +537,8 @@ function attachEventListeners() {
             const name = card.querySelector('.product-name').textContent;
             const imgSrc = card.querySelector('.product-img').src;
             const category = card.querySelector('.product-category').textContent;
-            openProductModal(name, imgSrc, category);
+            const slug = card.getAttribute('data-product-slug') || '';
+            openProductModal(name, imgSrc, category, slug);
         });
     });
 
@@ -549,7 +557,7 @@ function attachEventListeners() {
     }
 }
 
-function openProductModal(name, imgSrc, category) {
+function openProductModal(name, imgSrc, category, slug) {
     const modal = document.getElementById('productModal');
 
     // Case-insensitive lookup
@@ -672,6 +680,13 @@ function openProductModal(name, imgSrc, category) {
     // Disable body scroll
     document.body.style.overflow = 'hidden';
     if (window.lenis) window.lenis.stop();
+
+    // Sync the URL with the open product and swap in product-specific SEO.
+    const finalSlug = slug || (window.ProductDetail ? window.ProductDetail.slugify(name) : '');
+    if (finalSlug && window.ProductDetail) {
+        window.ProductDetail.pushUrl(finalSlug);
+        window.ProductDetail.applySeo(finalSlug);
+    }
 }
 
 function closeProductModal() {
@@ -688,6 +703,12 @@ function closeProductModal() {
             if (window.lenis) window.lenis.start();
         }
     });
+
+    // Restore page-level SEO and remove the product param from the URL.
+    if (window.ProductDetail) {
+        window.ProductDetail.clearUrl();
+        window.ProductDetail.restoreSeo();
+    }
 }
 
 function animateCardsEntrance() {

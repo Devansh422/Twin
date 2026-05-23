@@ -1592,11 +1592,16 @@
                 <div class="section-label">Basic Information</div>
                 <div class="form-row">
                     <div class="form-group"><label>Product Name</label><input type="text" id="prodName"
-                            placeholder="e.g. ALL-IN-ONE"></div>
+                            placeholder="e.g. ALL-IN-ONE" oninput="onProdNameInput()"></div>
                     <div class="form-group"><label>Category</label><input type="text" id="prodCategory"
                             list="categoryList" placeholder="Select or type new"><datalist id="categoryList"></datalist>
                         <p class="help-text">Type a new name to create a category</p>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label>URL Slug</label>
+                    <input type="text" id="prodSlug" placeholder="auto-generated-from-name" oninput="onProdSlugInput()">
+                    <p class="help-text">Unique per brand. Used in product URLs (e.g. <code>/evershine/?product=safety-solvent</code>) and as the identifier for product SEO. Auto-generated from the name — edit only if you have a reason.</p>
                 </div>
                 <div class="form-group">
                     <label>Product Image</label>
@@ -2285,6 +2290,8 @@
             clearProductForm(); populateCategoryList();
             document.getElementById('tableDataRows').innerHTML = '';
             addTableRow('Brand', getBrandLabel(currentBrand)); addTableRow('Packing Type', ''); addTableRow('Packaging', ''); addTableRow('Packaging Size', '');
+            // For new products, slug auto-syncs from name until the user edits it manually
+            prodSlugManuallyEdited = false;
             openModal('productModal');
         }
 
@@ -2295,6 +2302,9 @@
             document.getElementById('prodName').value = p.name;
             document.getElementById('prodCategory').value = cat;
             document.getElementById('prodImagePath').value = p.imagePath || '';
+            document.getElementById('prodSlug').value = p.slug || '';
+            // Existing products: don't auto-overwrite a stored slug when the name changes
+            prodSlugManuallyEdited = !!(p.slug);
             // Image preview
             pendingProductImage = p.imageData || null;
             const previewSrc = resolveAdminImageSrc(p.imagePath, p.imageData);
@@ -2315,10 +2325,41 @@
         }
 
         function clearProductForm() {
-            ['prodName', 'prodCategory', 'prodImagePath', 'prodDescription', 'prodPackSize', 'prodForm'].forEach(id => document.getElementById(id).value = '');
+            ['prodName', 'prodCategory', 'prodImagePath', 'prodDescription', 'prodPackSize', 'prodForm', 'prodSlug'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('prodAvailability').value = 'In stock';
             pendingProductImage = null; removeProductImage();
             featuresTags = []; benefitsTags = []; renderTags('features'); renderTags('benefits');
+            prodSlugManuallyEdited = false;
+        }
+
+        // Slug syncing: while adding a new product (or any time the slug is empty),
+        // the slug field auto-fills from the name. Once the user edits the slug
+        // directly, we stop overwriting it.
+        let prodSlugManuallyEdited = false;
+        function slugifyClient(text) {
+            return String(text || '')
+                .replace(/&/g, ' and ')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+        function onProdNameInput() {
+            const nameVal = document.getElementById('prodName').value;
+            const slugEl = document.getElementById('prodSlug');
+            if (!prodSlugManuallyEdited || !slugEl.value.trim()) {
+                slugEl.value = slugifyClient(nameVal);
+            }
+        }
+        function onProdSlugInput() {
+            const slugEl = document.getElementById('prodSlug');
+            const cleaned = slugifyClient(slugEl.value);
+            // Normalize as the user types so the preview matches what'll be stored
+            if (slugEl.value !== cleaned) {
+                const pos = slugEl.selectionStart;
+                slugEl.value = cleaned;
+                try { slugEl.setSelectionRange(pos, pos); } catch (_) { /* ignore */ }
+            }
+            prodSlugManuallyEdited = true;
         }
 
         function handleTagInput(e, type) {
@@ -2392,6 +2433,7 @@
             const name = document.getElementById('prodName').value.trim();
             const category = document.getElementById('prodCategory').value.trim();
             const imagePath = document.getElementById('prodImagePath').value.trim();
+            const slug = slugifyClient(document.getElementById('prodSlug').value.trim());
             if (!name || !category) { showToast('Please fill in Product Name and Category.', 'error'); return; }
 
             const ev = document.getElementById('editIndex').value;
@@ -2418,6 +2460,7 @@
                 brand: currentBrand,
                 category,
                 name,
+                slug,
                 imagePath,
                 imageData: pendingProductImage,
                 description: desc,
@@ -2454,6 +2497,8 @@
                 brand: currentBrand,
                 category: cat,
                 name: p.name + ' (Copy)',
+                // Server will auto-uniquify, but pre-seeding gives a sensible base
+                slug: (p.slug ? p.slug + '-copy' : ''),
                 imagePath: p.imagePath || '',
                 imageData: p.imageData || null,
                 description: p.description || det.description || '',
@@ -3253,22 +3298,47 @@
             Object.keys(productsData).forEach(brand => {
                 Object.keys(productsData[brand]).forEach(cat => {
                     productsData[brand][cat].forEach(p => {
-                        allProducts.push({ id: p.id, name: p.name, brand: brand, category: cat });
+                        allProducts.push({ id: p.id, slug: p.slug || '', name: p.name, brand: brand, category: cat, imagePath: p.imagePath, imageData: p.imageData, description: p.description, details: p.details });
                     });
                 });
             });
-            if (searchQuery) {
-                allProducts = allProducts.filter(p => p.name.toLowerCase().includes(searchQuery) || p.brand.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery));
+            const filteredProducts = searchQuery
+                ? allProducts.filter(p => p.name.toLowerCase().includes(searchQuery) || p.brand.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery) || (p.slug || '').toLowerCase().includes(searchQuery))
+                : allProducts;
+
+            // Count how many products don't yet have SEO so we can offer the bulk action
+            const missingCount = allProducts.filter(p => {
+                const ident = p.slug || String(p.id);
+                if (getSeoForItem('product', ident)) return false;
+                if (p.slug && getSeoForItem('product', String(p.id))) return false; // legacy
+                return true;
+            }).length;
+
+            let html = '';
+            if (missingCount > 0) {
+                html += `<div class="seo-page-item" style="cursor:default;background:var(--bg-input);border-style:dashed">
+                    <div class="seo-page-info">
+                        <div class="seo-page-name">${missingCount} product${missingCount === 1 ? '' : 's'} without SEO</div>
+                        <div class="seo-page-path">Auto-generate meta title, description, keywords, and canonical URLs based on each product's name &amp; category. You can still tweak individual products afterwards.</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="bulkAutofillProductSeo()">⚡ Auto-fill all</button>
+                </div>`;
             }
-            if (!allProducts.length) return '<div class="empty-state"><div class="icon">&#128230;</div><h3>No products found</h3></div>';
-            let html = '<div class="seo-page-list">';
-            allProducts.forEach(p => {
-                const seo = getSeoForItem('product', p.id);
+
+            if (!filteredProducts.length) return html + '<div class="empty-state"><div class="icon">&#128230;</div><h3>No products found</h3></div>';
+
+            html += '<div class="seo-page-list">';
+            filteredProducts.forEach(p => {
+                // Product SEO is keyed by slug now (falls back to id for legacy rows)
+                const identifier = p.slug || String(p.id);
+                let seo = getSeoForItem('product', identifier);
+                if (!seo && p.slug) seo = getSeoForItem('product', String(p.id)); // legacy fallback
                 const configured = !!seo;
-                html += `<div class="seo-page-item" onclick="openSeoModal('product','${p.id}','${escapeHtmlAttr(p.name)}')">
+                const productUrl = '/' + encodeURIComponent(p.brand) + '/?product=' + encodeURIComponent(p.slug || '');
+                html += `<div class="seo-page-item" onclick="openSeoModal('product','${escapeHtmlAttr(identifier)}','${escapeHtmlAttr(p.name)}')">
                     <div class="seo-page-info">
                         <div class="seo-page-name">${escapeHtmlAttr(p.name)}</div>
-                        <div class="seo-page-path">${escapeHtmlAttr(p.brand)} / ${escapeHtmlAttr(p.category)}</div>
+                        <div class="seo-page-path">${escapeHtmlAttr(p.brand)} / ${escapeHtmlAttr(p.category)} &middot; <code>${escapeHtmlAttr(productUrl)}</code></div>
                         ${seo && seo.meta_title ? `<div class="seo-page-meta">${escapeHtmlAttr(seo.meta_title)}</div>` : ''}
                     </div>
                     <span class="seo-status-badge ${configured ? 'configured' : 'not-configured'}">${configured ? 'Configured' : 'Not Set'}</span>
@@ -3276,6 +3346,77 @@
             });
             html += '</div>';
             return html;
+        }
+
+        // Build a SEO payload from a product for the bulk auto-fill action.
+        function buildProductSeoPayload(product) {
+            const brandLabel = getBrandLabel(product.brand);
+            const name = product.name || '';
+            const category = product.category || '';
+            const det = product.details || {};
+            const description = (det.description || product.description || ('Buy ' + name + ' from ' + brandLabel + '. Premium quality ' + category.toLowerCase() + ' product by Twin Tech India.')).toString();
+            const metaTitle = (name + ' — ' + brandLabel + ' | Twin Tech India').slice(0, 70);
+            const metaDesc = description.length > 160 ? description.slice(0, 157) + '...' : description;
+            const keywords = [name, brandLabel, category, 'Twin Tech India'].filter(Boolean).join(', ');
+            const slug = product.slug || '';
+            const canonical = slug ? ('https://twintechindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
+            const img = product.imageData || (product.imagePath ? ('https://twintechindia.com/' + product.imagePath) : '');
+
+            return {
+                action: 'save',
+                page_type: 'product',
+                page_identifier: slug || String(product.id),
+                meta_title: metaTitle,
+                meta_description: metaDesc,
+                meta_keywords: keywords,
+                canonical_url: canonical,
+                robots: 'index, follow',
+                og_title: metaTitle,
+                og_description: metaDesc,
+                og_image: img,
+                og_type: 'product',
+                twitter_card: 'summary_large_image',
+                twitter_title: metaTitle,
+                twitter_description: metaDesc,
+                twitter_image: img,
+                schema_json: '',
+                custom_head: ''
+            };
+        }
+
+        async function bulkAutofillProductSeo() {
+            // Identify every product that doesn't yet have a SEO row
+            const targets = [];
+            Object.keys(productsData).forEach(brand => {
+                Object.keys(productsData[brand]).forEach(cat => {
+                    productsData[brand][cat].forEach(p => {
+                        const ident = p.slug || String(p.id);
+                        const hasNew = !!getSeoForItem('product', ident);
+                        const hasLegacy = p.slug && !!getSeoForItem('product', String(p.id));
+                        if (!hasNew && !hasLegacy) {
+                            targets.push({ ...p, brand, category: cat });
+                        }
+                    });
+                });
+            });
+            if (!targets.length) { showToast('Every product already has SEO settings.', 'info'); return; }
+            if (!confirm('Auto-fill SEO meta data for ' + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '?\n\nThis writes a meta title, description, keywords, canonical URL, and social-share tags derived from each product\'s name, brand, and category. You can still edit each product\'s SEO afterwards.')) return;
+
+            showSpinner('Auto-filling SEO for ' + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '…');
+            let ok = 0, fail = 0;
+            for (const p of targets) {
+                const payload = buildProductSeoPayload(p);
+                try {
+                    const res = await fetch('../api/seo.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const data = await res.json();
+                    if (data.success) ok++; else fail++;
+                } catch (e) { fail++; }
+            }
+            hideSpinner();
+            await init();
+            if (currentMode === 'seo') renderSEOManager();
+            if (fail === 0) showToast('SEO auto-filled for ' + ok + ' product' + (ok === 1 ? '' : 's') + '.', 'success');
+            else showToast('Filled ' + ok + ', failed ' + fail + '. Check console.', 'error');
         }
 
         function renderSeoBlogsList() {
@@ -3301,6 +3442,21 @@
             return html;
         }
 
+        // Find a product in productsData by slug (or id as fallback for legacy entries)
+        function findProductByIdentifier(identifier) {
+            const idStr = String(identifier);
+            for (const brand of Object.keys(productsData)) {
+                for (const cat of Object.keys(productsData[brand])) {
+                    for (const p of productsData[brand][cat]) {
+                        if ((p.slug && String(p.slug) === idStr) || String(p.id) === idStr) {
+                            return { ...p, brand, category: cat };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
         function openSeoModal(pageType, pageId, displayName) {
             document.getElementById('seoModalTitle').textContent = 'SEO: ' + displayName;
             document.getElementById('seoPageType').value = pageType;
@@ -3314,8 +3470,14 @@
             document.getElementById('seoOgType').value = 'website';
             document.getElementById('seoTwitterCard').value = 'summary_large_image';
 
-            // Load existing data
-            const existing = getSeoForItem(pageType, pageId);
+            // Load existing data — for products, try slug first, fall back to legacy id
+            let existing = getSeoForItem(pageType, pageId);
+            if (!existing && pageType === 'product') {
+                const product = findProductByIdentifier(pageId);
+                if (product && String(product.id) !== String(pageId)) {
+                    existing = getSeoForItem('product', String(product.id));
+                }
+            }
             if (existing) {
                 document.getElementById('seoMetaTitle').value = existing.meta_title || '';
                 document.getElementById('seoMetaDesc').value = existing.meta_description || '';
@@ -3335,10 +3497,48 @@
                 document.getElementById('seoDeleteBtn').style.display = '';
             } else {
                 document.getElementById('seoDeleteBtn').style.display = 'none';
+                // Prefill sensible defaults for products so each product starts with
+                // its own meta data instead of inheriting the brand's SEO.
+                if (pageType === 'product') {
+                    const product = findProductByIdentifier(pageId);
+                    if (product) prefillProductSeoDefaults(product);
+                }
             }
 
             updateSeoPreview();
             openModal('seoModal');
+        }
+
+        // Prefill the SEO form with reasonable defaults derived from a product.
+        // The admin can still override every field before saving.
+        function prefillProductSeoDefaults(product) {
+            const brandLabel = getBrandLabel(product.brand);
+            const name = product.name || '';
+            const category = product.category || '';
+            const det = product.details || {};
+            const description = (det.description || product.description || ('Buy ' + name + ' from ' + brandLabel + '. Premium quality ' + category.toLowerCase() + ' product by Twin Tech India.')).toString();
+
+            const metaTitle = (name + ' — ' + brandLabel + ' | Twin Tech India').slice(0, 70);
+            const metaDesc = description.length > 160 ? description.slice(0, 157) + '...' : description;
+            const keywords = [name, brandLabel, category, 'Twin Tech India'].filter(Boolean).join(', ');
+            const slug = product.slug || '';
+            const canonical = slug ? ('https://twintechindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
+
+            document.getElementById('seoMetaTitle').value = metaTitle;
+            document.getElementById('seoMetaDesc').value = metaDesc;
+            document.getElementById('seoMetaKeywords').value = keywords;
+            document.getElementById('seoCanonical').value = canonical;
+            document.getElementById('seoOgTitle').value = metaTitle;
+            document.getElementById('seoOgDesc').value = metaDesc;
+            document.getElementById('seoOgType').value = 'product';
+            document.getElementById('seoTwitterTitle').value = metaTitle;
+            document.getElementById('seoTwitterDesc').value = metaDesc;
+            // If we have an uploaded image, use it as OG/Twitter image
+            const img = product.imageData || (product.imagePath ? ('https://twintechindia.com/' + product.imagePath) : '');
+            if (img) {
+                document.getElementById('seoOgImage').value = img;
+                document.getElementById('seoTwitterImage').value = img;
+            }
         }
 
         function updateSeoPreview() {

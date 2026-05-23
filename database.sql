@@ -54,6 +54,7 @@ CREATE TABLE `products` (
   `brand` varchar(50) NOT NULL,
   `category` varchar(100) NOT NULL,
   `name` varchar(200) NOT NULL,
+  `slug` varchar(150) DEFAULT NULL, -- URL-safe identifier (unique per brand)
   `image_path` varchar(255) DEFAULT NULL,
   `image_data` longtext, -- Base64 string for small images/uploads
   `description` text,
@@ -62,7 +63,8 @@ CREATE TABLE `products` (
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `idx_brand_sort` (`brand`, `sort_order`)
+  KEY `idx_brand_sort` (`brand`, `sort_order`),
+  UNIQUE KEY `brand_slug` (`brand`, `slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

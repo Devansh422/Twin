@@ -77,7 +77,8 @@ async function initDynamicProducts() {
     let allProducts = [];
     Object.entries(productsData).forEach(([category, products]) => {
         products.forEach(p => {
-            allProducts.push({ ...p, rawCategory: category });
+            const productSlug = p.slug || (window.ProductDetail ? window.ProductDetail.slugify(p.name) : String(p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
+            allProducts.push({ ...p, slug: productSlug, rawCategory: category });
         });
     });
 
@@ -93,6 +94,7 @@ async function initDynamicProducts() {
         const displayName = product.name.replace(/^\d+\.\s*/, '').replace(/-/g, ' ').replace(/\.jpg|\.jpeg|\.png/i, '');
 
         card.setAttribute('data-product-name', product.name);
+        card.setAttribute('data-product-slug', product.slug || '');
 
         card.innerHTML = `
             <div class="product-image-wrapper">
@@ -108,19 +110,21 @@ async function initDynamicProducts() {
 
     if (countElement) countElement.textContent = allProducts.length;
 
-    // Check for URL parameters to open specific product
+    // Check for URL parameters to open specific product (slug first, name fallback)
     const urlParams = new URLSearchParams(window.location.search);
     const productParam = urlParams.get('product');
 
     if (productParam) {
-        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
+        const targetProduct = window.ProductDetail
+            ? window.ProductDetail.findByParam(allProducts, productParam)
+            : allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
         if (targetProduct) {
              // Create image source path securely
             const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
             const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
-            
+
             // Open the modal
-            openProductModal(targetProduct.name, imgSrc, targetProduct.rawCategory || targetProduct.category);
+            openProductModal(targetProduct.name, imgSrc, targetProduct.rawCategory || targetProduct.category, targetProduct.slug);
         }
     }
 
@@ -194,7 +198,8 @@ function attachEventListeners() {
             const name = card.getAttribute('data-product-name') || card.querySelector('.product-name').textContent;
             const imgSrc = card.querySelector('.product-img').src;
             const category = card.getAttribute('data-category') || 'Twin Tapes';
-            openProductModal(name, imgSrc, category);
+            const slug = card.getAttribute('data-product-slug') || '';
+            openProductModal(name, imgSrc, category, slug);
         });
     });
 
@@ -212,7 +217,7 @@ function attachEventListeners() {
     }
 }
 
-function openProductModal(name, imgSrc, category) {
+function openProductModal(name, imgSrc, category, slug) {
     const modal = document.getElementById('productModal');
 
     // Case-insensitive lookup (try raw name, then cleaned name without dashes)
@@ -287,6 +292,13 @@ function openProductModal(name, imgSrc, category) {
 
     document.body.style.overflow = 'hidden';
     if (window.lenis) window.lenis.stop();
+
+    // Sync URL + apply this product's SEO if configured in the admin
+    const finalSlug = slug || (window.ProductDetail ? window.ProductDetail.slugify(name) : '');
+    if (finalSlug && window.ProductDetail) {
+        window.ProductDetail.pushUrl(finalSlug);
+        window.ProductDetail.applySeo(finalSlug);
+    }
 }
 
 function closeProductModal() {
@@ -303,6 +315,11 @@ function closeProductModal() {
             if (window.lenis) window.lenis.start();
         }
     });
+
+    if (window.ProductDetail) {
+        window.ProductDetail.clearUrl();
+        window.ProductDetail.restoreSeo();
+    }
 }
 
 function animateCardsEntrance() {

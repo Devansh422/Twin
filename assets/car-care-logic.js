@@ -245,8 +245,12 @@ async function initDynamicProducts() {
     allProducts = [];
     Object.entries(productsData).forEach(([category, products]) => {
         products.forEach(p => {
+            // Keep slug from the DB row; fall back to a client-side slug derived
+            // from the name so legacy/static data still resolves consistently.
+            const productSlug = p.slug || (window.ProductDetail ? window.ProductDetail.slugify(p.name) : String(p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
             allProducts.push({
                 ...p,
+                slug: productSlug,
                 category: category,
                 rawCategory: category,
                 filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
@@ -290,6 +294,8 @@ async function initDynamicProducts() {
         card.className = 'product-card';
         card.setAttribute('data-product', index + 1);
         card.setAttribute('data-category', product.filterSlug);
+        card.setAttribute('data-product-slug', product.slug || '');
+        card.setAttribute('data-product-name', product.name || '');
 
         // Image path handling
         const encodedPath = (product.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
@@ -317,17 +323,21 @@ async function initDynamicProducts() {
     // Initial animation for cards
     animateCardsEntrance();
 
-    // Check URL for product parameter to open modal automatically
+    // Check URL for product parameter to open modal automatically.
+    // The URL is the canonical entry point for both shared links and search hits;
+    // resolve by slug first and fall back to the legacy name match.
     const urlParams = new URLSearchParams(window.location.search);
     const productParam = urlParams.get('product');
     if (productParam) {
-        const targetProduct = allProducts.find(p => p.name.toLowerCase() === productParam.trim().toLowerCase());
+        const targetProduct = window.ProductDetail
+            ? window.ProductDetail.findByParam(allProducts, productParam)
+            : allProducts.find(p => p.name.toLowerCase() === productParam.trim().toLowerCase());
         if (targetProduct) {
             const encodedPath = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
             const imgSrc = targetProduct.imageData || (encodedPath ? ('../' + encodedPath) : '');
             // Small delay to ensure modal logic is ready and transition is smooth
             setTimeout(() => {
-                openProductModal(targetProduct.name, imgSrc, targetProduct.category);
+                openProductModal(targetProduct.name, imgSrc, targetProduct.category, targetProduct.slug);
             }, 500);
         }
     }
@@ -496,7 +506,8 @@ function attachEventListeners() {
             const name = card.querySelector('.product-name').textContent;
             const imgSrc = card.querySelector('.product-img').src;
             const category = card.querySelector('.product-category').textContent;
-            openProductModal(name, imgSrc, category);
+            const slug = card.getAttribute('data-product-slug') || '';
+            openProductModal(name, imgSrc, category, slug);
         });
     });
 
@@ -515,7 +526,7 @@ function attachEventListeners() {
     }
 }
 
-function openProductModal(name, imgSrc, category) {
+function openProductModal(name, imgSrc, category, slug) {
     const modal = document.getElementById('productModal');
 
     // Case-insensitive lookup
@@ -589,6 +600,14 @@ function openProductModal(name, imgSrc, category) {
     // Disable body scroll
     document.body.style.overflow = 'hidden';
     if (window.lenis) window.lenis.stop();
+
+    // Reflect the open product in the URL so the link is shareable, then load
+    // that product's SEO (meta title/description/OG/etc.) into the document head.
+    const finalSlug = slug || (window.ProductDetail ? window.ProductDetail.slugify(name) : '');
+    if (finalSlug && window.ProductDetail) {
+        window.ProductDetail.pushUrl(finalSlug);
+        window.ProductDetail.applySeo(finalSlug);
+    }
 }
 
 function closeProductModal() {
@@ -605,6 +624,12 @@ function closeProductModal() {
             if (window.lenis) window.lenis.start();
         }
     });
+
+    // Drop the ?product= param and restore the page-level SEO.
+    if (window.ProductDetail) {
+        window.ProductDetail.clearUrl();
+        window.ProductDetail.restoreSeo();
+    }
 }
 
 function animateCardsEntrance() {

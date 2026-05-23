@@ -52,4 +52,73 @@ function sendResponse($success, $message = '', $data = [])
     echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
     exit();
 }
+
+// Convert a name to a URL-safe slug
+function generateSlug($text)
+{
+    $text = (string)$text;
+    // Replace ampersands explicitly so words don't collapse
+    $text = str_replace('&', ' and ', $text);
+    // Remove accents/special unicode where possible
+    if (function_exists('iconv')) {
+        $converted = @iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text);
+        if ($converted !== false) $text = $converted;
+    }
+    $text = strtolower($text);
+    // Replace anything that isn't a-z 0-9 with dashes
+    $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+    $text = trim($text, '-');
+    if ($text === '') $text = 'product';
+    // Keep within seo_settings.page_identifier (varchar 100) so the slug can be
+    // used directly as the SEO row identifier.
+    if (strlen($text) > 90) $text = substr($text, 0, 90);
+    return trim($text, '-');
+}
+
+// Ensure slug uniqueness within a brand (optionally excluding an id)
+function uniqueProductSlug(PDO $pdo, $brand, $baseSlug, $excludeId = 0)
+{
+    $slug = $baseSlug;
+    $suffix = 1;
+    $stmt = $pdo->prepare("SELECT id FROM products WHERE brand = ? AND slug = ? AND id != ? LIMIT 1");
+    while (true) {
+        $stmt->execute([$brand, $slug, (int)$excludeId]);
+        if (!$stmt->fetch()) return $slug;
+        $suffix++;
+        $slug = $baseSlug . '-' . $suffix;
+    }
+}
+
+// Lightweight one-time migration: add `slug` column to products if it doesn't exist
+// and backfill slugs for any existing rows. Safe to call on every request — it
+// checks the schema and exits early once everything is in place.
+function ensureProductSlugColumn(PDO $pdo)
+{
+    static $checked = false;
+    if ($checked) return;
+    try {
+        $col = $pdo->query("SHOW COLUMNS FROM products LIKE 'slug'")->fetch();
+        if (!$col) {
+            $pdo->exec("ALTER TABLE products ADD COLUMN slug VARCHAR(150) DEFAULT NULL AFTER name");
+            // Add unique key (brand, slug). NULLs are allowed multiple times in MySQL unique keys.
+            try {
+                $pdo->exec("ALTER TABLE products ADD UNIQUE KEY brand_slug (brand, slug)");
+            } catch (Exception $e) { /* ignore if exists */ }
+        }
+        // Backfill any rows missing a slug
+        $rows = $pdo->query("SELECT id, brand, name FROM products WHERE slug IS NULL OR slug = ''")->fetchAll();
+        if ($rows) {
+            $upd = $pdo->prepare("UPDATE products SET slug = ? WHERE id = ?");
+            foreach ($rows as $r) {
+                $base = generateSlug($r['name']);
+                $unique = uniqueProductSlug($pdo, $r['brand'], $base, (int)$r['id']);
+                $upd->execute([$unique, (int)$r['id']]);
+            }
+        }
+        $checked = true;
+    } catch (Exception $e) {
+        // Don't break the app if migration fails (e.g. user lacks ALTER perms)
+        error_log('ensureProductSlugColumn failed: ' . $e->getMessage());
+    }
+}
 ?>

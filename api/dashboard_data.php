@@ -12,6 +12,9 @@ if (!$pdo) {
     sendResponse(false, 'Database connection failed');
 }
 
+// Ensure the products table has slugs (auto-migrates on first run)
+ensureProductSlugColumn($pdo);
+
 $data = [
     'products' => [],
     'details' => [],
@@ -55,6 +58,7 @@ try {
         $prodObj = [
             'id' => $p['id'],
             'name' => $p['name'],
+            'slug' => $p['slug'] ?? '',
             'imagePath' => $p['image_path'],
             'imageData' => $p['image_data'],
             'description' => $p['description'],

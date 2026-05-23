@@ -540,6 +540,7 @@
         <div class="bottom"><span>©Copyright 2026. All Rights Reserved.</span></div>
     </footer>
 
+    <script src="../assets/product-detail-helper.js"></script>
     <script src="../assets-config.js"></script>
     <script src="../assets-apply.js" defer></script>
     <script src="../assets/global-search.js" defer></script>
@@ -604,7 +605,8 @@
             const allProducts = [];
             Object.entries(productsData).forEach(([category, products]) => {
                 products.forEach(p => {
-                    allProducts.push({ ...p, category, rawCategory: category, filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-') });
+                    const productSlug = p.slug || (window.ProductDetail ? window.ProductDetail.slugify(p.name) : String(p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
+                    allProducts.push({ ...p, slug: productSlug, category, rawCategory: category, filterSlug: category.toLowerCase().replace(/[^a-z0-9]+/g, '-') });
                 });
             });
 
@@ -649,7 +651,7 @@
           <h3 class="product-name">${product.name}</h3>
           <p class="product-category">${product.rawCategory}</p>
         </div>`;
-                card.addEventListener('click', () => openProductModal(product.name, imgSrc, product.rawCategory));
+                card.addEventListener('click', () => openProductModal(product.name, imgSrc, product.rawCategory, product.slug));
                 grid.appendChild(card);
             });
 
@@ -671,7 +673,7 @@
             });
 
             // Modal
-            function openProductModal(name, imgSrc, category) {
+            function openProductModal(name, imgSrc, category, slug) {
                 const modal = document.getElementById('productModal');
                 const key = Object.keys(productDetails).find(k => k.toLowerCase() === name.toLowerCase());
                 const det = productDetails[key] || productDetails['default'] || {};
@@ -694,14 +696,41 @@
                 const benEl = document.getElementById('modalBenefits'), benSec = document.getElementById('benefitsSection');
                 if (det.benefits && det.benefits.length) { benEl.innerHTML = det.benefits.map(b => `<li>${b}</li>`).join(''); benSec.style.display = 'block'; } else benSec.style.display = 'none';
                 modal.classList.add('active'); document.body.style.overflow = 'hidden';
+
+                const finalSlug = slug || (window.ProductDetail ? window.ProductDetail.slugify(name) : '');
+                if (finalSlug && window.ProductDetail) {
+                    window.ProductDetail.pushUrl(finalSlug);
+                    window.ProductDetail.applySeo(finalSlug);
+                }
             }
 
-            document.getElementById('closeModal').addEventListener('click', () => {
-                document.getElementById('productModal').classList.remove('active'); document.body.style.overflow = '';
-            });
+            function closeBrandProductModal() {
+                document.getElementById('productModal').classList.remove('active');
+                document.body.style.overflow = '';
+                if (window.ProductDetail) {
+                    window.ProductDetail.clearUrl();
+                    window.ProductDetail.restoreSeo();
+                }
+            }
+
+            document.getElementById('closeModal').addEventListener('click', closeBrandProductModal);
             document.getElementById('productModal').addEventListener('click', e => {
-                if (e.target === document.getElementById('productModal')) { document.getElementById('productModal').classList.remove('active'); document.body.style.overflow = ''; }
+                if (e.target === document.getElementById('productModal')) closeBrandProductModal();
             });
+
+            // Auto-open product if URL has ?product=
+            const urlParams = new URLSearchParams(window.location.search);
+            const productParam = urlParams.get('product');
+            if (productParam) {
+                const targetProduct = window.ProductDetail
+                    ? window.ProductDetail.findByParam(allProducts, productParam)
+                    : allProducts.find(p => p.name.toLowerCase() === productParam.toLowerCase());
+                if (targetProduct) {
+                    const enc = (targetProduct.imagePath || '').split('/').map(s => encodeURIComponent(s)).join('/');
+                    const targetImg = targetProduct.imageData || (enc ? ('../' + enc) : '');
+                    setTimeout(() => openProductModal(targetProduct.name, targetImg, targetProduct.rawCategory, targetProduct.slug), 300);
+                }
+            }
 
             removeOverlay();
 

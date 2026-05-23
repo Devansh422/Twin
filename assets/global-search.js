@@ -36,6 +36,7 @@
                         var brandKey = p.brand || '';
                         return {
                             name: p.name,
+                            slug: p.slug || '',
                             brand: brandLabelMap[brandKey] || brandKey,
                             category: p.category,
                             brandPage: brandPageMap[brandKey] || ('brand/index.html?brand=' + encodeURIComponent(brandKey) + '&'),
@@ -156,11 +157,14 @@
         for (var i = 0; i < matches.length; i++) {
             var p = matches[i];
             var imgSrc = p.imagePath ? (basePath + encodeURI(p.imagePath)) : '';
+            // Prefer slugs in product URLs so search results match the canonical
+            // links produced everywhere else (admin, brand pages, sitemap, etc.).
+            var productParam = p.slug || p.name;
             var href;
             if (p.brandPage.indexOf('?') !== -1) {
-                href = basePath + p.brandPage + 'product=' + encodeURIComponent(p.name);
+                href = basePath + p.brandPage + 'product=' + encodeURIComponent(productParam);
             } else {
-                href = basePath + p.brandPage + '?product=' + encodeURIComponent(p.name);
+                href = basePath + p.brandPage + '?product=' + encodeURIComponent(productParam);
             }
             html += '<a href="' + href + '" class="search-result-item">' +
                 (imgSrc ? '<img src="' + imgSrc + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' : '') +
