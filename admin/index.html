@@ -1717,7 +1717,7 @@
                 <div class="seo-preview" id="seoGooglePreview">
                     <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);font-weight:700;margin-bottom:.5rem">Google Preview</div>
                     <div class="seo-preview-title" id="seoPreviewTitle">Page Title</div>
-                    <div class="seo-preview-url" id="seoPreviewUrl">https://twintechindia.com/page</div>
+                    <div class="seo-preview-url" id="seoPreviewUrl">https://twinindia.com/page</div>
                     <div class="seo-preview-desc" id="seoPreviewDesc">Page description will appear here...</div>
                 </div>
 
@@ -1745,7 +1745,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Canonical URL</label>
-                                <input type="text" id="seoCanonical" placeholder="https://twintechindia.com/page" oninput="updateSeoPreview()">
+                                <input type="text" id="seoCanonical" placeholder="https://twinindia.com/page" oninput="updateSeoPreview()">
                             </div>
                             <div class="form-group">
                                 <label>Robots Directive</label>
@@ -1777,7 +1777,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>OG Image URL</label>
-                                <input type="text" id="seoOgImage" placeholder="https://twintechindia.com/assets/image.png">
+                                <input type="text" id="seoOgImage" placeholder="https://twinindia.com/assets/image.png">
                             </div>
                             <div class="form-group">
                                 <label>OG Type</label>
@@ -3359,8 +3359,8 @@
             const metaDesc = description.length > 160 ? description.slice(0, 157) + '...' : description;
             const keywords = [name, brandLabel, category, 'Twin Tech India'].filter(Boolean).join(', ');
             const slug = product.slug || '';
-            const canonical = slug ? ('https://twintechindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
-            const img = product.imageData || (product.imagePath ? ('https://twintechindia.com/' + product.imagePath) : '');
+            const canonical = slug ? ('https://twinindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
+            const img = product.imageData || (product.imagePath ? ('https://twinindia.com/' + product.imagePath) : '');
 
             return {
                 action: 'save',
@@ -3522,7 +3522,7 @@
             const metaDesc = description.length > 160 ? description.slice(0, 157) + '...' : description;
             const keywords = [name, brandLabel, category, 'Twin Tech India'].filter(Boolean).join(', ');
             const slug = product.slug || '';
-            const canonical = slug ? ('https://twintechindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
+            const canonical = slug ? ('https://twinindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
 
             document.getElementById('seoMetaTitle').value = metaTitle;
             document.getElementById('seoMetaDesc').value = metaDesc;
@@ -3534,7 +3534,7 @@
             document.getElementById('seoTwitterTitle').value = metaTitle;
             document.getElementById('seoTwitterDesc').value = metaDesc;
             // If we have an uploaded image, use it as OG/Twitter image
-            const img = product.imageData || (product.imagePath ? ('https://twintechindia.com/' + product.imagePath) : '');
+            const img = product.imageData || (product.imagePath ? ('https://twinindia.com/' + product.imagePath) : '');
             if (img) {
                 document.getElementById('seoOgImage').value = img;
                 document.getElementById('seoTwitterImage').value = img;
@@ -3544,7 +3544,7 @@
         function updateSeoPreview() {
             const title = document.getElementById('seoMetaTitle').value || 'Page Title';
             const desc = document.getElementById('seoMetaDesc').value || 'Page description will appear here...';
-            const canonical = document.getElementById('seoCanonical').value || 'https://twintechindia.com/';
+            const canonical = document.getElementById('seoCanonical').value || 'https://twinindia.com/';
 
             document.getElementById('seoPreviewTitle').textContent = title;
             document.getElementById('seoPreviewUrl').textContent = canonical;
