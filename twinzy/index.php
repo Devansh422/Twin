@@ -1,29 +1,36 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/../seo-meta.php';
+$seo = renderSeoMeta('page', 'twinzy', [
+	'meta_title'          => 'Twinzy Home Care Products - Twin Tech India',
+	'meta_description'    => 'Discover Twinzy home care products by Twin Tech India - air fresheners, furniture polish, and premium home care solutions for everyday use.',
+	'meta_keywords'       => 'Twinzy, home care products, air freshener, furniture polish, Twin Tech India, household products',
+	'robots'              => 'index, follow',
+	'canonical_url'       => 'https://twinindia.com/twinzy/',
+	'og_title'            => 'Twinzy Home Care Products - Twin Tech India',
+	'og_description'      => 'Discover Twinzy home care products by Twin Tech India - air fresheners, furniture polish, and premium home care solutions for everyday use.',
+	'og_image'            => 'https://twinindia.com/assets/logo.png',
+	'og_type'             => 'website',
+	'twitter_card'        => 'summary_large_image',
+	'twitter_title'       => 'Twinzy Home Care Products - Twin Tech India',
+	'twitter_description' => 'Discover Twinzy home care products by Twin Tech India - air fresheners, furniture polish, and premium home care solutions for everyday use.',
+	'twitter_image'       => 'https://twinindia.com/assets/logo.png',
+]);
+?><!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
-	<meta name="description" content="Discover Twinzy home care products by Twin Tech India - air fresheners, furniture polish, and premium home care solutions for everyday use.">
-	<meta name="keywords" content="Twinzy, home care products, air freshener, furniture polish, Twin Tech India, household products">
 	<meta name="author" content="Twin Tech India Pvt. Ltd.">
-	<meta name="robots" content="index, follow">
 	<meta name="theme-color" content="#ED1D21">
-	<meta property="og:title" content="Twinzy Home Care Products - Twin Tech India">
-	<meta property="og:description" content="Discover Twinzy home care products by Twin Tech India - air fresheners, furniture polish, and premium home care solutions for everyday use.">
-	<meta property="og:image" content="../assets/logo.png">
-	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Twin Tech India">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Twinzy Home Care Products - Twin Tech India">
-	<meta name="twitter:description" content="Discover Twinzy home care products by Twin Tech India - air fresheners, furniture polish, and premium home care solutions for everyday use.">
-	<meta name="twitter:image" content="../assets/logo.png">
+	<?= $seo['html'] ?>
+	<?= $seo['scriptJson'] ?>
 	<link rel="stylesheet" type="text/css" href="../style.css">
 	<link rel="stylesheet" type="text/css" href="../nav.css">
 	<link rel="stylesheet" type="text/css" href="../footer.css">
-	<title>Twinzy Home Care Products - Twin Tech India</title>
-	<script src="../assets/seo-loader.js" data-page-type="page" data-page-id="twinzy"></script>
+	<script src="../assets/seo-loader.js"></script>
 	<style>
 		/* Products Showcase Section */
 		.products-showcase {

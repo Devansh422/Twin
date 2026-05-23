@@ -1,29 +1,36 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/../seo-meta.php';
+$seo = renderSeoMeta('page', 'sprayzet', [
+	'meta_title'          => 'SprayZet Industrial Maintenance Products - Twin Tech India',
+	'meta_description'    => 'Discover SprayZet industrial maintenance products by Twin Tech India - cleaners, degreasers, rust removers, protective coatings, lubricants, anti-seize sprays, and mould release agents.',
+	'meta_keywords'       => 'SprayZet, industrial maintenance sprays, cleaners, degreasers, rust remover, protective coatings, lubricants, Twin Tech India',
+	'robots'              => 'index, follow',
+	'canonical_url'       => 'https://twinindia.com/sprayzet/',
+	'og_title'            => 'SprayZet Industrial Maintenance Products - Twin Tech India',
+	'og_description'      => 'Discover SprayZet industrial maintenance products by Twin Tech India - cleaners, degreasers, rust removers, protective coatings, lubricants, anti-seize sprays, and mould release agents.',
+	'og_image'            => 'https://twinindia.com/assets/logo.png',
+	'og_type'             => 'website',
+	'twitter_card'        => 'summary_large_image',
+	'twitter_title'       => 'SprayZet Industrial Maintenance Products - Twin Tech India',
+	'twitter_description' => 'Discover SprayZet industrial maintenance products by Twin Tech India - cleaners, degreasers, rust removers, protective coatings, lubricants, anti-seize sprays, and mould release agents.',
+	'twitter_image'       => 'https://twinindia.com/assets/logo.png',
+]);
+?><!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
-	<meta name="description" content="Explore Evershine premium car care products by Twin Tech India - auto body shiners, dashboard polish, tyre shiners, AC disinfectants, spray paints, additives, and more for bikes and cars.">
-	<meta name="keywords" content="Evershine, car care products, bike care, auto body shiner, tyre shiner, dashboard polish, Twin Tech India, spray paint, car wash shampoo">
 	<meta name="author" content="Twin Tech India Pvt. Ltd.">
-	<meta name="robots" content="index, follow">
 	<meta name="theme-color" content="#ED1D21">
-	<meta property="og:title" content="Evershine Car Care Products - Twin Tech India">
-	<meta property="og:description" content="Explore Evershine premium car care products by Twin Tech India - auto body shiners, dashboard polish, tyre shiners, AC disinfectants, spray paints, additives, and more for bikes and cars.">
-	<meta property="og:image" content="../assets/logo.png">
-	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Twin Tech India">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Evershine Car Care Products - Twin Tech India">
-	<meta name="twitter:description" content="Explore Evershine premium car care products by Twin Tech India - auto body shiners, dashboard polish, tyre shiners, AC disinfectants, spray paints, additives, and more for bikes and cars.">
-	<meta name="twitter:image" content="../assets/logo.png">
+	<?= $seo['html'] ?>
+	<?= $seo['scriptJson'] ?>
 	<link rel="stylesheet" type="text/css" href="../style.css">
 	<link rel="stylesheet" type="text/css" href="../nav.css">
 	<link rel="stylesheet" type="text/css" href="../footer.css">
-	<title>Evershine Car Care Products - Twin Tech India</title>
-	<script src="../assets/seo-loader.js" data-page-type="page" data-page-id="evershine"></script>
+	<script src="../assets/seo-loader.js"></script>
 	<style>
 		.hero-cta-actions {
 			display: flex;
@@ -33,7 +40,6 @@
 		@media (max-width: 768px) {
 			.hero-cta-actions {
 				flex-direction: column;
-				gap: 0rem;
 			}
 		}
 
@@ -329,7 +335,6 @@
 									<path d="M5 12h14" />
 									<path d="m12 5 7 7-7 7" />
 								</svg></span>Twin Tapes</a></li>
-				
 					<li><a href="../twinzy/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
 									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 									stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right">
@@ -356,29 +361,29 @@
 			</button>
 		</div>
 	</nav>
+
 	<!-- Hero Section -->
 	<section id="hero-section" style="position: relative; height: 100vh; overflow: hidden;">
 		<video autoplay muted loop playsinline
 			style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-			<source src="../assets/Aerosol.mp4" type="video/mp4">
+			<source src="../assets/Sprayzet.mp4" type="video/mp4">
 		</video>
 		<div class="hero-content">
-			<h1>The Ultimate Car Care Products</h1>
-			<span class="sub-text">Premium automotive care solutions designed to protect, restore, and maintain your
-				vehicle's beauty and performance</span>
+			<h1>Industrial Maintenance<br>Aerosol Solutions</h1>
+			<span class="sub-text">Professional-grade aerosol products engineered for precision cleaning, rust
+				protection, and industrial maintenance applications</span>
 			<div class="hero-cta-actions">
 				<a style="text-decoration: none;" href="https://api.whatsapp.com/send/?phone=9310052702&text&type=phone_number&app_absent=0"><button class="cta-button" style="font-size: 0.9rem;">Request Quote</button></a>
 				<a class="cta-button" style="font-size: 0.9rem;"
-					href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/2.%20EVERSHINE/EVERSHINE%20CAR%20CARE%20PRODUCTS/EVERSHINER%20CATALOUGE%20FINAL.pdf"
+					href="../BRAND%20WISE%20PRODUCTS-20260130T003450Z-3-001/BRAND%20WISE%20PRODUCTS/1.%20SPRAYZET/SPRAYZET%20CATALOGUE%20NEW.pdf"
 					target="_blank" style="text-decoration:none;"><button>Download Catalog</button></a>
 			</div>
 		</div>
 	</section>
-
 	<!-- Products Showcase Section -->
 	<section class="products-showcase">
-		<h2>Our Premium Products</h2>
-		<p class="section-subtitle">Discover our complete range of professional car care solutions</p>
+		<h2>Our Industrial Products</h2>
+		<p class="section-subtitle">Professional-grade maintenance solutions for industrial applications</p>
 
 		<!-- Filter Tags -->
 		<div class="product-filters"></div>
@@ -387,10 +392,12 @@
 
 		<div class="products-grid"></div>
 	</section>
+
+	<!-- Footer -->
 	<footer>
 		<div class="top">
 			<div class="logo">
-				<img id="site-logo-footer" src="">
+				<img id="site-logo-footer" src="" alt="Twin Tech Logo">
 			</div>
 			<div class="footer-info animate-text">
 				Twin Tech India Pvt. Ltd. is a leading manufacturer of high-quality Industrial aerosol sprays, car care
@@ -416,8 +423,8 @@
 									<path d="M5 12h14" />
 									<path d="m12 5 7 7-7 7" />
 								</svg></span>About Us</a></li>
-					<li><a href="../customer/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+					<li><a href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 									stroke-linecap="round" stroke-linejoin="round"
 									class="lucide lucide-arrow-right-icon lucide-arrow-right">
 									<path d="M5 12h14" />
@@ -454,7 +461,6 @@
 									<path d="M5 12h14" />
 									<path d="m12 5 7 7-7 7" />
 								</svg></span>Twin Tapes</a></li>
-					
 					<li><a href="../twinzy/"><span><svg xmlns="http://www.w3.org/2000/svg" width="24"
 									height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 									stroke-linecap="round" stroke-linejoin="round"
@@ -515,14 +521,14 @@
 									class="lucide lucide-phone-icon lucide-phone">
 									<path
 										d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
-								</svg></span>+91-9310052702</a></li>
+								</svg></span>91-9310052702</a></li>
 				</ul>
 			</div>
 			<ul class="address">
-				<li><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Office Address</b><br>A-304,
-						Solitairian City Center, Knowledge Park III<br>Greater NOIDA (UP) India - 201308</a></li>
-				<li style="margin-top: 1.5rem;"><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Work
-							Address</b><br>R-50,51, 52 & 53, UPSIDC, Sikandrabad,<br>Uttar Pradesh - 203205 </a></li>
+				<li><a href="#"><b>Office Address</b><br>A-304, Solitairian City Center, Knowledge Park III<br>Greater
+						NOIDA (UP) India - 201308</a></li>
+				<li><a href="https://www.google.com/maps?q=28.473747,77.656921"><b>Work Address</b><br>R-50, 51, 52 & 53,
+						UPSIDC, Sikandrabad,<br>Uttar Pradesh - 203205 </a></li>
 				<ul class="socials">
 					<li><a href="https://www.instagram.com/twinindia.in/" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -543,8 +549,8 @@
 								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
 								stroke-linejoin="round" class="lucide lucide-youtube-icon lucide-youtube">
 								<path
-									d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-								<polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+									d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+								<path d="m10 15 5-3-5-3z" />
 							</svg></a></li>
 					<li><a href="https://www.facebook.com/twintechindia" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -554,11 +560,12 @@
 				</ul>
 			</ul>
 		</div>
-		<div class="black-strip"></div>
+		<div class="black-strip"> </div>
 		<div class="bottom">
 			<span>©Copyright 2026. All Rights Reserved.</span>
 		</div>
 	</footer>
+
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 
@@ -652,13 +659,20 @@
 
 			// Run once on page load
 			window.applyCTAStyles();
+
 		});
 	</script>
 
+
+	<script src="../assets-config.js"></script>
+	<script src="../assets-apply.js"></script>
+	<script src="../assets/global-search.js" defer></script>
 	<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+	<script src="../assets/product-detail-helper.js"></script>
+	<script src="../assets/product-logic.js"></script>
 	<script>
 		gsap.registerPlugin(ScrollTrigger);
 
@@ -1096,10 +1110,12 @@
 			flex: 1;
 			padding: 1.5rem;
 			overflow-y: auto;
+			max-height: 100%;
 			min-height: 0;
-			overscroll-behavior: contain;
+			margin: 0;
 			scrollbar-width: thin;
 			scrollbar-color: #ed1d21 #f0f0f0;
+			scroll-behavior: smooth;
 		}
 
 		.modal-content-col::-webkit-scrollbar {
@@ -1214,7 +1230,6 @@
 				flex-direction: column;
 				width: 95%;
 				height: 75vh;
-				/* More height on mobile */
 			}
 
 			.modal-image-col {
@@ -1306,11 +1321,7 @@
 		</div>
 	</div>
 
-	<script src="../assets/product-detail-helper.js"></script>
-	<script src="../assets/car-care-logic.js"></script>
-	<script src="../assets-config.js"></script>
-	<script src="../assets-apply.js"></script>
-	<script src="../assets/global-search.js" defer></script>
+
 </body>
 
 </html>

@@ -1,29 +1,36 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/../seo-meta.php';
+$seo = renderSeoMeta('page', 'twin-tapes', [
+	'meta_title'          => 'Twin Tapes - Self-Adhesive Tapes by Twin Tech India',
+	'meta_description'    => 'Explore Twin Tapes self-adhesive tape solutions by Twin Tech India - BOPP tapes, masking tapes, double-sided tapes, and specialty adhesive tapes for industrial and packaging applications.',
+	'meta_keywords'       => 'Twin Tapes, adhesive tapes, BOPP tape, masking tape, double-sided tape, packaging tape, Twin Tech India',
+	'robots'              => 'index, follow',
+	'canonical_url'       => 'https://twinindia.com/twin-tapes/',
+	'og_title'            => 'Twin Tapes - Self-Adhesive Tapes by Twin Tech India',
+	'og_description'      => 'Explore Twin Tapes self-adhesive tape solutions by Twin Tech India - BOPP tapes, masking tapes, double-sided tapes, and specialty adhesive tapes for industrial and packaging applications.',
+	'og_image'            => 'https://twinindia.com/assets/logo.png',
+	'og_type'             => 'website',
+	'twitter_card'        => 'summary_large_image',
+	'twitter_title'       => 'Twin Tapes - Self-Adhesive Tapes by Twin Tech India',
+	'twitter_description' => 'Explore Twin Tapes self-adhesive tape solutions by Twin Tech India - BOPP tapes, masking tapes, double-sided tapes, and specialty adhesive tapes for industrial and packaging applications.',
+	'twitter_image'       => 'https://twinindia.com/assets/logo.png',
+]);
+?><!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
-	<meta name="description" content="Explore Twin Tapes self-adhesive tape solutions by Twin Tech India - BOPP tapes, masking tapes, double-sided tapes, and specialty adhesive tapes for industrial and packaging applications.">
-	<meta name="keywords" content="Twin Tapes, adhesive tapes, BOPP tape, masking tape, double-sided tape, packaging tape, Twin Tech India">
 	<meta name="author" content="Twin Tech India Pvt. Ltd.">
-	<meta name="robots" content="index, follow">
 	<meta name="theme-color" content="#ED1D21">
-	<meta property="og:title" content="Twin Tapes - Self-Adhesive Tapes by Twin Tech India">
-	<meta property="og:description" content="Explore Twin Tapes self-adhesive tape solutions by Twin Tech India - BOPP tapes, masking tapes, double-sided tapes, and specialty adhesive tapes for industrial and packaging applications.">
-	<meta property="og:image" content="../assets/logo.png">
-	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Twin Tech India">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Twin Tapes - Self-Adhesive Tapes by Twin Tech India">
-	<meta name="twitter:description" content="Explore Twin Tapes self-adhesive tape solutions by Twin Tech India - BOPP tapes, masking tapes, double-sided tapes, and specialty adhesive tapes for industrial and packaging applications.">
-	<meta name="twitter:image" content="../assets/logo.png">
+	<?= $seo['html'] ?>
+	<?= $seo['scriptJson'] ?>
 	<link rel="stylesheet" type="text/css" href="../style.css">
 	<link rel="stylesheet" type="text/css" href="../nav.css">
 	<link rel="stylesheet" type="text/css" href="../footer.css">
-	<title>Twin Tapes - Self-Adhesive Tapes by Twin Tech India</title>
-	<script src="../assets/seo-loader.js" data-page-type="page" data-page-id="twin-tapes"></script>
+	<script src="../assets/seo-loader.js"></script>
 	<style>
 		.hero-cta-actions {
 			display: flex;

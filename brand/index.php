@@ -1,29 +1,41 @@
-<!DOCTYPE html>
+<?php
+require_once __DIR__ . '/../seo-meta.php';
+// Custom-brand pages: the page-level SEO key is the brand slug from ?brand=.
+// Falls back to "brand" (the generic listing) if no brand was specified.
+$brandKey = isset($_GET['brand']) ? trim((string)$_GET['brand']) : '';
+$pageId = $brandKey !== '' ? $brandKey : 'brand';
+$brandLabel = $brandKey !== '' ? ucwords(str_replace('-', ' ', $brandKey)) : 'Products by Brand';
+$seo = renderSeoMeta('page', $pageId, [
+	'meta_title'          => $brandLabel . ' Products - Twin Tech India',
+	'meta_description'    => 'Browse ' . $brandLabel . ' products by Twin Tech India.',
+	'meta_keywords'       => $brandLabel . ', Twin Tech India, product catalog',
+	'robots'              => 'index, follow',
+	'canonical_url'       => 'https://twinindia.com/brand/' . ($brandKey !== '' ? '?brand=' . urlencode($brandKey) : ''),
+	'og_title'            => $brandLabel . ' Products - Twin Tech India',
+	'og_description'      => 'Browse ' . $brandLabel . ' products by Twin Tech India.',
+	'og_image'            => 'https://twinindia.com/assets/logo.png',
+	'og_type'             => 'website',
+	'twitter_card'        => 'summary_large_image',
+	'twitter_title'       => $brandLabel . ' Products - Twin Tech India',
+	'twitter_description' => 'Browse ' . $brandLabel . ' products by Twin Tech India.',
+	'twitter_image'       => 'https://twinindia.com/assets/logo.png',
+]);
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
-	<meta name="description" content="Browse all Twin Tech India products by brand - Evershine car care, SprayZet industrial sprays, Twin Tapes adhesive solutions, Twinzy home care, and Silox products.">
-	<meta name="keywords" content="Twin Tech India products, all brands, Evershine, SprayZet, Twin Tapes, Twinzy, Silox, product catalog">
 	<meta name="author" content="Twin Tech India Pvt. Ltd.">
-	<meta name="robots" content="index, follow">
 	<meta name="theme-color" content="#ED1D21">
-	<meta property="og:title" content="Products by Brand - Twin Tech India">
-	<meta property="og:description" content="Browse all Twin Tech India products by brand - Evershine car care, SprayZet industrial sprays, Twin Tapes adhesive solutions, Twinzy home care, and Silox products.">
-	<meta property="og:image" content="../assets/logo.png">
-	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Twin Tech India">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Products by Brand - Twin Tech India">
-	<meta name="twitter:description" content="Browse all Twin Tech India products by brand - Evershine car care, SprayZet industrial sprays, Twin Tapes adhesive solutions, Twinzy home care, and Silox products.">
-	<meta name="twitter:image" content="../assets/logo.png">
+	<?= $seo['html'] ?>
+	<?= $seo['scriptJson'] ?>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link rel="stylesheet" type="text/css" href="../nav.css">
     <link rel="stylesheet" type="text/css" href="../footer.css">
-    <title>Products by Brand - Twin Tech India</title>
-    <script src="../assets/seo-loader.js" data-page-type="page" data-page-id="brand"></script>
+    <script src="../assets/seo-loader.js"></script>
     <style>
         .products-showcase {
             padding-top: 8rem;

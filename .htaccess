@@ -1,0 +1,10 @@
+# Serve sitemap.php at the conventional /sitemap.xml URL
+RewriteEngine On
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Prefer index.php over index.html in the brand directories
+# (the brand pages were converted to .php for server-side SEO rendering)
+DirectoryIndex index.php index.html
+
+# Tell crawlers about the sitemap
+# (also add this in Google Search Console for faster discovery)
