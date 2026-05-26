@@ -55,13 +55,22 @@ foreach ($staticPages as $p) {
     echo smTag($site . $p[0], $today, $p[2], $p[1]);
 }
 
-// Products
+// Products — clean path URLs, /<brand>/<slug>, so each product is its own
+// distinct page in search-engine eyes (not a duplicate of the brand page).
 $pdo = getDBConnection();
+$builtinBrands = ['evershine', 'sprayzet', 'twin-tapes', 'twinzy'];
 if ($pdo) {
     try {
         $stmt = $pdo->query("SELECT brand, slug, updated_at FROM products WHERE slug IS NOT NULL AND slug != '' ORDER BY brand, slug");
         foreach ($stmt as $row) {
-            $url = $site . '/' . rawurlencode($row['brand']) . '/?product=' . rawurlencode($row['slug']);
+            $brand = $row['brand'];
+            $slug = $row['slug'];
+            if (in_array($brand, $builtinBrands, true)) {
+                $url = $site . '/' . rawurlencode($brand) . '/' . rawurlencode($slug);
+            } else {
+                // Custom brands use the /brand/<bs>/<ps> form
+                $url = $site . '/brand/' . rawurlencode($brand) . '/' . rawurlencode($slug);
+            }
             $lastmod = !empty($row['updated_at']) ? date('Y-m-d', strtotime($row['updated_at'])) : $today;
             echo smTag($url, $lastmod, 'weekly', '0.8');
         }

@@ -34,12 +34,17 @@
                 if (result.success && result.data) {
                     allSiteProducts = result.data.map(function (p) {
                         var brandKey = p.brand || '';
+                        var isBuiltin = brandPageMap.hasOwnProperty(brandKey);
                         return {
                             name: p.name,
                             slug: p.slug || '',
+                            brandKey: brandKey,
                             brand: brandLabelMap[brandKey] || brandKey,
                             category: p.category,
-                            brandPage: brandPageMap[brandKey] || ('brand/index.html?brand=' + encodeURIComponent(brandKey) + '&'),
+                            // brandPage points to the brand listing — used as fallback
+                            // when a product has no slug yet.
+                            brandPage: isBuiltin ? brandPageMap[brandKey] : ('brand/?brand=' + encodeURIComponent(brandKey)),
+                            isBuiltin: isBuiltin,
                             imagePath: p.imagePath || ''
                         };
                     });
@@ -157,14 +162,19 @@
         for (var i = 0; i < matches.length; i++) {
             var p = matches[i];
             var imgSrc = p.imagePath ? (basePath + encodeURI(p.imagePath)) : '';
-            // Prefer slugs in product URLs so search results match the canonical
-            // links produced everywhere else (admin, brand pages, sitemap, etc.).
-            var productParam = p.slug || p.name;
+            // Build a clean product URL: /<brand>/<slug> (built-in brands) or
+            // /brand/<bs>/<ps> (custom brands). Falls back to the brand listing
+            // when no slug is available yet.
+            var slugParam = p.slug || (window.ProductDetail ? window.ProductDetail.slugify(p.name) : '');
             var href;
-            if (p.brandPage.indexOf('?') !== -1) {
-                href = basePath + p.brandPage + 'product=' + encodeURIComponent(productParam);
+            if (slugParam) {
+                if (p.isBuiltin) {
+                    href = basePath + encodeURIComponent(p.brandKey) + '/' + encodeURIComponent(slugParam);
+                } else {
+                    href = basePath + 'brand/' + encodeURIComponent(p.brandKey) + '/' + encodeURIComponent(slugParam);
+                }
             } else {
-                href = basePath + p.brandPage + '?product=' + encodeURIComponent(productParam);
+                href = basePath + p.brandPage;
             }
             html += '<a href="' + href + '" class="search-result-item">' +
                 (imgSrc ? '<img src="' + imgSrc + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' : '') +

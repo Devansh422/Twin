@@ -1,10 +1,22 @@
-# Serve sitemap.php at the conventional /sitemap.xml URL
 RewriteEngine On
+
+# Serve sitemap.php at the conventional /sitemap.xml URL
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
-# Prefer index.php over index.html in the brand directories
-# (the brand pages were converted to .php for server-side SEO rendering)
-DirectoryIndex index.php index.html
+# Clean product URLs:  /<brand>/<product-slug>  →  /<brand>/index.php?product=<slug>
+# Browser URL stays clean; the rewrite is internal.
+#
+# Skip if the path matches an actual file or directory (so /evershine/index.php,
+# /evershine/assets/foo.png, /admin/, /api/, etc. are never rewritten).
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(evershine|sprayzet|twin-tapes|twinzy)/([A-Za-z0-9._-]+)/?$ $1/index.php?product=$2 [L,QSA]
 
-# Tell crawlers about the sitemap
-# (also add this in Google Search Console for faster discovery)
+# Clean product URL for custom brands (the /brand/ dynamic page):
+#   /brand/<brand-slug>/<product-slug>  →  /brand/index.php?brand=<bs>&product=<ps>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^brand/([A-Za-z0-9._-]+)/([A-Za-z0-9._-]+)/?$ brand/index.php?brand=$1&product=$2 [L,QSA]
+
+# Prefer index.php over index.html (brand pages were converted to .php)
+DirectoryIndex index.php index.html

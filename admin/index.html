@@ -3359,7 +3359,7 @@
             const metaDesc = description.length > 160 ? description.slice(0, 157) + '...' : description;
             const keywords = [name, brandLabel, category, 'Twin Tech India'].filter(Boolean).join(', ');
             const slug = product.slug || '';
-            const canonical = slug ? ('https://twinindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
+            const canonical = slug ? ('https://twinindia.com/' + encodeURIComponent(product.brand) + '/' + encodeURIComponent(slug)) : '';
             const img = product.imageData || (product.imagePath ? ('https://twinindia.com/' + product.imagePath) : '');
 
             return {
@@ -3522,7 +3522,7 @@
             const metaDesc = description.length > 160 ? description.slice(0, 157) + '...' : description;
             const keywords = [name, brandLabel, category, 'Twin Tech India'].filter(Boolean).join(', ');
             const slug = product.slug || '';
-            const canonical = slug ? ('https://twinindia.com/' + encodeURIComponent(product.brand) + '/?product=' + encodeURIComponent(slug)) : '';
+            const canonical = slug ? ('https://twinindia.com/' + encodeURIComponent(product.brand) + '/' + encodeURIComponent(slug)) : '';
 
             document.getElementById('seoMetaTitle').value = metaTitle;
             document.getElementById('seoMetaDesc').value = metaDesc;

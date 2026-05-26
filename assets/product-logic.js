@@ -353,8 +353,11 @@ async function initDynamicProducts() {
 
     // Check for URL parameters to open specific product.
     // Resolve by slug first (canonical), name second (legacy links).
-    const urlParams = new URLSearchParams(window.location.search);
-    const productParam = urlParams.get('product');
+    // Reads /sprayzet/<slug> from the path (preferred) and falls back to ?product=
+    // for old bookmarks/shares.
+    const productParam = window.ProductDetail
+        ? window.ProductDetail.readSlugFromUrl()
+        : new URLSearchParams(window.location.search).get('product');
 
     if (productParam) {
         const targetProduct = window.ProductDetail

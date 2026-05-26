@@ -323,11 +323,12 @@ async function initDynamicProducts() {
     // Initial animation for cards
     animateCardsEntrance();
 
-    // Check URL for product parameter to open modal automatically.
-    // The URL is the canonical entry point for both shared links and search hits;
-    // resolve by slug first and fall back to the legacy name match.
-    const urlParams = new URLSearchParams(window.location.search);
-    const productParam = urlParams.get('product');
+    // Check URL for product slug to open modal automatically.
+    // Reads from the clean path form (/evershine/<slug>) first, then falls back
+    // to the legacy ?product=<slug> query string for old bookmarks/shares.
+    const productParam = window.ProductDetail
+        ? window.ProductDetail.readSlugFromUrl()
+        : new URLSearchParams(window.location.search).get('product');
     if (productParam) {
         const targetProduct = window.ProductDetail
             ? window.ProductDetail.findByParam(allProducts, productParam)

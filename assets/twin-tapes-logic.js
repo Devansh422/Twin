@@ -110,9 +110,11 @@ async function initDynamicProducts() {
 
     if (countElement) countElement.textContent = allProducts.length;
 
-    // Check for URL parameters to open specific product (slug first, name fallback)
-    const urlParams = new URLSearchParams(window.location.search);
-    const productParam = urlParams.get('product');
+    // Check the URL for a product slug to open automatically.
+    // Reads /twin-tapes/<slug> from the path first; falls back to legacy ?product=.
+    const productParam = window.ProductDetail
+        ? window.ProductDetail.readSlugFromUrl()
+        : new URLSearchParams(window.location.search).get('product');
 
     if (productParam) {
         const targetProduct = window.ProductDetail
