@@ -3315,13 +3315,25 @@
             }).length;
 
             let html = '';
+            const totalProducts = allProducts.length;
             if (missingCount > 0) {
                 html += `<div class="seo-page-item" style="cursor:default;background:var(--bg-input);border-style:dashed">
                     <div class="seo-page-info">
                         <div class="seo-page-name">${missingCount} product${missingCount === 1 ? '' : 's'} without SEO</div>
                         <div class="seo-page-path">Auto-generate meta title, description, keywords, and canonical URLs based on each product's name &amp; category. You can still tweak individual products afterwards.</div>
                     </div>
-                    <button class="btn btn-primary" onclick="bulkAutofillProductSeo()">⚡ Auto-fill all</button>
+                    <button class="btn btn-primary" onclick="bulkAutofillProductSeo('missing')">⚡ Auto-fill all</button>
+                </div>`;
+            }
+            // Always offer a refresh option so admins can re-generate URLs/titles after a
+            // code change (e.g. switching from ?product= URLs to clean paths).
+            if (totalProducts > 0) {
+                html += `<div class="seo-page-item" style="cursor:default;background:#fff7ed;border:1px dashed #f97316">
+                    <div class="seo-page-info">
+                        <div class="seo-page-name">🔄 Refresh SEO for all ${totalProducts} product${totalProducts === 1 ? '' : 's'}</div>
+                        <div class="seo-page-path"><b>Overwrites existing rows.</b> Use this after a code change to update canonical URLs, brand labels, or meta-tag formatting. Any manual edits will be replaced.</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="bulkAutofillProductSeo('refresh')">🔄 Refresh all</button>
                 </div>`;
             }
 
@@ -3334,7 +3346,7 @@
                 let seo = getSeoForItem('product', identifier);
                 if (!seo && p.slug) seo = getSeoForItem('product', String(p.id)); // legacy fallback
                 const configured = !!seo;
-                const productUrl = '/' + encodeURIComponent(p.brand) + '/?product=' + encodeURIComponent(p.slug || '');
+                const productUrl = p.slug ? ('/' + encodeURIComponent(p.brand) + '/' + encodeURIComponent(p.slug)) : ('/' + encodeURIComponent(p.brand) + '/');
                 html += `<div class="seo-page-item" onclick="openSeoModal('product','${escapeHtmlAttr(identifier)}','${escapeHtmlAttr(p.name)}')">
                     <div class="seo-page-info">
                         <div class="seo-page-name">${escapeHtmlAttr(p.name)}</div>
@@ -3384,27 +3396,46 @@
             };
         }
 
-        async function bulkAutofillProductSeo() {
-            // Identify every product that doesn't yet have a SEO row
+        // Auto-fill SEO for products.
+        //   mode === 'missing' (default) — only fills products that don't have a SEO row yet
+        //   mode === 'refresh'           — regenerates SEO for ALL products, overwriting existing rows
+        //                                  (use this after changing canonical URL format, brand label, etc.)
+        async function bulkAutofillProductSeo(mode) {
+            mode = mode || 'missing';
+            const refresh = mode === 'refresh';
+
             const targets = [];
             Object.keys(productsData).forEach(brand => {
                 Object.keys(productsData[brand]).forEach(cat => {
                     productsData[brand][cat].forEach(p => {
-                        const ident = p.slug || String(p.id);
-                        const hasNew = !!getSeoForItem('product', ident);
-                        const hasLegacy = p.slug && !!getSeoForItem('product', String(p.id));
-                        if (!hasNew && !hasLegacy) {
+                        if (refresh) {
                             targets.push({ ...p, brand, category: cat });
+                        } else {
+                            const ident = p.slug || String(p.id);
+                            const hasNew = !!getSeoForItem('product', ident);
+                            const hasLegacy = p.slug && !!getSeoForItem('product', String(p.id));
+                            if (!hasNew && !hasLegacy) {
+                                targets.push({ ...p, brand, category: cat });
+                            }
                         }
                     });
                 });
             });
-            if (!targets.length) { showToast('Every product already has SEO settings.', 'info'); return; }
-            if (!confirm('Auto-fill SEO meta data for ' + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '?\n\nThis writes a meta title, description, keywords, canonical URL, and social-share tags derived from each product\'s name, brand, and category. You can still edit each product\'s SEO afterwards.')) return;
+            if (!targets.length) {
+                showToast(refresh ? 'No products to refresh.' : 'Every product already has SEO settings. Click "Refresh all" if you want to regenerate them.', 'info');
+                return;
+            }
+            const confirmMsg = refresh
+                ? '⚠️ Regenerate SEO for ALL ' + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '?\n\nThis OVERWRITES every product\'s meta title, description, canonical URL, and social-share tags with freshly-generated content. Any manual edits will be lost.\n\nUse this after changing the canonical URL format or brand labels.'
+                : 'Auto-fill SEO meta data for ' + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '?\n\nThis writes a meta title, description, keywords, canonical URL, and social-share tags derived from each product\'s name, brand, and category. You can still edit each product\'s SEO afterwards.';
+            if (!confirm(confirmMsg)) return;
 
-            showSpinner('Auto-filling SEO for ' + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '…');
+            showSpinner((refresh ? 'Refreshing SEO for ' : 'Auto-filling SEO for ') + targets.length + ' product' + (targets.length === 1 ? '' : 's') + '…');
             let ok = 0, fail = 0;
-            for (const p of targets) {
+            for (let i = 0; i < targets.length; i++) {
+                const p = targets[i];
+                // Keep the spinner message updated so the user sees progress on long runs
+                showSpinner((refresh ? 'Refreshing ' : 'Filling ') + (i + 1) + ' / ' + targets.length + ' — ' + (p.name || ''));
                 const payload = buildProductSeoPayload(p);
                 try {
                     const res = await fetch('../api/seo.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -3415,8 +3446,9 @@
             hideSpinner();
             await init();
             if (currentMode === 'seo') renderSEOManager();
-            if (fail === 0) showToast('SEO auto-filled for ' + ok + ' product' + (ok === 1 ? '' : 's') + '.', 'success');
-            else showToast('Filled ' + ok + ', failed ' + fail + '. Check console.', 'error');
+            const verb = refresh ? 'refreshed' : 'auto-filled';
+            if (fail === 0) showToast('SEO ' + verb + ' for ' + ok + ' product' + (ok === 1 ? '' : 's') + '.', 'success');
+            else showToast(verb.charAt(0).toUpperCase() + verb.slice(1) + ' ' + ok + ', failed ' + fail + '. Check console.', 'error');
         }
 
         function renderSeoBlogsList() {
