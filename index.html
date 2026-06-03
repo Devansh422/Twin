@@ -616,14 +616,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const [
                 THREE,
                 { GLTFLoader },
+                { DRACOLoader },
                 { RGBELoader },
                 { OrbitControls }
             ] = await Promise.all([
                 import('three'),
                 import('three/addons/loaders/GLTFLoader.js'),
+                import('three/addons/loaders/DRACOLoader.js'),
                 import('three/addons/loaders/RGBELoader.js'),
                 import('three/addons/controls/OrbitControls.js')
             ]);
+
+            // Shared Draco decoder for compressed GLB geometry
+            const dracoLoader = new DRACOLoader();
+            dracoLoader.setDecoderPath('https://unpkg.com/three@0.154.0/examples/jsm/libs/draco/');
 
             const modelDataConfig = [
                 {
@@ -762,6 +768,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 await getEnvironmentMap(webGLRender, threeScene);
 
                 const gltfLoader = new GLTFLoader();
+                gltfLoader.setDRACOLoader(dracoLoader);
                 let activeModel = null;
                 let modelGroup = new THREE.Group();
 
